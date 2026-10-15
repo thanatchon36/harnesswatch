@@ -92,7 +92,7 @@ def glob_paths(pattern: str, root: Path, home: Path | None = None) -> list[Path]
     path = expand_user_path(pattern, home) if is_user_path(pattern) else root / pattern
     text = str(path)
     if not any(ch in text for ch in "*?["):
-        return [path] if path.exists() else []
+        return [path] if _exists_exact(path) else []
     parts = path.parts
     split = next(i for i, part in enumerate(parts) if any(ch in part for ch in "*?["))
     base = Path(*parts[:split])
@@ -102,6 +102,17 @@ def glob_paths(pattern: str, root: Path, home: Path | None = None) -> list[Path]
     if "**" in rest:
         return _walk_glob(base, rest)
     return sorted(p for p in base.glob(rest) if p.exists())
+
+
+def _exists_exact(path: Path) -> bool:
+    """`exists()` that also matches the file name's case, so a scan on a case-insensitive
+    filesystem (macOS) does not report `AGENTS.md` again as `agents.md`."""
+    if not path.exists():
+        return False
+    try:
+        return path.name in os.listdir(path.parent)
+    except OSError:
+        return True
 
 
 PRUNE_DIRS = frozenset(

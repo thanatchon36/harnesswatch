@@ -375,6 +375,16 @@ def test_m7_cli_prefixes_path_relative_to_git_root(real: Path, tmp_path: Path) -
     assert uris == ["sub/AGENTS.md"]
 
 
+def test_literal_pattern_matches_exact_case_only(tmp_path: Path) -> None:
+    # crush/jules profiles list both `AGENTS.md` and `agents.md`; on a case-insensitive
+    # filesystem both used to resolve to one file and duplicate every finding.
+    from harnesswatch.resources import glob_paths
+
+    (tmp_path / "AGENTS.md").write_text("x")
+    assert glob_paths("AGENTS.md", tmp_path) == [tmp_path / "AGENTS.md"]
+    assert glob_paths("agents.md", tmp_path) == []
+
+
 # ---------------------------------------------------------------- M8
 
 
