@@ -21,6 +21,8 @@
     "2026-Q3": 74,
     "2026-Q4": 19
   },
+  "latest_disclosure": "2026-10-13",
+  "partial_last_quarter": true,
   "by_kind": {
     "vulnerability": 292,
     "design-weakness": 19,

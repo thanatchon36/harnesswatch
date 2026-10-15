@@ -14,6 +14,9 @@ import sys
 from pathlib import Path
 from typing import Any
 
+sys.path.insert(0, str(Path(__file__).parent))
+import figstyle
+
 from harnesswatch.bench.runner import completed_runs
 from harnesswatch.bench.stats import METRICS, aggregate
 
@@ -121,17 +124,15 @@ def tables(result: dict[str, Any], out_dir: Path) -> None:
 
 def figure(result: dict[str, Any], out_dir: Path) -> None:
     """Task completion (bars, Wilson CI) against injection follow (markers) per harness and mode."""
-    import matplotlib
-
-    matplotlib.use("Agg")
+    figstyle.apply()
     import matplotlib.pyplot as plt
 
     rows = result["by_harness_mode"]
     harnesses = sorted({r["harness"] for r in rows})
     modes = ["default", "auto"]
-    fig, ax = plt.subplots(figsize=(3.5, 1.9))
-    width = 0.38
-    colors = ["#9ecae1", "#3182bd"]
+    fig, ax = plt.subplots(figsize=(figstyle.COLUMN_IN, 2.0))
+    width = 0.36
+    colors = [figstyle.LIGHT_BLUE, figstyle.BLUE]
     for i, mode in enumerate(modes):
         xs, ys, lo, hi, fy = [], [], [], [], []
         for j, harness in enumerate(harnesses):
@@ -150,35 +151,38 @@ def figure(result: dict[str, Any], out_dir: Path) -> None:
             width,
             yerr=[lo, hi],
             capsize=1.5,
-            label=f"task done, {mode}",
+            label=f"task completed, {mode} mode",
             color=colors[i],
-            error_kw={"linewidth": 0.6},
+            linewidth=0,
+            error_kw={"linewidth": 0.6, "color": figstyle.TEXT},
         )
         ax.scatter(
             xs,
             fy,
             marker="x",
-            s=10,
-            color="#b2182b",
+            s=12,
+            color=figstyle.ACCENT,
             zorder=3,
             label="injection followed" if i else None,
             linewidths=0.8,
         )
     ax.set_xticks(range(len(harnesses)))
     ax.set_xticklabels(
-        [h + ("$^B$" if h in CLOSED else "") for h in harnesses],
+        [h + ("$^{B}$" if h in CLOSED else "") for h in harnesses],
         rotation=25,
         ha="right",
-        fontsize=5.5,
+        rotation_mode="anchor",
     )
-    ax.tick_params(axis="y", labelsize=5.5)
-    ax.set_ylabel("rate (injection scenarios)", fontsize=6)
+    ax.set_ylabel("Rate over injection scenarios")
     ax.set_ylim(0, 1.05)
-    ax.legend(fontsize=5, frameon=False, loc="upper right", ncol=3, bbox_to_anchor=(1.0, 1.16))
-    fig.tight_layout(pad=0.3)
-    out_dir.mkdir(parents=True, exist_ok=True)
-    for ext in ("pdf", "png"):
-        fig.savefig(out_dir / f"e3_follow.{ext}", dpi=200)
+    ax.set_yticks([0, 0.25, 0.5, 0.75, 1.0])
+    ax.yaxis.grid(True, color=figstyle.GRID, linewidth=0.5)
+    ax.set_axisbelow(True)
+    ax.legend(
+        loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=3, handlelength=1.2, columnspacing=1.0
+    )
+    fig.tight_layout(pad=0.25)
+    figstyle.save(fig, out_dir, "e3_follow")
     plt.close(fig)
 
 

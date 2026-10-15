@@ -403,10 +403,12 @@ rater 1’s scores are reported.
 <figure id="fig:heatmap">
 <img src="figures/e1_heatmap.png" width="100%" />
 <figcaption>Control matrix (RQ2): score 0–3 per dimension, rater 1;
-hatched cells are N/A. Tier A/B products (top) and tier C/D runtimes and
-hosted services (bottom) are ranked separately. The same scores with
-means are generated as <code>paper/tables/scorecard.tex</code>; per-cell
-evidence and rationale are in <code>matrix/</code>.</figcaption>
+hatched cells are N/A. Tier A/B products (a) and tier C/D runtimes and
+hosted services (b) are ranked separately; the right-hand column gives
+each harness’s mean and the number of scored dimensions. The same scores
+with means are generated as <code>paper/tables/scorecard.tex</code>;
+per-cell evidence and rationale are in
+<code>matrix/</code>.</figcaption>
 </figure>
 
 #### Overall picture
@@ -634,8 +636,8 @@ distribution of real-world harm.
 <figure id="fig:timeline">
 <img src="figures/rq3_timeline.png" width="100%" />
 <figcaption>Verified harness incidents and CVEs by quarter of disclosure
-(RQ3). The final quarter is partial (to 15 October 2026) and does not
-indicate a decline.</figcaption>
+(RQ3). The hatched final quarter is partial (to 15 October 2026) and
+does not indicate a decline.</figcaption>
 </figure>
 
 #### Timeline

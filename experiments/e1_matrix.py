@@ -31,12 +31,16 @@ import csv
 import io
 import json
 import re
+import sys
 from collections import Counter
 from collections.abc import Iterable
 from pathlib import Path
 from typing import Any
 
 import yaml
+
+sys.path.insert(0, str(Path(__file__).parent))
+import figstyle
 
 ROOT = Path(__file__).resolve().parent.parent
 RUBRIC = ROOT / "matrix" / "rubric.yaml"
@@ -528,27 +532,22 @@ def matrix_scorecard_md(result: dict[str, Any], rubric: dict[str, dict[str, Any]
 
 
 def heatmap(summary: dict[str, dict[str, Any]], out_dir: Path) -> None:
-    import matplotlib
-
-    matplotlib.use("Agg")
+    figstyle.apply()
     import matplotlib.pyplot as plt
     from matplotlib.colors import ListedColormap
     from matplotlib.patches import Rectangle
 
-    plt.rcParams["svg.hashsalt"] = "e1"
-    # sequential single hue (blue, light -> dark); N/A is a hatched neutral, never a ramp step
-    ramp = ["#cde2fb", "#6da7ec", "#2a78d6", "#104281"]
-    ink = {0: "#1f1f1f", 1: "#1f1f1f", 2: "#ffffff", 3: "#ffffff"}
-    groups = [("A/B", "Tier A/B harnesses"), ("C", "Tier C runtimes and SDKs")]
+    groups = [("A/B", "(a) Tier A/B products"), ("C", "(b) Tier C/D runtimes and hosted services")]
     orders = {g: _ordered(summary, g) for g, _ in groups}
     heights = [max(len(orders[g]), 1) for g, _ in groups]
+    row_in = 0.088  # printed row height at one column width
     fig, axes = plt.subplots(
         2,
         1,
-        figsize=(3.5, 0.098 * sum(heights) + 0.75),
-        gridspec_kw={"height_ratios": heights, "hspace": 0.12},
+        figsize=(figstyle.COLUMN_IN, row_in * sum(heights) + 0.85),
+        gridspec_kw={"height_ratios": heights, "hspace": 0.14},
     )
-    cmap = ListedColormap(ramp)
+    cmap = ListedColormap(figstyle.RAMP)
     for ax, (group, title) in zip(axes, groups, strict=True):
         hs = orders[group]
         for i, h in enumerate(hs):
@@ -561,8 +560,8 @@ def heatmap(summary: dict[str, dict[str, Any]], out_dir: Path) -> None:
                             (j, i),
                             1,
                             1,
-                            facecolor="#f0efec",
-                            edgecolor="#b8b6b0",
+                            facecolor=figstyle.NEUTRAL,
+                            edgecolor=figstyle.NEUTRAL_EDGE,
                             hatch="////",
                             linewidth=0,
                         )
@@ -575,57 +574,62 @@ def heatmap(summary: dict[str, dict[str, Any]], out_dir: Path) -> None:
                         str(sc),
                         ha="center",
                         va="center",
-                        fontsize=4,
-                        color=ink[int(sc)],
+                        fontsize=4.3,
+                        color=figstyle.INK_ON_RAMP[int(sc)],
                     )
             mean = _fmt(v["mean"]) if v["mean"] is not None else "insuff."
             ax.text(
-                len(CORE_DIMS) + 0.25,
+                len(CORE_DIMS) + 0.3,
                 i + 0.52,
                 f"{mean} ({v['n_scored']})",
                 ha="left",
                 va="center",
-                fontsize=4,
-                color="#3a3a3a",
+                fontsize=4.5,
+                color=figstyle.TEXT,
             )
-        for x in range(len(CORE_DIMS) + 1):  # 2px-style surface gaps between cells
-            ax.axvline(x, color="white", linewidth=0.4)
+        ax.text(
+            len(CORE_DIMS) + 0.3,
+            -0.55,
+            "mean (n)",
+            ha="left",
+            va="center",
+            fontsize=4.8,
+            fontstyle="italic",
+            color=figstyle.TEXT,
+        )
+        for x in range(len(CORE_DIMS) + 1):  # thin white gutters between cells
+            ax.axvline(x, color="white", linewidth=0.5)
         for y in range(len(hs) + 1):
-            ax.axhline(y, color="white", linewidth=0.4)
+            ax.axhline(y, color="white", linewidth=0.5)
         ax.set_xlim(0, len(CORE_DIMS))
         ax.set_ylim(len(hs), 0)
         ax.set_yticks([i + 0.5 for i in range(len(hs))])
-        ax.set_yticklabels([str(summary[h]["name"]) for h in hs], fontsize=4.5)
+        ax.set_yticklabels([str(summary[h]["name"]) for h in hs], fontsize=4.8)
         ax.set_xticks([j + 0.5 for j in range(len(CORE_DIMS))])
-        ax.set_xticklabels([d.replace("D", "") for d in CORE_DIMS], fontsize=4.5)
+        ax.set_xticklabels([d.replace("D", "") for d in CORE_DIMS], fontsize=4.8)
         ax.xaxis.tick_top()
-        ax.tick_params(length=0)
+        ax.tick_params(length=0, pad=1.5)
         for spine in ax.spines.values():
             spine.set_visible(False)
-        ax.set_title(
-            f"{title} (right: mean, n scored)",
-            fontsize=5,
-            loc="left",
-            pad=7,
+        ax.set_title(title, fontsize=5.8, fontweight="bold", loc="left", pad=9)
+    handles = [Rectangle((0, 0), 1, 1, facecolor=c) for c in figstyle.RAMP] + [
+        Rectangle(
+            (0, 0), 1, 1, facecolor=figstyle.NEUTRAL, edgecolor=figstyle.NEUTRAL_EDGE, hatch="////"
         )
-    handles = [Rectangle((0, 0), 1, 1, facecolor=c) for c in ramp] + [
-        Rectangle((0, 0), 1, 1, facecolor="#f0efec", edgecolor="#b8b6b0", hatch="////")
     ]
     fig.legend(
         handles,
-        ["0 absent", "1 opt-in/weak", "2 default, gaps", "3 strong+central", "N/A"],
+        ["0 absent", "1 opt-in or weak", "2 default, with gaps", "3 strong, central", "N/A"],
         loc="lower center",
         ncol=5,
-        fontsize=4.5,
-        handlelength=1.0,
-        columnspacing=0.8,
-        frameon=False,
+        fontsize=4.8,
+        handlelength=1.1,
+        handleheight=0.9,
+        columnspacing=0.9,
         bbox_to_anchor=(0.5, 0.0),
     )
-    fig.subplots_adjust(left=0.33, right=0.86, top=0.95, bottom=0.03)
-    out_dir.mkdir(parents=True, exist_ok=True)
-    fig.savefig(out_dir / "e1_heatmap.pdf", metadata={"CreationDate": None, "ModDate": None})
-    fig.savefig(out_dir / "e1_heatmap.png", dpi=200, metadata={"Software": None})
+    fig.subplots_adjust(left=0.335, right=0.855, top=0.955, bottom=0.035)
+    figstyle.save(fig, out_dir, "e1_heatmap")
     plt.close(fig)
 
 

@@ -27,5 +27,8 @@ Date: 2026-10-15 · Spend: $0.00
 
 ## Update (2026-10-15): prose revision
 - The paper was re-edited for a formal academic register at the author's request (A29): tighter sentences, no colloquialisms, consistent British spelling. Section sources went from 8,257 to 8,403 words; the PDF stays at 14 pages (microtype protrusion; heatmap at 0.9 and timeline at 0.85 column width).
+
+## Update (2026-10-15): figure restyle
+- All three generated figures (`e1_heatmap`, `rq3_timeline`, `e3_follow`) now share `experiments/figstyle.py`: drawn at the printed column width (3.5 in) in STIX, a Times-compatible serif matching the IEEEtran body text, with fonts embedded as TrueType (Type 42) rather than Type 3, which IEEE PDF eXpress rejects. The heat map gains panel labels (a)/(b) and a `mean (n)` column header; the timeline drops its in-figure title, labels bar counts, groups quarters under their year and draws the partial final quarter hatched (`partial_last_quarter`, computed from the latest counted disclosure, is now written to `rq3_incidents.json`). Both figures are included at `\columnwidth`; the PDF stays at 14 pages and `numbers.tex` is unchanged.
 - Author block: name only; the project URL is now the last sentence of the abstract.
 - Checked by script: every `numbers.tex` macro, `\cite` key, `\ref`/`\label` and evidence-label count is unchanged (one duplicated rubric-rule sentence in Appendix E now cross-references Section V). `make all` passes; the Markdown mirror and the web reader were regenerated.

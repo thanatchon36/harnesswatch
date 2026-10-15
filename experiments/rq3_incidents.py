@@ -14,10 +14,14 @@ from __future__ import annotations
 import csv
 import json
 import statistics
+import sys
 from collections import Counter, defaultdict
 from datetime import date
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, str(Path(__file__).parent))
+import figstyle
 
 ROOT = Path(__file__).resolve().parents[1]
 COUNTED_STATUS = {"confirmed", "no-id (primary-source only)"}
@@ -79,8 +83,16 @@ def latency(row: dict[str, Any]) -> int | None:
     return (fixed - disclosed).days
 
 
+def _quarter_end(iso: str) -> str:
+    """Last day of the calendar quarter that contains the ISO date."""
+    year, month = int(iso[:4]), int(iso[5:7])
+    end_month = ((month - 1) // 3 + 1) * 3
+    return f"{year}-{end_month:02d}-{31 if end_month in (3, 12) else 30}"
+
+
 def analyse(rows: list[dict[str, Any]]) -> dict[str, Any]:
     counted = [r for r in rows if r["counted"]]
+    latest = max(r["date_disclosed"][:10] for r in counted)
     quarters = Counter(
         f"{r['date_disclosed'][:4]}-Q{(int(r['date_disclosed'][5:7]) - 1) // 3 + 1}"
         for r in counted
@@ -108,6 +120,8 @@ def analyse(rows: list[dict[str, Any]]) -> dict[str, Any]:
         },
         "by_year": dict(sorted(Counter(r["date_disclosed"][:4] for r in counted).items())),
         "by_quarter": dict(sorted(quarters.items())),
+        "latest_disclosure": latest,
+        "partial_last_quarter": latest < _quarter_end(latest),
         "by_kind": dict(Counter(r["kind"] for r in counted).most_common()),
         "by_taxonomy_class": dict(Counter(r["taxonomy_class"] for r in counted).most_common()),
         "by_root_cause": dict(Counter(r["root_cause_class"] for r in counted).most_common()),
@@ -175,21 +189,54 @@ def _tex(text: str) -> str:
 
 
 def figure(result: dict[str, Any], out: Path) -> None:
-    import matplotlib
-
-    matplotlib.use("Agg")
+    figstyle.apply()
     import matplotlib.pyplot as plt
+    from matplotlib.patches import Patch
 
     quarters = list(result["by_quarter"])
-    fig, ax = plt.subplots(figsize=(6.5, 2.4))
-    ax.bar(quarters, [result["by_quarter"][q] for q in quarters], color="#3182bd")
-    ax.set_ylabel("Verified incidents")
-    ax.set_title("Harness incidents and CVEs by disclosure quarter (A11 counting rule)", fontsize=8)
-    ax.tick_params(axis="x", labelsize=7)
-    fig.tight_layout()
-    out.mkdir(parents=True, exist_ok=True)
-    for ext in ("pdf", "png"):
-        fig.savefig(out / f"rq3_timeline.{ext}", dpi=200)
+    counts = [result["by_quarter"][q] for q in quarters]
+    partial = bool(result.get("partial_last_quarter"))
+    fig, ax = plt.subplots(figsize=(figstyle.COLUMN_IN, 1.6))
+    xs = list(range(len(quarters)))
+    bars = ax.bar(xs, counts, width=0.7, color=figstyle.BLUE, linewidth=0)
+    open_bar = {
+        "facecolor": "#eaf0f8",
+        "edgecolor": figstyle.BLUE,
+        "hatch": "////",
+        "linewidth": 0.5,
+    }
+    if partial:  # the last quarter ends at the study cut-off, so it is drawn open
+        bars[-1].set(**open_bar)
+    for x, c in zip(xs, counts, strict=True):
+        ax.text(x, c + max(counts) * 0.02, str(c), ha="center", va="bottom", fontsize=6)
+    ax.set_xticks(xs)
+    ax.set_xticklabels([q.split("-")[1] for q in quarters])
+    for year in sorted({q[:4] for q in quarters}):  # year centred under its quarters
+        idx = [x for x, q in zip(xs, quarters, strict=True) if q.startswith(year)]
+        ax.annotate(
+            year,
+            xy=((idx[0] + idx[-1]) / 2, 0),
+            xycoords=("data", "axes fraction"),
+            xytext=(0, -13),
+            textcoords="offset points",
+            ha="center",
+            va="top",
+            fontsize=6.5,
+        )
+    ax.set_ylabel("Counted incidents")
+    ax.set_ylim(0, max(counts) * 1.2)
+    ax.yaxis.grid(True, color=figstyle.GRID, linewidth=0.5)
+    ax.set_axisbelow(True)
+    ax.tick_params(axis="x", length=0)
+    if partial:
+        ax.legend(
+            handles=[Patch(**open_bar)],
+            labels=["partial quarter (study cut-off)"],
+            loc="upper left",
+            handlelength=1.4,
+        )
+    fig.tight_layout(pad=0.25)
+    figstyle.save(fig, out, "rq3_timeline")
     plt.close(fig)
 
 
