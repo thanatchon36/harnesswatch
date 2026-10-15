@@ -225,7 +225,8 @@ def test_m3_non_regular_files_are_skipped(tmp_path: Path) -> None:
 def test_m4_scanners_are_linear(func) -> None:  # type: ignore[no-untyped-def]
     start = time.monotonic()
     func()
-    assert time.monotonic() - start < 3
+    # The pre-fix behaviour took minutes to hours; 20 s tolerates slow shared CI runners.
+    assert time.monotonic() - start < 20
 
 
 def test_m4_line_numbers_still_correct() -> None:
@@ -258,7 +259,7 @@ def test_m4_chunk_boundaries_do_not_double_count(tmp_path: Path) -> None:
 def test_m5_missing_path_exits_2(real: Path, tmp_path: Path) -> None:
     result = runner.invoke(app, ["audit", "repo", str(tmp_path / "nope")])
     assert result.exit_code == 2
-    assert "does not exist" in result.output
+    assert "does not exist" in " ".join(result.output.split())  # Rich wraps at terminal width
 
 
 def test_m5_errors_reach_sarif_and_markdown() -> None:

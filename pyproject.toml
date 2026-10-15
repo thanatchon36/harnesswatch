@@ -79,6 +79,8 @@ strict = true
 python_version = "3.12"
 files = ["src/harnesswatch"]
 plugins = ["pydantic.mypy"]
+# Sidecars run only inside Linux containers (AF_PACKET); type-checking them on macOS fails.
+exclude = ["src/harnesswatch/observe/sidecars/"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
