@@ -105,7 +105,9 @@ th { font-weight: 500; color: var(--ink-2); border-bottom-color: var(--ink-2); }
 .csl-entry a { overflow-wrap: anywhere; word-break: break-all; }
 .csl-left-margin { color: var(--ink-2); font-family: var(--font-mono); font-size: 0.85em; }
 .cite { min-width: 0; }
-.cite pre, .cite pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
+/* BibTeX keeps its lines intact (no mid-URL breaks); the block scrolls sideways on narrow screens. */
+.cite pre { overflow-x: auto; }
+.cite pre, .cite pre code { white-space: pre; overflow-wrap: normal; word-break: normal; }
 .colophon { border-top: 1px solid var(--rule); padding-top: 20px; color: var(--ink-2); font-size: 0.85rem; }
 .colophon p { margin: 0 0 0.7em; }
 @media (max-width: 480px) { body { font-size: 16px; } .page { padding-block: 28px 48px; gap: 28px; } }
