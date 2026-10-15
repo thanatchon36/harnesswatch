@@ -1,0 +1,19 @@
+{
+  "title": "harnesswatch",
+  "upload_type": "software",
+  "description": "Security audit toolkit for AI coding-agent harnesses (Claude Code, Codex CLI, Copilot CLI, Grok Build, Antigravity and 50+ more): static audits of harness configuration, MCP declarations, instruction files, secret residue, supply chain and CI, with SARIF output; a black-box behavioural probe (observe); and an inert canary prompt-injection benchmark. Companion software to the paper \"The Harness Is the Attack Surface: A Security Analysis of AI Coding-Agent Harnesses (2025-2026)\" (https://thanatchon36.github.io/harnesswatch/paper/).",
+  "creators": [
+    {
+      "name": "Chongmankhong, Thanatchon"
+    }
+  ],
+  "license": "apache-2.0",
+  "keywords": ["security", "AI agents", "coding agents", "Model Context Protocol", "prompt injection", "supply chain", "SARIF"],
+  "related_identifiers": [
+    {
+      "identifier": "https://thanatchon36.github.io/harnesswatch/paper/",
+      "relation": "isDocumentedBy",
+      "resource_type": "publication-preprint"
+    }
+  ]
+}

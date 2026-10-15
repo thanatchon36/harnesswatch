@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="t">
+  <title id="t">harnesswatch</title>
+  <rect width="128" height="128" rx="28" fill="#12233f"/>
+  <!-- watching eye: the harness under observation -->
+  <path d="M14 64 C32 34 96 34 114 64 C96 94 32 94 14 64 Z" fill="none" stroke="#7fb0ec" stroke-width="7" stroke-linejoin="round"/>
+  <circle cx="64" cy="64" r="21" fill="#1f5fae"/>
+  <!-- terminal prompt as the pupil: >_ -->
+  <path d="M53 55 L62 64 L53 73" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M65 74 H76" stroke="#ffd166" stroke-width="5" stroke-linecap="round"/>
+</svg>

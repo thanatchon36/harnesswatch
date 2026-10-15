@@ -5,6 +5,8 @@ repo_url: https://github.com/thanatchon36/harnesswatch
 repo_name: thanatchon36/harnesswatch
 theme:
   name: material
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
   features: [navigation.sections, content.code.copy]
 strict: true
 nav:

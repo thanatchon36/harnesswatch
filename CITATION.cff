@@ -1,6 +1,11 @@
 cff-version: 1.2.0
-message: "If you use harnesswatch or its results, please cite it as below."
+message: "Please cite the paper (preferred-citation); if you use the harnesswatch toolkit, also cite the software."
 title: "harnesswatch: security analysis and audit toolkit for AI coding-agent harnesses"
+abstract: >-
+  Security audit toolkit for AI coding-agent harnesses: static audits of
+  harness configuration, MCP declarations, instruction files, secret residue,
+  supply chain and CI; a black-box behavioural probe; and an inert canary
+  prompt-injection benchmark.
 type: software
 authors:
   - family-names: Chongmankhong
@@ -9,12 +14,14 @@ version: 0.1.0
 date-released: 2026-10-15
 license: Apache-2.0
 repository-code: "https://github.com/thanatchon36/harnesswatch"
+url: "https://thanatchon36.github.io/harnesswatch/"
 keywords: [security, ai-agents, coding-agents, mcp, prompt-injection, sarif]
 preferred-citation:
-  type: article
+  type: generic
   title: "The Harness Is the Attack Surface: A Security Analysis of AI Coding-Agent Harnesses (2025-2026)"
   authors:
     - family-names: Chongmankhong
       given-names: Thanatchon
   year: 2026
   notes: "Preprint; arXiv identifier to be added after submission."
+  url: "https://thanatchon36.github.io/harnesswatch/paper/"

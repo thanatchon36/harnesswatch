@@ -33,6 +33,14 @@ On https://pypi.org/manage/account/publishing/ add a pending publisher:
 
 Create a GitHub environment named `pypi`, adding yourself as a required reviewer if you like.
 
+## 2b. Zenodo (one-time, before step 3)
+Zenodo archives a GitHub *release* and mints a DOI. It only sees releases published after the switch is on.
+1. Log in at https://zenodo.org/account/settings/github/ (the same GitHub account as for cbtone).
+2. Click **Sync now**, then turn on the switch next to `thanatchon36/harnesswatch`.
+3. After step 3 creates the GitHub release, Zenodo reads `.zenodo.json` (title, description, keywords, link to the paper)
+   and publishes the record. Copy the **concept DOI** (all versions) into `CITATION.cff` (`doi:`) and add the badge to README:
+   `[![DOI](https://zenodo.org/badge/DOI/<concept-doi>.svg)](https://doi.org/<concept-doi>)`.
+
 ## 3. Signed release tag → PyPI publish
 ```bash
 git tag -s v0.1.0 -m "harnesswatch 0.1.0"     # needs your GPG/SSH signing key

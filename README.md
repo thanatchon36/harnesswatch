@@ -1,4 +1,6 @@
-# harnesswatch
+<p align="center"><img src="docs/assets/logo.svg" alt="harnesswatch logo" width="120"></p>
+
+<h1 align="center">harnesswatch</h1>
 
 [![CI](https://github.com/thanatchon36/harnesswatch/actions/workflows/ci.yml/badge.svg)](https://github.com/thanatchon36/harnesswatch/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/thanatchon36/harnesswatch/branch/main/graph/badge.svg)](https://codecov.io/gh/thanatchon36/harnesswatch)
