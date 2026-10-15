@@ -90,10 +90,19 @@ figure img { background: var(--plate); padding: 12px; border-radius: 6px; border
 figcaption, caption { font-size: 0.88rem; color: var(--ink-2); line-height: 1.45; text-align: left; }
 .paper table { display: block; overflow-x: auto; border-collapse: collapse; width: 100%; margin: 1.4em 0;
   font: 400 0.78rem/1.45 var(--font-mono); font-variant-numeric: tabular-nums; }
+/* Code in table cells must not break per letter on phones; the table scrolls sideways instead. */
+.paper table code { overflow-wrap: normal; word-break: normal; white-space: nowrap; }
 th, td { padding: 6px 10px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
 th { font-weight: 500; color: var(--ink-2); border-bottom-color: var(--ink-2); }
-#refs { font-size: 0.88rem; line-height: 1.5; display: flex; flex-direction: column; gap: 6px; }
-.csl-entry { display: grid; grid-template-columns: 2.6em 1fr; overflow-wrap: anywhere; }
+#refs { width: 100%; max-width: none; font-size: 0.88rem; line-height: 1.5; display: flex; flex-direction: column; gap: 6px; }
+/* Author-year entries are plain text: full width with a hanging indent. The two-column grid is
+   only for numbered styles, where pandoc emits a .csl-left-margin label (otherwise the text
+   fell into the 2.6em label column and wrapped every word or two). */
+.csl-entry { display: block; min-width: 0; padding-left: 1.5em; text-indent: -1.5em;
+  overflow-wrap: anywhere; word-break: break-word; }
+.csl-entry:has(> .csl-left-margin) { display: grid; grid-template-columns: 2.6em minmax(0, 1fr);
+  padding-left: 0; text-indent: 0; }
+.csl-entry a { overflow-wrap: anywhere; word-break: break-all; }
 .csl-left-margin { color: var(--ink-2); font-family: var(--font-mono); font-size: 0.85em; }
 .cite { min-width: 0; }
 .cite pre, .cite pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
