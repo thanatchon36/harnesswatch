@@ -1,18 +1,18 @@
 \section{Limitations and Threats to Validity}\label{sec:limits}
-\answers{how far the answers to RQ1--RQ7 generalise}
+\answers{Bounds how far the answers to RQ1--RQ7 generalise}
 
-\paragraph*{Version drift} Scores, probes and bench cells refer to the versions in \texttt{VERSIONS.md}, accessed 15~October 2026. Harnesses release weekly and several were renamed or discontinued during the study; the matrix should be re-run, not cited as current.
+\paragraph*{Version drift} Scores, probes and bench cells refer to the versions listed in \texttt{VERSIONS.md}, accessed on 15~October 2026. Harnesses release weekly, and several were renamed or discontinued during the study; the matrix should be re-run rather than cited as current.
 
-\paragraph*{Models and compute} No vendor API keys or logins were used, so the bench runs one small local open-weight model through documented custom-endpoint features and says nothing about any vendor's flagship model. The GPU is shared with the owner's other work; a planned second model family was cancelled to release it, so the goal of at least two models per harness is \emph{not met}, and the scenario set and run count per cell were reduced, leaving wide intervals. A model this small also limits how often any injection is acted on at all. Claude Code was routed to a non-Claude model, which its vendor does not support, and in that setup its default arm is the classifier \texttt{auto} mode; its bench and permission results describe harness behaviour in an unsupported configuration.
+\paragraph*{Models and compute} No vendor API keys or logins were used, so the bench runs a single small, local, open-weight model through documented custom-endpoint features and says nothing about any vendor's flagship model. The GPU is shared with the owner's other work; a planned second model family was cancelled to release it, so the goal of at least two models per harness is \emph{not met}, and the scenario set and runs per cell were reduced, leaving wide intervals. So small a model also limits how often any injection is acted upon at all. Claude Code was routed to a non-Claude model, which its vendor does not support (Section~\ref{sec:method}).
 
-\paragraph*{Headless only} Probes and bench runs are headless. Interactive trust dialogs, IDE extensions and GUI-only products (e.g.\ the Antigravity IDE) were not tested; a harness whose interactive mode is safer is under-credited, which is the conservative error for CI use.
+\paragraph*{Headless only} Probes and bench runs are headless. Interactive trust dialogs, IDE extensions and GUI-only products (the Antigravity IDE, for instance) were not tested. A harness whose interactive mode is safer is under-credited, which is the conservative error for CI use.
 
-\paragraph*{Benign-canary ceiling} Payloads are inert and plainly worded; disguised or adaptive attacks may succeed where they fail, so bench rates are lower bounds.
+\paragraph*{Benign-canary ceiling} The payloads are inert and plainly worded; disguised or adaptive attacks may succeed where these fail, so the bench rates are lower bounds.
 
-\paragraph*{Black-box limits} Without TLS inspection we cannot say what an allowed host receives; login-gated harnesses were observed only before login.
+\paragraph*{Black-box limits} Without TLS inspection we cannot say what an allowed host receives, and login-gated harnesses were observed only before login.
 
-\paragraph*{Rating and classification} Evidence collection, both matrix raters, incident collection and incident classification were LLM agents supervised by the author. Both raters worked from one shared fact base, so $\kappa$ measures rubric application, not evidence reliability, and it excludes the N/A-versus-score cells (all \nDisagreeEOne{} disagreements, including those, are published). Incident classes and root causes had a single rater with no agreement measurement, and RC1 is the residual class of an ordered procedure. Several scores depend on rubric interpretations, notably classifier-gated defaults.
+\paragraph*{Rating and classification} Both matrix raters worked from one shared fact base, so $\kappa$ measures the application of the rubric rather than the reliability of the evidence, and it excludes the N/A-versus-score cells (all \nDisagreeEOne{} disagreements, those included, are published). Incident classes and root causes had a single LLM rater and no agreement measurement, and RC1 is the residual class of an ordered procedure. Several scores turn on rubric interpretation, notably of classifier-gated defaults.
 
-\paragraph*{Selection} The incident survey admits only publicly disclosed, harness-level advisories, mostly with CVE or GHSA identifiers; model-level failures are rarely tracked this way, and agent-assisted search favours recent, well-indexed advisories. RQ3 shares therefore describe disclosed harness defects, not overall risk.
+\paragraph*{Selection} The incident survey admits only publicly disclosed, harness-level advisories, most of them with CVE or GHSA identifiers; model-level failures are rarely tracked in this way, and agent-assisted search favours recent, well-indexed advisories. The RQ3 shares therefore describe disclosed harness defects, not overall risk.
 
-\paragraph*{Corpora} E6 is synthetic and author-labelled; E2's code-search sample favours popular, recently indexed repositories; E5 has one session per condition.
+\paragraph*{Corpora} E6 is synthetic and labelled by the author; E2's code-search sample favours popular, recently indexed repositories; E5 has one session per condition.

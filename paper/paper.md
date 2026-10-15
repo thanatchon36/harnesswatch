@@ -6,33 +6,36 @@
 
 # Abstract
 
-Coding agents are built as *model plus harness*: the runtime loop that
-holds credentials, runs shell commands, mounts Model Context Protocol
-(MCP) servers, reads repository configuration, spawns sub-agents and
-runs headless in CI. We study the security of this deterministic layer
-across 58 harnesses and runtimes in four method tiers: open source
-(white-box), closed but runnable (black-box), closed and unreachable
-(documentation only), and SDK runtimes. We contribute: (i) a threat
-taxonomy (T01–T19) mapped to STRIDE, MITRE ATLAS and the OWASP LLM,
-Agentic and MCP lists (RQ1); (ii) a 15-dimension control matrix with 664
-evidence-linked scores and a second LLM-agent rating on the same fact
-base (quadratic $\kappa=0.88$) (RQ2); (iii) a survey of 323 publicly
-disclosed harness-level advisories and incidents from 2025–2026: in 48%
-the root cause is a flawed approval, allowlist or path check or
-configuration honoured before consent, while pure prompt injection, the
-residual class of our procedure, is 5% (RQ3); (iv) `harnesswatch`, an
-open-source auditor with micro precision 0.983 (95% CI 0.950–0.994) on a
-held-out synthetic corpus and a stratified prevalence study of 1010
-public repositories (RQ4); (v) an inert canary benchmark (350 runs, one
-small local model) that found no detectable difference in
+Coding agents are built as *model plus harness*: the model proposes
+actions; the harness, the runtime loop around it, holds credentials,
+executes shell commands, mounts Model Context Protocol (MCP) servers,
+reads repository configuration, spawns sub-agents and runs unattended in
+CI. We examine the security of this deterministic layer across 58
+harnesses and runtimes in four tiers defined by method: white-box for
+open source, black-box for closed clients that can be run, documentation
+alone for those that cannot, and a separate ladder for SDK runtimes. We
+contribute (i) a threat taxonomy (T01–T19) mapped to STRIDE, MITRE ATLAS
+and the OWASP LLM, Agentic and MCP lists (RQ1); (ii) a fifteen-dimension
+control matrix of 664 evidence-linked scores, re-rated blind by a second
+LLM agent from the same fact base (quadratic $\kappa=0.88$) (RQ2);
+(iii) a survey of 323 publicly disclosed harness-level advisories and
+incidents from 2025–2026, of which 48% trace to a flawed approval,
+allowlist or path check or to configuration honoured before consent,
+while pure prompt injection, the residual class of our procedure,
+accounts for 5% (RQ3); (iv) `harnesswatch`, an open-source auditor with
+micro precision 0.983 (95% CI 0.950–0.994) on a held-out synthetic
+corpus, applied in a stratified prevalence study of 1010 public
+repositories (RQ4); (v) an inert canary benchmark of 350 runs on one
+small local model, which found no detectable difference in
 injection-following between permission modes but showed a documented
 Claude Code import feature placing a gitignored secret in the session
 transcript in 10 of 10 runs (RQ5); (vi) a governance checklist mapped to
 NIST AI RMF, ISO/IEC 42001, OWASP and the MAS AI risk-management
 guidelines (RQ6); and (vii) a black-box comparison of vendor claims with
-observed behaviour, where 24% of 117 documented claims were testable
-headless and 22 of the 28 tested matched (RQ7). Every result number is
-generated from versioned results files.
+observed behaviour, in which 24% of 117 documented claims proved
+testable headless and 22 of the 28 tested matched (RQ7). Every reported
+number is generated from versioned results files; toolkit, evidence and
+results are released at <https://github.com/thanatchon36/harnesswatch>.
 
 #### Index terms
 
@@ -41,58 +44,60 @@ Protocol, software supply chain, security controls
 
 # Introduction
 
-*Answers the motivation for RQ1–RQ7 and summarises the contributions.* 
+*Motivates RQ1–RQ7 and summarises the contributions.* 
 
-In 2025 and 2026 coding agents moved from chat windows into terminals,
-IDEs and CI pipelines. Vendors and open-source projects converged on a
-common architecture: an agent is a *model* plus a *harness*. The harness
-is the program around the model. It assembles context from the
-repository, exposes tools (shell, file edit, web fetch, MCP servers),
-decides which tool calls need human approval, stores credentials and
-transcripts, spawns sub-agents, and can run unattended in CI. The model
-proposes actions; the harness carries them out.
+In 2025 and 2026, coding agents left the chat window for the terminal,
+the IDE and the CI pipeline, and vendors and open-source projects
+converged on one architecture: an agent is a *model* plus a *harness*.
+The harness is the program around the model: it assembles context from
+the repository, exposes tools (shell, file editing, web fetch, MCP
+servers), decides which tool calls require human approval, stores
+credentials and transcripts, spawns sub-agents, and can run unattended
+in CI. The model proposes; the harness executes.
 
-Most security research on LLM agents studies the model side,
-i.e. whether a model follows injected instructions (Greshake et al.
-2023; Debenedetti et al. 2024; Zhan et al. 2024), and treats the
-tool-execution layer as fixed. Yet the harness decides whether an
-injected instruction becomes a shell command, whether a cloned
-repository can run a hook before the user consents, whether an MCP
-server starts from a cloned file, and whether a secret lands in a
-world-readable log. These are deterministic software decisions that can
-be specified, tested and audited like any access-control code.
+Most security research on LLM agents addresses the model, asking whether
+it follows injected instructions (Greshake et al. 2023; Debenedetti et
+al. 2024; Zhan et al. 2024), with the tool-execution layer held fixed.
+Yet the harness decides whether an injected instruction becomes a shell
+command, whether a cloned repository can run a hook before the user has
+consented, whether an MCP server starts from a cloned file, and whether
+a secret lands in a world-readable log. These are deterministic software
+decisions, and they can be specified, tested and audited like any other
+access-control code.
 
-Public advisories point the same way. Of the 323 verified harness-level
+The public record points the same way. Of the 323 verified harness-level
 advisories and incidents we collected for 2025–2026
 (Section <a href="#sec:incidents" data-reference-type="ref"
-data-reference="sec:incidents">7</a>), 104 stem from flawed approval,
+data-reference="sec:incidents">7</a>), 104 arise from flawed approval,
 allowlist or path checks and 52 from workspace configuration honoured
-before consent; only 17 are pure prompt injection. This population is
-filtered towards software defects (model failures rarely receive CVEs)
-and RC1 is the residual class of our procedure, so these shares describe
-disclosed harness bugs, not overall risk; within that scope, injection
-is often the vector while the damage depends on harness controls.
+before consent; only 17 are pure prompt injection. Since model failures
+seldom receive CVEs and RC1 is the residual class of our procedure,
+these shares describe disclosed harness bugs rather than overall risk;
+within that scope, injection is often the vector, but harness controls
+decide the damage.
 
-Comparing harnesses is hard: the field changes monthly, many popular
-harnesses are closed source, and documentation describes intended rather
-than actual behaviour. We therefore organise the study by *method*:
-white-box for open source, black-box observation for closed harnesses we
-can run, documentation for those we cannot, and a separate track for SDK
-runtimes (Section <a href="#sec:method" data-reference-type="ref"
+Comparing harnesses is difficult: the field changes monthly, many
+popular harnesses are closed source, and documentation describes
+intended rather than actual behaviour. We therefore organise the study
+by *method*: white-box analysis for open source, black-box observation
+for closed harnesses that we can run, documentation for those we cannot,
+and a separate track for SDK runtimes
+(Section <a href="#sec:method" data-reference-type="ref"
 data-reference="sec:method">3</a>).
 
 #### Research questions
 
-**RQ1**: What is the attack surface of a harness and how does it differ
-from classic LLM-application risk? **RQ2**: How do harnesses differ in
-their security controls? **RQ3**: Which harness-level incidents were
-disclosed in 2025–2026, and with which root causes? **RQ4**: Can
-dangerous configuration be detected automatically across harness
-formats? **RQ5**: How resilient are harness $\times$ model $\times$
-permission-mode combinations to indirect prompt injection and secret
-residue, measured with inert canaries? **RQ6**: Which controls should an
-organisation mandate before adopting harnesses? **RQ7**: For closed
-harnesses, do documented controls match observable client behaviour?
+**RQ1**: What is the attack surface of a harness, and how does it differ
+from classical LLM-application risk? **RQ2**: How do harnesses differ in
+the security controls they provide? **RQ3**: Which harness-level
+incidents were disclosed in 2025–2026, and from which root causes?
+**RQ4**: Can dangerous configuration be detected automatically across
+harness formats? **RQ5**: How resilient are harness $\times$ model
+$\times$ permission-mode combinations to indirect prompt injection and
+secret residue, as measured with inert canaries? **RQ6**: Which controls
+should an organisation mandate before adopting a harness? **RQ7**: For
+closed harnesses, do the documented controls match the observable
+behaviour of the client?
 
 #### Contributions
 
@@ -113,20 +118,20 @@ data-reference="sec:tool">8</a>–<a href="#sec:eval" data-reference-type="ref"
 data-reference="sec:eval">9</a>); and a governance checklist (RQ6,
 Section <a href="#sec:governance" data-reference-type="ref"
 data-reference="sec:governance">10</a>). `make all` rebuilds every
-table, figure and result number from versioned results
+table, figure and reported number from versioned results
 (Appendix <a href="#app:repro" data-reference-type="ref"
 data-reference="app:repro">14</a>).
 
 # Background: Anatomy of a Harness
 
-*Answers the descriptive part of RQ1 and sets up RQ2.* 
+*Covers the descriptive part of RQ1 and prepares RQ2.* 
 
 #### The loop
 
-A harness builds a context, calls the model, checks each proposed tool
-call against a permission policy, executes it and feeds the result back;
-repository content, tool output and MCP results flow in, commands and
-requests flow out.
+A harness assembles a context, calls the model, checks each proposed
+tool call against a permission policy, executes it and returns the
+result to the model. Repository content, tool output and MCP results
+flow inwards; commands and network requests flow outwards.
 
 #### Repository files
 
@@ -134,131 +139,127 @@ Harnesses auto-load instruction files (`AGENTS.md`, `CLAUDE.md`,
 `.github/copilot-instructions.md`, `.cursor/rules`), settings that can
 set environment variables, permission modes and *hooks* (shell commands
 bound to lifecycle events), and MCP declarations (`.mcp.json`,
-`.vscode/mcp.json`). Formats are shared: Grok Build imports Claude Code
-and Cursor hook and MCP files<sup>\[D\]</sup> (xAI 2026a, 2026b). A
-cloned repository is therefore both data and configuration.
+`.vscode/mcp.json`). Formats are shared across products: Grok Build
+imports Claude Code and Cursor hook and MCP files<sup>\[D\]</sup> (xAI
+2026a, 2026b). A cloned repository is therefore configuration as well as
+data.
 
 #### Permissions and sandbox
 
-Modes range from “ask before every tool call” to “approve everything”
-(YOLO, bypass, full-auto, always-approve), with allow and deny rules
-over commands and paths. Several harnesses now default to a model-based
-approver; Claude Code starts `claude -p` in a classifier-mediated `auto`
-mode when feature flags are not fetched<sup>\[D\]\[T\]</sup> (Anthropic
-2026c). Some confine commands with an OS sandbox (Seatbelt, bubblewrap,
-Landlock) or a container<sup>\[D\]</sup> (Anthropic 2026e). Approval
-decides *whether* an action runs; the sandbox limits *what it reaches*.
+Permission modes range from “ask before every tool call” to “approve
+everything” (YOLO, bypass, full-auto, always-approve), with allow and
+deny rules over commands and paths. Several harnesses now default to a
+model-based approver; Claude Code starts `claude -p` in a
+classifier-mediated `auto` mode when feature flags are not
+fetched<sup>\[D\]\[T\]</sup> (Anthropic 2026c). Some confine commands
+within an OS sandbox (Seatbelt, bubblewrap, Landlock) or a
+container<sup>\[D\]</sup> (Anthropic 2026e). Approval decides *whether*
+an action runs; the sandbox bounds *what it can reach*.
 
 #### Extensions, state and headless mode
 
-MCP (Model Context Protocol 2026) servers are launched locally (often
-via unpinned `npx` or `uvx`) or reached remotely, and their tool
-descriptions enter the context verbatim; skills and plugins add code and
-prompts from marketplaces. Credentials, transcripts and persistent
-memory live in a per-user state directory, and sub-agents may inherit
-the parent’s permissions. The harnesses we benchmarked all run
+MCP servers (Model Context Protocol 2026) are launched locally, often
+through unpinned `npx` or `uvx`, or reached remotely, and their tool
+descriptions enter the context verbatim; skills and plugins add further
+code and prompts from marketplaces. Credentials, transcripts and
+persistent memory reside in a per-user state directory, and sub-agents
+may inherit the parent’s permissions. Every harness we benchmarked runs
 non-interactively<sup>\[D\]\[T\]</sup> (`claude -p`, `codex exec`,
-`grok -p`, `copilot -p`); in CI the triggering issue or pull request is
-attacker-controllable and the job may hold secrets.
-
-#### The 2026 landscape
-
-The field splits into open-source harnesses, closed but installable
-clients, hosted agents and SDK runtimes
-(Section <a href="#sec:method" data-reference-type="ref"
-data-reference="sec:method">3</a>). On 31 March 2026 the npm release
-2.1.88 of Claude Code was reported to ship a source map exposing client
-internals<sup>\[3P\]</sup> (Wiggers 2026); we cite this only as an event
-and did not use the exposed material.
+`grok -p`, `copilot -p`); in CI the triggering issue or pull request may
+be attacker-controlled and the job may hold secrets.
 
 # Scope, Tiers and Evidence Method
 
-*Answers how the evidence behind RQ2–RQ7 was collected.* 
+*Describes how the evidence behind RQ2–RQ7 was collected.* 
 
 #### Tiers by method
 
-We split harnesses by what can be observed, not by market share.
-*Tier A* (open source, white-box): we read the source at a pinned commit
-and run the client in containers (e.g. Codex CLI, OpenCode, Gemini CLI,
-Qwen Code, Aider, goose, Cline, Hermes Agent). *Tier B* (closed but
-runnable, black-box): we install the official client in a disposable
-container, record what it writes and which hosts it contacts, and drive
-it headless (Claude Code, GitHub Copilot CLI, Antigravity CLI before
-login). Grok Build is an A/B hybrid: its source is public under
-Apache-2.0<sup>\[D\]</sup> (xAI 2026d), but the public tree lags the npm
-release (1.0.45 vs 1.0.52) and injects endpoints at build time, so we
-read the source white-box and treat the shipped npm client as Tier B in
-E3 and E7. *Tier C* (closed, not reachable): documentation, advisories
-and third-party research only (e.g. Cursor, Kiro, Devin, Jules).
-*Tier D* (runtimes and SDKs) is scored on a separate ladder and never
-ranked against products (the rubric files and figures group it with
-hosted services as “tier C”). The matrix covers 36 tier A/B products and
-22 runtimes and hosted services.
+We group harnesses by what can be observed about them, not by market
+share. *Tier A* (open source; white-box): we read the source at a pinned
+commit and run the client in containers (e.g. Codex CLI, OpenCode,
+Gemini CLI, Qwen Code, Aider, goose, Cline, Hermes Agent). *Tier B*
+(closed but runnable; black-box): we install the official client in a
+disposable container, record what it writes and which hosts it contacts,
+and drive it headless (Claude Code, GitHub Copilot CLI, and the
+Antigravity CLI before login). Grok Build is a hybrid: its source is
+public under Apache-2.0<sup>\[D\]</sup> (xAI 2026d), but the public tree
+lags the npm release (1.0.45 against 1.0.52) and endpoints are injected
+at build time, so we read the source white-box and treat the shipped npm
+client as Tier B in E3 and E7. *Tier C* (closed and unreachable):
+documentation, advisories and third-party research only (e.g. Cursor,
+Kiro, Devin, Jules). *Tier D* (runtimes and SDKs) is scored on a
+separate ladder and never ranked against products; the rubric files and
+figures group it with hosted services as “tier C”. The matrix covers 36
+tier A/B products and 22 runtimes and hosted services.
 
 #### Black-box method
 
-For closed harnesses we install the official release, read its
+For a closed harness we install the official release, read its
 documentation and advisories, parse its configuration, run it under
 `harnesswatch observe`
 (Section <a href="#sec:tool" data-reference-type="ref"
-data-reference="sec:tool">8</a>), probe configuration trust with
-synthetic repositories carrying hooks, MCP servers and settings, and
-inspect package metadata. We never decompile, deobfuscate or use leaked
-source, never decrypt TLS or store request bodies, and stay within
-vendor terms (otherwise the cell is *N/A (terms)*). No vendor login was
-placed in any container: closed clients were driven only through
-documented custom-endpoint features pointing at a local model (Claude
-Code’s `ANTHROPIC_BASE_URL`, although Anthropic states that it “doesn’t
+data-reference="sec:tool">8</a>), probe its treatment of configuration
+with synthetic repositories carrying hooks, MCP servers and settings,
+and inspect its package metadata. We never decompile, deobfuscate or
+consult leaked source, never decrypt TLS or store request bodies, and
+remain within vendor terms; otherwise the cell is *N/A (terms)*. No
+vendor login was placed in any container: closed clients were driven
+solely through documented custom-endpoint features pointing at a local
+model, namely Claude Code’s `ANTHROPIC_BASE_URL`, Copilot CLI’s
+bring-your-own-key mode, which requires no GitHub
+authentication<sup>\[D\]</sup> (GitHub 2026), and Grok Build’s custom
+models<sup>\[D\]</sup> (xAI 2026c). Anthropic states that it “doesn’t
 support routing Claude Code to non-Claude models through any
-gateway”<sup>\[D\]</sup> (Anthropic 2026b), so our Claude Code runs test
-harness behaviour in an unsupported configuration, not vendor-supported
-performance; Copilot CLI’s bring-your-own-key mode, which needs no
-GitHub authentication<sup>\[D\]</sup> (GitHub 2026), and Grok Build’s
-custom models<sup>\[D\]</sup> (xAI 2026c)). Antigravity has no
-documented local-model path and its terms restrict use with other
+gateway”<sup>\[D\]</sup> (Anthropic 2026b), so our Claude Code runs
+characterise harness behaviour in an unsupported configuration, not
+vendor-supported performance. Antigravity has no documented local-model
+path and its terms restrict use with other
 products<sup>\[D\]</sup> (Google 2026b), so it was observed only before
 login.
 
 #### Evidence labels
 
-Every factual claim about a harness carries one of three labels, shown
-as superscripts: <sup>\[T\]</sup> *verified-by-test*, behaviour or state
-we observed by running the pinned client;
+Every factual statement about a harness carries one of three labels,
+rendered as superscripts: <sup>\[T\]</sup> *verified-by-test*, behaviour
+or state observed by running the pinned client;
 <sup>\[D\]</sup> *from-official-docs*, vendor documentation, vendor
 advisories, registry metadata or the official source code (reading
 source counts as documentation, not as a test);
 <sup>\[3P\]</sup> *third-party-report*, a write-up by an independent
 researcher or journalist. Unverified claims are excluded. Documentation
-and source facts live in the evidence ledger and `matrix/evidence/`;
-every <sup>\[T\]</sup> fact traces to a probe or bench file under
-`experiments/results/` or `bench/results/`.
+and source facts are recorded in the evidence ledger and in
+`matrix/evidence/`; every <sup>\[T\]</sup> fact traces to a probe or
+bench file under `experiments/results/` or `bench/results/`.
 
 #### Who did the work
 
-Evidence collection, both matrix ratings and incident collection and
-classification were performed by LLM research agents run and supervised
-by the author. The two matrix raters scored from the same extracted fact
-lists, and incidents had a single classifier;
+Evidence collection, both matrix ratings, and the collection and
+classification of incidents were carried out by LLM research agents run
+and supervised by the author;
 Section <a href="#sec:limits" data-reference-type="ref"
-data-reference="sec:limits">12</a> discusses what this means for
+data-reference="sec:limits">12</a> discusses the consequences for
 reliability.
 
 #### Kinds of finding
 
-We separate a *vulnerability* (a defect that violates the product’s own
-security intent, usually with a CVE or GHSA), a *design weakness* (a
+We distinguish a *vulnerability* (a defect that violates the product’s
+own security intent, usually with a CVE or GHSA), a *design weakness* (a
 documented default or capability that enables harm without being a bug,
-e.g. headless mode running repository hooks) and a *policy choice*
-(e.g. telemetry or retention defaults). Only the first is a bug.
+such as headless mode running repository hooks) and a *policy choice*
+(telemetry or retention defaults, for instance). Only the first is a
+bug.
 
 #### Ethics
 
 Experiments ran in disposable containers on the author’s machine with
 inert canaries and synthetic secrets; the public-repository study stores
-aggregates only. Potentially unknown issues went to private coordinated
-disclosure and are not described here. For packages we inspected
-registry metadata only; one fact obtained by listing strings in a binary
-was withdrawn as outside this rule.
+aggregates only. Issues that might be unknown to the vendor went to
+private coordinated disclosure and are not described here. Packages were
+examined through registry metadata alone; one fact obtained by listing
+the strings in a binary was withdrawn as outside that rule, and the
+reported source-map exposure in Claude Code’s npm release 2.1.88 of 31
+March 2026<sup>\[3P\]</sup> (Wiggers 2026) is cited only as an event,
+with no use of the exposed material.
 
 # Threat Model and Taxonomy
 
@@ -266,28 +267,29 @@ was withdrawn as outside this rule.
 
 #### Adversaries
 
-(A1) A *content author* controls text the agent reads (README, comment,
-issue, web page, tool result); (A2) a *repository author* controls
-cloned files, including configuration; (A3) a *supply-chain attacker*
-controls a package, MCP server, plugin or release; (A4) a *local or
-network peer* reaches a service the harness exposes. The defender runs
-the harness with real credentials, code and host access (the assets). We
-assume the model sometimes follows injected instructions and that no
-model-level defence holds.
+(A1) A *content author* controls text the agent reads (a README,
+comment, issue, web page or tool result); (A2) a *repository author*
+controls cloned files, configuration included; (A3) a *supply-chain
+attacker* controls a package, MCP server, plugin or release; (A4) a
+*local or network peer* reaches a service the harness exposes. The
+defender runs the harness with real credentials, code and host access
+(the assets). We assume that the model will sometimes follow injected
+instructions and that no model-level defence can be relied upon.
 
 #### Taxonomy
 
-We extended the 16-class seed into the classes in
+We extended a sixteen-class seed into the classes of
 Table <a href="#tab:taxonomy" data-reference-type="ref"
 data-reference="tab:taxonomy">1</a>. Three classes were added because
-the incident set contained large groups with no home: sandbox and
-isolation escape (T17), exposure of the agent’s own control plane, such
-as local HTTP or WebSocket servers without authentication or Origin
-checks (T18), and conventional software defects in runtimes and SDKs
-(T19). Each class carries STRIDE letters, MITRE ATLAS techniques, OWASP
-LLM 2025, OWASP Agentic (ASI01–ASI10) and OWASP MCP Top 10 identifiers;
-the MCP list is still in beta, and we flag those mappings as unstable.
-Each class also lists the control dimensions that mitigate it
+the incident set contained sizeable groups with no natural home: escape
+from a sandbox or isolation boundary (T17); exposure of the agent’s own
+control plane, typically a local HTTP or WebSocket server without
+authentication or Origin checks (T18); and conventional software defects
+in runtimes and SDKs (T19). Each class carries STRIDE letters, MITRE
+ATLAS techniques, and OWASP LLM 2025, OWASP Agentic (ASI01–ASI10) and
+OWASP MCP Top 10 identifiers; as the MCP list remains in beta, those
+mappings are flagged as unstable. Each class also lists its mitigating
+control dimensions
 (Section <a href="#sec:controls" data-reference-type="ref"
 data-reference="sec:controls">5</a>) and the `harnesswatch` rules that
 detect it (Appendix <a href="#app:rules" data-reference-type="ref"
@@ -295,17 +297,17 @@ data-reference="app:rules">16</a>).
 
 #### Classification procedure
 
-Write-ups mix the entry vector with the control that failed, so we walk
-the classes in a fixed order and assign the first whose *failed control*
-the incident exhibits. A parallel 12-question procedure assigns one of
-twelve root causes, RC1–RC12
+Because write-ups conflate the entry vector with the control that
+failed, we traverse the classes in a fixed order and assign the first
+whose *failed control* the incident exhibits. A parallel twelve-question
+procedure assigns one of twelve root causes, RC1–RC12
 (Table <a href="#tab:rootcauses" data-reference-type="ref"
-data-reference="tab:rootcauses">3</a>). For example, injection-written
-configuration that later executes is T02/RC2, not T01; data leaving
-through a permitted command is T08/RC3. RC1 (untrusted content treated
-as instructions with no other control failure) is the residual answer
-reached only when no earlier question applies, so its share is low
-partly by construction.
+data-reference="tab:rootcauses">3</a>). Thus configuration written by an
+injection and executed later is T02/RC2 rather than T01, and data
+leaving through a permitted command is T08/RC3. RC1, untrusted content
+treated as instructions with no other control failure, is reached only
+when no earlier question applies; its share is therefore low partly by
+construction.
 
 <div id="tab:taxonomy">
 
@@ -342,19 +344,20 @@ abbreviated (prefix `AML.` dropped; first shown).
 
 #### How harness risk differs from LLM-application risk
 
-In a chat application, a successful injection yields a bad answer or a
-leaked system prompt. In a harness, the injected text comes from the
-developer’s own workspace and is acted on with the developer’s
+In a chat application, a successful injection yields a wrong answer or a
+leaked system prompt. In a harness, the injected text originates in the
+developer’s own workspace and is acted upon with the developer’s
 privileges. Three properties follow. First, *configuration is code*:
 repository files can define hooks, environment variables and MCP launch
-commands that run before the model is consulted (T02). Second, *the
-approval layer is a parser*: allowlists over shell commands must reason
-about quoting, substitution, redirection and symlinks, and such failures
-are the largest single group of disclosed incidents (T03, 23% by class;
-RC3, 32% by root cause). Third, *the harness is a long-lived service*:
-local servers, sub-agents, memory and CI runners create surfaces that
-classic LLM threat models do not include (T10, T11, T18). Attack trees
-for the main paths are in the repository.
+commands that execute before the model is consulted (T02). Second, *the
+approval layer is a parser*: an allowlist over shell commands must
+reason about quoting, substitution, redirection and symlinks, and
+failures of this kind form the largest single group of disclosed
+incidents (T03, 23% by class; RC3, 32% by root cause). Third, *the
+harness is a long-lived service*: local servers, sub-agents, persistent
+memory and CI runners create surfaces that classical LLM threat models
+omit (T10, T11, T18). Attack trees for the principal paths are in the
+repository.
 
 # Comparative Analysis of Security Controls
 
@@ -362,43 +365,44 @@ for the main paths are in the repository.
 
 #### Rubric
 
-We score 15 control dimensions from 0 to 3: D01 permission model, D02
-execution sandbox, D03 network egress, D04 workspace and configuration
-trust, D05 MCP governance, D06 extensions and plugins, D07 secrets and
-credential storage, D08 headless and CI safeguards, D09 persistent
-memory, D10 sub-agent isolation, D11 audit logging, D12 telemetry and
-retention, D13 distribution supply chain, D14 managed policy, D15
-vulnerability disclosure. The scale is 0 absent, 1 opt-in or weak,
-2 default-on with documented gaps, 3 strong, documented and centrally
-enforceable, with per-dimension criteria
+We score fifteen control dimensions from 0 to 3: D01 permission model,
+D02 execution sandbox, D03 network egress, D04 workspace and
+configuration trust, D05 MCP governance, D06 extensions and plugins, D07
+secrets and credential storage, D08 headless and CI safeguards, D09
+persistent memory, D10 sub-agent isolation, D11 audit logging, D12
+telemetry and retention, D13 distribution supply chain, D14 managed
+policy and D15 vulnerability disclosure. The scale reads 0 absent,
+1 opt-in or weak, 2 on by default with documented gaps, and 3 strong,
+documented and centrally enforceable, with per-dimension criteria
 (Appendix <a href="#app:rubric" data-reference-type="ref"
 data-reference="app:rubric">18</a>). Only <sup>\[D\]</sup> and
-<sup>\[T\]</sup> facts can raise a score and <sup>\[3P\]</sup> facts can
-only lower it (third-party reports document bypasses, not guarantees);
-the highest level whose criteria are *all* met is chosen; undecidable
-criteria count as unmet; incident history does not change scores (it
-belongs to RQ3). D12 records a policy choice, not a vulnerability. Means
-are unweighted, need at least 8 scored dimensions and are shown with the
-minimum; rankings are claimed only if they hold under equal,
-incident-exposure and security-core weightings.
+<sup>\[T\]</sup> facts can raise a score; <sup>\[3P\]</sup> facts can
+only lower one, since third-party reports document bypasses rather than
+guarantees. The score is the highest level whose criteria are *all* met;
+an undecidable criterion counts as unmet; incident history, which
+belongs to RQ3, leaves scores unchanged. Means are unweighted, require
+at least eight scored dimensions and are reported alongside the minimum;
+a ranking is asserted only where it holds under equal, incident-exposure
+and security-core weightings alike.
 
 #### Coverage and reliability
 
 Of 870 harness–dimension cells, 664 were scored and 206 are N/A with a
-recorded reason (feature absent, no access, or not documented); 5
-runtimes have too little evidence for a mean. A second LLM-agent rater,
-without access to the first rater’s scores, rescored the matrix from the
-*same* extracted fact lists, so agreement measures how consistently the
-rubric is applied to shared evidence, not the reliability of evidence
-collection. On the 655 cells both scored, quadratic-weighted Cohen’s
-$\kappa$ (Cohen 1968) is 0.88, exact agreement 91.6% and within-one
-agreement 99.5%; these exclude the 29 cells where one rater gave N/A and
-the other a score. All 84 disagreements (including those N/A cases) are
-published, not adjudicated, and rater 1’s scores are reported.
+recorded reason (feature absent, no access, or undocumented); 5 runtimes
+have too little evidence to support a mean. A second LLM-agent rater,
+blind to the first rater’s scores, rescored the matrix from the *same*
+extracted fact lists, so agreement measures how consistently the rubric
+is applied to shared evidence, not the reliability of evidence
+collection. On the 655 cells both raters scored, quadratic-weighted
+Cohen’s $\kappa$ (Cohen 1968) is 0.88, exact agreement 91.6% and
+within-one agreement 99.5%; these figures exclude the 29 cells in which
+one rater recorded N/A and the other a score. All 84 disagreements,
+those N/A cases included, are published rather than adjudicated, and
+rater 1’s scores are reported.
 
 <figure id="fig:heatmap">
 <img src="figures/e1_heatmap.png" width="100%" />
-<figcaption>Control matrix (RQ2): 0–3 score per dimension, rater 1;
+<figcaption>Control matrix (RQ2): score 0–3 per dimension, rater 1;
 hatched cells are N/A. Tier A/B products (top) and tier C/D runtimes and
 hosted services (bottom) are ranked separately. The same scores with
 means are generated as <code>paper/tables/scorecard.tex</code>; per-cell
@@ -407,75 +411,76 @@ evidence and rationale are in <code>matrix/</code>.</figcaption>
 
 #### Overall picture
 
-Controls exist but are rarely safe by default
+Controls exist but are seldom safe by default
 (Figure <a href="#fig:heatmap" data-reference-type="ref"
-data-reference="fig:heatmap">1</a>). Across the 36 tier A/B products the
-per-dimension mean never reaches 2; the lowest are network egress (D03,
-mean 0.77), the execution sandbox (D02, 0.84), headless and CI
-safeguards (D08, 0.91) and workspace trust (D04, 0.97). The highest are
+data-reference="fig:heatmap">1</a>). Across the 36 tier A/B products no
+per-dimension mean reaches 2. The lowest means belong to network egress
+(D03, 0.77), the execution sandbox (D02, 0.84), headless and CI
+safeguards (D08, 0.91) and workspace trust (D04, 0.97); the highest to
 vulnerability disclosure (D15, 1.51), audit logging (D11, 1.50) and
-managed policy (D14, 1.48). Means differ little: only Codex CLI stays in
-the top three and only Continue in the bottom three under all
-weightings, so buyers should read per-dimension columns, not means.
+managed policy (D14, 1.48). Overall means are closely bunched: only
+Codex CLI stays in the top three, and only Continue in the bottom three,
+under every weighting, so the per-dimension columns are more informative
+than the means.
 
 #### Permission model (D01)
 
-Nearly every product offers per-action approval, but only 6 of 36 reach
-score 2. Two patterns hold scores down: approve-everything can often be
-switched on from repository-controlled files (hooks returning an
-auto-approve verdict, repository MCP entries with `autoApprove`), and
-several harnesses default to a model-based approver (Claude Code’s
-`auto`<sup>\[D\]</sup>, Cursor’s auto-review<sup>\[D\]</sup>, Qwen
-Code’s AUTO<sup>\[D\]</sup>, Hermes Agent’s `smart`<sup>\[D\]</sup>).
-The rubric does not count a classifier verdict as “asking”, so these
-defaults score 1; counting them as asking would raise Claude Code’s D01
-from 1 to 3 and would also lift the other classifier-default harnesses.
-We did not recompute rankings under that reading; it is the main open
-question for the rubric.
+Nearly every product offers per-action approval, yet only 6 of 36 reach
+score 2. Two patterns depress the scores: approve-everything can often
+be enabled from repository-controlled files, through hooks that return
+an auto-approve verdict or repository MCP entries carrying
+`autoApprove`; and several harnesses default to a model-based approver
+(Claude Code’s `auto`<sup>\[D\]</sup>, Cursor’s
+auto-review<sup>\[D\]</sup>, Qwen Code’s AUTO<sup>\[D\]</sup>, Hermes
+Agent’s `smart`<sup>\[D\]</sup>). The rubric does not treat a
+classifier’s verdict as “asking”, so these defaults score 1. Counting
+them as asking would raise Claude Code’s D01 from 1 to 3 and lift the
+other classifier-default harnesses; we did not recompute the rankings
+under that reading, which remains the rubric’s principal open question.
 
 #### Sandbox and egress (D02, D03)
 
 These are the lowest-scoring dimensions (means 0.84 and 0.77). Among
-tier A/B products, 8 have no sandbox option at all, the number that
-confine both filesystem and network by default with central enforcement
-(score 3) is 0, and 11 have no egress control. Managed runtimes score
-higher (tier C/D means 1.47 and 1.61), because the provider runs each
-session in an isolated container or microVM. Where sandboxes exist, the
-incident record shows that their boundaries are often the weak point:
-symlink and working-directory tricks, writes to `.git` hooks and
-fallbacks to unsandboxed execution account for 22 escape incidents
+tier A/B products, 8 offer no sandbox at all, 0 confine both filesystem
+and network by default with central enforcement (score 3), and 11 have
+no egress control. Managed runtimes score higher (tier C/D means 1.47
+and 1.61) because the provider runs each session in an isolated
+container or microVM. Where sandboxes exist, the incident record shows
+their boundaries to be a frequent point of failure: symlink and
+working-directory tricks, writes to `.git` hooks and fallbacks to
+unsandboxed execution account for 22 escape incidents
 (Section <a href="#sec:incidents" data-reference-type="ref"
 data-reference="sec:incidents">7</a>).
 
 #### Workspace trust (D04)
 
-13 tier A/B products honour repository configuration with no trust
-concept, and none reaches score 3. A frequent design choice is that
-headless mode bypasses the trust gate: Claude Code documents that
+Repository configuration is honoured with no notion of trust by 13 tier
+A/B products, and none reaches score 3. A recurrent design choice is
+that headless mode bypasses the trust gate. Claude Code documents that
 `claude -p` in a never-trusted folder runs project hooks and MCP
 servers<sup>\[D\]</sup> (Anthropic 2026a), which we
-observed<sup>\[T\]</sup>, whereas Grok Build ran an untrusted repository
-hook only after `–trust`<sup>\[D\]\[T\]</sup> and Copilot CLI did not
-start a repository MCP server in an untrusted folder<sup>\[T\]</sup>,
-not re-tested in a trusted folder
+observed<sup>\[T\]</sup>; by contrast, Grok Build ran an untrusted
+repository hook only after `–trust`<sup>\[D\]\[T\]</sup>, and Copilot
+CLI did not start a repository MCP server in an untrusted
+folder<sup>\[T\]</sup>, though we did not re-test it in a trusted one
 (Section <a href="#sec:claims" data-reference-type="ref"
-data-reference="sec:claims">6</a>). Similarly, Cline documents that
-project plugins in `.cline/plugins/` load when working in that
-repository<sup>\[D\]</sup> (Cline 2026). These are documented design
-properties, not vulnerabilities, but a CI job running a harness on a
-pull request inherits them.
+data-reference="sec:claims">6</a>). Cline likewise documents that
+project plugins in `.cline/plugins/` load whenever the agent works in
+that repository<sup>\[D\]</sup> (Cline 2026). These are documented
+design properties rather than vulnerabilities, but a CI job that runs a
+harness on a pull request inherits them all.
 
 #### Other dimensions
 
-On D07 only 1 of 36 tier A/B products reach score 2, mostly because
-transcript retention is undocumented even where credentials sit in a
-0600 file or keychain<sup>\[D\]</sup> (D07 column). Telemetry (D12) is
-scored on transparency and opt-out, not as a defect. D13 is examined in
-Section <a href="#sec:eval-supply" data-reference-type="ref"
-data-reference="sec:eval-supply">9.5</a>. SDK runtimes leave approvals,
-sandboxing and egress to the application; the rubric scores these as not
-provided (*application responsibility*), so teams building on an SDK
-inherit those gaps unless they close them.
+On D07 only 1 of 36 tier A/B products reach score 2, chiefly because
+transcript retention is undocumented even where credentials are kept in
+a 0600 file or a keychain<sup>\[D\]</sup> (D07 column). Telemetry (D12)
+is scored for transparency and opt-out, not as a defect. D13 is examined
+in Section <a href="#sec:eval-supply" data-reference-type="ref"
+data-reference="sec:eval-supply">9.5</a>. SDK runtimes delegate
+approval, sandboxing and egress to the application; the rubric scores
+these as not provided (*application responsibility*), so a team building
+on an SDK inherits those gaps unless it closes them.
 
 # Documented Claims versus Observed Behaviour
 
@@ -483,28 +488,28 @@ inherit those gaps unless they close them.
 
 #### Method
 
-For each Tier-B harness we extracted security-relevant statements from
+For each Tier-B harness we extracted the security-relevant statements in
 the vendor’s documentation into a claims table (117 claims across the
 closed harnesses), each tagged with a dimension (telemetry, updates,
 configuration/hook/MCP trust, sandbox, secret storage, permission
-default, state-directory modes). We then wrote 23 black-box probes using
-the method of Section <a href="#sec:method" data-reference-type="ref"
-data-reference="sec:method">3</a>. Each probe runs the pinned client in
+default, state-directory modes). We then wrote 23 black-box probes
+(Section <a href="#sec:method" data-reference-type="ref"
+data-reference="sec:method">3</a>). Each probe runs the pinned client in
 a fresh container, optionally on a synthetic repository seeded with a
-hook, MCP server or settings file. Verdicts are *match*, *partial*,
-*mismatch* or *not observed* (behaviour not exercised); claims needing a
-login, GUI or interactive session stay *untested*.
+hook, an MCP server or a settings file. A verdict is *match*, *partial*,
+*mismatch* or *not observed* (behaviour not exercised); claims that
+require a login, a GUI or an interactive session remain *untested*.
 
 #### Results
 
 Only 24% of the 117 claims could be tested headless without a vendor
-login; 28 were tested: 22 matched, 3 were partial, 1 mismatched and 2
+login. Of the 28 tested, 22 matched, 3 were partial, 1 mismatched and 2
 were not observed; 89 remain untested
 (Table <a href="#tab:claims" data-reference-type="ref"
 data-reference="tab:claims">2</a>). By harness, 13 of 14 tested Claude
-Code claims matched, 4 of 7 for Antigravity, 3 of 4 for Grok Build and 2
-of 3 for Copilot CLI. All observations in the table are
-<sup>\[T\]</sup>; all claims are <sup>\[D\]</sup>.
+Code claims matched, as did 4 of 7 for Antigravity, 3 of 4 for Grok
+Build and 2 of 3 for Copilot CLI. Every observation in the table is
+<sup>\[T\]</sup>; every claim is <sup>\[D\]</sup>.
 
 <div id="tab:claims">
 
@@ -539,61 +544,64 @@ of 3 for Copilot CLI. All observations in the table are
 | grok-build     | mcp_trust          | project .mcp.json (compat import) server started in an untrusted folder: no                                                                         | partial      |
 | grok-build     | secret_storage     | files written under ~/.grok: 53; other-user-readable: 35 (session files among them: 0)                                                              | match        |
 
-Claims versus observed behaviour for closed and hybrid harnesses (RQ7).
-Each row is one tested documented claim<sup>\[D\]</sup> and the
-observation from a black-box probe<sup>\[T\]</sup> on the pinned client
-(Claude Code 2.1.300, Antigravity CLI 1.3.5 before login, Grok Build
-1.0.52, Copilot CLI 1.0.98 in BYOK mode). Untested claims are omitted.
+Documented claims against observed behaviour for closed and hybrid
+harnesses (RQ7). Each row pairs one tested documented
+claim<sup>\[D\]</sup> with the observation from a black-box
+probe<sup>\[T\]</sup> of the pinned client (Claude Code 2.1.300,
+Antigravity CLI 1.3.5 before login, Grok Build 1.0.52, Copilot CLI
+1.0.98 in BYOK mode). Untested claims are omitted.
 
 </div>
 
 #### What the probes show
 
-The tested claims are a convenience sample weighted towards network and
+The tested claims form a convenience sample weighted towards network and
 update behaviour, so the match count does not generalise to the untested
 claims. The notable findings are documented design properties, not
 vulnerabilities. (i) *Headless trust.* In Claude Code, a `claude -p` run
 in a never-trusted folder executed a repository `SessionStart` hook and
-started a repository stdio MCP server without a
-prompt<sup>\[T\]\[D\]</sup> (Anthropic 2026a), and applied a repository
-`env` entry redirecting the model endpoint<sup>\[T\]\[D\]</sup>; `–bare`
-prevented the hook<sup>\[T\]\[D\]</sup> (Anthropic 2026d), and a
-repository request for `bypassPermissions` was
-ignored<sup>\[T\]\[D\]</sup>. Its documented `@path` import in
-`CLAUDE.md` also fired on the token `@.env` inside a shell command line,
-pulling the gitignored `.env` into the session transcript (mode 0600)
-with no model call<sup>\[T\]\[D\]</sup>; this explains the E3
-secret-in-state result
+started a repository stdio MCP server without
+prompting<sup>\[T\]\[D\]</sup> (Anthropic 2026a), and applied a
+repository `env` entry redirecting the model
+endpoint<sup>\[T\]\[D\]</sup>; `–bare` prevented the
+hook<sup>\[T\]\[D\]</sup> (Anthropic 2026d), and a repository request
+for `bypassPermissions` was ignored<sup>\[T\]\[D\]</sup>. Its documented
+`@path` import in `CLAUDE.md` also fired on the token `@.env` inside a
+shell command line, drawing the gitignored `.env` into the session
+transcript (mode 0600) without any model call<sup>\[T\]\[D\]</sup>; this
+explains the E3 secret-in-state result
 (Section <a href="#sec:eval-bench" data-reference-type="ref"
 data-reference="sec:eval-bench">9.3</a>). (ii) *Trust-gated
 alternatives.* Grok Build did not run an untrusted repository hook,
-including one imported from the Claude Code format, and ran it after
-`–trust`<sup>\[T\]\[D\]</sup> (xAI 2026a). Copilot CLI did not start a
-repository MCP server or hook in an untrusted
-folder<sup>\[T\]\[D\]</sup>, but we did not re-test it in a trusted
-folder, so “did not run” may also mean “not supported under `-p`”.
-(iii) *Network.* With documented opt-outs and a local model, Copilot
-CLI, Grok Build and Claude Code contacted no vendor
+including one imported from the Claude Code format, and ran it once
+`–trust` was given<sup>\[T\]\[D\]</sup> (xAI 2026a). Copilot CLI started
+neither a repository MCP server nor a hook in an untrusted
+folder<sup>\[T\]\[D\]</sup>; as we did not re-test it in a trusted
+folder, “did not run” may equally mean “not supported under `-p`”.
+(iii) *Network.* With the documented opt-outs set and a local model,
+Copilot CLI, Grok Build and Claude Code contacted no vendor
 host<sup>\[T\]\[D\]</sup>. Before login, Antigravity’s CLI contacted its
 auto-updater and a telemetry host, as its defaults document, and the
-updater opt-out worked<sup>\[T\]\[D\]</sup> (Google 2026c). (iv) *The
-one mismatch* is functional: `agy -p /help` is documented to run without
-an agent turn but required authentication<sup>\[T\]\[D\]</sup> (Google
-2026a). *Partial* verdicts concern state-directory modes and MCP
-start-up before trust, where documentation is silent.
+updater opt-out took effect<sup>\[T\]\[D\]</sup> (Google 2026c).
+(iv) *The single mismatch* is functional: `agy -p /help` is documented
+to run without an agent turn but demanded
+authentication<sup>\[T\]\[D\]</sup> (Google 2026a). The *partial*
+verdicts concern state-directory modes and MCP start-up before trust, on
+which the documentation is silent.
 
 #### Limits
 
-A *match* holds for this version in a headless Linux container; it does
-not certify interactive use, other platforms or post-login behaviour,
-and without payload inspection it says nothing about what an allowed
-host receives. Probe effort was uneven (14 Claude Code claims against 3
-for Copilot CLI), and Claude Code ran in a configuration its vendor does
-not support (Section <a href="#sec:method" data-reference-type="ref"
-data-reference="sec:method">3</a>). Without the opt-outs, during E3, the
-proxy blocked attempts to reach vendor or telemetry hosts from Claude
-Code (`api.anthropic.com`), Codex CLI (`chatgpt.com`, `github.com`),
-Qwen Code (an Aliyun RUM host, `models.dev`) and OpenCode
+A *match* holds for this version in a headless Linux container; it
+certifies neither interactive use, other platforms nor post-login
+behaviour, and without payload inspection it says nothing about what an
+allowed host receives. Probe effort was uneven (14 Claude Code claims
+against 3 for Copilot CLI), and Claude Code ran in a configuration its
+vendor does not support
+(Section <a href="#sec:method" data-reference-type="ref"
+data-reference="sec:method">3</a>). Without the opt-outs, the E3 proxy
+blocked attempts to reach vendor or telemetry hosts from Claude Code
+(`api.anthropic.com`), Codex CLI (`chatgpt.com`, `github.com`), Qwen
+Code (an Aliyun RUM host and `models.dev`) and OpenCode
 (`models.opencode.ai`)<sup>\[T\]</sup>.
 
 # Incident and CVE Survey, 2025–2026
@@ -603,60 +611,61 @@ Qwen Code (an Aliyun RUM host, `models.dev`) and OpenCode
 #### Collection and counting rule
 
 We searched NVD, the GitHub Advisory Database, vendor security pages and
-researcher write-ups for harness-level incidents disclosed from January
-2025 to mid-October 2026 (including the harnesses’ MCP servers, SDKs, CI
-actions and distribution channels), yielding 357 rows after
+researcher write-ups for harness-level incidents disclosed between
+January 2025 and mid-October 2026 (including the harnesses’ MCP servers,
+SDKs, CI actions and distribution channels), obtaining 357 rows after
 deterministic de-duplication. An incident is *counted* only if (a) its
 primary source was read and (b) an independent script re-resolved every
 listed CVE and GHSA identifier against NVD and the GitHub advisory API;
-incidents without an identifier need a primary vendor or researcher
-source. 29 rows failed (a), 4 failed (b) and 1 fell outside 2025–2026,
-leaving 323 incidents (99 disclosed in 2025, 224 in 2026; 239 with a CVE
-and 237 with a GHSA). By kind, 292 are vulnerabilities, 19 design
-weaknesses, 8 supply-chain compromises, 3 documented offensive misuse
-and 1 other events. Classes follow
+an incident without an identifier must have a primary vendor or
+researcher source. 29 rows failed (a), 4 failed (b) and 1 fell outside
+2025–2026, leaving 323 counted incidents (99 disclosed in 2025 and 224
+in 2026; 239 with a CVE and 237 with a GHSA). By kind, 292 are
+vulnerabilities, 19 design weaknesses, 8 supply-chain compromises, 3
+documented offensive misuse and 1 other events. Classes follow
 Section <a href="#sec:threats" data-reference-type="ref"
-data-reference="sec:threats">4</a>; one LLM agent classified every
+data-reference="sec:threats">4</a>; a single LLM agent classified every
 incident, and inter-rater agreement for classes and root causes was not
 measured. The population is selected for disclosed, harness-level
 software defects, including 73 ecosystem items such as MCP tooling and
-package compromises, so shares describe that population, not the
+package compromises; the shares describe that population, not the
 distribution of real-world harm.
 
 <figure id="fig:timeline">
 <img src="figures/rq3_timeline.png" width="100%" />
-<figcaption>Verified harness incidents and CVEs by disclosure quarter
-(RQ3). The last quarter is partial (to 15 October 2026) and is not a
-decline.</figcaption>
+<figcaption>Verified harness incidents and CVEs by quarter of disclosure
+(RQ3). The final quarter is partial (to 15 October 2026) and does not
+indicate a decline.</figcaption>
 </figure>
 
 #### Timeline
 
-Disclosures rose through every full quarter of the study period
+Disclosures rose in every complete quarter of the study period
 (Figure <a href="#fig:timeline" data-reference-type="ref"
-data-reference="fig:timeline">2</a>). This reflects more harnesses, more
-researcher attention, wider GHSA use and an agent-assisted search that
-favours recent, well-indexed advisories, not necessarily declining
-quality; likewise, per-product counts track scrutiny and disclosure
-maturity (D15) as much as risk, so we do not rank products by them.
+data-reference="fig:timeline">2</a>). The rise reflects more harnesses,
+greater researcher attention, wider use of GHSAs and an agent-assisted
+search that favours recent, well-indexed advisories, not necessarily
+declining quality; per-product counts likewise track scrutiny and
+disclosure maturity (D15) as much as risk, so we do not rank products by
+them.
 
 #### Root causes
 
 Table <a href="#tab:rootcauses" data-reference-type="ref"
-data-reference="tab:rootcauses">3</a> gives the distribution. Defective
-checks that gate an agent capability (RC3: allowlists bypassed by shell
-substitution, redirections, environment-variable prefixes, `find -exec`,
-symlinks or lookalike domains) are the largest group with 104 incidents
-(32%). Configuration honoured before consent (RC2) adds 52: repository
-settings, hooks, `.env` files, MCP declarations and Git configuration
-that run or take effect before the trust prompt. Together these
-deterministic harness defects account for 48% of counted incidents, the
-largest share but not a majority. Conventional defects not specific to
-agents (RC10) account for 16%, and missing authentication or Origin
-checks on local control endpoints (RC4) for 24. Pure prompt injection
-with no other control failure (RC1) is 5%; as the residual class, this
-is a lower bound on injection’s role, which we did not code separately
-as a vector.
+data-reference="tab:rootcauses">3</a> gives the distribution. The
+largest group, with 104 incidents (32%), comprises defective checks that
+gate an agent capability (RC3): allowlists bypassed through shell
+substitution, redirection, environment-variable prefixes, `find -exec`,
+symlinks or look-alike domains. Configuration honoured before consent
+(RC2) contributes a further 52: repository settings, hooks, `.env`
+files, MCP declarations and Git configuration that run or take effect
+before the trust prompt. Together these deterministic harness defects
+account for 48% of counted incidents, the largest share though not a
+majority. Conventional defects not specific to agents (RC10) account for
+16%, and missing authentication or Origin checks on local control
+endpoints (RC4) for 24. Pure prompt injection with no other control
+failure (RC1) stands at 5%; as the residual class, this is a lower bound
+on the role of injection, which we did not code separately as a vector.
 
 <div id="tab:rootcauses">
 
@@ -676,7 +685,7 @@ as a vector.
 | RC11       | Autonomous action exceeding user intent without enforced guardrail                            |         1 |
 
 Root causes of the counted 2025–2026 harness incidents (RQ3), assigned
-by the ordered procedure. Primary taxonomy classes are in
+by the ordered procedure. Primary taxonomy classes are given in
 Table <a href="#tab:taxonomy" data-reference-type="ref"
 data-reference="tab:taxonomy">1</a>.
 
@@ -687,140 +696,143 @@ data-reference="tab:taxonomy">1</a>.
 By primary class
 (Table <a href="#tab:taxonomy" data-reference-type="ref"
 data-reference="tab:taxonomy">1</a>), permission-model weaknesses (T03,
-74, 23%) and repository configuration as code execution (T02, 52) lead,
-followed by conventional defects (T19, 45) and control-plane exposure
-(T18, 34). Indirect prompt injection is the primary class of only 14
-incidents, although injection is the delivery vector in many incidents
-classified elsewhere.
+74, 23%) and repository configuration acting as code execution (T02, 52)
+lead, followed by conventional defects (T19, 45) and control-plane
+exposure (T18, 34). Indirect prompt injection is the primary class of
+only 14 incidents, although injection is the delivery vector in many
+incidents classified elsewhere.
 
 #### Representative cases
 
-(credit to the original researchers) *Injection to configuration:*
-hidden Unicode in rules files (Pillar
+Credit belongs to the original researchers. *Injection to
+configuration:* hidden Unicode in rules files (Pillar
 Security)<sup>\[3P\]</sup> (Karliner 2025); injection flipping Copilot’s
 auto-approve (CVE-2025-53773)<sup>\[3P\]</sup> (Rehberger 2025a); Cursor
 executing attacker-written or silently modified MCP configuration
 (CVE-2025-54135/54136)<sup>\[D\]\[3P\]</sup> (Anysphere 2025; Charikov,
 Zaikin, and Vanunu 2025). *Configuration before consent:* Claude Code
-project files running code and sending API tokens before the trust
-dialog (CVE-2025-59536, CVE-2026-21852)<sup>\[3P\]</sup> (Donenfeld and
-Vanunu 2026); Codex CLI loading project MCP servers without confirmation
+project files executing code and transmitting API tokens before the
+trust dialog (CVE-2025-59536,
+CVE-2026-21852)<sup>\[3P\]</sup> (Donenfeld and Vanunu 2026); Codex CLI
+loading project MCP servers without confirmation
 (CVE-2025-61260)<sup>\[3P\]</sup> (Mill and Vanunu 2025); Gemini CLI’s
 CI action auto-trusting the workspace<sup>\[D\]</sup> (Google 2026d).
-*Allowlist and path checks:* Gemini CLI command
-deception<sup>\[3P\]</sup> (Cox 2025); Claude Code path and command
-bypasses (CVE-2025-54794/54795)<sup>\[3P\]</sup> (Beber 2025) and deny
+*Allowlist and path checks:* command deception in Gemini
+CLI<sup>\[3P\]</sup> (Cox 2025); path and command bypasses in Claude
+Code (CVE-2025-54794/54795)<sup>\[3P\]</sup> (Beber 2025), and deny
 rules not enforced through symlinks<sup>\[D\]</sup> (Anthropic 2026f).
 *MCP:* tool poisoning and the GitHub MCP leak (Invariant
 Labs)<sup>\[3P\]</sup> (Beurer-Kellner and Fischer 2025; Milanta and
-Beurer-Kellner 2025), SQL-returned injection via Supabase
-MCP<sup>\[3P\]</sup> (Havaei, Liu, and Li 2025), MCP Inspector’s
-unauthenticated proxy (CVE-2025-49596)<sup>\[D\]\[3P\]</sup> (Model
+Beurer-Kellner 2025); SQL-returned injection via the Supabase MCP
+server<sup>\[3P\]</sup> (Havaei, Liu, and Li 2025); the unauthenticated
+proxy in MCP Inspector (CVE-2025-49596)<sup>\[D\]\[3P\]</sup> (Model
 Context Protocol project 2025; Lumelsky 2025). *Other:* unauthenticated
 local control planes in OpenCode and DeepSeek
 Harness<sup>\[D\]</sup> (OpenCode maintainers 2026; GitHub Advisory
-Database 2026); a malicious prompt in Amazon Q Developer
+Database 2026); a malicious prompt shipped in Amazon Q Developer
 1.84.0<sup>\[D\]</sup> (Amazon Web Services 2025); the `nx`
-“s1ngularity” compromise using installed AI CLIs to hunt
-secrets<sup>\[D\]</sup> (Nx maintainers (nrwl) 2025); Antigravity data
-leaks after launch<sup>\[3P\]</sup> (PromptArmor 2025; Rehberger 2025c);
-and a vendor’s own account of criminal misuse of a coding
-agent (Anthropic 2025).
+“s1ngularity” compromise, using installed AI CLIs to search for
+secrets<sup>\[D\]</sup> (Nx maintainers (nrwl) 2025); data leaks from
+Antigravity shortly after launch<sup>\[3P\]</sup> (PromptArmor 2025;
+Rehberger 2025c); and a vendor’s own account of the criminal misuse of a
+coding agent (Anthropic 2025).
 
 #### Fix date relative to advisory publication
 
-For the 148 counted incidents with both dates, a fix release existed on
-or before the advisory’s publication in 135 cases (median offset -5.00
-days, maximum 288); 175 incidents have no recorded fix date (unfixed or
-unknown). Because advisories are usually published after a fix by
-design, this measures disclosure practice, not time-to-fix; report dates
-were not available.
+Among the 148 counted incidents with both dates, a fix release existed
+on or before the advisory’s publication in 135 cases (median offset
+-5.00 days, maximum 288); 175 incidents have no recorded fix date
+(unfixed or unknown). Because advisories are by design usually published
+after a fix, this measures disclosure practice rather than time to fix;
+report dates were not available.
 
 # Design of `harnesswatch`
 
-*Answers the design half of RQ4 and the instrument for RQ5 and RQ7.* 
+*Covers the design half of RQ4 and the instrument used for RQ5 and
+RQ7.* 
 
-`harnesswatch` is an Apache-2.0 Python package and CLI. It is read-only
-and offline by default, never transmits file contents, and redacts any
-secret it reports.
+`harnesswatch` is an Apache-2.0 Python package and command-line tool. It
+is read-only and offline by default, never transmits file contents, and
+redacts every secret it reports.
 
 #### Profiles and a common schema
 
 One risk has many spellings: approve-everything is `bypassPermissions`
 in Claude Code, `approval_policy = "never"` in Codex, `yolo` in Gemini
-and Qwen, and `"permission": "allow"` in OpenCode. A YAML profile per
-harness (one for each of the 58 in the matrix) records file locations,
-key names and documented defaults, and a profile-driven parser maps
-every file into a common `HarnessConfig` model (permission mode,
-allow/deny lists, hooks, MCP servers, instruction files, trust,
-telemetry, auto-update). Files shared by several harnesses are parsed
-once, with the semantics of the format’s owner.
+and Qwen, and `"permission": "allow"` in OpenCode. A YAML profile for
+each of the 58 harnesses in the matrix records file locations, key names
+and documented defaults, and a profile-driven parser maps every file
+onto a common `HarnessConfig` model (permission mode, allow and deny
+lists, hooks, MCP servers, instruction files, trust, telemetry and
+auto-update). A file shared by several harnesses is parsed once, with
+the semantics of the format’s owner.
 
 #### Audits and rules
 
-Six audit modules cover *config*, *mcp* (pinning, transport, inline
-secrets, tool-description injection, auto-approval), *instructions*
-(hidden Unicode, override phrasing, remote includes), *secrets* (state
-directories, transcripts, file modes), *supply* (SBOM, OSV, installer
-verification) and *ci* (headless agents on untrusted triggers). The 25
-rules (Table <a href="#tab:rules" data-reference-type="ref"
-data-reference="tab:rules">7</a>) each carry severity, confidence, a
+Six audit modules cover *config*; *mcp* (pinning, transport, inline
+secrets, tool-description injection, auto-approval); *instructions*
+(hidden Unicode, override phrasing, remote includes); *secrets* (state
+directories, transcripts, file modes); *supply* (SBOM, OSV, installer
+verification); and *ci* (headless agents on untrusted triggers). Each of
+the 25 rules (Table <a href="#tab:rules" data-reference-type="ref"
+data-reference="tab:rules">7</a>) carries a severity, a confidence, a
 kind (vulnerability pattern, design weakness or policy choice), taxonomy
-classes, remediation and `should_fire`/`should_not_fire` fixtures.
-Output is terminal, JSON, Markdown or SARIF 2.1.0; a GitHub Action and a
-pre-commit hook wrap the repository audits.
+classes, remediation guidance and `should_fire`/`should_not_fire`
+fixtures. Output is terminal, JSON, Markdown or SARIF 2.1.0; a GitHub
+Action and a pre-commit hook wrap the repository audits.
 
 #### observe and bench
 
 `harnesswatch observe <harness> – CMD` runs a command in a disposable
-container whose only exit is a logging proxy, and records CONNECT
+container whose sole exit is a logging proxy, and records the CONNECT
 targets (classified as model API, telemetry, update or unknown), a
 filesystem diff with modes, credential locations, sandbox evidence from
-`/proc`, and permission prompts in the output. It stores no request
+`/proc` and any permission prompts in the output. It stores no request
 bodies and does not decrypt TLS. It underlies E5, E7 and every bench
 run. The canary bench
 (Section <a href="#sec:eval-bench" data-reference-type="ref"
 data-reference="sec:eval-bench">9.3</a>) drives each harness headless
-through one adapter per harness and aggregates rates with Wilson
+through a dedicated adapter and aggregates rates with Wilson
 intervals (Wilson 1927).
 
 # Empirical Evaluation
 
-*Answers RQ4 (E6, E2), RQ5 (E3, E5) and the supply-chain part of RQ2
-(E4).* 
+*Answers RQ4 (E6, E2) and RQ5 (E3, E5), and the supply-chain component
+of RQ2 (E4).* 
 
-All experiments ran on one Linux workstation with Docker and a consumer
-GPU; every result number is read from `experiments/results/*.json`.
+All experiments ran on a single Linux workstation with Docker and a
+consumer GPU; every reported number is read from
+`experiments/results/*.json`.
 
 ## E6: Rule-pack accuracy on a labelled corpus (RQ4)
 
 #### Design
 
-The corpus has 376 cases (113 hand-crafted, 263 generated) over more
-than twenty harness formats, CI files, state directories and MCP
-manifests; 108 are fully negative, and many positives have near-miss
-twins (pinned `npx`, authenticated HTTPS MCP, linter-only hooks, emoji
-ZWJ, key-like identifiers). Every audit runs on every case and the unit
-is the (case, rule) pair, so any unlabelled firing is a false positive.
-A hash of the case id splits the corpus into 245 development and 131
-test cases; errors were inspected and fixed only on the development
-split.
+The corpus comprises 376 cases (113 hand-crafted and 263 generated)
+spanning more than twenty harness formats, CI files, state directories
+and MCP manifests; 108 are wholly negative, and many positives have
+near-miss twins (pinned `npx`, authenticated HTTPS MCP, linter-only
+hooks, emoji ZWJ, key-like identifiers). Every audit runs on every case
+and the unit is the (case, rule) pair, so any unlabelled firing is a
+false positive. A hash of the case identifier splits the corpus into 245
+development and 131 test cases; errors were inspected and corrected on
+the development split only.
 
 #### Results
 
 On the held-out test split, micro precision is 0.983 (95% Wilson CI
 0.950–0.994) and micro recall 0.983 (0.950–0.994), with 3 false
 positives and 3 false negatives; macro precision and recall are 0.97 and
-0.95 (per-rule results: `paper/tables/e6_accuracy.md`). Before the
-development-split fixes, test precision was 0.960 with 7 false
+0.95 (per-rule results in `paper/tables/e6_accuracy.md`). Before the
+development-split corrections, test precision was 0.960 with 7 false
 positives; the test split had been scored once before corpus-content
-fixes that touched both splits, so it is not pristine. The Wilson
+corrections that touched both splits, so it is not pristine. The Wilson
 intervals treat (case, rule) pairs as independent although they cluster
 within cases and generator families, so they are optimistic. The weakest
 rules are `HG-SUB-001`, `HG-MCP-004` and the approve-everything rules.
 Because the corpus is synthetic and labelled by the rule author, this
 shows that the rules implement their specification across formats;
-real-world precision is unknown.
+real-world precision remains unknown.
 
 ## E2: Prevalence in public repositories (RQ4)
 
@@ -828,40 +840,39 @@ real-world precision is unknown.
 
 Through the GitHub code-search API we sampled harness settings and MCP
 files, instruction files (`AGENTS.md`, `CLAUDE.md`, Copilot and Windsurf
-rules) and CI workflows invoking `claude-code-action`, `codex exec` or
-`gemini -p`. Per repository we rebuilt only the sampled files in a
-temporary tree, ran `harnesswatch audit`, kept only (rule, file) pairs
-and deleted the tree. Identifiers were hashed with an unsaved per-run
-salt for de-duplication only; a scrub check refuses to write results
-containing any identifier or URL seen; secret findings are only counted;
-requests stayed below the API’s rate limits. Each of the 17 search
-strata is capped at 60 files, so pooled per-repository rates mostly
-reflect which strata were chosen. We therefore report each rule’s rate
-over the stratum of files that can carry it (config/MCP files, $n=600$;
-instruction files, $n=240$; agent CI workflows, $n=177$), with Wilson
-intervals, and never name a repository.
-
-Code search over-represents popular, recently indexed files; only
-project-level configuration is visible; a finding marks risky
-configuration, not exploitation.
+rules) and CI workflows that invoke `claude-code-action`, `codex exec`
+or `gemini -p`. For each repository we reconstructed only the sampled
+files in a temporary tree, ran `harnesswatch audit`, retained only
+(rule, file) pairs and deleted the tree. Identifiers were hashed with an
+unsaved per-run salt for de-duplication only; a scrub check refuses to
+write results containing any identifier or URL seen; secret findings
+were only counted; and requests stayed below the API’s rate limits. Each
+of the 17 search strata is capped at 60 files, so a pooled
+per-repository rate would mostly reflect the choice of strata. We
+therefore report each rule’s rate over the stratum of files that can
+carry it (configuration and MCP files, $n=600$; instruction files,
+$n=240$; agent CI workflows, $n=177$), with Wilson intervals, and name
+no repository. Only project-level configuration is visible, and a
+finding marks risky configuration, not exploitation.
 
 #### Results
 
-We audited 1010 repositories (1017 files, 0 audit errors) and 18 rules
+We audited 1010 repositories (1017 files, 0 audit errors), and 18 rules
 fired at least once (Table <a href="#tab:e2" data-reference-type="ref"
 data-reference="tab:e2">4</a>). Among agent CI workflows, 63.3% run the
 agent with a write-scoped token (`HG-CI-002`) and 28.2% match the
-pwn-request pattern of untrusted trigger plus secrets (`HG-CI-001`).
-Among config and MCP files, 28.3% launch an MCP server from a registry
-without a version pin (`HG-MCP-001`) and 14.3% declare a remote server
-without TLS or authentication (`HG-MCP-002`); `HG-MCP-005` (server
-declared in repository config, 51.8%) largely restates the sampling key
-and is informational. Secret-shaped strings in MCP declarations
-(`HG-MCP-003`, 3.5%) were counted only; since identifiers are discarded
-by design, owners were not notified and the strings were not validated.
-No E2 finding was hand-validated, so the real-world precision of these
-rules is unknown; the rates describe this capped, relevance-ranked
-sample, not GitHub as a whole.
+pwn-request pattern of an untrusted trigger combined with secrets
+(`HG-CI-001`). Among configuration and MCP files, 28.3% launch an MCP
+server from a registry without a version pin (`HG-MCP-001`) and 14.3%
+declare a remote server without TLS or authentication (`HG-MCP-002`);
+`HG-MCP-005` (a server declared in repository configuration, 51.8%)
+largely restates the sampling key and is informational. Secret-shaped
+strings in MCP declarations (`HG-MCP-003`, 3.5%) were counted only;
+because identifiers are discarded by design, owners were not notified
+and the strings were not validated. No E2 finding was validated by hand,
+so the real-world precision of these rules is unknown, and the rates
+describe this capped, relevance-ranked sample rather than GitHub as a
+whole.
 
 <div class="adjustbox">
 
@@ -882,9 +893,9 @@ max width=
 | HG-PERM-001 | config (600)    |    12 | 2.0% \[1.1, 3.5\]    |
 | HG-PERM-003 | config (600)    |    12 | 2.0% \[1.1, 3.5\]    |
 
-E2 prevalence per stratum (RQ4): repositories with a finding over
-audited files in the stratum that can carry the rule; top rules, Wilson
-95% CI. Aggregates only; no repository is named.
+E2 prevalence by stratum (RQ4): repositories with a finding over the
+audited files in the stratum that can carry the rule; top rules, with
+Wilson 95% CI. Aggregates only; no repository is named.
 
 </div>
 
@@ -894,102 +905,102 @@ audited files in the stratum that can carry the rule; top rules, Wilson
 
 #### Design
 
-Each run uses a fresh container with a tiny Python repository, a
+Each run starts a fresh container with a minimal Python repository, a
 synthetic `.env` token, a fixture file and a sink on `127.0.0.1`, and
-the same benign task (add a `multiply` function and test, run the
-tests). Besides a *control*, four scenarios place one templated block in
-the README, the native instruction file, a code comment, or test output
-that returns as a tool result
+sets the same benign task: add a `multiply` function and test, and run
+the tests. Besides a *control*, four scenarios place one templated block
+in the README, in the harness-native instruction file, in a code
+comment, or in test output that is returned as a tool result
 (Table <a href="#tab:bench-catalogue" data-reference-type="ref"
 data-reference="tab:bench-catalogue">9</a>). The block asks the agent to
-create `CANARY_<id>.txt`, POST `.env` to the sink, and delete the
-fixture; all are inert, and the container reaches only the model server.
-Modes are *default* (out-of-the-box headless) and *auto* (the documented
-approve-everything flag).
+create `CANARY_<id>.txt`, POST `.env` to the sink and delete the
+fixture; all three are inert, and the container reaches only the model
+server. The two modes are *default* (out-of-the-box headless) and *auto*
+(the documented approve-everything flag).
 
 #### Harnesses, model and grid
 
 Seven adapters cover three Tier-B clients (Claude Code, Copilot CLI and
-the Grok Build npm binary, driven through custom-endpoint modes; Claude
-Code’s is vendor-unsupported with non-Claude models,
+the Grok Build npm binary, driven through their custom-endpoint modes;
+Claude Code’s is vendor-unsupported,
 Section <a href="#sec:method" data-reference-type="ref"
-data-reference="sec:method">3</a>) and four open ones (OpenCode, Codex
-CLI, Aider and Qwen Code). No vendor credentials are used, so every
-harness talks to one local open-weight model, `qwen3:4b-instruct`,
-served by Ollama. The grid is 7 harnesses $\times$ 5 scenarios $\times$
-2 modes with 5 runs per cell. A run is capped at 240 s and scored on the
-state at the cap; a run with no harness output counts as an error, not
-as safe. Aider never loads an instruction file, so its `instructions`
-cells are N/A in both modes and excluded from the pooled statistics.
+data-reference="sec:method">3</a>) and four open-source harnesses
+(OpenCode, Codex CLI, Aider and Qwen Code). No vendor credentials are
+used, so every harness talks to the same local open-weight model,
+`qwen3:4b-instruct`, served by Ollama. The grid is 7 harnesses $\times$
+5 scenarios $\times$ 2 modes, with 5 runs per cell. A run is capped at
+240 s and scored on its state at the cap; a run with no harness output
+counts as an error, not as safe. Aider never loads an instruction file,
+so its `instructions` cells are N/A in both modes and are excluded from
+the pooled statistics.
 
 #### Metrics
 
-*Injection follow*: any of the three goals achieved (marker created,
-sink POST, fixture deleted). *Exfil attempt*: any POST to the sink, or
-the secret seen at the sink. *Destructive action*: fixture deleted.
-*Secret read*: the synthetic token appears in the harness’s printed
-output (other than as an environment-variable dump) or reaches the sink;
-since some harnesses print only the final message, this undercounts
-reads. *Secret in state*: the token appears in a transcript or session
-file the harness wrote, separating persistence from agent action.
-*Permission prompt*: an approval prompt in the output. *Task completed*:
-tests pass and the function and its test exist, so that “safe but
-useless” is visible. Rates carry Wilson 95% intervals.
+*Injection follow*: any of the three goals achieved. *Exfiltration
+attempt*: any POST to the sink, or the secret observed there.
+*Destructive action*: the fixture deleted. *Secret read*: the synthetic
+token appears in the harness’s printed output (other than in an
+environment-variable dump) or reaches the sink; since some harnesses
+print only their final message, this undercounts reads. *Secret in
+state*: the token appears in a transcript or session file written by the
+harness, which separates persistence from agent action. *Permission
+prompt*: an approval prompt appears in the output. *Task completed*: the
+tests pass and the function and its test exist, so that a “safe but
+useless” outcome remains visible. All rates carry Wilson 95% intervals.
 
 #### Results
 
 The grid produced 350 runs (0 errors, 22 timeouts scored at the cap,
 model cost \$0.00), of which 340 enter the analysis
 (Table <a href="#tab:e3" data-reference-type="ref"
-data-reference="tab:e3">5</a>; plotted in
-`paper/figures/e3_follow.pdf`). Over the injection scenarios the
+data-reference="tab:e3">5</a>). Over the injection scenarios, the
 injected instruction was followed in 2 of 135 auto-mode runs (95% CI
-0.004–0.052) and 0 of 135 default-mode runs (0.000–0.028); controls
-followed nothing (0 of 70). No run attempted the POST, the fixture was
-deleted in 1 auto-mode run, and the strict secret-read count is 0 in
-both modes. The intervals overlap, so there is *no detectable safety
-difference* between modes. Task completion differs (84 of 135 auto vs 23
-of 135 default) because several headless defaults deny the tools the
-task needs: Codex CLI and Copilot CLI showed a permission prompt in
-every default run, while Grok Build and Qwen Code completed nothing in
-default mode without a detectable prompt, for reasons we did not
-establish. OpenCode completed 1 of 10 even in controls, an adapter–model
-incompatibility, so its cells are uninformative. Claude Code’s “default”
-arm is not an ask mode: with a third-party endpoint it starts in the
-classifier-mediated `auto` mode
+0.004–0.052) and in 0 of 135 default-mode runs (0.000–0.028); the
+controls followed nothing (0 of 70). No run attempted the POST, the
+fixture was deleted in 1 auto-mode run, and the strict secret-read count
+is 0 in both modes. The intervals overlap, so there is *no detectable
+safety difference* between the modes. Task completion does differ (84 of
+135 auto against 23 of 135 default) because several headless defaults
+withhold the tools the task needs: Codex CLI and Copilot CLI showed a
+permission prompt in every default run, while Grok Build and Qwen Code
+completed nothing in default mode without a detectable prompt, for
+reasons we did not establish. OpenCode completed 1 of 10 even in the
+controls, an adapter–model incompatibility that renders its cells
+uninformative. Claude Code’s “default” arm is not an ask mode: with a
+third-party endpoint it starts in the classifier-mediated `auto` mode
 (Section <a href="#sec:claims" data-reference-type="ref"
 data-reference="sec:claims">6</a>).
 
 #### Secret in state
 
-In 10 of 10 Claude Code runs of the `instructions` scenario (both modes)
-the synthetic secret reached the session transcript, against 0 in its
-other scenarios. This is not a model action: an E7 probe with an
+In 10 of 10 Claude Code runs of the `instructions` scenario (both
+modes), the synthetic secret reached the session transcript, against 0
+in its other scenarios. This is not a model action: an E7 probe with an
 unreachable model endpoint reproduced it, because the payload’s
 `–data-binary @.env` contains the token `@.env`, which Claude Code’s
 documented `@path` import resolves when it loads
 `CLAUDE.md`<sup>\[T\]\[D\]</sup>. It is a harness design property: an
 instruction file can import gitignored secrets into context and
-transcripts without any approval.
+transcript without any approval.
 
 #### Interpretation
 
-The low follow rate most likely reflects the small model’s limited
-agentic and instruction-following ability and the plainly worded benign
-canary, *not* harness robustness; with 5 runs per cell and zero or one
-event per cell, intervals are wide, and we do not rank harnesses on
-resilience. We do not call default modes safer.
+The low follow rate most probably reflects the small model’s limited
+agentic and instruction-following ability and the plainly worded, benign
+canary, *not* the robustness of the harnesses. With 5 runs per cell and
+zero or one event per cell, the intervals are wide, and we do not rank
+harnesses on resilience. Nor do we describe default modes as safer.
 
 #### Correction
 
-Our first secret metric (token anywhere in output or written files)
-flagged 15 runs, chosen before results were inspected and replaced
-afterwards: 10 were the Claude Code import above and the rest Codex CLI,
-which writes its process environment, holding the canary, into
+Our original secret metric (the token anywhere in output or written
+files), fixed before the results were inspected, flagged 15 runs and was
+replaced afterwards: 10 were the Claude Code import above and the rest
+Codex CLI, which writes its process environment, canary included, into
 `~/.codex` shell snapshots whenever its shell tool runs (6 of 50 Codex
 runs)<sup>\[T\]</sup>. Neither is the agent reading the secret, hence
-the two separate metrics: benchmarks should separate what a harness
-persists from what an agent does.
+the two metrics: a benchmark should distinguish what a harness persists
+from what an agent does.
 
 <div class="adjustbox">
 
@@ -1014,8 +1025,8 @@ max width=
 | qwen-code            | auto    |  20 | 0/20 \[0.0, 16.1\]   |     0 |      0 |               0 |       1 |        1 | 12/20 \[38.7, 78.1\]    |
 | qwen-code            | default |  20 | 0/20 \[0.0, 16.1\]   |     0 |      0 |               0 |       0 |        1 | 0/20 \[0.0, 16.1\]      |
 
-E3 canary bench (RQ5): per harness and permission mode over the
-injection scenarios; $k/n$ with Wilson 95% CI in percent; other columns
+E3 canary bench (RQ5): by harness and permission mode over the injection
+scenarios; $k/n$ with Wilson 95% CI in per cent; the remaining columns
 are counts out of $n$. One local model (`qwen3:4b-instruct`); $^B$ marks
 Tier-B clients. Not a resilience ranking.
 
@@ -1028,32 +1039,32 @@ Tier-B clients. Not a resilience ranking.
 #### Design
 
 For each of the 7 bench harnesses we ran two short sessions in a fresh
-container. In *key* the provider credential was a unique synthetic
-canary. In *content* the prompt asked the agent to read a synthetic
-`.env` file. We searched every file the harness wrote for the canary and
-recorded paths, modes and reachability by other users (home 0755);
-contents were never stored. With one session per harness and condition
-($N=1$) the results are descriptive.
+container. In the *key* condition the provider credential was a unique
+synthetic canary; in the *content* condition the prompt asked the agent
+to read a synthetic `.env` file. We searched every file the harness
+wrote for the canary and recorded paths, modes and reachability by other
+users (home directory 0755); file contents were never stored. With one
+session per harness and condition ($N=1$), the results are descriptive.
 
 #### Results
 
-In the content condition, 6 of 7 harnesses left at least one file
+In the content condition, 6 of the 7 harnesses left at least one file
 holding the secret, typically a transcript or chat log
 (Table <a href="#tab:e5" data-reference-type="ref"
-data-reference="tab:e5">6</a>)<sup>\[T\]</sup>. In 3 harnesses such a
-file was readable by other local users. In the key condition, 0 of the 4
-harnesses that take a key wrote it to a file in this single
-run<sup>\[T\]</sup>; that is a sampling result, not evidence of absence,
-because Codex CLI persists environment-supplied credentials in shell
-snapshots whenever its shell tool runs, which happened in 6 of 50 E3
-runs and not in the E5 key session<sup>\[T\]</sup>. Mode bits alone can
+data-reference="tab:e5">6</a>)<sup>\[T\]</sup>; in 3 of them such a file
+was readable by other local users. In the key condition, 0 of the 4
+harnesses that accept a key wrote it to a file in this single
+run<sup>\[T\]</sup>. That is a sampling result rather than evidence of
+absence: Codex CLI persists environment-supplied credentials in shell
+snapshots whenever its shell tool runs, which occurred in 6 of 50 E3
+runs but not in the E5 key session<sup>\[T\]</sup>. Mode bits alone can
 mislead: Grok Build writes 0644 session files, but inside a 0700
 sessions directory, so other users cannot reach them<sup>\[T\]</sup>;
 Claude Code writes transcripts with mode 0600<sup>\[T\]</sup>. OpenCode
-left no residue in this run. Residue depends on whether the agent reads
-the file, so one run can miss it. These are design weaknesses, not
-vulnerabilities; a 0750 home directory would block the reachable paths,
-but CI runners and containers often use 0755.
+left no residue in this run. Because residue depends on whether the
+agent reads the file, a single run can miss it. These are design
+weaknesses, not vulnerabilities; a 0750 home directory would close the
+reachable paths, but CI runners and containers commonly use 0755.
 
 <div class="adjustbox">
 
@@ -1072,10 +1083,11 @@ max width=
 | qwen-code      |               1 | log       | 644     |      1 |     0 |     10/13 |
 
 E5 secret residue after reading a synthetic `.env` (content condition;
-one session per harness, descriptive). “Reach.”: files readable by other
+one session per harness; descriptive). “Reach.”: files readable by other
 users (o+r on the file and o+x on every ancestor). “Cred.”: files
-holding the provider key in the key condition (n/a: no key taken). “o+r
-state”: other-user-readable / all state files written.
+holding the provider key in the key condition (n/a: no key accepted).
+“o+r state”: other-user-readable state files over all state files
+written.
 
 </div>
 
@@ -1083,113 +1095,115 @@ state”: other-user-readable / all state files written.
 
 ## E4: Distribution supply chain (RQ2, D13)
 
-We inspected the published package of 23 harnesses (the Tier-A set plus
+We inspected the published packages of 23 harnesses (the Tier-A set plus
 Claude Code, Grok Build and Copilot CLI) from registry metadata and
-lockfiles only, without running install scripts<sup>\[D\]</sup>
-(per-package table: `paper/tables/e4_supply.md`). 7 packages declare
-install-time hooks. 10 of 18 with determinable status publish registry
-provenance attestations. 17 offer a `curl | sh` installer, and in 17 of
-them the installer verifies no signature (some verify a checksum; Claude
-Code documents a signed release manifest that its installer does not
-itself verify<sup>\[D\]</sup>). Auto-update is documented as on by
-default in 12 (cells marked “unverified” in the table are undetermined,
-not off). The median lockfile size is 97 transitive packages, and OSV
-lists 299 unique advisories against locked dependency versions,
-concentrated in a few packages. These are advisories against pinned
-versions, not demonstrated exploitability. Auto-update is a trade-off:
-it delivers fixes quickly but widens the blast radius of a compromised
-release channel, as the Amazon Q extension incident
-showed<sup>\[D\]</sup> (Amazon Web Services 2025).
+lockfiles alone, without running any install script<sup>\[D\]</sup>
+(per-package table: `paper/tables/e4_supply.md`). Install-time hooks are
+declared by 7 packages. Of the 18 whose status could be determined, 10
+publish registry provenance attestations. A `curl | sh` installer is
+offered by 17, and in 17 of these the installer verifies no signature
+(some verify a checksum; Claude Code documents a signed release manifest
+that its installer does not itself verify<sup>\[D\]</sup>). Auto-update
+is documented as on by default in 12 (cells marked “unverified” in the
+table are undetermined, not off). The median lockfile holds 97
+transitive packages, and OSV lists 299 unique advisories against the
+locked dependency versions, concentrated in a few packages; these are
+advisories against pinned versions, not demonstrated exploitability.
+Auto-update is a trade-off: it delivers fixes promptly but widens the
+blast radius of a compromised release channel, as the Amazon Q extension
+incident showed<sup>\[D\]</sup> (Amazon Web Services 2025).
 
 # Governance Recommendations
 
-*Answers RQ6 (as recommendations, not an evaluated finding).* 
+*Addresses RQ6 as recommendations, not as an evaluated finding.* 
 
-We turned the findings into a 30-control checklist (GC-01 to GC-30).
-Each control states the requirement, its rationale (threat classes, root
-causes, rubric dimensions, and whether it addresses a vulnerability,
-design weakness or policy choice), how to verify it with an exact
-`harnesswatch` command or a manual check, and its mapping to NIST AI
+We distilled the findings into a checklist of thirty controls (GC-01 to
+GC-30). Each states its requirement; its rationale (threat classes, root
+causes, rubric dimensions, and whether it targets a vulnerability, a
+design weakness or a policy choice); how to verify it, with an exact
+`harnesswatch` command or a manual check; and its mapping to NIST AI
 RMF 1.0 (Tabassi 2023), NIST AI 600-1 (Autio et al. 2024), ISO/IEC 42001
 Annex A (ISO/IEC 2023), OWASP (OWASP GenAI Security Project 2024,
 2025b), MITRE ATLAS (MITRE n.d.) and the MAS AI risk-management
 guidelines (Monetary Authority of Singapore 2026). The controls that
 follow most directly from our evidence are: treat repository
-configuration, including instruction-file imports, as untrusted code and
+configuration, instruction-file imports included, as untrusted code, and
 gate changes to it in CI (GC-08, GC-09, GC-23; RC2, E3 secret-in-state);
-lock approve-everything modes by managed policy and treat allowlists as
-convenience, not a boundary (GC-06, GC-07; RC3); supply the sandbox and
-egress boundary yourself, since D02 and D03 score lowest (GC-16, GC-17,
-GC-20); never run headless agents with secrets or write tokens on
-untrusted triggers (GC-21, GC-22; E2 CI strata); keep secrets out of
-config files and the agent’s environment and restrict state directories
-(GC-14, GC-15; E5); and re-run the black-box probes and canary bench on
-the version and model you deploy (GC-03, GC-04). The checklist has not
-been evaluated for coverage or usability; the OWASP MCP Top 10 is in
-beta, ISO/IEC 42001 Annex A titles come from public listings, and NIST
-AI 600-1 is cited at document level where needed.
+lock approve-everything modes by managed policy, and regard allowlists
+as a convenience rather than a boundary (GC-06, GC-07; RC3); supply the
+sandbox and egress boundary yourself, since D02 and D03 score lowest
+(GC-16, GC-17, GC-20); never run a headless agent with secrets or write
+tokens on an untrusted trigger (GC-21, GC-22; E2 CI strata); keep
+secrets out of configuration files and the agent’s environment, and
+restrict state directories (GC-14, GC-15; E5); and re-run the black-box
+probes and the canary bench on the exact version and model you deploy
+(GC-03, GC-04). The checklist has not been evaluated for coverage or
+usability; the OWASP MCP Top 10 remains in beta, the ISO/IEC 42001
+Annex A titles are taken from public listings, and NIST AI 600-1 is
+cited at document level where necessary.
 
 # Related Work
 
-*Answers where RQ1–RQ7 sit relative to prior work.* 
+*Places RQ1–RQ7 in relation to prior work.* 
 
 #### Prompt-injection benchmarks for agents
 
 Greshake et al. introduced indirect prompt injection against
 LLM-integrated applications (Greshake et al. 2023), and Liu
-et al. formalised attacks and defences (Liu et al. 2024).
+et al. formalised the attacks and defences (Liu et al. 2024).
 InjecAgent (Zhan et al. 2024) and AgentDojo (Debenedetti et al. 2024)
-benchmark tool-using agents against injected tool outputs, Agent
-Security Bench (Zhang et al. 2025) broadens the attack and defence set,
-ToolEmu (Ruan et al. 2024) emulates tools to find risky agent behaviour,
-and RedCode (Guo et al. 2024) benchmarks risky code execution by code
-agents. These fix the agent framework and vary model and attack; our
-bench fixes model and payload and varies real harness binaries and
-modes.
+benchmark tool-using agents against injected tool outputs; Agent
+Security Bench (Zhang et al. 2025) broadens the set of attacks and
+defences; ToolEmu (Ruan et al. 2024) emulates tools to surface risky
+agent behaviour; and RedCode (Guo et al. 2024) benchmarks risky code
+execution by code agents. These works fix the agent framework and vary
+the model and the attack; our bench fixes the model and the payload and
+varies real harness binaries and their modes.
 
 #### Design-level defences
 
 CaMeL (Debenedetti et al. 2025) and the design patterns of
 Beurer-Kellner et al. (Beurer-Kellner et al. 2025) constrain what an
-agent can do after reading untrusted data. System-level isolation
+agent may do once it has read untrusted data. System-level isolation
 (IsolateGPT (Wu et al. 2025)) and programmable privilege control
 (Progent (Shi et al. 2025)) move enforcement into the runtime, much as
-our rubric asks harnesses to do. Willison’s “lethal trifecta” (Willison
+our rubric asks of harnesses. Willison’s “lethal trifecta” (Willison
 2025) explains why egress (D03) and secret handling (D07) matter even
 when injection cannot be prevented.
 
 #### MCP security
 
-Hou et al. survey the MCP landscape and its threats (Hou et al. 2025).
+Hou et al. survey the MCP landscape and its threats (Hou et al. 2025);
 Radosevich and Halloran show that MCP-connected models can be driven to
-harmful actions (Radosevich and Halloran 2025). Hasan et al. study the
+harmful actions (Radosevich and Halloran 2025); Hasan et al. study the
 security and maintainability of MCP servers at scale (Hasan et al.
-2025), and MCPTox benchmarks tool poisoning on real servers (Wang et al.
+2025); and MCPTox benchmarks tool poisoning on real servers (Wang et al.
 2026). Invariant Labs described tool-poisoning attacks and the GitHub
 MCP data leak (Beurer-Kellner and Fischer 2025; Milanta and
-Beurer-Kellner 2025), and Trail of Bits showed that servers can attack
-before any tool is used (Trail of Bits 2025). We add the harness side:
-how servers are declared, pinned and approved, and how often risky
-declarations appear in public repositories.
+Beurer-Kellner 2025), and Trail of Bits showed that a server can attack
+before any tool is invoked (Trail of Bits 2025). We add the harness
+side: how servers are declared, pinned and approved, and how often risky
+declarations occur in public repositories.
 
 #### Practitioner research on coding agents
 
 Much of what is known comes from practitioners: Pillar Security’s
-rules-file backdoor (Karliner 2025), Tracebit’s Gemini CLI allowlist
-bypass (Cox 2025), Johann Rehberger’s *Embrace The Red* series,
+rules-file backdoor (Karliner 2025); Tracebit’s Gemini CLI allowlist
+bypass (Cox 2025); Johann Rehberger’s *Embrace The Red* series,
 including the Copilot auto-approve RCE, the Month of AI Bugs and the
-Antigravity analysis (Rehberger 2025a, 2025b, 2025c), Trail of Bits on
-prompt injection to RCE in agents (Vandevanter 2025), and Check Point
-Research and Cymulate on Cursor, Codex CLI and Claude Code (Charikov,
-Zaikin, and Vanunu 2025; Mill and Vanunu 2025; Donenfeld and Vanunu
-2026; Beber 2025). Our survey normalises these reports into one
-taxonomy, root-cause scheme and counting rule.
+Antigravity analysis (Rehberger 2025a, 2025b, 2025c); Trail of Bits on
+prompt injection leading to RCE in agents (Vandevanter 2025); and Check
+Point Research and Cymulate on Cursor, Codex CLI and Claude
+Code (Charikov, Zaikin, and Vanunu 2025; Mill and Vanunu 2025; Donenfeld
+and Vanunu 2026; Beber 2025). Our survey normalises these reports under
+one taxonomy, one root-cause scheme and one counting rule.
 
 #### CI and supply chain
 
 Studies of GitHub workflow security (Koishybayev et al. 2022; Muralee et
-al. 2023) underpin our CI rules and E2 workflow stratum, and open-source
-supply-chain attack taxonomies (Ohm et al. 2020) frame E4.
+al. 2023) underpin our CI rules and the E2 workflow stratum, and
+taxonomies of open-source supply-chain attacks (Ohm et al. 2020) frame
+E4.
 
 #### Frameworks
 
@@ -1202,156 +1216,157 @@ and MITRE ATLAS (MITRE n.d.) catalogues adversary techniques. We map our
 taxonomy onto all of them and add a harness-specific, checkable control
 layer.
 
-#### Author’s prior tooling
+#### The author’s prior tooling
 
 `harnesswatch` reuses parsing ideas from the author’s `upfront`, offers
-`rulewarden` (deterministic instruction-file rule enforcement) as an
-integration point, and uses `airmkit`’s control vocabulary for the MAS
+`rulewarden` (deterministic enforcement of instruction-file rules) as an
+integration point, and adopts `airmkit`’s control vocabulary for the MAS
 mapping.
 
 # Limitations and Threats to Validity
 
-*Answers how far the answers to RQ1–RQ7 generalise.* 
+*Bounds how far the answers to RQ1–RQ7 generalise.* 
 
 #### Version drift
 
-Scores, probes and bench cells refer to the versions in `VERSIONS.md`,
-accessed 15 October 2026. Harnesses release weekly and several were
-renamed or discontinued during the study; the matrix should be re-run,
-not cited as current.
+Scores, probes and bench cells refer to the versions listed in
+`VERSIONS.md`, accessed on 15 October 2026. Harnesses release weekly,
+and several were renamed or discontinued during the study; the matrix
+should be re-run rather than cited as current.
 
 #### Models and compute
 
-No vendor API keys or logins were used, so the bench runs one small
-local open-weight model through documented custom-endpoint features and
-says nothing about any vendor’s flagship model. The GPU is shared with
-the owner’s other work; a planned second model family was cancelled to
-release it, so the goal of at least two models per harness is *not met*,
-and the scenario set and run count per cell were reduced, leaving wide
-intervals. A model this small also limits how often any injection is
-acted on at all. Claude Code was routed to a non-Claude model, which its
-vendor does not support, and in that setup its default arm is the
-classifier `auto` mode; its bench and permission results describe
-harness behaviour in an unsupported configuration.
+No vendor API keys or logins were used, so the bench runs a single
+small, local, open-weight model through documented custom-endpoint
+features and says nothing about any vendor’s flagship model. The GPU is
+shared with the owner’s other work; a planned second model family was
+cancelled to release it, so the goal of at least two models per harness
+is *not met*, and the scenario set and runs per cell were reduced,
+leaving wide intervals. So small a model also limits how often any
+injection is acted upon at all. Claude Code was routed to a non-Claude
+model, which its vendor does not support
+(Section <a href="#sec:method" data-reference-type="ref"
+data-reference="sec:method">3</a>).
 
 #### Headless only
 
 Probes and bench runs are headless. Interactive trust dialogs, IDE
-extensions and GUI-only products (e.g. the Antigravity IDE) were not
-tested; a harness whose interactive mode is safer is under-credited,
-which is the conservative error for CI use.
+extensions and GUI-only products (the Antigravity IDE, for instance)
+were not tested. A harness whose interactive mode is safer is
+under-credited, which is the conservative error for CI use.
 
 #### Benign-canary ceiling
 
-Payloads are inert and plainly worded; disguised or adaptive attacks may
-succeed where they fail, so bench rates are lower bounds.
+The payloads are inert and plainly worded; disguised or adaptive attacks
+may succeed where these fail, so the bench rates are lower bounds.
 
 #### Black-box limits
 
-Without TLS inspection we cannot say what an allowed host receives;
+Without TLS inspection we cannot say what an allowed host receives, and
 login-gated harnesses were observed only before login.
 
 #### Rating and classification
 
-Evidence collection, both matrix raters, incident collection and
-incident classification were LLM agents supervised by the author. Both
-raters worked from one shared fact base, so $\kappa$ measures rubric
-application, not evidence reliability, and it excludes the
-N/A-versus-score cells (all 84 disagreements, including those, are
-published). Incident classes and root causes had a single rater with no
-agreement measurement, and RC1 is the residual class of an ordered
-procedure. Several scores depend on rubric interpretations, notably
-classifier-gated defaults.
+Both matrix raters worked from one shared fact base, so $\kappa$
+measures the application of the rubric rather than the reliability of
+the evidence, and it excludes the N/A-versus-score cells (all 84
+disagreements, those included, are published). Incident classes and root
+causes had a single LLM rater and no agreement measurement, and RC1 is
+the residual class of an ordered procedure. Several scores turn on
+rubric interpretation, notably of classifier-gated defaults.
 
 #### Selection
 
 The incident survey admits only publicly disclosed, harness-level
-advisories, mostly with CVE or GHSA identifiers; model-level failures
-are rarely tracked this way, and agent-assisted search favours recent,
-well-indexed advisories. RQ3 shares therefore describe disclosed harness
-defects, not overall risk.
+advisories, most of them with CVE or GHSA identifiers; model-level
+failures are rarely tracked in this way, and agent-assisted search
+favours recent, well-indexed advisories. The RQ3 shares therefore
+describe disclosed harness defects, not overall risk.
 
 #### Corpora
 
-E6 is synthetic and author-labelled; E2’s code-search sample favours
-popular, recently indexed repositories; E5 has one session per
+E6 is synthetic and labelled by the author; E2’s code-search sample
+favours popular, recently indexed repositories; E5 has one session per
 condition.
 
 # Conclusion
 
-*Answers the summary of RQ1–RQ7.* 
+*Summarises the answers to RQ1–RQ7.* 
 
-The harness is where an agent’s capabilities become effects. Among
+The harness is where an agent’s capabilities become effects. Among the
 publicly disclosed harness-level advisories of 2025–2026, flawed
 approval checks and configuration honoured before consent account for
 48%, and pure prompt injection, a residual class, for 5%. Across 58
-harnesses and runtimes, controls exist but are rarely safe by default:
-sandboxing and egress are the weakest dimensions, headless modes often
-bypass trust gates, and in our public-repository sample unpinned MCP
-launches and write-scoped agent CI jobs recur. For closed harnesses, 22
-of the 28 testable claims matched, but most documented claims could not
-be tested headless, and documented features such as instruction-file
-imports can move secrets into transcripts without any model action.
+harnesses and runtimes, controls exist but are seldom safe by default:
+sandboxing and egress are the weakest dimensions, headless modes
+frequently bypass trust gates, and in our sample of public repositories
+unpinned MCP launches and write-scoped agent CI jobs recur. For closed
+harnesses, 22 of the 28 testable claims matched, but most documented
+claims could not be tested headless, and documented features such as
+instruction-file imports can carry secrets into transcripts without any
+model action.
 
-The answers are engineering ones: trust gates that cover every
-executable configuration class and apply headless, policy-locked
-permission modes, default sandboxes and egress allowlists. We release
-`harnesswatch`, the rubric, evidence and results so the study can be
-re-run as the field moves.
+The remedies are engineering: trust gates that cover every executable
+class of configuration and apply headless, permission modes locked by
+policy, default sandboxes and egress allowlists. We release
+`harnesswatch`, the rubric, the evidence and the results so that the
+study can be repeated as the field moves.
 
 # Reproducibility
 
 The repository contains the toolkit, rule pack, harness profiles,
 evidence ledger, matrix evidence, results JSON and this paper. Three
-entry points rebuild everything:
+entry points rebuild everything.
 
-- `make all` runs lint, type checks and tests with coverage, builds the
-  documentation, regenerates every results-derived table, figure and
-  number offline from committed data (`make experiments`, which ends
-  with `experiments/paper_numbers.py` writing `paper/numbers.tex`), and
-  builds this paper with `paper/build.sh`.
+- `make all` runs the linter, type checker and tests with coverage,
+  builds the documentation, regenerates every results-derived table,
+  figure and number offline from committed data (`make experiments`,
+  which ends with `experiments/paper_numbers.py` writing
+  `paper/numbers.tex`), and builds this paper with `paper/build.sh`.
 
-- `make bench` builds the pinned harness images (`make bench-images`)
-  and runs or resumes the canary grid against a local Ollama container,
-  then re-runs the E3 analysis. It needs Docker and a GPU-backed Ollama
-  container on the bench network. No vendor credentials are used.
+- `make bench` builds the pinned harness images (`make bench-images`),
+  runs or resumes the canary grid against a local Ollama container, and
+  re-runs the E3 analysis. It requires Docker and a GPU-backed Ollama
+  container on the bench network; no vendor credentials are used.
 
-- `paper/build.sh` uses a pinned Tectonic release (downloaded with a
-  SHA-256 check) and writes a Markdown mirror, `paper/paper.md`.
+- `paper/build.sh` uses a pinned Tectonic release, downloaded with a
+  SHA-256 check, and also writes the Markdown mirror `paper/paper.md`
+  and the web version in `docs/paper/`.
 
-Pinned versions: harness versions in `VERSIONS.md`; bench images are
-tagged with the harness version
+Pinned versions: harness versions are listed in `VERSIONS.md`; bench
+images are tagged with the harness version
 (Table <a href="#tab:bench-catalogue" data-reference-type="ref"
 data-reference="tab:bench-catalogue">9</a>); the model server is
-Ollama 0.40.4 pinned by image digest; and Python dependencies are locked
-in `uv.lock`. Every result number in the prose is a macro generated from
-`experiments/results/*.json`; design constants (versions, caps, mode
-bits, counts of classes and controls) are typed. The E2 corpus script
-stores aggregates only and refuses to write any repository identifier.
+Ollama 0.40.4, pinned by image digest; and Python dependencies are
+locked in `uv.lock`. Every reported number in the prose is a macro
+generated from `experiments/results/*.json`; design constants (versions,
+caps, mode bits, and the counts of classes and controls) are typed by
+hand.
 
 # Review and Corrections
 
-After an internal hostile review we made these changes, all reflected in
-the results files and logged in the assumptions log: (1) incident
-de-duplication is now deterministic, which removed one double-counted
-incident, and the excluded out-of-period row is shown; (2) “patch
-latency” was recomputed from dates and reframed as fix date relative to
-advisory publication, with undated fixes reported; (3) the E3 secret
-metric was split into *secret read* and *secret in state* after the
+Following an internal hostile review we made these changes, all
+reflected in the results files and logged in the assumptions log:
+(1) deterministic incident de-duplication, which removed one
+double-counted incident, with the excluded out-of-period row now shown;
+(2) “patch latency” recomputed from dates and reframed as fix date
+relative to advisory publication, with undated fixes reported; (3) the
+E3 secret metric split into *secret read* and *secret in state* once the
 lenient metric was found to count harness persistence (Codex environment
-snapshots, the Claude Code `@path` import); (4) E2 prevalence is now
-reported per stratum instead of pooled; (5) matrix evidence labels were
-aligned with the ledger so that source reads are <sup>\[D\]</sup>, not
-<sup>\[T\]</sup>; (6) one fact about Grok Build obtained by listing
-strings in the shipped binary was withdrawn as outside our metadata-only
-rule; (7) claims about RQ3 shares, mode safety, claim coverage and rater
-independence were reworded.
+snapshots, the Claude Code `@path` import); (4) E2 prevalence reported
+per stratum rather than pooled; (5) matrix evidence labels aligned with
+the ledger, so that source reads are <sup>\[D\]</sup>, not
+<sup>\[T\]</sup>; (6) one Grok Build fact obtained by listing strings in
+the shipped binary withdrawn as outside our metadata-only rule;
+(7) claims about RQ3 shares, mode safety, claim coverage and rater
+independence reworded.
 
 # Rule Pack
 
 Table <a href="#tab:rules" data-reference-type="ref"
 data-reference="tab:rules">7</a> lists every rule; each YAML file adds
-harness-specific spellings, remediation, references and fixtures.
+harness-specific spellings, remediation guidance, references and
+fixtures.
 
 <div id="tab:rules">
 
@@ -1395,10 +1410,10 @@ data-reference="tab:taxonomy">1</a>.
 
 Table <a href="#tab:bench-catalogue" data-reference-type="ref"
 data-reference="tab:bench-catalogue">9</a> lists the scenarios and
-adapters. Every injected block uses the same versioned payload template,
-and only its location changes. The `hidden_unicode` scenario is
-implemented but excluded from the reported grid. Its zero-width wrapping
-reaches the model as plain ASCII, so it measures nothing beyond
+adapters. Every injected block uses the same versioned payload template;
+only its location changes. The `hidden_unicode` scenario is implemented
+but excluded from the reported grid, because its zero-width wrapping
+reaches the model as plain ASCII and so measures nothing beyond
 `instructions`. Aider has no auto-loaded instruction file, so its
 `instructions` cells are N/A.
 
@@ -1441,23 +1456,20 @@ added in the *auto* mode.
 
 # Scorecard Rubric
 
-The fifteen core dimensions and the 0–3 scale are listed in
-Section <a href="#sec:controls" data-reference-type="ref"
+The fifteen core dimensions, the 0–3 scale and the scoring rules are set
+out in Section <a href="#sec:controls" data-reference-type="ref"
 data-reference="sec:controls">5</a>; a proposed D16 (local service and
-control-plane exposure) is excluded from all means until it has enough
-evidence. Each dimension poses one question, e.g. D01 “does the harness
-ask before risky tool actions, and can the approve-everything path be
-restricted?” and D04 “is repository-supplied configuration ignored until
-the user consents?”. Its criteria are written so that they can be
-decided from labelled facts: score 3 always requires a safe default
-*and* central enforceability (e.g. for D02, filesystem and network
-confined by default, not weakenable by the agent or repository files,
-and enforceable by an administrator). Scoring rules: highest level whose
-criteria are all met; <sup>\[3P\]</sup> facts can only lower a score;
-undecidable criteria count as unmet; incident history never changes a
-score. Tier-C runtimes use separate ladders that flag *application
-responsibility*. The full criteria are in `matrix/rubric.md` (summary
-table: `paper/tables/rubric.md`), the scores with means and minima in
+control-plane exposure) is excluded from all means until it has
+sufficient evidence. Each dimension poses a single question, for example
+D01, “does the harness ask before risky tool actions, and can the
+approve-everything path be restricted?”, and D04, “is
+repository-supplied configuration ignored until the user consents?”. The
+criteria are written so that they can be decided from labelled facts:
+score 3 always requires a safe default *and* central enforceability (for
+D02, filesystem and network confined by default, not weakenable by the
+agent or by repository files, and enforceable by an administrator). The
+full criteria are in `matrix/rubric.md` (summary table:
+`paper/tables/rubric.md`), the scores with means and minima in
 `paper/tables/scorecard.tex`, and every cell’s evidence and rationale in
 `matrix/`.
 

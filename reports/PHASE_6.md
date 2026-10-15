@@ -24,3 +24,8 @@ Date: 2026-10-15 · Spend: $0.00
 
 ## Open / partial (as recorded in REVIEW.md)
 - A second rater for incident classification; Krippendorff's α; a hand-labelled E2 sample; positive-control trust probes; cluster bootstrap for E6.
+
+## Update (2026-10-15): prose revision
+- The paper was re-edited for a formal academic register at the author's request (A29): tighter sentences, no colloquialisms, consistent British spelling. Section sources went from 8,257 to 8,403 words; the PDF stays at 14 pages (microtype protrusion; heatmap at 0.9 and timeline at 0.85 column width).
+- Author block: name only; the project URL is now the last sentence of the abstract.
+- Checked by script: every `numbers.tex` macro, `\cite` key, `\ref`/`\label` and evidence-label count is unchanged (one duplicated rubric-rule sentence in Appendix E now cross-references Section V). `make all` passes; the Markdown mirror and the web reader were regenerated.
