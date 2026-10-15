@@ -1,8 +1,7 @@
 # Phase 0 — Bootstrap (2026-10-15)
 
 ## Done
-- Name check: `harnessguard` taken on PyPI (v0.6.4, GitHub-Actions AI-workflow linter, created
-  2026-09-13); `harnesswatch` free on PyPI and GitHub → package/import/CLI `harnesswatch` (A01).
+- Name check: `harnesswatch` free on PyPI and GitHub → package/import/CLI `harnesswatch` (A01).
 - Scaffold per MISSION §5.6 (src layout, `rules/`, `taxonomy/`, `matrix/`, `evidence/`, `bench/`,
   `experiments/`, `paper/`, `brief/`, `docs/`, `private/` gitignored).
 - Tooling: uv, hatchling, ruff, mypy --strict, pytest+cov+hypothesis, pre-commit (ruff, gitleaks,

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>$pagetitle$</title>
+<meta name="description" content="$if(description)$$description$$else$$pagetitle$$endif$">
+<meta name="author" content="$for(author)$$author$$sep$, $endfor$">
+<style>
+/* One reading column (~46rem) with a results strip up top. System font stacks only: the page is a
+   single self-contained file with no third-party requests. Colour tokens on :root, redefined for dark. */
+:root {
+  --paper: #fbfbf9; --ink: #17191c; --ink-2: #4c5058; --rule: #dcdcd6;
+  --accent: #1f5fae; --accent-soft: #e6eef8;
+  --pos: #1d6b52; --pos-soft: #e3f1ea; --null: #6b6f78; --null-soft: #eeeeea;
+  --find: #8a5a12; --find-soft: #f6eedd; --plate: #ffffff; --quote: #f3f3ef;
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-body: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #15171a; --ink: #e8e9ec; --ink-2: #a6abb4; --rule: #30343a;
+    --accent: #7fb0ec; --accent-soft: #1b2a3d; --pos: #7dcfac; --pos-soft: #16302a;
+    --null: #a6abb4; --null-soft: #23262b; --find: #e7bd73; --find-soft: #33291a;
+    --plate: #f4f4f2; --quote: #1d2024; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #15171a; --ink: #e8e9ec; --ink-2: #a6abb4; --rule: #30343a;
+  --accent: #7fb0ec; --accent-soft: #1b2a3d; --pos: #7dcfac; --pos-soft: #16302a;
+  --null: #a6abb4; --null-soft: #23262b; --find: #e7bd73; --find-soft: #33291a;
+  --plate: #f4f4f2; --quote: #1d2024; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.62 var(--font-body); }
+.page { max-width: 46rem; margin: 0 auto; padding-inline: 16px; padding-block: 48px 72px;
+  display: flex; flex-direction: column; gap: 40px; }
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 650; text-wrap: balance; line-height: 1.2; }
+h1 { font-size: clamp(1.7rem, 4.2vw, 2.35rem); margin: 0; letter-spacing: -0.01em; }
+h2 { font-size: 1.4rem; margin: 2.2em 0 0.5em; }
+h3 { font-size: 1.12rem; margin: 1.8em 0 0.4em; }
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+code { font: 500 0.84em var(--font-mono); overflow-wrap: anywhere; }
+pre { background: var(--quote); border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px;
+  overflow-x: auto; font-size: 0.84rem; line-height: 1.5; }
+pre code { font-weight: 400; font-size: inherit; overflow-wrap: normal; }
+.masthead { display: flex; flex-direction: column; gap: 12px; border-bottom: 1px solid var(--rule); padding-bottom: 28px; }
+.kicker { margin: 0; font: 500 0.78rem var(--font-mono); text-transform: uppercase; letter-spacing: 0.09em; color: var(--accent); }
+.subtitle { margin: 0; font-style: italic; color: var(--ink-2); font-size: 1.05rem; }
+.byline { margin: 0; color: var(--ink-2); }
+.meta { margin: 0; font: 400 0.8rem/1.6 var(--font-mono); color: var(--ink-2); }
+.meta b { font-weight: 500; color: var(--ink); }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 0; padding: 0; list-style: none; }
+.actions a { display: inline-block; padding: 6px 12px; border: 1px solid var(--rule); border-radius: 999px;
+  font: 500 0.78rem var(--font-mono); text-decoration: none; color: var(--ink); }
+.actions a:hover { border-color: var(--accent); color: var(--accent); }
+.abstract h2, .results h2, .toc h2, .cite h2 { margin: 0 0 10px; font-size: 0.82rem; font-family: var(--font-mono);
+  font-weight: 500; text-transform: uppercase; letter-spacing: 0.09em; color: var(--ink-2); }
+.abstract-body p { margin: 0 0 0.8em; font-size: 1.04rem; }
+.abstract-body p:last-child { margin-bottom: 0; }
+.results .note { margin: 0 0 14px; color: var(--ink-2); font-size: 0.95rem; }
+.result-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 8px; }
+.r { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "id tag" "text text"; gap: 2px 10px;
+  padding: 10px 12px; border-radius: 6px; border-left: 3px solid; font-size: 0.9rem; line-height: 1.4; }
+.r-pos { background: var(--pos-soft); border-color: var(--pos); }
+.r-ref { background: var(--find-soft); border-color: var(--find); }
+.r-null, .r-nf { background: var(--null-soft); border-color: var(--null); }
+.r-id { grid-area: id; font: 500 0.85rem var(--font-mono); }
+.r-tag { grid-area: tag; justify-self: end; font: 500 0.72rem var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; }
+.r-pos .r-tag { color: var(--pos); } .r-ref .r-tag { color: var(--find); } .r-null .r-tag, .r-nf .r-tag { color: var(--null); }
+.r-text { grid-area: text; }
+.r-text small { display: block; color: var(--ink-2); font-size: 0.8rem; margin-top: 2px; }
+.toc ul { margin: 0; padding-left: 1.2em; columns: 2 14rem; column-gap: 32px; }
+.toc li { break-inside: avoid; }
+.toc ul ul { columns: 1; padding-left: 1em; font-size: 0.92em; color: var(--ink-2); }
+.toc a { text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+.paper h1 { font-size: 1.55rem; margin: 2em 0 0.5em; padding-top: 0.6em; border-top: 1px solid var(--rule); }
+.paper p, .paper li { hyphens: auto; }
+.paper p { margin: 0 0 1em; }
+.paper .header-section-number { color: var(--accent); margin-right: 0.5em; font-family: var(--font-mono); font-size: 0.85em; font-weight: 500; }
+.paper blockquote { margin: 1.2em 0; padding: 10px 16px; border-left: 3px solid var(--rule); background: var(--quote);
+  border-radius: 0 6px 6px 0; font-size: 0.93rem; color: var(--ink-2); }
+figure { margin: 1.6em 0; display: flex; flex-direction: column; gap: 10px; }
+figure img { background: var(--plate); padding: 12px; border-radius: 6px; border: 1px solid var(--rule); max-width: 100%; height: auto; }
+figcaption, caption { font-size: 0.88rem; color: var(--ink-2); line-height: 1.45; text-align: left; }
+.paper table { display: block; overflow-x: auto; border-collapse: collapse; width: 100%; margin: 1.4em 0;
+  font: 400 0.78rem/1.45 var(--font-mono); font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 10px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+th { font-weight: 500; color: var(--ink-2); border-bottom-color: var(--ink-2); }
+#refs { font-size: 0.88rem; line-height: 1.5; display: flex; flex-direction: column; gap: 6px; }
+.csl-entry { display: grid; grid-template-columns: 2.6em 1fr; overflow-wrap: anywhere; }
+.csl-left-margin { color: var(--ink-2); font-family: var(--font-mono); font-size: 0.85em; }
+.cite { min-width: 0; }
+.cite pre, .cite pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
+.colophon { border-top: 1px solid var(--rule); padding-top: 20px; color: var(--ink-2); font-size: 0.85rem; }
+.colophon p { margin: 0 0 0.7em; }
+@media (max-width: 480px) { body { font-size: 16px; } .page { padding-block: 28px 48px; gap: 28px; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <p class="kicker">Research paper · harnesswatch</p>
+  <h1>$title$</h1>
+$if(subtitle)$
+  <p class="subtitle">$subtitle$</p>
+$endif$
+  <p class="byline">$for(author)$$author$$sep$, $endfor$ · <a href="https://github.com/thanatchon36/harnesswatch">github.com/thanatchon36/harnesswatch</a></p>
+  <p class="meta"><!--META--></p>
+  <ul class="actions"><!--ACTIONS--></ul>
+</header>
+<section class="abstract" aria-label="Abstract">
+  <h2>Abstract</h2>
+  <div class="abstract-body"><!--ABSTRACT--></div>
+</section>
+<section class="results" aria-label="Results at a glance">
+  <h2>Results at a glance</h2>
+  <p class="note"><!--RESULTS-NOTE--></p>
+  <ul class="result-list"><!--RESULTS--></ul>
+</section>
+$if(toc)$
+<nav class="toc" aria-label="Contents"><h2>Contents</h2>
+$toc$
+</nav>
+$endif$
+<article class="paper">
+$body$
+</article>
+<section class="cite" aria-label="How to cite"><!--CITE--></section>
+<footer class="colophon"><!--COLOPHON--></footer>
+</div>
+</body>
+</html>

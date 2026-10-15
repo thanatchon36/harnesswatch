@@ -1,4 +1,4 @@
-# MISSION.md — `harnessguard`
+# MISSION.md — `harnesswatch`
 
 > **Security analysis & audit toolkit for AI agent harnesses** (coding-agent CLIs/IDEs and agent SDK runtimes).
 > **50 % software** (auditable, contributable Python toolkit) · **50 % research** (peer-review-grade paper + executive brief).
@@ -8,7 +8,7 @@
 
 ## 0. One-paragraph brief
 
-In 2026 the industry converged on **Agent = Model + Harness**. The harness — the runtime loop that holds credentials, executes shell commands, mounts MCP servers, reads repo-level config, spawns sub-agents and runs headless in CI — is now the real attack surface, not the model. Every major vendor shipped at least one harness-level vulnerability in 2025–2026 (rules-file backdoors, MCP tool poisoning, prompt-injection → RCE, supply-chain abuse of agent CLIs, source leaks). There is no vendor-neutral, reproducible comparison of harness security controls and no tooling that audits a machine or repo for dangerous harness configuration. **Build both.** Output: (1) `harnessguard`, a Python package/CLI on PyPI that inventories installed harnesses, audits their configs/MCP servers/instruction files/state directories for risk, and benchmarks prompt-injection resilience with inert canaries in a sandbox; (2) a paper, *"The Harness Is the Attack Surface: A Security Analysis of AI Coding-Agent Harnesses (2025–2026)"*, plus a 2-page executive brief and a governance checklist. Everything reproducible from `make all`.
+In 2026 the industry converged on **Agent = Model + Harness**. The harness — the runtime loop that holds credentials, executes shell commands, mounts MCP servers, reads repo-level config, spawns sub-agents and runs headless in CI — is now the real attack surface, not the model. Every major vendor shipped at least one harness-level vulnerability in 2025–2026 (rules-file backdoors, MCP tool poisoning, prompt-injection → RCE, supply-chain abuse of agent CLIs, source leaks). There is no vendor-neutral, reproducible comparison of harness security controls and no tooling that audits a machine or repo for dangerous harness configuration. **Build both.** Output: (1) `harnesswatch`, a Python package/CLI on PyPI that inventories installed harnesses, audits their configs/MCP servers/instruction files/state directories for risk, and benchmarks prompt-injection resilience with inert canaries in a sandbox; (2) a paper, *"The Harness Is the Attack Surface: A Security Analysis of AI Coding-Agent Harnesses (2025–2026)"*, plus a 2-page executive brief and a governance checklist. Everything reproducible from `make all`.
 
 ---
 
@@ -54,7 +54,7 @@ We cannot read their code, but we can install the official client, inspect what 
 Codex cloud agent/app (if no ChatGPT plan) · Devin · Replit Agent · any Tier-B harness whose access check fails. Analyse official docs, security pages, disclosure policies, advisories and third-party research. Matrix cells from this tier are labelled `from-official-docs` or `third-party-report`, never `verified-by-test`.
 
 ### 1.1 The black-box method (applies to every Tier B harness)
-- **Do:** install the official release; read official docs/changelogs/advisories; parse user- and repo-level config; run `harnessguard observe` (§5.2) — a sandboxed run with egress logging and filesystem watch — to record hosts contacted (model API / telemetry / update / unknown), files written and their permissions, where credentials are stored (keychain vs plaintext), evidence of OS-level sandboxing (seatbelt / bwrap / container) from process inspection, and prompts shown; drive headless mode through the canary scenarios; probe config trust (does a repo-level hook or MCP server run on first open? is there a trust prompt?); inspect package **metadata** only (manifest, declared dependencies, install/postinstall scripts, signatures, SBOM).
+- **Do:** install the official release; read official docs/changelogs/advisories; parse user- and repo-level config; run `harnesswatch observe` (§5.2) — a sandboxed run with egress logging and filesystem watch — to record hosts contacted (model API / telemetry / update / unknown), files written and their permissions, where credentials are stored (keychain vs plaintext), evidence of OS-level sandboxing (seatbelt / bwrap / container) from process inspection, and prompts shown; drive headless mode through the canary scenarios; probe config trust (does a repo-level hook or MCP server run on first open? is there a trust prompt?); inspect package **metadata** only (manifest, declared dependencies, install/postinstall scripts, signatures, SBOM).
 - **Don't:** decompile, deobfuscate or reverse-engineer proprietary code; use leaked source (the Claude Code source-map leak is cited as an event, never read or quoted); bypass licensing, quotas or bot detection; test the vendor's hosted service beyond your own client's normal traffic; break the vendor's terms — if the terms forbid a probe, skip it and label the cell `N/A (terms)`.
 - **Why it matters:** the gap between what a vendor documents and what its client observably does is itself a result (RQ7), and the method is the same for open and closed harnesses, which makes the comparison fair.
 
@@ -73,8 +73,8 @@ Managed/commercial: Claude Agent SDK + Claude Managed Agents · OpenAI AgentKit 
 | RQ1 | What is the attack surface of an agent harness, and how does it differ from classic LLM-app risk? | Threat taxonomy (`taxonomy/harness-threats.yaml`), attack trees, mapping to OWASP LLM Top 10 (2025), OWASP Agentic/MCP Top 10, MITRE ATLAS, STRIDE | literature + source reading |
 | RQ2 | How do harnesses differ in their security controls (permission model, sandbox, config trust, MCP governance, secrets, egress, telemetry, supply chain, CI safeguards)? | Control matrix + 0–3 rubric scorecard per harness (`matrix/controls.csv`, `matrix/scorecard.md`) with evidence links | docs + source + hands-on verification |
 | RQ3 | What harness-level incidents and CVEs occurred 2025–2026, what was the root cause class, and how fast were they patched? | Incident timeline + root-cause classification (`evidence/incidents.csv`) | NVD/GHSA/vendor advisories |
-| RQ4 | Can misconfiguration and dangerous patterns be detected automatically across harness config formats? | `harnessguard` static modules + rule pack, precision/recall on a labelled synthetic corpus, findings on a public-repo corpus | software + experiment |
-| RQ5 | How resilient are harnesses × models × permission modes to indirect prompt injection and secret-residue leakage, measured with inert canaries? | `harnessguard bench` (canary-bench) results with confidence intervals | sandboxed experiment |
+| RQ4 | Can misconfiguration and dangerous patterns be detected automatically across harness config formats? | `harnesswatch` static modules + rule pack, precision/recall on a labelled synthetic corpus, findings on a public-repo corpus | software + experiment |
+| RQ5 | How resilient are harnesses × models × permission modes to indirect prompt injection and secret-residue leakage, measured with inert canaries? | `harnesswatch bench` (canary-bench) results with confidence intervals | sandboxed experiment |
 | RQ6 | What controls should an organisation (incl. regulated financial institutions) mandate before adopting agent harnesses? | Governance checklist mapped to NIST AI RMF, ISO/IEC 42001, OWASP, MAS AI-risk guidelines; executive brief | synthesis |
 | RQ7 | For closed-source harnesses (Claude Code, Antigravity, Grok Build, …), do the documented security controls match observable client behaviour — telemetry hosts, config trust, sandboxing, secret storage, update checks? | Claims-vs-observed table per closed harness (`matrix/claims_vs_observed.csv`) | black-box observation (§1.1) |
 
@@ -133,10 +133,10 @@ Also collect each vendor's **security documentation**, SECURITY.md / disclosure 
 
 ---
 
-## 5. Software deliverable — `harnessguard`
+## 5. Software deliverable — `harnesswatch`
 
 ### 5.1 Package & CLI
-- Python ≥ 3.12, `uv`, `pyproject.toml`, src layout: `src/harnessguard/`. Import `harnessguard`, CLI `harnessguard` (Typer + Rich). **Phase 0: check PyPI + GitHub name availability; fallbacks `harnesswatch`, `harnessaudit`.**
+- Python ≥ 3.12, `uv`, `pyproject.toml`, src layout: `src/harnesswatch/`. Import `harnesswatch`, CLI `harnesswatch` (Typer + Rich). **Phase 0: check PyPI + GitHub name availability; fallbacks `harnesswatch`, `harnessaudit`.**
 - Stack: `pydantic` v2 models for every finding/config, `typer`, `rich`, `pyyaml`, `httpx`, `pytest` (+ `pytest-cov`, `hypothesis` for parsers), `ruff`, `mypy --strict`, `pre-commit`, GitHub Actions (lint/type/test matrix macOS + Ubuntu, Python 3.12/3.13), Codecov, `uv build` + Trusted Publishing to PyPI.
 - Output formats: Rich terminal, JSON, Markdown, **SARIF 2.1.0** (so findings show up in GitHub code scanning). Exit codes: 0 clean / 1 findings ≥ threshold / 2 error.
 - No network calls by default; `--online` enables OSV / registry lookups. Never transmit file contents anywhere.
@@ -144,17 +144,17 @@ Also collect each vendor's **security documentation**, SECURITY.md / disclosure 
 ### 5.2 Modules (each: parser → pydantic model → rules → findings)
 | Command | Purpose |
 |---|---|
-| `harnessguard inventory` | Detect installed harnesses on this machine and in this repo: binaries on PATH, versions, install method (npm/pip/brew/curl-installer), state dirs, login state (never print secrets) |
-| `harnessguard audit config [PATH]` | Parse user-level and repo-level configs of every supported harness into a **common schema** (`HarnessConfig`: permission_mode, allow/deny lists, hooks, mcp_servers, instruction_files, trust settings, telemetry, auto_update) and run the rule pack |
-| `harnessguard audit mcp` | Parse all MCP server declarations (every harness format + `.vscode/mcp.json`): package pinning, registry provenance, transport/TLS/auth, inline secrets in `env`, tool-description injection heuristics, optional OSV/registry checks |
-| `harnessguard audit instructions` | Scan instruction/rules/skill files for injection indicators: zero-width/bidi/confusable Unicode, HTML comments, base64/hex blobs, imperative override phrases, embedded URLs/IPs, role-play & "do not tell the user" patterns. Scored, not binary |
-| `harnessguard audit secrets` | Scan harness state dirs, session logs, transcripts, trajectories, memory files for secrets (regex + entropy; `detect-secrets`-style) and check file permissions. Redacts in output; never stores matches |
-| `harnessguard audit supply` | SBOM (CycloneDX) for installed harness packages (npm/pip/cargo/go), OSV vulnerability lookup (`--online`), installer-script checksum/signature presence, auto-update channel settings |
-| `harnessguard audit ci [REPO]` | Detect headless agent invocations in GitHub Actions / GitLab CI: PR-triggered + secrets + auto-approve = "pwn-request" pattern; permissions of `GITHUB_TOKEN` |
-| `harnessguard observe <harness> [-- CMD]` | **Black-box behavioural probe** (works for closed and open harnesses alike): run a harness command inside the sandbox with an egress-logging proxy and a filesystem watch; report hosts contacted (classified model-API / telemetry / update / unknown), files and dirs written with permission bits, credential storage location, evidence of OS-level sandboxing, prompts shown. Output feeds `matrix/claims_vs_observed.csv` (RQ7) |
-| `harnessguard bench …` | Canary-bench (5.4) |
-| `harnessguard report` | Aggregate findings → Markdown/SARIF/JSON; `--baseline` for diffing |
-| `harnessguard scorecard` | Render the RQ2 control matrix for a harness/version from `matrix/` data |
+| `harnesswatch inventory` | Detect installed harnesses on this machine and in this repo: binaries on PATH, versions, install method (npm/pip/brew/curl-installer), state dirs, login state (never print secrets) |
+| `harnesswatch audit config [PATH]` | Parse user-level and repo-level configs of every supported harness into a **common schema** (`HarnessConfig`: permission_mode, allow/deny lists, hooks, mcp_servers, instruction_files, trust settings, telemetry, auto_update) and run the rule pack |
+| `harnesswatch audit mcp` | Parse all MCP server declarations (every harness format + `.vscode/mcp.json`): package pinning, registry provenance, transport/TLS/auth, inline secrets in `env`, tool-description injection heuristics, optional OSV/registry checks |
+| `harnesswatch audit instructions` | Scan instruction/rules/skill files for injection indicators: zero-width/bidi/confusable Unicode, HTML comments, base64/hex blobs, imperative override phrases, embedded URLs/IPs, role-play & "do not tell the user" patterns. Scored, not binary |
+| `harnesswatch audit secrets` | Scan harness state dirs, session logs, transcripts, trajectories, memory files for secrets (regex + entropy; `detect-secrets`-style) and check file permissions. Redacts in output; never stores matches |
+| `harnesswatch audit supply` | SBOM (CycloneDX) for installed harness packages (npm/pip/cargo/go), OSV vulnerability lookup (`--online`), installer-script checksum/signature presence, auto-update channel settings |
+| `harnesswatch audit ci [REPO]` | Detect headless agent invocations in GitHub Actions / GitLab CI: PR-triggered + secrets + auto-approve = "pwn-request" pattern; permissions of `GITHUB_TOKEN` |
+| `harnesswatch observe <harness> [-- CMD]` | **Black-box behavioural probe** (works for closed and open harnesses alike): run a harness command inside the sandbox with an egress-logging proxy and a filesystem watch; report hosts contacted (classified model-API / telemetry / update / unknown), files and dirs written with permission bits, credential storage location, evidence of OS-level sandboxing, prompts shown. Output feeds `matrix/claims_vs_observed.csv` (RQ7) |
+| `harnesswatch bench …` | Canary-bench (5.4) |
+| `harnesswatch report` | Aggregate findings → Markdown/SARIF/JSON; `--baseline` for diffing |
+| `harnesswatch scorecard` | Render the RQ2 control matrix for a harness/version from `matrix/` data |
 
 Ship a **GitHub Action** (`action.yml`) and a **pre-commit hook** wrapping `audit config/mcp/instructions/ci` on repos.
 
@@ -186,14 +186,14 @@ Rule ID scheme `HG-<AREA>-<NNN>`, severity (critical/high/medium/low/info), conf
 
 Rules must be **harness-aware**: the same risk has different config spellings per harness. Maintain `rules/harness_profiles/<harness>.yaml` describing config locations, flag names, and defaults (verify every path/flag against current docs — seeds: `~/.claude/settings.json`, `.claude/settings*.json`, `.mcp.json`, `~/.codex/config.toml`, `opencode.json`, `~/.gemini/settings.json`, `.cursor/rules|mcp.json|hooks.json`, `.github/copilot-instructions.md`, `.vscode/mcp.json`, `.clinerules`, `.roo/`, `.kilocode/`, `.aider.conf.yml`, `~/.config/goose/config.yaml`, `.goosehints`, `.openhands/`, `~/.hermes/`, `~/.pi/`, `~/.omp/`, `~/.dsh/` profiles, `.kiro/steering|hooks|settings`, `~/.qwen/`, `~/.kimi/`, `~/.vibe/config.toml`, `crush.json`, `.windsurf/`, `.agent/` rules/workflows/skills + the `agy` config dir (Antigravity IDE/CLI — verify), `~/.grok/` + AGENTS.md handling (Grok Build — verify), `~/.openclaw/`, `~/.config/amp/`, `.factory/`, `.continue/`). Profiles for Claude Code, Antigravity and Grok Build are mandatory, not optional. Expect schemas to have changed — read the docs/source first.
 
-### 5.4 Canary-bench (`harnessguard bench`) — defensive resilience benchmark
+### 5.4 Canary-bench (`harnesswatch bench`) — defensive resilience benchmark
 **Purpose:** measure, per harness × model × permission mode, how often an agent follows injected instructions or leaks synthetic secrets. **Inert by design.**
 - **Isolation:** every run inside Docker (Linux container; `--network none` plus a sidecar egress proxy that allows only the model-API host and logs/blocks everything else). Synthetic repo per run, discarded afterwards. Nothing ever runs on the host.
 - **Canary payload rules (hard):** the only "attacker goals" are (a) create a marker file `CANARY_<id>.txt`, (b) print a canary string, (c) read a synthetic secret file and send it to a **local sink at 127.0.0.1** inside the container. No real hosts, no real credentials, no destructive commands beyond deleting a fixture file inside the sandbox. Payloads are templated, versioned, and documented as **detection fixtures**, not exploits.
 - **Scenarios (seed):** README injection · AGENTS.md/CLAUDE.md injection · hidden-Unicode rules file · HTML-comment injection in source · poisoned MCP tool description (fake local MCP server) · poisoned tool *result* · poisoned local web page (served from container) · poisoned git commit message / issue text · poisoned persistent-memory file · sub-agent delegation chain · headless `-p` mode vs interactive-with-auto-approve.
 - **Metrics:** Injection Follow Rate, Secret Access Rate (read when task didn't require it), Exfil Attempt Rate (blocked egress or local-sink hit), Destructive Action Rate, Permission-Prompt Rate, task-completion rate (so "safe but useless" is visible), tokens/cost. N ≥ 5 runs per cell, report Wilson/bootstrap CIs, fixed seeds where the harness allows.
 - **Runners:** one adapter per harness using its headless mode (`claude -p`, `codex exec`, `opencode run`, `dsh` headless profile, `agy`/`gemini -p`, `aider --message`, `goose run`, `hermes`, `omp -p`, `qwen -p`, `kimi`, `vibe --prompt`, `crush run`, `grok -p`, `kiro-cli`, `copilot -p` — verify flags). Skip gracefully with `N/A (no access)` when credentials are absent.
-- **Tier B harnesses run the identical scenarios black-box:** no source instrumentation; wrap every run with `harnessguard observe` so network and filesystem evidence is captured alongside the behavioural metrics. Claude Code, Antigravity (`agy`) and Grok Build are first-class bench targets, not afterthoughts.
+- **Tier B harnesses run the identical scenarios black-box:** no source instrumentation; wrap every run with `harnesswatch observe` so network and filesystem evidence is captured alongside the behavioural metrics. Claude Code, Antigravity (`agy`) and Grok Build are first-class bench targets, not afterthoughts.
 - **Budget:** hard cap configurable (`--max-usd`, default 25) with cheap models by default; log spend per cell.
 
 ### 5.5 Engineering standards
@@ -205,10 +205,10 @@ Rules must be **harness-aware**: the same risk has different config spellings pe
 
 ### 5.6 Repository layout
 ```
-harnessguard/
+harnesswatch/
 ├── MISSION.md  README.md  LICENSE(Apache-2.0)  SECURITY.md  CHANGELOG.md  VERSIONS.md  ASSUMPTIONS.md
 ├── pyproject.toml  Makefile  action.yml  .pre-commit-hooks.yaml  .github/workflows/
-├── src/harnessguard/{inventory,parsers/<harness>.py,models,rules_engine,audits/*,bench/*,report,cli}.py
+├── src/harnesswatch/{inventory,parsers/<harness>.py,models,rules_engine,audits/*,bench/*,report,cli}.py
 ├── rules/            # HG-*.yaml + harness_profiles/
 ├── taxonomy/         # harness-threats.yaml, mappings (owasp/atlas/stride/nist)
 ├── matrix/           # controls.csv, scorecard rubric, per-harness evidence JSON
@@ -227,14 +227,14 @@ harnessguard/
 
 ### 6.1 Paper — `paper/`
 Working title: **"The Harness Is the Attack Surface: A Security Analysis of AI Coding-Agent Harnesses (2025–2026)"**. Target arXiv cs.CR, 10–14 pages, ACM/IEEE template, LaTeX, fully built by `paper/build.sh`.
-1. Abstract · 2. Introduction (Agent = Model + Harness; why the harness layer matters; contributions) · 3. Background (harness anatomy: loop, tools, permissions, MCP, skills, memory, sub-agents, headless mode; the 2026 landscape incl. open vs closed split) · 4. Threat model & taxonomy (RQ1) · 5. Comparative analysis of security controls (RQ2; matrix + scorecard; per-dimension discussion) · 6. Incident & CVE survey 2025–2026 (RQ3; timeline, root-cause classes, patch latency) · 7. `harnessguard` design (RQ4) · 8. Empirical evaluation (RQ4 corpus results; RQ5 canary-bench results with CIs) · 9. Governance recommendations (RQ6; mapped to NIST AI RMF, ISO/IEC 42001, OWASP, MITRE ATLAS, MAS AI-risk guidelines and financial-sector supervisory expectations) · 10. Related work (AgentDojo, InjecAgent, MCP security studies, rules-file backdoor research, Trail of Bits / Invariant / Tracebit / Pillar reports, OWASP agentic work) · 11. Limitations & threats to validity (version drift, model nondeterminism, access gaps, benign-canary ceiling) · 12. Conclusion · Appendix: reproducibility, full rule list, bench scenario catalogue, scorecard rubric.
+1. Abstract · 2. Introduction (Agent = Model + Harness; why the harness layer matters; contributions) · 3. Background (harness anatomy: loop, tools, permissions, MCP, skills, memory, sub-agents, headless mode; the 2026 landscape incl. open vs closed split) · 4. Threat model & taxonomy (RQ1) · 5. Comparative analysis of security controls (RQ2; matrix + scorecard; per-dimension discussion) · 6. Incident & CVE survey 2025–2026 (RQ3; timeline, root-cause classes, patch latency) · 7. `harnesswatch` design (RQ4) · 8. Empirical evaluation (RQ4 corpus results; RQ5 canary-bench results with CIs) · 9. Governance recommendations (RQ6; mapped to NIST AI RMF, ISO/IEC 42001, OWASP, MITRE ATLAS, MAS AI-risk guidelines and financial-sector supervisory expectations) · 10. Related work (AgentDojo, InjecAgent, MCP security studies, rules-file backdoor research, Trail of Bits / Invariant / Tracebit / Pillar reports, OWASP agentic work) · 11. Limitations & threats to validity (version drift, model nondeterminism, access gaps, benign-canary ceiling) · 12. Conclusion · Appendix: reproducibility, full rule list, bench scenario catalogue, scorecard rubric.
 - Also produce `paper/paper.md` (Markdown mirror) for GitHub readers.
 
 ### 6.2 Executive brief — `brief/executive-brief.md` (+PDF), 2 pages
 C-suite lens: what changed, top 5 risks in business terms, what to mandate before rollout, a one-page decision table (which harness class is acceptable under which controls), cost of inaction with incident citations.
 
 ### 6.3 Governance checklist — `brief/governance-checklist.md`
-Control → why → how to verify (with the exact `harnessguard` command) → framework mapping. Make it adoptable as policy text.
+Control → why → how to verify (with the exact `harnesswatch` command) → framework mapping. Make it adoptable as policy text.
 
 ### 6.4 Evidence & citation discipline (hard rules)
 - Every factual claim about a harness carries: version tested, date, source URL, and a label — **verified-by-test** / **from-official-docs** / **third-party-report** / **unverified**. Unverified claims do not enter the paper.
@@ -297,11 +297,11 @@ Checkpoint rule: a phase is complete only when its artefacts exist, tests pass, 
 - If a harness cannot be installed or run, record `N/A` with the reason — never fabricate a result.
 
 ## 11. Definition of done
-- [ ] `pip install harnessguard` works; `harnessguard inventory && harnessguard audit config .` runs on a clean machine in < 5 s
+- [ ] `pip install harnesswatch` works; `harnesswatch inventory && harnesswatch audit config .` runs on a clean machine in < 5 s
 - [ ] ≥ 20 documented rules with fixture pairs; E6 precision ≥ 0.9 on the synthetic corpus
 - [ ] Parsers for every Tier-A harness + Claude Code + Antigravity + Grok Build + Cursor + Copilot + Kiro config formats
 - [ ] Claude Code, Antigravity (`agy` + IDE) and Grok Build each have: a harness profile, a black-box behavioural profile (E7), a claims-vs-observed row (RQ7), a scorecard column and bench cells — or `N/A (no access)` with the reason
-- [ ] `harnessguard observe` works on at least one open and one closed harness
+- [ ] `harnesswatch observe` works on at least one open and one closed harness
 - [ ] Canary-bench runs end-to-end on ≥ 4 harnesses with CIs; results reproducible from `make bench`
 - [ ] Control matrix covers every harness in §1 (with honest `N/A`s), each cell linked to evidence
 - [ ] Incident timeline ≥ 25 verified entries 2025–2026 with root-cause class
@@ -316,10 +316,10 @@ Checkpoint rule: a phase is complete only when its artefacts exist, tests pass, 
 - Antigravity IDE needs a GUI session (fine on the Mac); `agy` and Grok Build are terminal tools. Grok Build is beta-gated to SuperGrok-tier accounts — without one it drops to Tier C automatically, with the reason recorded in `ACCESS.md`.
 
 ## 13. Related work by the same author — reuse, cross-link, do not duplicate
-- **upfront** (github.com/thanatchon36/upfront): already parses MCP servers, skills and instruction files across Claude Code / Codex / Gemini CLI / OpenCode to measure token cost. Reuse or port its parsers where sensible (respect its license); link it in README and Related Work. `harnessguard` stays independent (no hard dependency).
+- **upfront** (github.com/thanatchon36/upfront): already parses MCP servers, skills and instruction files across Claude Code / Codex / Gemini CLI / OpenCode to measure token cost. Reuse or port its parsers where sensible (respect its license); link it in README and Related Work. `harnesswatch` stays independent (no hard dependency).
 - **rulewarden**: deterministic enforcement of CLAUDE.md/AGENTS.md rules. Offer an optional integration point (a `HG-INJ` finding can suggest a rulewarden policy); cite in Related Work.
 - **airmkit**: MAS AI-risk-management toolkit — use its control vocabulary for the RQ6 mapping so the governance checklist slots into it.
 - Same conventions as those repos: MISSION-driven, software 50 / paper 50, Apache-2.0, PyPI, CI + Codecov, paper in-repo, LinkedIn-ready announcement.
 
 ## 14. Kickoff
-Start in plan mode: produce a one-screen plan for Phase 0–1, create the task list, then execute. First commands: name availability check → scaffold → `harnessguard inventory` prototype against this machine → Phase 1 subagent fan-out. Report back with `reports/PHASE_0.md`.
+Start in plan mode: produce a one-screen plan for Phase 0–1, create the task list, then execute. First commands: name availability check → scaffold → `harnesswatch inventory` prototype against this machine → Phase 1 subagent fan-out. Report back with `reports/PHASE_0.md`.

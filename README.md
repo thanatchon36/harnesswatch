@@ -6,6 +6,11 @@
 [![Docs](https://img.shields.io/badge/docs-mkdocs-blue)](https://thanatchon36.github.io/harnesswatch/)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
 
+📄 **[Read the paper on the web](https://thanatchon36.github.io/harnesswatch/paper/)** ·
+⬇️ **[Download the PDF](https://github.com/thanatchon36/harnesswatch/raw/main/paper/main.pdf)** ·
+📚 **[Documentation](https://thanatchon36.github.io/harnesswatch/)** ·
+📋 **[Executive brief](brief/executive-brief.pdf)**
+
 **Security audit toolkit and research study for AI coding-agent harnesses.** The harness is the runtime
 loop (Claude Code, Codex CLI, OpenCode, Cursor, Copilot CLI, Kiro, Grok Build, Antigravity, Goose, Aider and others)
 that holds credentials, runs shell commands, starts MCP servers, reads repository-level configuration and runs
@@ -20,9 +25,6 @@ unattended in CI. harnesswatch audits that layer, and the accompanying paper mea
   It records metadata only and never request bodies.
 - **`bench`:** an inert canary prompt-injection benchmark. It runs in disposable containers with egress blocked,
   uses synthetic secrets and sends exfiltration only to a local sink.
-
-> The project was planned as `harnessguard`. That name is taken on PyPI, so the package, import and CLI are
-> `harnesswatch` (ASSUMPTIONS A01). Rule IDs keep the `HG-` prefix.
 
 ## Install and quickstart
 
@@ -47,7 +49,7 @@ A recorded demo is in [`docs/demo.cast`](docs/demo.cast) (asciinema v2; regenera
 
 ## Research: *The Harness Is the Attack Surface* (2025–2026)
 
-The paper is in [`paper/`](paper/), with a PDF in [`paper/main.pdf`](paper/main.pdf) and a Markdown mirror in [`paper/paper.md`](paper/paper.md).
+The paper is in [`paper/`](paper/): a PDF in [`paper/main.pdf`](paper/main.pdf), a [web version](https://thanatchon36.github.io/harnesswatch/paper/) (built into [`docs/paper/`](docs/paper/)) and a Markdown mirror in [`paper/paper.md`](paper/paper.md).
 It answers seven research questions: the threat taxonomy, a control matrix covering 58 harnesses, incidents and CVEs from
 2025–2026, detection accuracy, a canary benchmark, governance, and documented claims vs observed behaviour for closed
 harnesses. Every number in the paper is generated from `experiments/results/*.json`, and every harness claim carries

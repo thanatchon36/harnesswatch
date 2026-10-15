@@ -1,8 +1,7 @@
 # RELEASE_CHECKLIST.md: steps only the author can take
 
 Everything below is prepared and committed. Each step is an irreversible or public action (MISSION hard blocker 2),
-so it is left to you. Run the commands in order from a clean clone of this repository, which is named `harnessguard`
-locally and is published as **`harnesswatch`**.
+so it is left to you. Run the commands in order from a clean clone of this repository.
 
 ## 0. Pre-flight (local, safe)
 ```bash

@@ -1,7 +1,7 @@
 \section{Design of \texttt{harnesswatch}}\label{sec:tool}
 \answers{the design half of RQ4 and the instrument for RQ5 and RQ7}
 
-\tool{} is an Apache-2.0 Python package and CLI (the working name \texttt{harnessguard} was taken on PyPI; rule ids keep the \texttt{HG-} prefix). It is read-only and offline by default, never transmits file contents, and redacts any secret it reports.
+\tool{} is an Apache-2.0 Python package and CLI. It is read-only and offline by default, never transmits file contents, and redacts any secret it reports.
 
 \paragraph*{Profiles and a common schema} One risk has many spellings: approve-everything is \texttt{bypassPermissions} in Claude Code, \texttt{approval\_policy = "never"} in Codex, \texttt{yolo} in Gemini and Qwen, and \texttt{"permission": "allow"} in OpenCode. A YAML profile per harness (one for each of the \nHarnesses{} in the matrix) records file locations, key names and documented defaults, and a profile-driven parser maps every file into a common \texttt{HarnessConfig} model (permission mode, allow/deny lists, hooks, MCP servers, instruction files, trust, telemetry, auto-update). Files shared by several harnesses are parsed once, with the semantics of the format's owner.
 

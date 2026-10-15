@@ -4,14 +4,15 @@ Security audit toolkit and research project for **AI coding-agent harnesses**: t
 (Claude Code, Codex CLI, OpenCode, Cursor, Copilot, Kiro, Goose, Aider and others) that holds
 credentials, runs shell commands, mounts MCP servers and reads repository-level config.
 
-The package and CLI are named `harnesswatch`; rule IDs keep the `HG-` prefix.
+📄 **[Read the paper](paper/index.html)**: *The Harness Is the Attack Surface: A Security Analysis of AI
+Coding-Agent Harnesses (2025–2026)* ([PDF](paper/paper.pdf)).
 
 What it does:
 
 - **Inventory** the harnesses installed on a machine and the harness files in a repository.
 - **Audit** configs, MCP declarations, instruction files and CI workflows, offline and read-only.
 - **Observe** a harness black-box in a sandbox: hosts contacted, files written, prompts shown.
-- **Bench** inert canary prompt-injection scenarios across harnesses (in progress).
+- **Bench** inert canary prompt-injection scenarios across harnesses.
 - Report in Rich, JSON, Markdown or SARIF.
 
 Start with the [quickstart](quickstart.md). Rules are listed in the [rule reference](reference/rules.md),

@@ -1,12 +1,15 @@
 site_name: harnesswatch
 site_description: Security audit toolkit for AI coding-agent harnesses
+site_url: https://thanatchon36.github.io/harnesswatch/
 repo_url: https://github.com/thanatchon36/harnesswatch
+repo_name: thanatchon36/harnesswatch
 theme:
   name: material
   features: [navigation.sections, content.code.copy]
 strict: true
 nav:
   - Home: index.md
+  - Paper: paper/index.html
   - Quickstart: quickstart.md
   - CLI reference: cli.md
   - Rule reference: reference/rules.md

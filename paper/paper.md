@@ -279,16 +279,16 @@ model-level defence holds.
 
 We extended the 16-class seed into the classes in
 Table <a href="#tab:taxonomy" data-reference-type="ref"
-data-reference="tab:taxonomy">[tab:taxonomy]</a>. Three classes were
-added because the incident set contained large groups with no home:
-sandbox and isolation escape (T17), exposure of the agent’s own control
-plane, such as local HTTP or WebSocket servers without authentication or
-Origin checks (T18), and conventional software defects in runtimes and
-SDKs (T19). Each class carries STRIDE letters, MITRE ATLAS techniques,
-OWASP LLM 2025, OWASP Agentic (ASI01–ASI10) and OWASP MCP Top 10
-identifiers; the MCP list is still in beta, and we flag those mappings
-as unstable. Each class also lists the control dimensions that mitigate
-it (Section <a href="#sec:controls" data-reference-type="ref"
+data-reference="tab:taxonomy">1</a>. Three classes were added because
+the incident set contained large groups with no home: sandbox and
+isolation escape (T17), exposure of the agent’s own control plane, such
+as local HTTP or WebSocket servers without authentication or Origin
+checks (T18), and conventional software defects in runtimes and SDKs
+(T19). Each class carries STRIDE letters, MITRE ATLAS techniques, OWASP
+LLM 2025, OWASP Agentic (ASI01–ASI10) and OWASP MCP Top 10 identifiers;
+the MCP list is still in beta, and we flag those mappings as unstable.
+Each class also lists the control dimensions that mitigate it
+(Section <a href="#sec:controls" data-reference-type="ref"
 data-reference="sec:controls">5</a>) and the `harnesswatch` rules that
 detect it (Appendix <a href="#app:rules" data-reference-type="ref"
 data-reference="app:rules">16</a>).
@@ -300,14 +300,14 @@ the classes in a fixed order and assign the first whose *failed control*
 the incident exhibits. A parallel 12-question procedure assigns one of
 twelve root causes, RC1–RC12
 (Table <a href="#tab:rootcauses" data-reference-type="ref"
-data-reference="tab:rootcauses">[tab:rootcauses]</a>). For example,
-injection-written configuration that later executes is T02/RC2, not T01;
-data leaving through a permitted command is T08/RC3. RC1 (untrusted
-content treated as instructions with no other control failure) is the
-residual answer reached only when no earlier question applies, so its
-share is low partly by construction.
+data-reference="tab:rootcauses">3</a>). For example, injection-written
+configuration that later executes is T02/RC2, not T01; data leaving
+through a permitted command is T08/RC3. RC1 (untrusted content treated
+as instructions with no other control failure) is the residual answer
+reached only when no earlier question applies, so its share is low
+partly by construction.
 
-<div class="table*">
+<div id="tab:taxonomy">
 
 | Class | Name                                                            | STRIDE | OWASP LLM           | OWASP ASI           | MITRE ATLAS  | Controls                | Inc. |
 |:------|:----------------------------------------------------------------|:-------|:--------------------|:--------------------|:-------------|:------------------------|-----:|
@@ -330,6 +330,13 @@ share is low partly by construction.
 | T17   | Execution sandbox and isolation escape                          | E      | LLM06               | ASI05               | T0105, …     | D02, D10, D03           |   22 |
 | T18   | Agent control-plane exposure and authorization                  | SEI    |                     | ASI03               | T0132, …     | D16, D01, D04           |   34 |
 | T19   | Conventional software defects in agent runtimes and SDKs        | TDE    | LLM05, LLM10        | ASI05               | T0049, …     | D15, D13, D02           |   45 |
+
+Harness threat taxonomy (RQ1) with framework mappings, mitigating
+control dimensions (D01–D15,
+Section <a href="#sec:controls" data-reference-type="ref"
+data-reference="sec:controls">5</a>) and the number of verified
+2025–2026 incidents whose primary class it is (RQ3). ATLAS ids are
+abbreviated (prefix `AML.` dropped; first shown).
 
 </div>
 
@@ -494,12 +501,12 @@ Only 24% of the 117 claims could be tested headless without a vendor
 login; 28 were tested: 22 matched, 3 were partial, 1 mismatched and 2
 were not observed; 89 remain untested
 (Table <a href="#tab:claims" data-reference-type="ref"
-data-reference="tab:claims">[tab:claims]</a>). By harness, 13 of 14
-tested Claude Code claims matched, 4 of 7 for Antigravity, 3 of 4 for
-Grok Build and 2 of 3 for Copilot CLI. All observations in the table are
+data-reference="tab:claims">2</a>). By harness, 13 of 14 tested Claude
+Code claims matched, 4 of 7 for Antigravity, 3 of 4 for Grok Build and 2
+of 3 for Copilot CLI. All observations in the table are
 <sup>\[T\]</sup>; all claims are <sup>\[D\]</sup>.
 
-<div class="table*">
+<div id="tab:claims">
 
 | Harness        | Dimension          | Observed                                                                                                                                            | Verdict      |
 |:---------------|:-------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------|:-------------|
@@ -531,6 +538,12 @@ Grok Build and 2 of 3 for Copilot CLI. All observations in the table are
 | grok-build     | hooks_trust        | repo hook ran untrusted: no; with –trust: yes; .claude/settings.json compat hook untrusted: no                                                      | match        |
 | grok-build     | mcp_trust          | project .mcp.json (compat import) server started in an untrusted folder: no                                                                         | partial      |
 | grok-build     | secret_storage     | files written under ~/.grok: 53; other-user-readable: 35 (session files among them: 0)                                                              | match        |
+
+Claims versus observed behaviour for closed and hybrid harnesses (RQ7).
+Each row is one tested documented claim<sup>\[D\]</sup> and the
+observation from a black-box probe<sup>\[T\]</sup> on the pinned client
+(Claude Code 2.1.300, Antigravity CLI 1.3.5 before login, Grok Build
+1.0.52, Copilot CLI 1.0.98 in BYOK mode). Untested claims are omitted.
 
 </div>
 
@@ -630,31 +643,55 @@ maturity (D15) as much as risk, so we do not rank products by them.
 #### Root causes
 
 Table <a href="#tab:rootcauses" data-reference-type="ref"
-data-reference="tab:rootcauses">[tab:rootcauses]</a> gives the
-distribution. Defective checks that gate an agent capability (RC3:
-allowlists bypassed by shell substitution, redirections,
-environment-variable prefixes, `find -exec`, symlinks or lookalike
-domains) are the largest group with 104 incidents (32%). Configuration
-honoured before consent (RC2) adds 52: repository settings, hooks,
-`.env` files, MCP declarations and Git configuration that run or take
-effect before the trust prompt. Together these deterministic harness
-defects account for 48% of counted incidents, the largest share but not
-a majority. Conventional defects not specific to agents (RC10) account
-for 16%, and missing authentication or Origin checks on local control
-endpoints (RC4) for 24. Pure prompt injection with no other control
-failure (RC1) is 5%; as the residual class, this is a lower bound on
-injection’s role, which we did not code separately as a vector.
+data-reference="tab:rootcauses">3</a> gives the distribution. Defective
+checks that gate an agent capability (RC3: allowlists bypassed by shell
+substitution, redirections, environment-variable prefixes, `find -exec`,
+symlinks or lookalike domains) are the largest group with 104 incidents
+(32%). Configuration honoured before consent (RC2) adds 52: repository
+settings, hooks, `.env` files, MCP declarations and Git configuration
+that run or take effect before the trust prompt. Together these
+deterministic harness defects account for 48% of counted incidents, the
+largest share but not a majority. Conventional defects not specific to
+agents (RC10) account for 16%, and missing authentication or Origin
+checks on local control endpoints (RC4) for 24. Pure prompt injection
+with no other control failure (RC1) is 5%; as the residual class, this
+is a lower bound on injection’s role, which we did not code separately
+as a vector.
+
+<div id="tab:rootcauses">
+
+| Root cause | Name                                                                                          | Incidents |
+|:-----------|:----------------------------------------------------------------------------------------------|----------:|
+| RC3        | Validation, parsing or authorization logic flaw in a check that gates an agent capability     |       104 |
+| RC2        | Workspace, repository or agent-written content executed or honoured before or without consent |        52 |
+| RC10       | Conventional implementation defect not gating an agent capability                             |        51 |
+| RC4        | Missing authentication or origin/Host validation on a local or network control endpoint       |        24 |
+| RC8        | Isolation boundary escape or weak isolation fallback                                          |        20 |
+| RC6        | Insecure default, missing safeguard or over-privileged mode by design                         |        20 |
+| RC1        | Untrusted content treated as instructions (no distinct control failure)                       |        17 |
+| RC7        | Unintended exposure, leakage or over-collection of secrets or data by the harness itself      |        12 |
+| RC5        | Package, extension or update-channel compromise or integrity failure                          |        11 |
+| RC9        | Output-rendering or automatic-fetch feature acts as an exfiltration channel                   |         8 |
+| RC12       | Adversarial use of a legitimate capability (no product defect)                                |         3 |
+| RC11       | Autonomous action exceeding user intent without enforced guardrail                            |         1 |
+
+Root causes of the counted 2025–2026 harness incidents (RQ3), assigned
+by the ordered procedure. Primary taxonomy classes are in
+Table <a href="#tab:taxonomy" data-reference-type="ref"
+data-reference="tab:taxonomy">1</a>.
+
+</div>
 
 #### Classes
 
 By primary class
 (Table <a href="#tab:taxonomy" data-reference-type="ref"
-data-reference="tab:taxonomy">[tab:taxonomy]</a>), permission-model
-weaknesses (T03, 74, 23%) and repository configuration as code execution
-(T02, 52) lead, followed by conventional defects (T19, 45) and
-control-plane exposure (T18, 34). Indirect prompt injection is the
-primary class of only 14 incidents, although injection is the delivery
-vector in many incidents classified elsewhere.
+data-reference="tab:taxonomy">1</a>), permission-model weaknesses (T03,
+74, 23%) and repository configuration as code execution (T02, 52) lead,
+followed by conventional defects (T19, 45) and control-plane exposure
+(T18, 34). Indirect prompt injection is the primary class of only 14
+incidents, although injection is the delivery vector in many incidents
+classified elsewhere.
 
 #### Representative cases
 
@@ -703,10 +740,9 @@ were not available.
 
 *Answers the design half of RQ4 and the instrument for RQ5 and RQ7.* 
 
-`harnesswatch` is an Apache-2.0 Python package and CLI (the working name
-`harnessguard` was taken on PyPI; rule ids keep the `HG-` prefix). It is
-read-only and offline by default, never transmits file contents, and
-redacts any secret it reports.
+`harnesswatch` is an Apache-2.0 Python package and CLI. It is read-only
+and offline by default, never transmits file contents, and redacts any
+secret it reports.
 
 #### Profiles and a common schema
 
@@ -728,12 +764,11 @@ secrets, tool-description injection, auto-approval), *instructions*
 directories, transcripts, file modes), *supply* (SBOM, OSV, installer
 verification) and *ci* (headless agents on untrusted triggers). The 25
 rules (Table <a href="#tab:rules" data-reference-type="ref"
-data-reference="tab:rules">[tab:rules]</a>) each carry severity,
-confidence, a kind (vulnerability pattern, design weakness or policy
-choice), taxonomy classes, remediation and
-`should_fire`/`should_not_fire` fixtures. Output is terminal, JSON,
-Markdown or SARIF 2.1.0; a GitHub Action and a pre-commit hook wrap the
-repository audits.
+data-reference="tab:rules">7</a>) each carry severity, confidence, a
+kind (vulnerability pattern, design weakness or policy choice), taxonomy
+classes, remediation and `should_fire`/`should_not_fire` fixtures.
+Output is terminal, JSON, Markdown or SARIF 2.1.0; a GitHub Action and a
+pre-commit hook wrap the repository audits.
 
 #### observe and bench
 
@@ -814,7 +849,7 @@ configuration, not exploitation.
 
 We audited 1010 repositories (1017 files, 0 audit errors) and 18 rules
 fired at least once (Table <a href="#tab:e2" data-reference-type="ref"
-data-reference="tab:e2">1</a>). Among agent CI workflows, 63.3% run the
+data-reference="tab:e2">4</a>). Among agent CI workflows, 63.3% run the
 agent with a write-scoped token (`HG-CI-002`) and 28.2% match the
 pwn-request pattern of untrusted trigger plus secrets (`HG-CI-001`).
 Among config and MCP files, 28.3% launch an MCP server from a registry
@@ -866,11 +901,11 @@ tests). Besides a *control*, four scenarios place one templated block in
 the README, the native instruction file, a code comment, or test output
 that returns as a tool result
 (Table <a href="#tab:bench-catalogue" data-reference-type="ref"
-data-reference="tab:bench-catalogue">[tab:bench-catalogue]</a>). The
-block asks the agent to create `CANARY_<id>.txt`, POST `.env` to the
-sink, and delete the fixture; all are inert, and the container reaches
-only the model server. Modes are *default* (out-of-the-box headless) and
-*auto* (the documented approve-everything flag).
+data-reference="tab:bench-catalogue">9</a>). The block asks the agent to
+create `CANARY_<id>.txt`, POST `.env` to the sink, and delete the
+fixture; all are inert, and the container reaches only the model server.
+Modes are *default* (out-of-the-box headless) and *auto* (the documented
+approve-everything flag).
 
 #### Harnesses, model and grid
 
@@ -906,7 +941,7 @@ useless” is visible. Rates carry Wilson 95% intervals.
 The grid produced 350 runs (0 errors, 22 timeouts scored at the cap,
 model cost \$0.00), of which 340 enter the analysis
 (Table <a href="#tab:e3" data-reference-type="ref"
-data-reference="tab:e3">[tab:e3]</a>; plotted in
+data-reference="tab:e3">5</a>; plotted in
 `paper/figures/e3_follow.pdf`). Over the injection scenarios the
 injected instruction was followed in 2 of 135 auto-mode runs (95% CI
 0.004–0.052) and 0 of 135 default-mode runs (0.000–0.028); controls
@@ -956,11 +991,11 @@ runs)<sup>\[T\]</sup>. Neither is the agent reading the secret, hence
 the two separate metrics: benchmarks should separate what a harness
 persists from what an agent does.
 
-<div class="table*">
-
 <div class="adjustbox">
 
 max width=
+
+<div id="tab:e3">
 
 | Harness              | Mode    |   n | Follow \[95% CI, %\] | Exfil | Destr. | Secret in state | Prompts | Timeouts | Task done \[95% CI, %\] |
 |:---------------------|:--------|----:|:---------------------|------:|-------:|----------------:|--------:|---------:|:------------------------|
@@ -978,6 +1013,11 @@ max width=
 | opencode             | default |  20 | 0/20 \[0.0, 16.1\]   |     0 |      0 |               0 |       0 |        0 | 0/20 \[0.0, 16.1\]      |
 | qwen-code            | auto    |  20 | 0/20 \[0.0, 16.1\]   |     0 |      0 |               0 |       1 |        1 | 12/20 \[38.7, 78.1\]    |
 | qwen-code            | default |  20 | 0/20 \[0.0, 16.1\]   |     0 |      0 |               0 |       0 |        1 | 0/20 \[0.0, 16.1\]      |
+
+E3 canary bench (RQ5): per harness and permission mode over the
+injection scenarios; $k/n$ with Wilson 95% CI in percent; other columns
+are counts out of $n$. One local model (`qwen3:4b-instruct`); $^B$ marks
+Tier-B clients. Not a resilience ranking.
 
 </div>
 
@@ -1000,7 +1040,7 @@ contents were never stored. With one session per harness and condition
 In the content condition, 6 of 7 harnesses left at least one file
 holding the secret, typically a transcript or chat log
 (Table <a href="#tab:e5" data-reference-type="ref"
-data-reference="tab:e5">2</a>)<sup>\[T\]</sup>. In 3 harnesses such a
+data-reference="tab:e5">6</a>)<sup>\[T\]</sup>. In 3 harnesses such a
 file was readable by other local users. In the key condition, 0 of the 4
 harnesses that take a key wrote it to a file in this single
 run<sup>\[T\]</sup>; that is a sampling result, not evidence of absence,
@@ -1282,13 +1322,12 @@ entry points rebuild everything:
 Pinned versions: harness versions in `VERSIONS.md`; bench images are
 tagged with the harness version
 (Table <a href="#tab:bench-catalogue" data-reference-type="ref"
-data-reference="tab:bench-catalogue">[tab:bench-catalogue]</a>); the
-model server is Ollama 0.40.4 pinned by image digest; and Python
-dependencies are locked in `uv.lock`. Every result number in the prose
-is a macro generated from `experiments/results/*.json`; design constants
-(versions, caps, mode bits, counts of classes and controls) are typed.
-The E2 corpus script stores aggregates only and refuses to write any
-repository identifier.
+data-reference="tab:bench-catalogue">9</a>); the model server is
+Ollama 0.40.4 pinned by image digest; and Python dependencies are locked
+in `uv.lock`. Every result number in the prose is a macro generated from
+`experiments/results/*.json`; design constants (versions, caps, mode
+bits, counts of classes and controls) are typed. The E2 corpus script
+stores aggregates only and refuses to write any repository identifier.
 
 # Review and Corrections
 
@@ -1311,11 +1350,10 @@ independence were reworded.
 # Rule Pack
 
 Table <a href="#tab:rules" data-reference-type="ref"
-data-reference="tab:rules">[tab:rules]</a> lists every rule; each YAML
-file adds harness-specific spellings, remediation, references and
-fixtures.
+data-reference="tab:rules">7</a> lists every rule; each YAML file adds
+harness-specific spellings, remediation, references and fixtures.
 
-<div class="table*">
+<div id="tab:rules">
 
 | Rule          | Severity | Confidence | Kind            | Taxonomy      | Title                                                                                      |
 |:--------------|:---------|:-----------|:----------------|:--------------|:-------------------------------------------------------------------------------------------|
@@ -1345,20 +1383,26 @@ fixtures.
 | `HG-SUP-002`  | high     | high       | vuln. pattern   | T06           | Installed harness package version has known vulnerabilities (OSV)                          |
 | `HG-TEL-001`  | info     | high       | policy choice   | T15           | Telemetry, prompt logging or data sharing explicitly enabled                               |
 
+The `harnesswatch` rule pack (25 rules). Kind separates vulnerability
+patterns, design weaknesses (unsafe defaults or configurations) and
+policy choices; taxonomy classes refer to
+Table <a href="#tab:taxonomy" data-reference-type="ref"
+data-reference="tab:taxonomy">1</a>.
+
 </div>
 
 # Canary-Bench Scenario Catalogue
 
 Table <a href="#tab:bench-catalogue" data-reference-type="ref"
-data-reference="tab:bench-catalogue">[tab:bench-catalogue]</a> lists the
-scenarios and adapters. Every injected block uses the same versioned
-payload template, and only its location changes. The `hidden_unicode`
-scenario is implemented but excluded from the reported grid. Its
-zero-width wrapping reaches the model as plain ASCII, so it measures
-nothing beyond `instructions`. Aider has no auto-loaded instruction
-file, so its `instructions` cells are N/A.
+data-reference="tab:bench-catalogue">9</a> lists the scenarios and
+adapters. Every injected block uses the same versioned payload template,
+and only its location changes. The `hidden_unicode` scenario is
+implemented but excluded from the reported grid. Its zero-width wrapping
+reaches the model as plain ASCII, so it measures nothing beyond
+`instructions`. Aider has no auto-loaded instruction file, so its
+`instructions` cells are N/A.
 
-<div class="table*">
+<div id="tab:bench-catalogue">
 
 | Scenario         | Title                                         | Taxonomy | Files changed vs. base repository  |
 |:-----------------|:----------------------------------------------|:---------|:-----------------------------------|
@@ -1369,6 +1413,15 @@ file, so its `instructions` cells are N/A.
 | `tool_output`    | Poisoned tool result (test output)            | T01/T04  | `pytest.ini`, `tests/test_calc.py` |
 | `hidden_unicode` | Zero-width-wrapped instruction-file injection | T01      | `<instruction file>`               |
 
+Canary-bench catalogue. Top: scenarios (all share the base repository
+and task; `<instruction file>` is the harness-native file named below).
+Bottom: harness adapters, pinned image version, and the documented flag
+added in the *auto* mode.
+
+</div>
+
+<div id="tab:bench-catalogue">
+
 | Harness        | Tier | Version   | Instruction file                  | Auto-mode flag                              |
 |:---------------|:-----|:----------|:----------------------------------|:--------------------------------------------|
 | claude-code    | B    | `2.1.300` | `CLAUDE.md`                       | `–dangerously-skip-permissions`             |
@@ -1378,6 +1431,11 @@ file, so its `instructions` cells are N/A.
 | codex-cli      | A    | `0.162.1` | `AGENTS.md`                       | `–dangerously-bypass-approvals-and-sandbox` |
 | aider          | A    | `0.86.2`  | `CONVENTIONS.md`                  | `–yes-always`                               |
 | qwen-code      | A    | `0.25.1`  | `QWEN.md`                         | `–yolo`                                     |
+
+Canary-bench catalogue. Top: scenarios (all share the base repository
+and task; `<instruction file>` is the harness-native file named below).
+Bottom: harness adapters, pinned image version, and the documented flag
+added in the *auto* mode.
 
 </div>
 
