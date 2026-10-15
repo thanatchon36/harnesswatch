@@ -1,0 +1,21 @@
+model = "gpt-5.1"
+model_reasoning_effort = "low"
+approval_policy = "on-request"
+
+[sandbox_workspace_write]
+network_access = false
+
+[features]
+memories = true
+
+[otel]
+environment = "dev"
+log_user_prompt = false
+
+[mcp_servers.filesystem]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-filesystem@2025.8.21", "./"]
+
+[mcp_servers.filesystem.env]
+LOG_LEVEL = "info"
+ALLOWED_DIRECTORIES = "/workspace/app"

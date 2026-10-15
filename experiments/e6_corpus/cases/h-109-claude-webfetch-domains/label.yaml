@@ -1,0 +1,4 @@
+expected: []
+origin: hand
+family: net
+note: "domain-scoped WebFetch and sandbox allowlist"

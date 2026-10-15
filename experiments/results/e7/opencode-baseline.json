@@ -1,0 +1,1216 @@
+{
+  "probe": "opencode-baseline",
+  "harness": "opencode",
+  "image": "harnesswatch-bench-opencode:1.19.0",
+  "command": "opencode run -m ollama/qwen3:4b-instruct 'Reply with the single word OK.'",
+  "env_keys": [
+    "OPENCODE_DISABLE_AUTOUPDATE"
+  ],
+  "repo_files": [],
+  "notes": "",
+  "rc": "0",
+  "facts": {
+    "output_head": "\u001b[0m\n> build \u00b7 qwen3:4b-instruct\n\u001b[0m\nOK\n",
+    "mentions_root_refusal": false,
+    "mentions_auth_required": false,
+    "mentions_trust": false
+  },
+  "report": {
+    "harness": "opencode",
+    "image": "harnesswatch-bench-opencode:1.19.0",
+    "command": [
+      "sh",
+      "/hw/run.sh"
+    ],
+    "started": 1792046455.4443412,
+    "duration_s": 31.04,
+    "exit_code": 0,
+    "timed_out": false,
+    "hosts": [
+      {
+        "host": "hw-obs-84d4efca-proxy",
+        "port": 3128,
+        "category": "local",
+        "via": [
+          "dns",
+          "syn"
+        ],
+        "allowed": null,
+        "count": 2
+      },
+      {
+        "host": "hw-ollama",
+        "port": 11434,
+        "category": "local",
+        "via": [
+          "syn"
+        ],
+        "allowed": null,
+        "count": 2
+      },
+      {
+        "host": "ollama",
+        "port": null,
+        "category": "local",
+        "via": [
+          "dns"
+        ],
+        "allowed": null,
+        "count": 1
+      },
+      {
+        "host": "models.opencode.ai",
+        "port": 443,
+        "category": "unknown",
+        "via": [
+          "proxy"
+        ],
+        "allowed": false,
+        "count": 1
+      },
+      {
+        "host": "registry.npmjs.org",
+        "port": 443,
+        "category": "update",
+        "via": [
+          "proxy"
+        ],
+        "allowed": false,
+        "count": 1
+      }
+    ],
+    "files": [
+      {
+        "path": "/tmp",
+        "change": "C",
+        "type": "dir",
+        "mode": "0o1777",
+        "size": 0,
+        "category": "other",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/tmp/.bcdfe5dff6ddf62e-00000000.so",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 5576816,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/branches",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/description",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 73,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/post-update.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 189,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/pre-applypatch.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 424,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/pre-push.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 1374,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/push-to-checkout.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 2783,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/update.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 3650,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/applypatch-msg.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 478,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/fsmonitor-watchman.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 4726,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/pre-commit.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 1643,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/pre-merge-commit.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 416,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/pre-rebase.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 4898,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/pre-receive.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 544,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/prepare-commit-msg.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 1492,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/commit-msg.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 896,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/index",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 137,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/info",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/info/exclude",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 240,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/logs",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/logs/refs",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/logs/refs/heads",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/logs/refs/heads/main",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 156,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/logs/HEAD",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 156,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/pack",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/17",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/17/66483793937eed1e3b0926a5a74633da742b85",
+        "change": "A",
+        "type": "file",
+        "mode": "0o444",
+        "size": 54,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/23",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/23/7dd8d02fafee6139169c156fff1d45fa4d5d46",
+        "change": "A",
+        "type": "file",
+        "mode": "0o444",
+        "size": 23,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/d5",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/d5/2212a668fe603cd615ce6ccc7faf42fc63d243",
+        "change": "A",
+        "type": "file",
+        "mode": "0o444",
+        "size": 122,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/info",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/opencode",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 40,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/COMMIT_EDITMSG",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 5,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/HEAD",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 21,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/config",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 92,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/refs",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/refs/heads",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/refs/heads/main",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 41,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/refs/tags",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home",
+        "change": "C",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "other",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent",
+        "change": "C",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "other",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.cache",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.cache/opencode",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.cache/opencode/bin",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.config",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "config",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.config/opencode",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.config/opencode/opencode.json",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 407,
+        "category": "config",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.config/opencode/.gitignore",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 63,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/opencode.db-shm",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 32768,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/opencode.db-wal",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 836392,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/repos",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/HEAD",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 21,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/branches",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/config",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 275,
+        "category": "config",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/description",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 73,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/hooks",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/hooks/applypatch-msg.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 478,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/hooks/post-update.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 189,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/hooks/pre-commit.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 1643,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/hooks/pre-merge-commit.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 416,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/hooks/pre-rebase.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 4898,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/hooks/pre-receive.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 544,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/hooks/prepare-commit-msg.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 1492,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/hooks/update.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 3650,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/hooks/commit-msg.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 896,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/hooks/fsmonitor-watchman.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 4726,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/hooks/pre-applypatch.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 424,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/hooks/pre-push.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 1374,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/hooks/push-to-checkout.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 2783,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/index",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 137,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/objects",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/objects/pack",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/objects/info",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/objects/info/alternates",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 24,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/refs",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/refs/heads",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/refs/tags",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/info",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/snapshot/d52212a668fe603cd615ce6ccc7faf42fc63d243/8af22c44f40455ccc731201a5e49607eaac89fef/info/exclude",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 240,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/log",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/log/opencode.log",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 4974,
+        "category": "log",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/share/opencode/opencode.db",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 4096,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/state",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/state/opencode",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.local/state/opencode/locks",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      }
+    ],
+    "credential_files": [],
+    "processes": [
+      {
+        "cmd": "/bin/sh -c i=0; while [ ! -e /tmp/.hw_ready ] && [ \"$i\" -lt 300 ]; do sleep 0.1; i=$((i+1)); done; exec \"$@\" sh sh /hw/run.sh",
+        "uid": "1000",
+        "seccomp": 2,
+        "seccomp_filters": 2,
+        "no_new_privs": false,
+        "new_namespaces": [],
+        "sandbox_tool": null
+      },
+      {
+        "cmd": "sleep 0.1",
+        "uid": "1000",
+        "seccomp": 2,
+        "seccomp_filters": 2,
+        "no_new_privs": false,
+        "new_namespaces": [],
+        "sandbox_tool": null
+      },
+      {
+        "cmd": "sh /hw/run.sh",
+        "uid": "1000",
+        "seccomp": 2,
+        "seccomp_filters": 2,
+        "no_new_privs": false,
+        "new_namespaces": [],
+        "sandbox_tool": null
+      },
+      {
+        "cmd": "git commit -qm init",
+        "uid": "1000",
+        "seccomp": 2,
+        "seccomp_filters": 2,
+        "no_new_privs": false,
+        "new_namespaces": [],
+        "sandbox_tool": null
+      },
+      {
+        "cmd": "opencode run -m ollama/qwen3:4b-instruct Reply with the single word OK.",
+        "uid": "1000",
+        "seccomp": 2,
+        "seccomp_filters": 2,
+        "no_new_privs": false,
+        "new_namespaces": [],
+        "sandbox_tool": null
+      },
+      {
+        "cmd": "",
+        "uid": "1000",
+        "seccomp": 2,
+        "seccomp_filters": 2,
+        "no_new_privs": false,
+        "new_namespaces": [],
+        "sandbox_tool": null
+      },
+      {
+        "cmd": "git rev-parse --show-toplevel",
+        "uid": "1000",
+        "seccomp": 2,
+        "seccomp_filters": 2,
+        "no_new_privs": false,
+        "new_namespaces": [],
+        "sandbox_tool": null
+      }
+    ],
+    "sandbox": {
+      "sandbox_tools": [],
+      "new_namespaces": [],
+      "extra_seccomp_filters": false,
+      "no_new_privs_set": false
+    },
+    "prompts": [],
+    "canary_files": null,
+    "notes": []
+  }
+}

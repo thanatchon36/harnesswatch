@@ -1,0 +1,184 @@
+{
+  "harness": "azure-ai-foundry-agent-service",
+  "version": "GA (docs page updated 2026-10-15); voice agents and agent guardrails in preview",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Agent guardrails are in preview; four intervention points: user input, tool call (Preview), tool response (Preview), output; agent action is 'Annotate and block' only.",
+          "source": "https://learn.microsoft.com/en-us/azure/foundry/guardrails/guardrails-overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "The agent's guardrail fully overrides the model's guardrail; an agent only uses Microsoft.DefaultV2 if its model deployment does or it is explicitly assigned.",
+          "source": "https://learn.microsoft.com/en-us/azure/foundry/guardrails/guardrails-overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Content-safety guardrails with tool-call and tool-response intervention points exist but are Preview for agents; MCP tool-approval documentation could not be fetched (404), so human-approval defaults are unverified."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Hosted agents: each session runs in a VM-isolated sandbox connected to your VNet (BYO VNet).",
+          "source": "https://learn.microsoft.com/en-us/azure/foundry/agents/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Hosted agents run each session in a VM-isolated sandbox; prompt agents are fully managed; code interpreter tool available."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Hosted agents support network egress controls (preview) configured in the same guardrail (RAI policy).",
+          "source": "https://learn.microsoft.com/en-us/azure/foundry/guardrails/guardrails-overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Private networking is available for prompt agents; hosted agents support BYO Azure VNet.",
+          "source": "https://learn.microsoft.com/en-us/azure/foundry/agents/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Private networking for prompt agents and BYO VNet for hosted agents; network egress controls for hosted agents configured in guardrails (Preview)."
+    },
+    "D04": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (cloud service)."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "Toolboxes expose curated tools behind one managed MCP-compatible endpoint with centralized authentication, governance and versioning.",
+          "source": "https://learn.microsoft.com/en-us/azure/foundry/agents/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Supported MCP authentication options include key-based, Entra (agent or project managed identity), OAuth identity passthrough (OBO) and unauthenticated access.",
+          "source": "https://learn.microsoft.com/en-us/azure/foundry/agents/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Toolboxes curate tools behind one managed MCP endpoint with centralized auth, governance and versioning; MCP auth options include key, Entra agent identity, OAuth OBO and unauthenticated 'where appropriate'."
+    },
+    "D06": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "Not assessed."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Blueprint federated credential (managed identity) recommended for production; no secret stored in the blueprint; some tool configs still expose the project managed identity.",
+          "source": "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-identity",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Currently only MCP and A2A tools support agent identity authentication.",
+          "source": "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-identity",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Entra agent identity with federated credential from project managed identity avoids stored secrets; however only MCP and A2A tools support agent identity auth, and key-based auth remains available."
+    },
+    "D08": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (managed service)."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Built-in tools include web search, file search, code interpreter and memory.",
+          "source": "https://learn.microsoft.com/en-us/azure/foundry/agents/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "Memory is listed as a built-in tool; controls not verified."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "All unpublished agents in a project share a common identity; docs say to treat it as a broader blast radius and publish for a distinct identity.",
+          "source": "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-identity",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Unpublished agents in a project share one agent identity (broader blast radius); publishing creates a distinct identity requiring manual re-assignment of RBAC roles."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Observability: end-to-end tracing, metrics, evaluations, Application Insights integration.",
+          "source": "https://learn.microsoft.com/en-us/azure/foundry/agents/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "End-to-end tracing, metrics, evaluations and Application Insights; Entra admin center inventories agent identities."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "Customers can use their own Azure resources (storage, Azure AI Search, Cosmos DB) for conversation state.",
+          "source": "https://learn.microsoft.com/en-us/azure/foundry/agents/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "Not verified; bring-your-own storage/Cosmos DB/AI Search for conversation state is supported."
+    },
+    "D13": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (managed service)."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Entra admin center Agent ID: Conditional Access, identity protection, network access, governance for agent identities; blueprint lets admins disable/revoke all agents of a class.",
+          "source": "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-identity",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Entra Agent ID gives Conditional Access, identity protection, network access control and governance (owners/sponsors/expiry) per agent and per blueprint class, plus Azure RBAC."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "CVE-2026-35435: Azure AI Foundry (M365 published agents) improper access control / elevation of privilege, CVSS 8.6, published 2026-05-07, server-side fix.",
+          "source": "https://onlyfm252.starlabs.sg/patch-tuesday/2026-05/cve-2026-35435/",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Microsoft issues CVEs via MSRC; CVE-2026-35435 (Azure AI Foundry published agents, improper access control) reported by secondary sources only (NVD/MSRC pages not retrievable)."
+    }
+  }
+}

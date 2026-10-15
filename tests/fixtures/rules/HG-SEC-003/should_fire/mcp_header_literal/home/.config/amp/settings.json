@@ -1,0 +1,1 @@
+{"amp.mcpServers": {"sentry": {"url": "https://mcp.sentry.example.com/mcp", "headers": {"Authorization": "Bearer {{SYNTH:high-entropy}}"}}}}

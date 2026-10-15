@@ -1,0 +1,4 @@
+expected: [HG-CI-001]
+origin: hand
+family: ci
+note: "pull_request_target agent with secrets, gated (medium by spec)"

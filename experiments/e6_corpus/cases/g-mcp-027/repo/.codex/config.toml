@@ -1,0 +1,17 @@
+model = "gpt-5.1-codex"
+approval_policy = "on-request"
+
+[mcp_servers.jira]
+command = "/opt/acme/bin/jira-mcp"
+args = ["--stdio"]
+
+[mcp_servers.jira.env]
+LOG_LEVEL = "info"
+ALLOWED_DIRECTORIES = "/workspace/app"
+
+[mcp_servers.gh-docker]
+command = "docker"
+args = ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server"]
+
+[mcp_servers.gh-docker.env]
+GITHUB_TOKEN = "${GITHUB_TOKEN}"

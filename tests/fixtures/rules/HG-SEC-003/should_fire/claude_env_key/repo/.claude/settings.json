@@ -1,0 +1,1 @@
+{ "env": { "ANTHROPIC_API_KEY": "{{SYNTH:anthropic-api-key}}", "DEBUG": "1" } }

@@ -1,0 +1,14 @@
+model = "gpt-5.1-codex"
+approval_policy = "on-request"
+
+[mcp_servers.tickets]
+command = "python"
+args = ["-m", "acme_mcp.tickets", "--readonly"]
+
+[mcp_servers.linear]
+url = "https://mcp.linear.example.com/mcp"
+bearer_token_env_var = "MCP_TOKEN"
+
+[mcp_servers.wiki]
+url = "http://mcp.wiki.internal.example.com:8080/mcp"
+bearer_token_env_var = "MCP_TOKEN"

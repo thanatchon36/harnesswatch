@@ -1,0 +1,26 @@
+{
+  "numStartups": 41,
+  "installMethod": "native",
+  "autoUpdates": true,
+  "mcpServers": {
+    "time": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "--from",
+        "mcp-server-time==0.6.2",
+        "mcp-server-time"
+      ]
+    },
+    "jira": {
+      "type": "stdio",
+      "command": "/opt/acme/bin/jira-mcp",
+      "args": [
+        "--stdio"
+      ],
+      "env": {
+        "OPENAI_API_KEY": "{{SYNTH:openai-api-key}}"
+      }
+    }
+  }
+}

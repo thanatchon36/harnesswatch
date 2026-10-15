@@ -1,0 +1,235 @@
+{
+  "harness": "augment",
+  "version": "0.36.0",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "toolPermissions in settings.json: permission.type is allow, deny, webhook-policy or script-policy; first matching rule wins; terminal rules take shellInputRegex.",
+          "source": "https://docs.augmentcode.com/cli/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "If no rule matches, the CLI follows its implicit runtime behavior; across policies the most restrictive wins (deny > webhook-policy > script-policy > allow).",
+          "source": "https://docs.augmentcode.com/cli/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Auggie runs commands and tools automatically; only use integrations and MCP servers from trusted sources.",
+          "source": "https://docs.augmentcode.com/cli/integrations",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "A bare-string permission value (\"permission\": \"deny\") is malformed and dropped.",
+          "source": "https://docs.augmentcode.com/cli/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "toolPermissions is honored by the Auggie CLI and Cosmos cloud agents, not enforced in the Augment code extension.",
+          "source": "https://docs.augmentcode.com/cli/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "toolPermissions rules (allow/deny/webhook-policy/script-policy, first-match, regex on shell input) exist, but unmatched tools follow an 'implicit runtime behavior' and docs say Auggie runs commands and tools automatically; rules are not enforced in the IDE extension."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "No OS sandbox setting appears in the CLI reference or permissions docs read (absence; sandbox may exist undocumented).",
+          "source": "https://docs.augmentcode.com/cli/reference",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No sandbox documented for Auggie CLI."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Tools can be disabled per session (--remove-tool) or persistently (removedTools in settings.json); no domain allowlist documented.",
+          "source": "https://docs.augmentcode.com/cli/reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No egress/domain allowlist documented; web-fetch/web-search can be removed via --remove-tool or removedTools."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Project settings .augment/settings.json and .augment/settings.local.json load automatically and may ship hooks that apply to all contributors.",
+          "source": "https://docs.augmentcode.com/cli/hooks",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "The interactive indexing confirmation can be skipped with --allow-indexing.",
+          "source": "https://docs.augmentcode.com/cli/reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Repo-level .augment/settings.json (permissions, hooks) is applied automatically to anyone running in the repo; no folder-trust prompt documented; the only prompt is an indexing confirmation (--allow-indexing skips it)."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP servers: mcpServers key in ~/.augment/settings.json (entries: type http|sse|stdio, url, command, args, env, headers); auggie mcp add persists there; ${workspaceFolder} expands.",
+          "source": "https://docs.augmentcode.com/cli/integrations",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "MCP servers configured in ~/.augment/settings.json (mcpServers) or --mcp-config; no approval/allowlist or change detection documented for the CLI."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Skills load automatically from .augment/skills/ and .claude/skills/ in workspace and home; plugins come from marketplaces.",
+          "source": "https://docs.augmentcode.com/cli/reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Plugins and marketplaces, skills from .augment/skills and .claude/skills load automatically; vetting not documented."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "auggie login stores the token locally; auggie token print prints session JSON for automation; auggie token revoke revokes all tokens; AUGMENT_SESSION_AUTH env carries session JSON.",
+          "source": "https://docs.augmentcode.com/cli/setup-auggie/authentication",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Session token stored locally by auggie login; AUGMENT_SESSION_AUTH passes the session JSON via env; auggie token print outputs the stored session; storage mechanism (keychain vs file) not documented."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "auggie --print runs a single instruction and exits; non-interactive mode may be disabled if not included in an enterprise agreement; --max-turns limits turns; service accounts exist for automation.",
+          "source": "https://docs.augmentcode.com/cli/automation/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CI sessions run with the integration configuration of the user who created the session token.",
+          "source": "https://docs.augmentcode.com/cli/automation/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "--print non-interactive mode may be disabled by enterprise agreement; authenticates with a user's session JSON (service accounts documented); permissions in print mode fall to implicit behavior unless rules set."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Rules precedence: --rules file, CLAUDE.md, AGENTS.md, <workspace>/.augment-guidelines, <workspace>/.augment/rules/, ~/.augment/rules/.",
+          "source": "https://docs.augmentcode.com/cli/rules",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Rules from CLAUDE.md, AGENTS.md, .augment-guidelines, .augment/rules and ~/.augment/rules; no autonomous memory documented in pages read."
+    },
+    "D10": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed: subagent isolation not read)."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "auggie --log-file <path> writes logs (default a temp file); --log-level error|warn|info|debug.",
+          "source": "https://docs.augmentcode.com/cli/reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Log file via --log-file (default temp file); sessions saved and shareable; enterprise audit log not verified."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "Augment states it never trains on customers' proprietary data/code; SOC 2 Type II, ISO/IEC 42001, customer-managed encryption keys offered.",
+          "source": "https://www.augmentcode.com/security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Auggie automatically indexes the workspace (--allow-indexing skips the confirmation).",
+          "source": "https://docs.augmentcode.com/cli/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Vendor states it never trains on customer proprietary code; CLI telemetry opt-out not documented; code is indexed on Augment servers."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Install: npm install -g @augmentcode/auggie (Node 20+); AUGMENT_DISABLE_AUTO_UPDATE disables auto updates.",
+          "source": "https://docs.augmentcode.com/cli/reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "npm @augmentcode/auggie latest 0.36.0 (2026-08-21), license 'SEE LICENSE IN LICENSE.md' (custom proprietary license, Augment Computing, Inc.).",
+          "source": "https://registry.npmjs.org/@augmentcode/auggie",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Distributed via npm (@augmentcode/auggie, proprietary license); auto-update on by default, AUGMENT_DISABLE_AUTO_UPDATE disables; no signature/provenance documented."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "/etc/augment/settings.json (Linux/macOS) and C:\\ProgramData\\Augment\\settings.json (Windows) are system-wide, highest precedence, cannot be overridden by any other config source.",
+          "source": "https://docs.augmentcode.com/cli/hooks",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "System-wide immutable settings at /etc/augment/settings.json and C:\\ProgramData\\Augment\\settings.json take precedence over all other sources (documented in the hooks page)."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "Report to security@augmentcode.com or GitHub Security Advisories on augmentcode/auggie; no bounty mentioned.",
+          "source": "https://github.com/augmentcode/auggie/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "The repo augmentcode/auggie has 0 published security advisories.",
+          "source": "https://github.com/augmentcode/auggie/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "SECURITY.md with private email and GitHub Security Advisories reporting; SOC 2 Type II; no bug bounty or published advisories found."
+    }
+  }
+}

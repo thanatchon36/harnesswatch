@@ -1,0 +1,248 @@
+{
+  "harness": "qoder",
+  "version": "CLI 1.1.71 (docs/npm; not executed)",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Permission modes: default, accept_edits, plan(alias of default), auto, bypass_permissions, dont_ask; default mode is 'default' (safe reads auto, sensitive actions ask).",
+          "source": "https://docs.qoder.com/en/cli/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "YOLO is reachable by flags --yolo, --dangerously-skip-permissions, --permission-mode bypass_permissions, Ctrl+Y, and QODER_PERMISSION_MODE env; some rm/path-shape safeguards still apply.",
+          "source": "https://docs.qoder.com/en/cli/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Rule syntax Tool(content) in permissions.allow/ask/deny; deny evaluated first; non-default modes only take effect in trusted directories.",
+          "source": "https://docs.qoder.com/en/cli/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Ask-by-default with allow/ask/deny rules and trust gating, but YOLO is a one-flag/one-setting opt-in (can be set in a project settings.json once trusted)."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Qoder CLI docs read contain no sandbox mechanism or flag; the IDE 'Experts Mode' runs risky commands in a sandbox restricted to the workspace (macOS works out of the box).",
+          "source": "https://docs.qoder.com/user-guide/quest/terminal-and-sandbox.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Desktop app access permissions: Ask for approval (default) / Auto approve / Full access.",
+          "source": "https://docs.qoder.com/qoder/approval-and-sandbox.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Sandbox exists only in the IDE/desktop expert mode; none documented for the CLI."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "CLI network page covers only proxy env vars and CA certs; no egress allowlist documented.",
+          "source": "https://docs.qoder.com/cli/network.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Desktop Ask-for-approval mode asks before accessing the internet.",
+          "source": "https://docs.qoder.com/qoder/approval-and-sandbox.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Approval prompts for network in desktop; no domain allowlist or egress policy found."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "security.folderTrust.enabled defaults true; in an untrusted cwd only user-level config loads and project/local settings.json are ignored.",
+          "source": "https://docs.qoder.com/cli/settings.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Project memory (AGENTS.md, .qoder/rules) is loaded only within a Trusted Workspace.",
+          "source": "https://docs.qoder.com/cli/memory.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Folder trust on by default gates project config (hooks, MCP, permissions) before use; not independently tested."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "mcp.allowed, mcp.excluded, mcp.enableAllProjectMcpServers, mcp.enabledProjectMcpServers settings and --strict-mcp-config/--allowed-mcp-server-names flags exist.",
+          "source": "https://docs.qoder.com/cli/settings-reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Per-server trust:true skips tool-call confirmation; docs do not describe an approval step for project .mcp.json.",
+          "source": "https://docs.qoder.com/cli/mcp-reference.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Allow/deny controls exist but project .mcp.json approval flow and tool-description change detection are undocumented."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Built-in qoder-plugins marketplace added in CLI 1.1.66 (2026-10-08); plugins/skills/hooks are user-installable.",
+          "source": "https://docs.qoder.com/release-notes/qoder-cli.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Desktop docs tell users to review scripts, hooks and endpoints before installing extensions (no vetting/signing statement).",
+          "source": "https://docs.qoder.com/qoder/security-and-authorization.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Marketplace exists; no signing/vetting documented."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "CLI auth via browser login or QODER_PERSONAL_ACCESS_TOKEN; credential storage location/format not documented.",
+          "source": "https://docs.qoder.com/cli/settings-reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (no verifiable facts on credential storage)."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "In print mode (-p) any operation that would prompt is automatically denied; permission mode/allowed tools must be pre-set.",
+          "source": "https://docs.qoder.com/cli/run-in-scripts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Official GitHub Action QoderAI/qoder-action (MIT) uses QODER_PERSONAL_ACCESS_TOKEN secret and AGENTS.md review rules.",
+          "source": "https://docs.qoder.com/cli/qoder-action.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Safe non-interactive default (deny on prompt); action hardening/untrusted-input guidance not reviewed."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Static memory (AGENTS.md, rules) and opt-in Auto-Memory markdown saved locally; QODER_MEMORY / QODER_MEMORY_USER env toggles.",
+          "source": "https://docs.qoder.com/cli/memory.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Local, visible markdown memory, agent-writable, toggleable."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Subagents declaring bypass are downgraded to acceptEdits when security.disableYoloMode=true; QODER_SUBAGENT_MODEL env.",
+          "source": "https://docs.qoder.com/en/cli/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Some inheritance control but no isolation (worktree option --worktree only)."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Session persistence can be disabled with --no-session-persistence (print mode); no audit/OTel export found.",
+          "source": "https://docs.qoder.com/cli/cli-reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (log paths and enterprise audit not verified)."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "privacy.usageStatisticsEnabled default true; turning it off enters Privacy mode. aiCodeStatistics.enabled default true.",
+          "source": "https://docs.qoder.com/cli/settings-reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Privacy policy operator listed as BRIGHT ZENITH PRIVATE LIMITED (Singapore), policy effective 2026-05-12 (tracker copy).",
+          "source": "https://tostracker.app/document/qodercom-privacy",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Telemetry on by default with opt-out; training-use default not verified."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Native installer via curl|bash from qoder.com; npm channel legacy; auto-update default on (general.enableAutoUpdate).",
+          "source": "https://docs.qoder.com/cli/installation.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No checksum/signature/SBOM/provenance statement found for installer.",
+          "source": "https://docs.qoder.com/cli/installation.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Piped installer and default auto-update with no documented integrity verification."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "allowManagedPermissionRulesOnly (org policy: only managed rules used) and security.disableYoloMode exist; managed policy file path/MDM delivery undocumented.",
+          "source": "https://docs.qoder.com/en/cli/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Policy keys exist but enforcement mechanism is not documented."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "No SECURITY.md, advisory feed or bug bounty found for Qoder; QoderAI/qoder-action repo has no SECURITY.md; qoder.com/security is a Code-Security product page.",
+          "source": "https://qoder.com/security",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (nothing found; absence not exhaustively proven)."
+    }
+  }
+}

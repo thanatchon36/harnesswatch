@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "permissions": {
+    "allow": [
+      "Shell(npm test)",
+      "Shell(ls)",
+      "Shell(git status)",
+      "Shell(bash)"
+    ]
+  }
+}

@@ -1,0 +1,212 @@
+{
+ "harness": "devin",
+ "version": "Devin CLI v3000.11.3 (2026-09-22); docs-level",
+ "analysed_on": "2026-10-15",
+ "status": "docs-only",
+ "dimensions": {
+  "D01": {
+   "facts": [
+    {
+     "claim": "Modes normal (default), accept-edits, smart, dangerous/yolo/bypass, autonomous (sandbox); deny>ask>allow; org deny/ask not overridable by any mode.",
+     "source": "https://docs.devin.ai/cli/reference/permissions.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Deny-rule bypass fixes in changelog (Windows chained commands v3000.3.22; cd-prefix fail-closed).",
+     "source": "https://docs.devin.ai/cli/changelog/stable.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 3,
+   "rationale": "Clear ruleset with org-enforced deny that bypass mode cannot override."
+  },
+  "D02": {
+   "facts": [
+    {
+     "claim": "--sandbox: Seatbelt/bwrap+seccomp; default off; admin Required mode; Windows unsupported; feature marked research preview/unstable.",
+     "source": "https://docs.devin.ai/cli/sandbox.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Real OS sandbox, opt-in locally but enforceable by admin."
+  },
+  "D03": {
+   "facts": [
+    {
+     "claim": "sandbox.allowed_domains/denied_domains/network_mode; org allowlist authoritative.",
+     "source": "https://docs.devin.ai/cli/sandbox.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Domain filtering inside sandbox, default full."
+  },
+  "D04": {
+   "facts": [
+    {
+     "claim": "--respect-workspace-trust defaults true; -p fails in untrusted dir.",
+     "source": "https://docs.devin.ai/cli/reference/commands.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Imports Cursor/Claude/Windsurf rules, MCP and hooks from workspace by default (read_config_from all true).",
+     "source": "https://docs.devin.ai/cli/reference/configuration/read-config-from.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Project config limited to permissions, read_config_from, hooks.",
+     "source": "https://docs.devin.ai/cli/reference/configuration/config-file.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Trust prompt exists; broad default config import widens surface."
+  },
+  "D05": {
+   "facts": [
+    {
+     "claim": "No project-server approval step documented; tool calls prompt; mcp__server__tool rules; team MCP settings.",
+     "source": "https://docs.devin.ai/cli/extensibility/mcp/configuration.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Project MCP servers loaded without documented approval."
+  },
+  "D06": {
+   "facts": [
+    {
+     "claim": "Plugins and skills; org switch to disable plugins (v2026.7.16).",
+     "source": "https://docs.devin.ai/cli/changelog/stable.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": null,
+   "rationale": "N/A (Vetting unverified.)"
+  },
+  "D07": {
+   "facts": [
+    {
+     "claim": "OAuth tokens stored locally; secrets via ${env:}/${file:} and mcp_config.local.json.",
+     "source": "https://docs.devin.ai/cli/extensibility/mcp/configuration.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": null,
+   "rationale": "N/A (Storage backend unverified.)"
+  },
+  "D08": {
+   "facts": [
+    {
+     "claim": "devin -p; trust prompt prevents -p in untrusted dirs; CI must pass --respect-workspace-trust false.",
+     "source": "https://docs.devin.ai/cli/reference/commands.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Fails closed by default in headless; no official CI action."
+  },
+  "D09": {
+   "facts": [
+    {
+     "claim": "Devin Local persists no memories; plans in ~/.devin/plans.",
+     "source": "https://docs.devin.ai/desktop/devin-local.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 3,
+   "rationale": "No agent-writable cross-session memory."
+  },
+  "D10": {
+   "facts": [
+    {
+     "claim": "Session approvals cover subagents; subagent_model config.",
+     "source": "https://docs.devin.ai/desktop/devin-local.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": null,
+   "rationale": "N/A (Isolation unverified.)"
+  },
+  "D11": {
+   "facts": [
+    {
+     "claim": "--export ATIF transcript; hooks lifecycle; admin analytics.",
+     "source": "https://docs.devin.ai/cli/reference/commands.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Export + hooks."
+  },
+  "D12": {
+   "facts": [
+    {
+     "claim": "Devin cloud: training on by default, paid users can opt out; Enterprise no training without consent; retention for duration of customer relationship.",
+     "source": "https://docs.devin.ai/admin/security.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Training default on for non-enterprise."
+  },
+  "D13": {
+   "facts": [
+    {
+     "claim": "curl|bash and brew cask installers; checksum/signature not documented.",
+     "source": "https://docs.devin.ai/work-with-devin/devin-cli.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Undocumented integrity."
+  },
+  "D14": {
+   "facts": [
+    {
+     "claim": "system.json (enterprise_host, account_id, proxy) in root-owned paths; Team Settings permissions/sandbox enforcement; 15-minute propagation.",
+     "source": "https://docs.devin.ai/cli/enterprise/system-config.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 3,
+   "rationale": "Strong managed policy."
+  },
+  "D15": {
+   "facts": [
+    {
+     "claim": "security@cognition.ai; SOC 2 Type II; no bounty or advisory feed found.",
+     "source": "https://docs.devin.ai/admin/security.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Embrace The Red (Aug 2025) reported Devin prompt-injection weaknesses incl. expose_port.",
+     "source": "https://vibegraveyard.ai/story/devin-ai-prompt-injection-no-protection/",
+     "label": "third-party-report",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Contact only."
+  }
+ }
+}

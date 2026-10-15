@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "github": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "LOG_LEVEL": "info",
+        "ALLOWED_DIRECTORIES": "/workspace/app"
+      }
+    }
+  }
+}

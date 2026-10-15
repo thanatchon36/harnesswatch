@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "internal-docs": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "./tools/mcp/docs-server.js"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  }
+}

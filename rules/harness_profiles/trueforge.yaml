@@ -1,0 +1,71 @@
+id: trueforge
+name: TrueForge (open-source agent harness server + chat UI + SDK)
+vendor: TrueFoundry
+tier: C   # lead asked for tier C; behaves as a full harness
+license: MIT
+open_source: true
+status: analysed
+version_analysed: "0.179.1"
+analysed_on: "2026-10-15"
+homepage: https://trueforge.dev
+repo: https://github.com/truefoundry/trueforge
+runtime_kind: harness-server   # Hono HTTP API + web UI; agents are configured in the UI/API, stored in SQLite (local) or Postgres (hosted)
+binaries: [trueforge]
+packages:
+  - {ecosystem: npm, name: "@truefoundry/trueforge"}
+  - {ecosystem: npm, name: "@truefoundry/trueforge-sdk"}
+  - {ecosystem: npm, name: "@truefoundry/trueforge-ui"}
+  - {ecosystem: npm, name: "@truefoundry/trueforge-core"}
+  - {ecosystem: pip, name: trueforge-sdk}   # python/trueforge_sdk in repo; PyPI name unverified
+  - {ecosystem: helm-oci, name: "oci://tfy.jfrog.io/tfy-helm/trueforge"}
+install_methods:
+  - {method: npx, command: "npx @truefoundry/trueforge@latest", checksum_verified: null, signed: true, source: "npm provenance attestation (SLSA v1) present on 0.179.1: https://registry.npmjs.org/-/npm/v1/attestations/@truefoundry%2ftrueforge@0.179.1"}
+  - {method: docker-compose, command: "git clone https://github.com/truefoundry/trueforge && docker compose up --build", checksum_verified: null, signed: null, source: https://trueforge.dev/quickstart}
+  - {method: helm, command: "helm install trueforge oci://tfy.jfrog.io/tfy-helm/trueforge --version <x.y.z>", checksum_verified: null, signed: null, source: https://trueforge.dev/quickstart}
+auto_update: {default: false, config: "npx @latest resolves latest at each launch", source: https://trueforge.dev/quickstart}
+state_dirs: ["env-paths('trueforge').data (Linux ~/.local/share/trueforge; macOS ~/Library/Application Support/trueforge; Windows %APPDATA%\\trueforge\\Data)", "<data>/db/db.sqlite", "<data>/sandboxes"]
+credential_files: ["<data>/db/db.sqlite"]
+credential_storage: "Model/sandbox/web-search provider keys and MCP headers entered in Settings are stored in the SQLite (local) / Postgres (hosted) DB; API/UI reads return redacted stand-ins. No at-rest encryption found in source (grep for encrypt/cipher in db/sqlite: none) - unverified. Standalone service key is the fixed string 'trueforge-standalone' unless TRUEFORGE_API_KEY set. Agent definitions never contain API keys; sandbox secrets are synced to Daytona org secrets (hash stored)."
+log_paths: ["<data>/db/db.sqlite  (sessions, turns, tool calls, subagents)"]
+memory_paths: []
+config_files:
+  - {path: "packages/trueforge/.env", scope: project, format: env, kind: settings}
+  - {path: "<repo>/charts/trueforge/values.yaml", scope: project, format: yaml, kind: settings}
+  - {path: "packages/trueforge/catalog/{model,mcp,skill,sandbox,web-search}-catalog.yaml", scope: project, format: yaml, kind: settings}
+instruction_files: []   # instructions live in the agent record, not on disk
+skills_paths: []        # git-backed SKILL.md packs registered in Settings, loaded into the sandbox
+mcp:
+  files: []   # MCP servers configured in UI/API (Settings -> MCP servers), stored in DB; shipped catalog packages/trueforge/catalog/mcp-catalog.yaml
+  servers_key: null
+  server_fields: {url: url, headers: headers, require_approval_for_tools: require_approval_for_tools}
+  project_servers_require_approval: null
+  notes: "Remote MCP only (header auth or OAuth incl. in-chat authorization); no stdio servers on the harness host. Per-agent require_approval_for_tools default [\"@write\",\"@destructive\"]; unlabeled tools run WITHOUT approval unless listed by name or \"@all\"."
+permissions:
+  config_keys: {approval: "agent.mcp_servers[].require_approval_for_tools"}
+  default_mode: "Tools whose MCP annotations mark them write/destructive pause for human Allow/Deny; read-only and UNLABELED tools run automatically."
+  auto_approve_values:
+    - {key: "require_approval_for_tools", value: []}
+  cli_flags_auto_approve: []
+  allow_rule_syntax: "require_approval_for_tools: [\"@all\"] | [\"@write\",\"@destructive\"] | [\"process_refund\"]"
+  overbroad_patterns: ["require_approval_for_tools: []", "OIDC not configured with HOST=0.0.0.0", "TRUEFORGE_API_KEY=placeholder-value-please-generate-your-own"]
+hooks: {supported: false, config_key: null, repo_scoped_allowed: false, command_field: null}
+sandbox: {available: true, default_on: false, mechanism: "Sandbox-as-tool: Daytona (hosted provider) or local mode via @anthropic-ai/sandbox-runtime (srt) 0.0.77; local sandbox fallback auto-enabled in standalone when probe succeeds. Skills and Code Mode require a sandbox.", config: "Settings -> Sandbox providers / Envs (Domain Allow List, Block All Network)", source: https://trueforge.dev/sandbox}
+network: {domain_allowlist: true, config: "sandbox environment 'Domain Allow List' / 'Block All Network'; server-side OUTBOUND_URL_ALLOWED_HOSTS / OUTBOUND_URL_BLOCKED_HOSTS (JSON arrays)", default: "sandbox egress UNRESTRICTED by default", source: https://trueforge.dev/sandbox}
+workspace_trust: {prompt_on_new_folder: false, notes: "Server product; no folder trust.", source: null}
+memory: {persistent: false, cross_project: false, agent_writable: false, notes: "Session persistence + context compaction; no cross-session memory documented.", source: null}
+subagents: {supported: true, inherits_permissions: "unverified", notes: "Dynamic subagents toggle per agent", source: https://trueforge.dev/key-features/subagents}
+telemetry: {default_on: false, opt_out: "SENTRY_ENABLED=false (default false; only active with SENTRY_DSN, and never when NODE_ENV is development/test/local). TrueFoundry-hosted mode uses initTrueFoundrySentry.", training_default: null, source: "packages/trueforge/src/config.ts, sentry/initSentry.ts"}
+headless:
+  command: "npx @truefoundry/trueforge --port 8790   # then drive via HTTP API / @truefoundry/trueforge-sdk (sessions, turns, events)"
+  flags: ["--port <n>", "-h"]
+  ci_integrations: []
+  model_override: "Settings -> Models -> custom provider (type: custom) with base URL + optional API key + model IDs"
+  local_model_support: "Any OpenAI-compatible endpoint incl. Ollama and vLLM via the 'custom' provider type (docs/models.mdx)"
+security_policy: {security_md: "https://github.com/truefoundry/trueforge/blob/main/SECURITY.md", bug_bounty: null, advisories: "https://github.com/truefoundry/trueforge/security/advisories"}
+sources:
+  - {url: "https://github.com/truefoundry/trueforge (HEAD d3d80a2)", accessed: "2026-10-15", note: "README, docs/, packages/trueforge/src/config.ts"}
+  - {url: "https://registry.npmjs.org/@truefoundry%2ftrueforge", accessed: "2026-10-15", note: "created 2026-08-13, latest 0.179.1 (2026-10-14), MIT"}
+extra:
+  env_vars: {HOST: "default localhost; Dockerfile sets 0.0.0.0", PORT: "8790 (standalone) / 8791 (compose)", STANDALONE: "default true: SQLite, NO login, one shared local admin", SQLITE_PATH: "override DB file", TRUEFORGE_API_KEY: "required when STANDALONE=false; chart ships placeholder", OIDC_ISSUER_URL: "OIDC login; ignored in standalone mode", OIDC_ALLOWED_EMAILS: "empty = any authenticated user may sign in"}
+  chart_defaults: "Helm chart default = no OIDC, well-known bundled Postgres password and Redis without auth (chart README 'Dev defaults')"
+  launch: "repo created 2026-07-23; npm package created 2026-08-13; lead's 2026-08-20 launch date unverified"

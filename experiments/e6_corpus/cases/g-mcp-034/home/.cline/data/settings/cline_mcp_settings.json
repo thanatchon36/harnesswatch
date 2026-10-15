@@ -1,0 +1,28 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest",
+        "--headless"
+      ],
+      "env": {
+        "LOG_LEVEL": "info",
+        "ALLOWED_DIRECTORIES": "/workspace/app"
+      },
+      "autoApprove": [
+        "get_issue",
+        "list_issues"
+      ]
+    },
+    "search": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "mcp/brave-search@sha256:3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a"
+      ]
+    }
+  }
+}

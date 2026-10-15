@@ -1,0 +1,6 @@
+expected:
+- HG-HOOK-002
+- HG-SEC-003
+origin: generated
+family: claude
+note: Claude Code settings (home)

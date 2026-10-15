@@ -1,0 +1,91 @@
+id: claude-agent-sdk
+name: Claude Agent SDK (Python and TypeScript)
+vendor: Anthropic
+tier: C
+license: "Python repo: MIT (LICENSE file) but README says use is governed by Anthropic Commercial Terms; wheels bundle the proprietary Claude Code CLI. TypeScript: All rights reserved, Commercial Terms"
+open_source: true   # Python source is public (MIT file); TypeScript repo is docs/changelog only; bundled CLI is closed
+status: docs-only
+version_analysed: "0.2.167"   # Python; TypeScript 0.3.300; source read, not executed
+analysed_on: "2026-10-15"
+homepage: https://code.claude.com/docs/en/agent-sdk
+repo: https://github.com/anthropics/claude-agent-sdk-python
+
+binaries: []                      # library; spawns the bundled `claude` CLI
+packages:
+  - {ecosystem: pypi, name: "claude-agent-sdk"}
+  - {ecosystem: npm, name: "@anthropic-ai/claude-agent-sdk"}
+install_methods:
+  - {method: pip, command: "pip install claude-agent-sdk", checksum_verified: null, signed: null, source: https://github.com/anthropics/claude-agent-sdk-python}
+  - {method: npm, command: "npm install @anthropic-ai/claude-agent-sdk", checksum_verified: null, signed: null, source: https://code.claude.com/docs/en/agent-sdk}
+auto_update: {default: false, config: "SDK pins its bundled CLI (src/claude_agent_sdk/_cli_version.py = 2.1.300); CLAUDE_AGENT_SDK_SKIP_VERSION_CHECK env skips the CLI version check", source: https://github.com/anthropics/claude-agent-sdk-python/blob/main/src/claude_agent_sdk/_internal/transport/subprocess_cli.py}
+
+state_dirs: ["~/.claude"]          # state is written by the spawned Claude Code CLI
+credential_files: ["~/.claude/.credentials.json"]   # unverified here; CLI-owned. API-key auth normally via ANTHROPIC_API_KEY env
+credential_storage: "SDK stores nothing; the subprocess inherits the caller's full environment (os.environ minus CLAUDECODE) plus ClaudeAgentOptions.env. Auth is CLI-owned (env var ANTHROPIC_API_KEY, apiKeyHelper, or CLI login)."
+log_paths: ["~/.claude/projects/*/*.jsonl"]        # CLI session transcripts (unverified path in this study; SessionStore option mirrors transcripts)
+memory_paths: ["CLAUDE.md", "~/.claude/CLAUDE.md"] # only loaded when setting_sources includes project/user
+
+config_files:                       # read by the bundled CLI according to setting_sources (None = all)
+  - {path: "~/.claude/settings.json", scope: user, format: json, kind: settings}
+  - {path: ".claude/settings.json", scope: project, format: json, kind: settings}
+  - {path: ".claude/settings.local.json", scope: project-local, format: json, kind: settings}
+  - {path: ".mcp.json", scope: project, format: json, kind: mcp}      # via CLI; SDK-mode approval behaviour unverified
+  - {path: ".claude/agents/*.md", scope: project, format: markdown, kind: agents}
+  - {path: ".claude/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+  - {path: "<flag --settings / ClaudeAgentOptions.settings>", scope: env, format: json, kind: settings}
+
+instruction_files: ["CLAUDE.md", ".claude/CLAUDE.md"]   # require "project" in setting_sources
+skills_paths: [".claude/skills/*/SKILL.md", "~/.claude/skills/*/SKILL.md"]
+
+mcp:
+  files: [".mcp.json"]
+  servers_key: "mcpServers"          # .mcp.json via CLI; SDK programmatic dict is ClaudeAgentOptions.mcp_servers {name: config}
+  server_fields: {command: command, args: args, env: env, url: url, headers: headers, type: type}
+  project_servers_require_approval: null   # unverified for SDK mode
+  notes: "Programmatic servers: ClaudeAgentOptions.mcp_servers dict (stdio | sse | http | in-process sdk). Option strict MCP config exists (types.py). Deny rules support mcp__* globs; allow rules need literal mcp__<server>__ prefix."
+
+permissions:
+  config_keys:
+    mode: "permissions.defaultMode (settings) / ClaudeAgentOptions.permission_mode (TS: permissionMode)"
+    allow: "permissions.allow / ClaudeAgentOptions.allowed_tools"
+    deny: "permissions.deny / ClaudeAgentOptions.disallowed_tools"
+    ask: "permissions.ask"
+  default_mode: "unset -> settings permissions.defaultMode else built-in default which the docs say can be auto mode (before TS SDK v0.3.286 unset == default)"
+  auto_approve_values:
+    - {key: "ClaudeAgentOptions.permission_mode", value: "bypassPermissions"}
+    - {key: "permissions.defaultMode", value: "bypassPermissions"}
+    - {key: "ClaudeAgentOptions.permission_mode", value: "acceptEdits"}   # file edits + mkdir/rm/mv/cp/sed inside workdir only
+    - {key: "ClaudeAgentOptions.permission_mode", value: "auto"}          # model-classifier approvals
+  cli_flags_auto_approve: ["--permission-mode bypassPermissions", "--dangerously-skip-permissions"]   # second flag is CLI-level, unverified in SDK
+  allow_rule_syntax: "Bash(npm test *)"
+  overbroad_patterns: ["Bash", "Bash(*)", "*", "Write", "Edit"]   # bare tool names allow every call and skip can_use_tool; allowed_tools=['*'] / ['mcp__*'] are ignored with a warning
+  callback: "can_use_tool(tool_name, input, ToolPermissionContext) -> PermissionResultAllow | PermissionResultDeny; unreachable when mode is bypassPermissions or a whole-tool allow rule matches"
+
+hooks:
+  supported: true
+  config_key: "hooks"
+  repo_scoped_allowed: true          # .claude/settings.json hooks load when project source enabled
+  command_field: "command"
+  notes: "Programmatic hooks via ClaudeAgentOptions.hooks {HookEvent: [HookMatcher]}; a PreToolUse hook deny applies even in bypassPermissions."
+
+sandbox: {available: true, default_on: false, mechanism: "bubblewrap (Linux) / Seatbelt (macOS) for Bash via ClaudeAgentOptions.sandbox", config: "sandbox.enabled; sandbox.allowUnsandboxedCommands default true; sandbox.autoAllowBashIfSandboxed default true; sandbox.enableWeakerNestedSandbox", source: https://github.com/anthropics/claude-agent-sdk-python/blob/main/src/claude_agent_sdk/types.py}
+network: {domain_allowlist: true, config: "sandbox.network.* (only when sandbox enabled); WebFetch allow/deny rules", default: "no restriction", source: https://code.claude.com/docs/en/agent-sdk/secure-deployment}
+workspace_trust: {prompt_on_new_folder: null, notes: "setting_sources=None loads user+project+local settings (matches CLI defaults); interactive trust dialog behaviour in SDK mode not documented in pages read. Use setting_sources=[] for isolation.", source: https://github.com/anthropics/claude-agent-sdk-python/blob/main/src/claude_agent_sdk/types.py}
+memory: {persistent: true, cross_project: null, agent_writable: true, notes: "CLI memory/CLAUDE.md semantics; SDK adds nothing", source: https://github.com/anthropics/claude-agent-sdk-python/blob/main/src/claude_agent_sdk/types.py}
+subagents: {supported: true, inherits_permissions: "parent permission mode; bypassPermissions on AgentDefinition is never applied unless parent is in bypass (CLI >= 2.1.267)", notes: "ClaudeAgentOptions.agents {name: AgentDefinition}", source: https://code.claude.com/docs/en/agent-sdk/permissions}
+telemetry: {default_on: null, opt_out: null, training_default: "see Anthropic Commercial Terms/Privacy Policy", source: https://github.com/anthropics/claude-agent-sdk-python/blob/main/README.md}
+headless:
+  command: "python: claude_agent_sdk.query(prompt=..., options=ClaudeAgentOptions(...)) -- spawns `claude` with --output-format stream-json (control protocol over stdio)"
+  flags: ["--permission-mode", "--allowedTools", "--disallowedTools", "--setting-sources=", "--settings", "--mcp-config", "--resume=<id>", "--session-id=<id>"]
+  ci_integrations: ["anthropics/claude-code-action (separate product)"]
+  model_override: "ClaudeAgentOptions.model; env ANTHROPIC_BASE_URL / ANTHROPIC_API_KEY passed via ClaudeAgentOptions.env or process env"
+  local_model_support: "Anthropic-compatible endpoint via ANTHROPIC_BASE_URL (documented for proxies/LiteLLM); Ollama Anthropic-compat not verified in this study"
+
+security_policy: {security_md: null, bug_bounty: "HackerOne (reporter credit in GHSA-h4mw-j7qp-8mwm); program page not fetched", advisories: https://github.com/anthropics/claude-agent-sdk-python/security/advisories}
+sources:
+  - {url: https://github.com/anthropics/claude-agent-sdk-python, accessed: "2026-10-15", note: "source read: types.py, _internal/transport/subprocess_cli.py, _internal/query.py, CHANGELOG.md, README.md"}
+  - {url: https://code.claude.com/docs/en/agent-sdk/permissions, accessed: "2026-10-15", note: "permission evaluation order and modes"}
+  - {url: https://code.claude.com/docs/en/agent-sdk/secure-deployment, accessed: "2026-10-15", note: "isolation and credential proxy guidance"}
+  - {url: https://github.com/anthropics/claude-agent-sdk-python/security/advisories/GHSA-h4mw-j7qp-8mwm, accessed: "2026-10-15", note: "CVE-2026-96620"}
+extra:
+  seed_path_corrections: "MISSION.md lists 'Claude Agent SDK + Claude Managed Agents' together; they are separate products (see claude-managed-agents). Python SDK is v0.2.x (0.2.167), TS is v0.3.x (0.3.300)."

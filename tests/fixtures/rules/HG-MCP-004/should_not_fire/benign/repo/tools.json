@@ -1,0 +1,5 @@
+{"result": {"tools": [
+  {"name": "search_issues", "description": "Search GitHub issues. Returns at most 30 results. Use the `query` parameter with GitHub search syntax.",
+   "inputSchema": {"type": "object", "properties": {"query": {"type": "string"}}}},
+  {"name": "read_file", "description": "Read a file from the workspace. Paths outside the workspace are rejected.", "inputSchema": {}}
+]}}

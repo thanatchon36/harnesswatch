@@ -1,0 +1,6 @@
+extensions:
+  fetch:
+    type: stdio
+    cmd: uvx
+    args: [mcp-server-fetch]
+    enabled: true

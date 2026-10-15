@@ -1,0 +1,5 @@
+{
+  "theme": "dark",
+  "skipDangerousModePermissionPrompt": true,
+  "permissions": {"allow": ["Bash(git status)"]}
+}

@@ -1,0 +1,70 @@
+id: copilot-studio
+name: Microsoft Copilot Studio (GitHub Copilot harness)
+vendor: Microsoft
+tier: C
+license: Proprietary (SaaS)
+open_source: false
+status: docs-only
+version_analysed: null   # SaaS, unversioned; docs read 2026-10-15 (Learn pages dated 2026-05..2026-10)
+analysed_on: "2026-10-15"
+homepage: https://learn.microsoft.com/en-us/microsoft-copilot-studio/
+repo: null
+
+binaries: []
+packages: []
+install_methods: []
+auto_update: {default: true, config: "SaaS; service updated by vendor", source: https://learn.microsoft.com/en-us/microsoft-copilot-studio/security-and-governance}
+
+state_dirs: []
+credential_files: []
+credential_storage: "Cloud service (Dataverse/Power Platform environment). Tools run with end-user credentials by default; maker-provided credentials are an opt-in that triggers a security-scan warning. Customer-managed keys (CMK) available."
+log_paths: []
+memory_paths: []
+
+config_files: []   # no local config; configuration lives in Power Platform environments (solutions / deploy-from-Git exports are YAML but not harness-read config)
+
+instruction_files: []
+skills_paths: []   # skills are uploaded (SKILL.md or .zip) into the agent in the Copilot Studio portal, not read from disk
+
+mcp:
+  files: []
+  servers_key: null
+  server_fields: {}
+  project_servers_require_approval: null
+  notes: "MCP servers are added by makers via onboarding wizard; GitHub Copilot harness can use MCP servers as tools. Power Platform data policies that block connectors also block tools of connected MCP servers (docs). Makers can submit MCP servers for Microsoft certification. Dynamic tool list refresh with no documented change-approval step (standard-harness MCP doc)."
+
+permissions:
+  config_keys: {}
+  default_mode: "Authenticate with Microsoft (Entra ID) for end users; tools use end-user credentials; agent shared with no one"
+  auto_approve_values: []
+  cli_flags_auto_approve: []
+  allow_rule_syntax: "Power Platform data policy: connector classification Business / Non-business / Blocked (Power Platform admin center)"
+  overbroad_patterns: ["Authentication = No authentication", "Credentials to use = Maker-provided credentials", "agent shared with everyone in the organization"]
+
+hooks: {supported: false}
+
+sandbox: {available: true, default_on: true, mechanism: "undocumented ('secure sandbox governed by Copilot Studio' per task, GitHub Copilot harness)", config: null, source: https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview}
+network: {domain_allowlist: true, config: "Power Platform connector endpoint filtering (HTTP, public-website knowledge, SharePoint); Entra network egress/ingress controls via Agent 365", default: "HTTP node allowed unless data policy blocks it", source: https://learn.microsoft.com/en-us/microsoft-copilot-studio/admin-data-loss-prevention}
+workspace_trust: {prompt_on_new_folder: null, notes: "N/A (no local workspace). Equivalent: maker security scan warns before publishing when secure defaults are changed.", source: https://learn.microsoft.com/en-us/microsoft-copilot-studio/security-scan}
+memory: {persistent: true, cross_project: null, agent_writable: null, notes: "Memory is listed as preview on the GitHub Copilot harness (Sept 2026 blog); details not read", source: https://www.microsoft.com/microsoft-copilot/blog/copilot-studio/new-and-improved-github-copilot-harness-agent-skills-and-richer-context/}
+subagents: {supported: true, inherits_permissions: null, notes: "Connected agents (preview) per Sept 2026 blog; isolation semantics unverified", source: https://www.microsoft.com/microsoft-copilot/blog/copilot-studio/new-and-improved-github-copilot-harness-agent-skills-and-richer-context/}
+telemetry: {default_on: true, opt_out: "Purview audit cannot be disabled per service; tenant-wide audit can be disabled in Purview; retention policy of 0 days for Copilot experiences prevents retention of message text", training_default: "unverified (not stated on pages read)", source: https://learn.microsoft.com/en-us/microsoft-copilot-studio/admin-logging-copilot-studio}
+headless:
+  command: null
+  flags: []
+  ci_integrations: ["Power Platform pipelines / deploy-from-Git (ALM)"]
+  model_override: "model selection in portal (docs list Claude Sonnet 5 and GPT-5.5 Chat as GA primary models); no custom base URL"
+  local_model_support: "none (SaaS)"
+
+security_policy: {security_md: null, bug_bounty: "unverified (MSRC; Copilot bounty program not fetched)", advisories: https://msrc.microsoft.com/update-guide}
+sources:
+  - {url: https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview, accessed: "2026-10-15", note: "three harnesses; GitHub Copilot harness is not the GitHub Copilot service"}
+  - {url: https://learn.microsoft.com/en-us/microsoft-copilot-studio/security-and-governance, accessed: "2026-10-15", note: "controls overview"}
+  - {url: https://learn.microsoft.com/en-us/microsoft-copilot-studio/admin-data-loss-prevention, accessed: "2026-10-15", note: "data policies"}
+  - {url: https://learn.microsoft.com/en-us/microsoft-copilot-studio/admin-logging-copilot-studio, accessed: "2026-10-15", note: "Purview audit"}
+  - {url: https://learn.microsoft.com/en-us/microsoft-copilot-studio/security-agent-runtime-view, accessed: "2026-10-15", note: "threat detection"}
+  - {url: https://www.microsoft.com/microsoft-copilot/blog/copilot-studio/new-and-improved-github-copilot-harness-agent-skills-and-richer-context/, accessed: "2026-10-15", note: "GA announcement"}
+extra:
+  harness_variants: [github-copilot-harness, standard-harness, copilot-chat-harness]
+  github_copilot_service_relationship: "shares technology and SDK components; customer data not sent to GitHub Copilot service (Learn harnesses-overview)"
+  audit_events_of_interest: [BotCreate, BotPublish, BotShare, "BotUpdateOperation-BotAuthUpdate", "BotUpdateOperation-BotAppInsightsUpdate", "BotComponentUpdate (*.topic.Signin)"]

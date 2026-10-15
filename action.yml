@@ -1,0 +1,101 @@
+name: harnesswatch
+description: Audit AI coding-agent harness configs, MCP servers, instruction files and CI workflows, and emit SARIF.
+author: harnesswatch contributors
+branding:
+  icon: shield
+  color: blue
+
+inputs:
+  path:
+    description: Repository or directory to audit.
+    default: "."
+  audits:
+    description: Space-separated audits to run (config, mcp, instructions, ci).
+    default: "config mcp instructions ci"
+  fail-on:
+    description: Fail the step if any finding is at or above this severity (critical, high, medium, low, info).
+    default: high
+  sarif-output:
+    description: Path of the SARIF file to write.
+    default: harnesswatch.sarif
+  upload-sarif:
+    description: Upload the SARIF file to GitHub code scanning (needs security-events write permission).
+    default: "false"
+  version:
+    description: harnesswatch version to install from PyPI ("latest" or an exact version).
+    default: latest
+  python-version:
+    description: Python version used to run harnesswatch.
+    default: "3.12"
+
+outputs:
+  sarif-file:
+    description: Path of the SARIF report.
+    value: ${{ inputs.sarif-output }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install harnesswatch
+      shell: bash
+      env:
+        HW_VERSION: ${{ inputs.version }}
+      run: |
+        python -m pip install --disable-pip-version-check pipx
+        if [ "$HW_VERSION" = "latest" ]; then
+          python -m pipx install harnesswatch
+        else
+          python -m pipx install "harnesswatch==${HW_VERSION}"
+        fi
+        echo "$(python -m pipx environment --value PIPX_BIN_DIR)" >> "$GITHUB_PATH"
+
+    - name: Run audits
+      id: audit
+      shell: bash
+      env:
+        HW_PATH: ${{ inputs.path }}
+        HW_AUDITS: ${{ inputs.audits }}
+        HW_FAIL_ON: ${{ inputs.fail-on }}
+        HW_SARIF: ${{ inputs.sarif-output }}
+      run: |
+        set -u
+        work="$(mktemp -d)"
+        reports=()
+        for name in $HW_AUDITS; do
+          case "$name" in
+            config | mcp | instructions) extra=(--no-user) ;;
+            ci) extra=() ;;
+            *) echo "::error::unsupported audit '$name' (use config, mcp, instructions, ci)"; exit 2 ;;
+          esac
+          # Exit 1 means findings; anything higher is a tool error. Gating happens in `report`.
+          rc=0
+          harnesswatch audit "$name" "$HW_PATH" "${extra[@]}" -f json -o "$work/$name.json" --fail-on critical || rc=$?
+          if [ "$rc" -gt 1 ]; then
+            echo "::error::harnesswatch audit $name failed (exit $rc)"
+            exit "$rc"
+          fi
+          reports+=("$work/$name.json")
+        done
+        mkdir -p "$(dirname "$HW_SARIF")"
+        harnesswatch report "${reports[@]}" -f sarif -o "$HW_SARIF" --fail-on "$HW_FAIL_ON" || rc=$?
+        echo "gate=${rc:-0}" >> "$GITHUB_OUTPUT"
+
+    - name: Upload SARIF
+      if: ${{ inputs.upload-sarif == 'true' && always() }}
+      uses: github/codeql-action/upload-sarif@ff0a06e83cb2de871e5a09832bc6a81e7276941f # v3.28.18
+      with:
+        sarif_file: ${{ inputs.sarif-output }}
+        category: harnesswatch
+
+    - name: Apply severity gate
+      if: ${{ steps.audit.outputs.gate != '' && steps.audit.outputs.gate != '0' }}
+      shell: bash
+      env:
+        HW_FAIL_ON: ${{ inputs.fail-on }}
+      run: |
+        echo "::error::harnesswatch found findings at or above '$HW_FAIL_ON'"
+        exit 1

@@ -1,0 +1,4 @@
+expected: []
+origin: hand
+family: instr
+note: "security guidance that quotes a curl|sh anti-pattern"

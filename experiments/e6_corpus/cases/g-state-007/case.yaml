@@ -1,0 +1,2 @@
+chmod:
+  home/.claude/.credentials.json: '0644'

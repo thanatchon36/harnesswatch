@@ -1,0 +1,6 @@
+allow:
+  - Read
+  - Bash(npm test)
+  - Bash(git status)
+ask:
+  - Write

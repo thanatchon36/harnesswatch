@@ -1,0 +1,5 @@
+allow:
+  - Read
+  - Bash
+ask:
+  - Write

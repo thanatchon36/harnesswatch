@@ -1,0 +1,7 @@
+expected:
+- HG-PERM-001
+- HG-PERM-003
+- HG-SUB-001
+origin: generated
+family: opencode
+note: OpenCode config

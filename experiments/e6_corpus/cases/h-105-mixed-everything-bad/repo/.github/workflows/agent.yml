@@ -1,0 +1,14 @@
+name: agent
+on:
+  issues:
+    types: [opened]
+jobs:
+  solve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: "Fix: ${{ github.event.issue.body }}"
+          claude_args: "--dangerously-skip-permissions"

@@ -1,0 +1,20 @@
+id: HG-INJ-001
+title: Hidden or confusable Unicode in an instruction file
+area: INJ
+severity: medium
+confidence: high
+kind: vulnerability-pattern
+taxonomy: [T01, T05]
+description: >
+  Instruction, rules and skill files (CLAUDE.md, AGENTS.md, .cursor/rules, copilot-instructions.md,
+  SKILL.md, …) are loaded verbatim into the agent's context. Zero-width characters, bidirectional
+  controls, Unicode tag characters ("ASCII smuggling") and mixed-script homoglyphs let an author hide
+  instructions from human reviewers while the model still reads them ("Rules File Backdoor").
+  Unicode tags and bidi controls are raised to high severity; mixed-script words alone are low.
+remediation: >
+  Remove the hidden characters (e.g. `harnesswatch audit instructions --json` lists the lines), review
+  the file in a hex-aware viewer, and require instruction-file changes to pass code review with
+  Unicode-revealing diffs.
+references:
+  - https://www.pillar.security/blog/new-vulnerability-in-github-copilot-and-cursor-how-hackers-can-weaponize-code-agents
+  - https://unicode.org/reports/tr36/

@@ -1,0 +1,120 @@
+id: cline
+name: Cline (VS Code extension + Cline CLI + SDK)
+vendor: Cline Bot Inc.
+tier: A
+license: Apache-2.0            # verified: LICENSE file + GitHub API + npm metadata
+open_source: true
+status: analysed               # source read at commit 789f79e (2026-10-14); not executed
+version_analysed: "VS Code ext 4.1.24 (2026-10-13); CLI cline@3.0.71 (2026-10-13); SDK 0.0.93; desktop 0.0.46"
+analysed_on: "2026-10-15"
+homepage: https://cline.bot
+repo: https://github.com/cline/cline
+
+binaries: [cline]
+packages:
+  - {ecosystem: npm, name: "cline"}                       # CLI; platform binaries via optionalDependencies
+  - {ecosystem: vscode-marketplace, name: "saoudrizwan.claude-dev"}
+  - {ecosystem: npm, name: "kanban"}                      # started by `cline --kanban` (GHSA-5c57-rqjx-35g2)
+install_methods:
+  - {method: npm, command: "npm install -g cline", checksum_verified: null, signed: null, source: https://github.com/cline/cline/blob/main/apps/cli/README.md}
+  - {method: vscode-marketplace, command: "install saoudrizwan.claude-dev", checksum_verified: null, signed: null, source: https://github.com/cline/cline/blob/main/README.md}
+  - {method: npm-provenance, command: "release workflows set NPM_CONFIG_PROVENANCE=true with id-token: write", checksum_verified: null, signed: true, source: https://github.com/cline/cline/blob/main/.github/workflows/cli-publish.yml}
+auto_update: {default: null, config: "`cline update` / `cline --update` (manual trigger); default auto-check behaviour unverified", source: https://github.com/cline/cline/blob/main/docs/cli/cli-reference.mdx}
+
+state_dirs: ["~/.cline", "~/.cline/data"]       # CLINE_DIR / CLINE_DATA_DIR / --config / --data-dir override
+credential_files: ["~/.cline/data/settings/providers.json"]   # written 0600 in dir 0700 (provider-settings-manager.ts)
+credential_storage: "CLI/SDK: provider API keys in plaintext JSON ~/.cline/data/settings/providers.json (mode 0600, dir 0700). Legacy VS Code extension used VS Code SecretStorage; where the SDK-based 4.x extension keeps keys is unverified. MCP env/headers in cline_mcp_settings.json are plaintext."
+log_paths: ["~/.cline/data/sessions/**", "~/.cline/data/db/*.db", "~/.cline/worktrees/**"]
+memory_paths: []                                 # no agent-writable cross-session memory store found (rules/skills are user-authored)
+
+config_files:
+  - {path: "~/.cline/data/settings/global-settings.json", scope: user, format: json, kind: settings}   # key toolAutoApprove, telemetryOptOut, planActMode ...
+  - {path: "~/.cline/data/settings/providers.json", scope: user, format: json, kind: settings}
+  - {path: "~/.cline/data/settings/cline_mcp_settings.json", scope: user, format: json, kind: mcp}       # CLINE_MCP_SETTINGS_PATH overrides
+  - {path: ".clinerules", scope: project, format: markdown, kind: rules}          # file or directory (deprecated name, still read)
+  - {path: ".cline/rules/*.md", scope: project, format: markdown, kind: rules}
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: "~/.agents/AGENTS.md", scope: user, format: markdown, kind: instructions}
+  - {path: "~/Documents/Cline/Rules", scope: user, format: markdown, kind: rules}
+  - {path: ".cline/hooks/*", scope: project, format: markdown, kind: hooks}        # executable scripts named after event (shell)
+  - {path: ".clinerules/hooks/*", scope: project, format: markdown, kind: hooks}   # executable; extension needs "Enable Hooks" (hooksEnabled default true)
+  - {path: "~/.cline/hooks/*", scope: user, format: markdown, kind: hooks}
+  - {path: "~/Documents/Cline/Hooks/*", scope: user, format: markdown, kind: hooks}
+  - {path: ".cline/plugins/**", scope: project, format: markdown, kind: skills}    # JS/TS modules executed by CLI/SDK (not VS Code ext); kind: plugin code
+  - {path: "~/.cline/plugins/**", scope: user, format: markdown, kind: skills}
+  - {path: ".cline/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+  - {path: ".claude/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+  - {path: ".agents/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+  - {path: ".cline/agents/*", scope: project, format: markdown, kind: agents}
+  - {path: ".clineignore", scope: project, format: ini, kind: ignore}              # NOT an access-control boundary (vendor doc)
+  - {path: ".cline/enterprise/", scope: managed, format: json, kind: settings}     # org remote-config copy written into workspace (CLI)
+  - {path: ".cline/remote-config/", scope: managed, format: json, kind: settings}  # same, VS Code/JetBrains
+
+instruction_files: [".clinerules", ".cline/rules/*.md", "AGENTS.md", "~/.agents/AGENTS.md"]
+skills_paths: [".cline/skills/*/SKILL.md", ".claude/skills/*/SKILL.md", ".agents/skills/*/SKILL.md", ".clinerules/skills/*/SKILL.md", "~/.cline/skills/*/SKILL.md", "~/.agents/skills/*/SKILL.md"]
+
+mcp:
+  files: ["~/.cline/data/settings/cline_mcp_settings.json"]
+  servers_key: "mcpServers"
+  server_fields:
+    command: command
+    args: args
+    env: env
+    url: url
+    headers: headers
+    type: type              # "streamableHttp" | "sse" (omitted => sse for remote); stdio inferred from command
+    disabled: disabled
+    autoApprove: autoApprove   # list of tool names auto-approved for this server
+    timeout: timeout
+  project_servers_require_approval: null   # no project-scoped MCP file exists in source; plugins can contribute MCP servers (plugin-mcp-settings.ts)
+  notes: "User-level only. `cline mcp add NAME -- cmd args` / `--yes` writes entries. Remote OAuth supported. Org 'Organization MCP servers' via remote config (VS Code/JetBrains only)."
+
+permissions:
+  config_keys:
+    cli_auto_approve: "toolAutoApprove"                       # ~/.cline/data/settings/global-settings.json (boolean)
+    vscode_auto_approve: "autoApprovalSettings.actions.{readFiles,editFiles,executeSafeCommands,executeAllCommands,useBrowser,useMcp}"   # VS Code global state
+    mcp_tool_allow: "mcpServers.<name>.autoApprove"
+    policy: "toolPolicies['*'].autoApprove (SDK)"
+  default_mode: "CLI: auto-approve ON by default (defaultToolAutoApprove = true in apps/cli/src/main.ts; --help: 'Default to start in act mode with auto-approve enabled'). ACP mode: off unless --auto-approve true. VS Code DEFAULT_AUTO_APPROVAL_SETTINGS: readFiles/editFiles/useBrowser/useMcp true, executeSafeCommands false, executeAllCommands true (legacy-named fields)."
+  auto_approve_values:
+    - {key: "toolAutoApprove", value: true}
+    - {key: "autoApprovalSettings.actions.executeAllCommands", value: true}
+    - {key: "autoApprovalSettings.actions.editFilesExternally", value: true}
+    - {key: "mcpServers.*.autoApprove", value: "non-empty list"}
+  cli_flags_auto_approve: ["--yolo", "--auto-approve true", "--autoapprove", "--auto-approve (bare => true)"]
+  allow_rule_syntax: "no pattern allowlist; model sets requires_approval per command (docs/features/auto-approve.mdx). MCP: autoApprove: [\"tool_name\"]"
+  overbroad_patterns: ["toolAutoApprove: true", "executeAllCommands: true"]
+  notes: "Cline docs still describe a separate YOLO toggle; source (vscode-to-file-migration.ts) folds legacy yoloModeToggled into autoApprovalSettings.actions all-true. Org policy key `yoloModeAllowed` (remote config; docs table says NOT supported by VS Code/CLI/Desktop - contradictory, unverified)."
+
+hooks:
+  supported: true
+  config_key: null                    # file-based: executable named after event (PreToolUse, PostToolUse, ...) in hooks dirs
+  repo_scoped_allowed: true           # .cline/hooks/ and .clinerules/hooks/ discovered from workspace; no trust gate found in source
+  command_field: null
+
+sandbox: {available: false, default_on: false, mechanism: "none for tool execution; opt-in plugin 'sandbox' mode only isolates plugin code", config: null, source: https://github.com/cline/cline/blob/main/docs/sdk/plugins.mdx}
+network: {domain_allowlist: false, config: null, default: "unrestricted; ping/other 'safe' commands approved by model flag (Mindgard DNS exfil)", source: https://mindgard.ai/disclosures/cline-bot-ai-coding-agent-data-exfiltration-via-prompt-injection-and-dns}
+workspace_trust: {prompt_on_new_folder: false, notes: "CLI has no folder-trust prompt in source (grep 'trust' finds none); workspace plugins/hooks/rules discovered from cwd. VS Code relies on VS Code Workspace Trust (not verified).", source: https://github.com/cline/cline/blob/main/sdk/packages/shared/src/storage/paths.ts}
+memory: {persistent: false, cross_project: false, agent_writable: false, notes: "No built-in memory store; rules/skills are files", source: https://github.com/cline/cline}
+subagents: {supported: true, inherits_permissions: "spawn_agent/team tools exist; --yolo disables spawn/team tools by default (main.ts enableSpawnAgent: !isYoloMode); subagentsEnabled default false in VS Code", notes: "agent teams via --team-name", source: https://github.com/cline/cline/blob/main/docs/features/subagents.mdx}
+telemetry: {default_on: true, opt_out: "telemetryOptOut: true in ~/.cline/data/settings/global-settings.json (shared across products)", training_default: "prompts only sent in telemetry for Cline/ClinePass providers; not used for training (vendor doc: not stated)", source: https://github.com/cline/cline/blob/main/docs/enterprise-solutions/monitoring/telemetry.mdx}
+headless:
+  command: "cline --json \"<prompt>\"   # or cline --yolo \"<prompt>\"; piped stdin also headless"
+  flags: ["--json", "--yolo", "--auto-approve <true|false>", "-P/--provider", "-m/--model", "-k/--key", "-c/--cwd", "-t/--timeout", "--config <dir>", "--data-dir <dir>", "--acp"]
+  ci_integrations: []
+  model_override: "persist: cline auth -p openai-compatible -k KEY -m MODEL -b http://127.0.0.1:PORT/v1 (provider id from sdk llms builtins.ts; flag spelling from cli-reference.mdx; not run). Per run: -P <provider> -m <model> -k <key>"
+  local_model_support: "yes: provider ids `ollama` (base URL http://localhost:11434), `lmstudio`, and `openai-compatible` (builtins.ts id 'openai-compatible', baseUrl+apiKey+modelId). `cline auth --baseurl` sets Base URL."
+
+security_policy: {security_md: https://github.com/cline/cline/blob/main/SECURITY.md, bug_bounty: "https://bugcrowd.com/engagements/clinebot-vdp-ess (VDP; no confirmed bounty)", advisories: https://github.com/cline/cline/security/advisories}
+extra:
+  hub_dashboard: {default_bind: "127.0.0.1:8787", auth: "ROOM_SECRET optional; required only on non-local bind (docs); GHSA-3cj3-hqcr-g934 fixed after cline<=3.0.24", warning: "dashboard sessions default autoApprove true for all tools (advisory)"}
+  kanban: {default_bind: "127.0.0.1:3484", advisory: "GHSA-5c57-rqjx-35g2 / CVE-2026-44211 fixed in kanban >=2.13.0 range per advisory (<v2.13.0 affected)"}
+  enterprise_remote_config: "hosted at app.cline.bot; keys incl. yoloModeAllowed; supported controls differ per product (docs overview table)"
+sources:
+  - {url: https://github.com/cline/cline, accessed: "2026-10-15", note: "source at 789f79e"}
+  - {url: https://github.com/cline/cline/blob/main/apps/cli/src/main.ts, accessed: "2026-10-15", note: "defaultToolAutoApprove = true"}
+  - {url: https://github.com/cline/cline/blob/main/sdk/packages/shared/src/storage/paths.ts, accessed: "2026-10-15", note: "all state/config paths"}
+  - {url: https://github.com/cline/cline/blob/main/docs/mcp/mcp-overview.mdx, accessed: "2026-10-15", note: "MCP file + schema"}
+  - {url: https://github.com/cline/cline/blob/main/docs/features/auto-approve.mdx, accessed: "2026-10-15", note: "auto-approve / YOLO"}
+  - {url: https://github.com/cline/cline/blob/main/docs/cli/cli-reference.mdx, accessed: "2026-10-15", note: "CLI flags"}
+  - {url: https://github.com/cline/cline/security/advisories, accessed: "2026-10-15", note: "3 GHSAs"}

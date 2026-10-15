@@ -1,0 +1,4 @@
+expected: []
+origin: hand
+family: mcp
+note: "connection URL without password and plain identifiers"

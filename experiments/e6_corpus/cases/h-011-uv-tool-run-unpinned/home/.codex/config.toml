@@ -1,0 +1,7 @@
+model = "gpt-5.1-codex"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[mcp_servers.git]
+command = "uv"
+args = ["tool", "run", "mcp-server-git", "--repository", "/home/dev/src/app"]

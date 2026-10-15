@@ -1,0 +1,6 @@
+approval_policy = "never"
+sandbox_mode = "workspace-write"
+
+[mcp_servers.fs]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-filesystem", "."]

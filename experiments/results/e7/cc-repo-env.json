@@ -1,0 +1,825 @@
+{
+  "probe": "cc-repo-env",
+  "harness": "claude-code",
+  "image": "harnesswatch-bench-claude-code:2.1.300",
+  "command": "claude -p 'Reply with the single word OK.' --output-format stream-json --verbose --max-turns 1",
+  "env_keys": [
+    "ANTHROPIC_AUTH_TOKEN",
+    "ANTHROPIC_BASE_URL",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL",
+    "ANTHROPIC_MODEL",
+    "CLAUDE_CODE_SUBAGENT_MODEL"
+  ],
+  "repo_files": [
+    ".claude/settings.json"
+  ],
+  "notes": "",
+  "rc": "1",
+  "facts": {
+    "output_head": "{\"type\":\"system\",\"subtype\":\"init\",\"cwd\":\"/workspace\",\"session_id\":\"3d8a6a38-0e0c-4f9f-8d5f-e4bacf40e79f\",\"tools\":[\"Task\",\"Bash\",\"CronCreate\",\"CronDelete\",\"CronList\",\"DesignSync\",\"Edit\",\"EnterWorktree\",\"ExitWorktree\",\"ListAgents\",\"NotebookEdit\",\"Read\",\"ReportFindings\",\"ScheduleWakeup\",\"SendMessage\",\"Skill\",\"TaskStop\",\"WebFetch\",\"WebSearch\",\"Workflow\",\"Write\"],\"mcp_servers\":[],\"model\":\"qwen3:4b-instruct\",\"permissionMode\":\"auto\",\"slash_commands\":[\"deep-research\",\"design\",\"design-sync\",\"dataviz\",\"update-config\",\"verify\",\"debug\",\"code-review\",\"simplify\",\"batch\",\"fewer-permission-prompts\",\"doctor\",\"",
+    "permission_mode": "auto",
+    "mcp_servers": [],
+    "mentions_root_refusal": false,
+    "mentions_auth_required": false,
+    "mentions_trust": false
+  },
+  "report": {
+    "harness": "claude-code",
+    "image": "harnesswatch-bench-claude-code:2.1.300",
+    "command": [
+      "sh",
+      "/hw/run.sh"
+    ],
+    "started": 1792045557.061428,
+    "duration_s": 2.66,
+    "exit_code": 0,
+    "timed_out": false,
+    "hosts": [
+      {
+        "host": "hw-obs-cf0ed5e3-proxy",
+        "port": 3128,
+        "category": "local",
+        "via": [
+          "dns",
+          "syn"
+        ],
+        "allowed": null,
+        "count": 3
+      },
+      {
+        "host": "hw-redirect.invalid",
+        "port": 8080,
+        "category": "local",
+        "via": [
+          "proxy"
+        ],
+        "allowed": false,
+        "count": 1
+      },
+      {
+        "host": "api.anthropic.com",
+        "port": 443,
+        "category": "model-api",
+        "via": [
+          "proxy"
+        ],
+        "allowed": false,
+        "count": 2
+      }
+    ],
+    "files": [
+      {
+        "path": "/workspace/.git",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/logs",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/logs/HEAD",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 156,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/logs/refs",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/logs/refs/heads",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/logs/refs/heads/main",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 156,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/refs",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/refs/heads",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/refs/heads/main",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 41,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/refs/tags",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/COMMIT_EDITMSG",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 5,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/HEAD",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 21,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/branches",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/description",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 73,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/update.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 3650,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/applypatch-msg.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 478,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/commit-msg.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 896,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/post-update.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 189,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/pre-push.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 1374,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/pre-receive.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 544,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/prepare-commit-msg.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 1492,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/fsmonitor-watchman.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 4726,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/pre-applypatch.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 424,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/pre-commit.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 1643,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/pre-merge-commit.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 416,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/pre-rebase.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 4898,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/hooks/push-to-checkout.sample",
+        "change": "A",
+        "type": "file",
+        "mode": "0o755",
+        "size": 2783,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/info",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/info/exclude",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 240,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/23",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/23/7dd8d02fafee6139169c156fff1d45fa4d5d46",
+        "change": "A",
+        "type": "file",
+        "mode": "0o444",
+        "size": 23,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/92",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/92/c9690eeeaf10e52f74300e7166a1b3864de5b9",
+        "change": "A",
+        "type": "file",
+        "mode": "0o444",
+        "size": 124,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/a1",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/a1/5f6e7ff346a920fa651dc7c881d61aa1aab9c7",
+        "change": "A",
+        "type": "file",
+        "mode": "0o444",
+        "size": 127,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/a8",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/a8/0ca68b2f541e40bd4c0f26273db4a867944c0c",
+        "change": "A",
+        "type": "file",
+        "mode": "0o444",
+        "size": 58,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/e2",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/e2/89bd9f4adff407bc4f9483d132418c3860af34",
+        "change": "A",
+        "type": "file",
+        "mode": "0o444",
+        "size": 87,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/info",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/objects/pack",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/config",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 92,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/workspace/.git/index",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 257,
+        "category": "workspace",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/tmp",
+        "change": "C",
+        "type": "dir",
+        "mode": "0o1777",
+        "size": 0,
+        "category": "other",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/tmp/cc-socks",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o700",
+        "size": 0,
+        "category": "other",
+        "group_readable": false,
+        "world_readable": false,
+        "canary_hit": false
+      },
+      {
+        "path": "/tmp/claude-1000",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o700",
+        "size": 0,
+        "category": "other",
+        "group_readable": false,
+        "world_readable": false,
+        "canary_hit": false
+      },
+      {
+        "path": "/tmp/claude-1000/fswatch-probe-RurnG1",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o700",
+        "size": 0,
+        "category": "other",
+        "group_readable": false,
+        "world_readable": false,
+        "canary_hit": false
+      },
+      {
+        "path": "/tmp/claude-1000/fswatch-probe-RurnG1/probe",
+        "change": "A",
+        "type": "file",
+        "mode": "0o600",
+        "size": 1,
+        "category": "other",
+        "group_readable": false,
+        "world_readable": false,
+        "canary_hit": false
+      },
+      {
+        "path": "/home",
+        "change": "C",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "other",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent",
+        "change": "C",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "other",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.claude",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.claude/sessions",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o700",
+        "size": 0,
+        "category": "state",
+        "group_readable": false,
+        "world_readable": false,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.claude/telemetry",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.claude/telemetry/1p_failed_events.3d8a6a38-0e0c-4f9f-8d5f-e4bacf40e79f.05e97ad4-d6b9-4a7c-8fc7-41747415ee26.json",
+        "change": "A",
+        "type": "file",
+        "mode": "0o644",
+        "size": 226701,
+        "category": "config",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.claude/backups",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.claude/backups/.claude.json.backup.1792045559221",
+        "change": "A",
+        "type": "file",
+        "mode": "0o600",
+        "size": 84,
+        "category": "state",
+        "group_readable": false,
+        "world_readable": false,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.claude/projects",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.claude/projects/-workspace",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.claude/projects/-workspace/3d8a6a38-0e0c-4f9f-8d5f-e4bacf40e79f.jsonl",
+        "change": "A",
+        "type": "file",
+        "mode": "0o600",
+        "size": 106151,
+        "category": "log",
+        "group_readable": false,
+        "world_readable": false,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.claude/projects/-workspace/memory",
+        "change": "A",
+        "type": "dir",
+        "mode": "0o755",
+        "size": 0,
+        "category": "state",
+        "group_readable": true,
+        "world_readable": true,
+        "canary_hit": false
+      },
+      {
+        "path": "/home/agent/.claude.json",
+        "change": "A",
+        "type": "file",
+        "mode": "0o600",
+        "size": 852,
+        "category": "config",
+        "group_readable": false,
+        "world_readable": false,
+        "canary_hit": false
+      }
+    ],
+    "credential_files": [],
+    "processes": [
+      {
+        "cmd": "/bin/sh -c i=0; while [ ! -e /tmp/.hw_ready ] && [ \"$i\" -lt 300 ]; do sleep 0.1; i=$((i+1)); done; exec \"$@\" sh sh /hw/run.sh",
+        "uid": "1000",
+        "seccomp": 2,
+        "seccomp_filters": 2,
+        "no_new_privs": false,
+        "new_namespaces": [],
+        "sandbox_tool": null
+      },
+      {
+        "cmd": "sleep 0.1",
+        "uid": "1000",
+        "seccomp": 2,
+        "seccomp_filters": 2,
+        "no_new_privs": false,
+        "new_namespaces": [],
+        "sandbox_tool": null
+      },
+      {
+        "cmd": "claude -p Reply with the single word OK. --output-format stream-json --verbose --max-turns 1",
+        "uid": "1000",
+        "seccomp": 2,
+        "seccomp_filters": 2,
+        "no_new_privs": false,
+        "new_namespaces": [],
+        "sandbox_tool": null
+      },
+      {
+        "cmd": "",
+        "uid": "1000",
+        "seccomp": 2,
+        "seccomp_filters": 2,
+        "no_new_privs": false,
+        "new_namespaces": [],
+        "sandbox_tool": null
+      },
+      {
+        "cmd": "",
+        "uid": "1000",
+        "seccomp": 2,
+        "seccomp_filters": 2,
+        "no_new_privs": false,
+        "new_namespaces": [],
+        "sandbox_tool": null
+      }
+    ],
+    "sandbox": {
+      "sandbox_tools": [],
+      "new_namespaces": [],
+      "extra_seccomp_filters": false,
+      "no_new_privs_set": false
+    },
+    "prompts": [],
+    "canary_files": null,
+    "notes": []
+  }
+}

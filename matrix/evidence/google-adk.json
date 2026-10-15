@@ -1,0 +1,152 @@
+{
+  "harness": "google-adk",
+  "version": "2.12.0",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "tier": "C",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "FunctionTool/McpToolset require_confirmation default False",
+          "source": "https://github.com/google/adk-python/blob/main/src/google/adk/tools/function_tool.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "BashTool allowed_command_prefixes default ('*',)",
+          "source": "https://github.com/google/adk-python/blob/main/src/google/adk/tools/bash_tool.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Confirmation primitive exists; defaults allow everything."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "UnsafeLocalCodeExecutor execs on host; ContainerCodeExecutor/GKE/Vertex/Agent Engine sandbox executors available",
+          "source": "https://github.com/google/adk-python/blob/main/src/google/adk/code_executors/unsafe_local_code_executor.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Isolated executors exist but are opt-in; one executor is explicitly unsafe."
+    },
+    "D03": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "adk web / api_server binds 127.0.0.1 by default; CVE-2026-4810 was unauthenticated RCE in ADK server",
+          "source": "https://github.com/google/adk-python/blob/main/src/google/adk/cli/cli_tools_click.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Local-bind default, but a critical unauthenticated-RCE advisory affected the server component."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "McpToolset tool_filter, require_confirmation, auth_scheme, header_provider",
+          "source": "https://github.com/google/adk-python/blob/main/src/google/adk/tools/mcp_tool/mcp_toolset.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Filtering and confirmation available, off by default."
+    },
+    "D06": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D07": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D08": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Session services (in-memory/SQLite/DB/Vertex) and memory service",
+          "source": "https://github.com/google/adk-python/blob/main/src/google/adk/sessions/database_session_service.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "Memory service exists; poisoning/review controls not examined."
+    },
+    "D10": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "OpenTelemetry tracing/metrics module; sqlite span exporter",
+          "source": "https://github.com/google/adk-python/blob/main/src/google/adk/telemetry/setup.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Structured OTel instrumentation available; export destination chosen by builder."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "OTLP export configured via OTEL_EXPORTER_OTLP_* env only (no vendor telemetry found)",
+          "source": "https://github.com/google/adk-python/blob/main/src/google/adk/telemetry/setup.py",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "Vendor telemetry not exhaustively searched."
+    },
+    "D13": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D14": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "CVE-2026-4810 GHSA-rg7c-g689-fr3x critical, fixed 1.28.1/2.0.0a2",
+          "source": "https://github.com/advisories/GHSA-rg7c-g689-fr3x",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No SECURITY.md found in repo root via contents API (404); Google OSS VRP applies generally (not fetched)",
+          "source": "https://github.com/google/adk-python/blob/main/SECURITY.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Advisory + CVE issued, but repo-level SECURITY.md not found and repo-level GHSA listing empty."
+    }
+  }
+}

@@ -1,0 +1,4 @@
+{"type": "usage", "input_tokens": 15320, "output_tokens": 812, "cache_read_input_tokens": 90211}
+{"type": "tool_result", "content": "commit 3f9c2a1e8b7d6c5f4a3b2c1d0e9f8a7b6c5d4e3f\nAuthor: Dev <dev@example.com>\n\n    fix: handle 429"}
+{"type": "assistant", "message": {"role": "assistant", "content": "I'll wrap `fetch_json` in tenacity.retry with exponential backoff."}}
+{"type": "tool_result", "content": "Authorization header is read from ${API_TOKEN} at runtime"}

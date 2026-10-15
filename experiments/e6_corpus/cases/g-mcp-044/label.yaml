@@ -1,0 +1,5 @@
+expected:
+- HG-MCP-005
+origin: generated
+family: mcp
+note: MCP servers in cursor-repo

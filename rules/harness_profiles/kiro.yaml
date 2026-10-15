@@ -1,0 +1,139 @@
+id: kiro
+name: AWS Kiro (IDE + Kiro CLI `kiro-cli`)
+vendor: Amazon Web Services
+tier: B
+license: Proprietary (closed; exact EULA not read)
+open_source: false
+status: docs-only
+version_analysed: "IDE 1.3.0 / CLI 2.31.0 (V3 engine opt-in via --v3)"
+analysed_on: "2026-10-15"
+homepage: https://kiro.dev
+repo: null   # github.com/kirodotdev/Kiro is an issue tracker only (not verified in this pass)
+
+binaries: [kiro-cli]   # IDE launcher `kiro` (VS Code-based) not verified in docs read
+packages: []
+install_methods:
+  - {method: curl-installer, command: "curl -fsSL https://cli.kiro.dev/install | bash", checksum_verified: true, signed: null, source: "https://cli.kiro.dev/install (script downloads manifest.json from prod.download.cli.kiro.dev and verifies sha256; aborts on mismatch). Same-origin manifest => integrity only."}
+auto_update: {default: true, config: "setting `app.disableAutoupdates` (kiro-cli settings) ; default on is inferred, not stated", source: https://kiro.dev/docs/reference/settings/}
+
+state_dirs: ["~/.kiro", "~/.kiro/settings", "~/.kiro/workspace-roots", "~/.kiro/sandbox-state", "~/.kiro/web-session", "~/.kiro/cloud-cache", "~/.kiro/powers/installed"]
+credential_files: []   # unverified; CLI/IDE sign-in token storage not documented in pages read. API key via env KIRO_API_KEY.
+credential_storage: "unverified (not documented in pages read)"
+log_paths: []          # unverified
+memory_paths: ["~/.kiro/steering/*.md", ".kiro/steering/*.md"]   # steering = persistent instructions; CLI V3 also has knowledge base (chat.enableKnowledge)
+
+config_files:
+  - {path: "~/.kiro/settings/cli.json", scope: user, format: json, kind: settings}
+  - {path: ".kiro/settings/cli.json", scope: project, format: json, kind: settings}
+  - {path: "~/.kiro/settings/mcp.json", scope: user, format: json, kind: mcp}
+  - {path: ".kiro/settings/mcp.json", scope: project, format: json, kind: mcp}
+  - {path: "~/.kiro/settings/permissions.yaml", scope: user, format: yaml, kind: settings}
+  - {path: "~/.kiro/workspace-roots/<hash>/permissions.yaml", scope: project-local, format: yaml, kind: settings}   # per-user, outside repo: a cloned repo cannot inject rules
+  - {path: "/Library/Application Support/Kiro/managed-settings.json", scope: managed, format: json, kind: settings}   # macOS; Windows/Linux paths not retrieved
+  - {path: "~/.kiro/settings/sandbox.json", scope: user, format: json, kind: settings}
+  - {path: ".kiro/settings/sandbox.json", scope: project, format: json, kind: settings}   # may only tighten a global policy
+  - {path: ".kiro/hooks/*.json", scope: project, format: json, kind: hooks}
+  - {path: "~/.kiro/hooks/*.json", scope: user, format: json, kind: hooks}     # CLI V3 only
+  - {path: ".kiro/agents/*.json", scope: project, format: json, kind: agents}
+  - {path: "~/.kiro/agents/*.json", scope: user, format: json, kind: agents}
+  - {path: ".kiro/steering/*.md", scope: project, format: markdown, kind: instructions}
+  - {path: "~/.kiro/steering/*.md", scope: user, format: markdown, kind: instructions}
+  - {path: ".kiro/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+  - {path: ".kiroignore", scope: project, format: ignore, kind: ignore}
+  - {path: ".kiro/hooks/*.kiro.hook", scope: project, format: json, kind: hooks}   # legacy IDE hook format (0.x/pre-1.0), per IDE reference page
+
+instruction_files: ["AGENTS.md", ".kiro/steering/*.md"]
+skills_paths: [".kiro/skills/*/SKILL.md", "~/.kiro/skills/*/SKILL.md"]   # user path inferred; unverified
+
+mcp:
+  files: ["~/.kiro/settings/mcp.json", ".kiro/settings/mcp.json", ".kiro/agents/*.json (mcpServers; includeMcpJson)"]
+  servers_key: "mcpServers"
+  server_fields:
+    command: command
+    args: args
+    env: env
+    url: url
+    headers: headers
+    type: null
+    disabled: disabled
+    autoApprove: autoApprove        # array of tool names; "*" approves all
+    disabledTools: disabledTools
+    oauth: oauth
+  project_servers_require_approval: true   # workspace trust: until trusted, Kiro does not load custom agents, steering, MCP config or skills (permissions doc). IDE kiro:// install links show confirmation.
+  notes: "Precedence: agent mcpServers > workspace > global. env/headers support ${VAR} expansion only for approved vars (IDE 'Mcp Approved Env Vars'). Writes to mcp.json always prompt in IDE; docs state writes to .kiro/settings/ are always denied for the agent in the permissions doc (IDE 1.x). Admin: MCP on/off + MCP Registry URL (client-side enforced; only IAM Identity Center/API-key users). Sources: https://kiro.dev/docs/mcp/configuration/ ; https://kiro.dev/docs/enterprise/governance/mcp/"
+
+permissions:
+  config_keys:
+    mode: "kiroAgent.agentAutonomy"          # IDE: Autopilot | Supervised (Settings > Agent > Agent Autonomy)
+    rules: "rules[]  # permissions.yaml: {capability, match[], exclude[], effect}"
+    legacy_trusted_commands: "kiroAgent.trustedCommands (IDE <1.0; unused in 1.0+)"
+    legacy_denylist: "kiroAgent.commandDenylist"
+    legacy_cli_allowed_tools: "allowedTools (agent json, CLI 2.x)"
+    legacy_cli_tools_settings: "toolsSettings.shell.allowedCommands / autoAllowReadonly / denyByDefault (agent json, CLI 2.x)"
+  default_mode: "ask for everything except fs_read ./**, read-only git/system commands, utility tools; headless: every `ask` becomes deny"
+  auto_approve_values:
+    - {key: "permissions.yaml rules[].effect", value: "allow with capability: all (or shell with match: ['*'])"}
+    - {key: "kiroAgent.trustedCommands", value: "*"}
+    - {key: "kiroAgent.agentAutonomy", value: "Autopilot"}
+    - {key: "mcpServers.<name>.autoApprove", value: "*"}
+    - {key: "agent json allowedTools", value: "['*' unsupported]; '@server' or '@mcp' or tools:['*'] broad"}
+    - {key: "agent json toolsSettings.shell.allowedCommands", value: "['.*']"}
+    - {key: "session preset (_meta.kiro.policyPreset)", value: "allow-all"}
+  cli_flags_auto_approve: ["--trust-all-tools", "--trust-tools=<ids>", "/tools trust-all"]
+  allow_rule_syntax: "permissions.yaml: rules: [{capability: shell, match: ['npm *'], exclude: ['npm publish*'], effect: allow}] ; capabilities: fs_read fs_write shell web_fetch web_search mcp subagent skill power context diagnostics sandbox_network all builtin filesystem"
+  overbroad_patterns: ["capability: all + effect: allow", "match: ['*'] with shell/mcp", "autoApprove: ['*']", "kiroAgent.trustedCommands: ['*']"]
+  precedence: "admin scope (managed-settings.json; deny/ask only) > ...; deny always wins except sandbox_network (first match). Trusted-command matching is simple string-prefix: chains not analysed (IDE privacy page)."
+  protected_paths: "always ask: .git/**, .vscode/**, *.code-workspace, .kiroignore, .kiro/{agents,hooks,workflows,powers}; always deny: .kiro/settings/, ~/.kiro/settings/ (IDE-enforced; CLI relies on trusted commands/isolation per privacy page)"
+
+hooks:
+  supported: true
+  config_key: "hooks[] in .kiro/hooks/*.json: {version:'v1', hooks:[{name, trigger, matcher, action:{type:'command'|'agent', command|prompt}, timeout, enabled, confirm}]}; CLI 2.x: agent json `hooks` object keyed by agentSpawn/userPromptSubmit/preToolUse/postToolUse/stop"
+  repo_scoped_allowed: true
+  command_field: "action.command|command"   # v1 json `action.command`; legacy IDE .kiro.hook `then: {type: runCommand, command}`
+  notes: "docs: hooks activate when a session starts; workspace trust withholds custom agents/steering/MCP/skills until trusted (hooks not explicitly listed). Windows executable-resolution CVEs 2026-18656/18657 'bypass workspace trust'."
+
+sandbox: {available: true, default_on: false, mechanism: "macOS Seatbelt (sandbox-exec); Linux bubblewrap (+socat for network modes); Windows needs one-time admin setup", config: "sandbox.json {enabled, networkAccess: DEFAULT_BLOCKED|COMMON_DEPENDENCIES|DEFAULT_ALLOWED, mcpSandboxing}; CLI --sandbox fails closed in headless; IDE 1.3+/CLI 2.31+ V3 local sessions only", source: https://kiro.dev/docs/sandbox/}
+network: {domain_allowlist: true, config: "sandbox_network capability rules in permissions.yaml (first match wins); web_fetch/web_search capabilities", default: "DEFAULT_BLOCKED when sandbox enabled; sandbox disabled by default => unrestricted", source: https://kiro.dev/docs/sandbox/}
+workspace_trust: {prompt_on_new_folder: true, notes: "Untrusted workspace: no custom agents, steering, MCP config, skills; ask before every shell command and MCP call. Trust status stored outside workspace. IDE is VS Code-derived.", source: https://kiro.dev/docs/permissions/}
+memory: {persistent: true, cross_project: true, agent_writable: null, notes: "steering files (global ~/.kiro/steering, workspace) ; CLI V3 knowledge base; untrusted-workspace writes to .kiro/steering ask", source: https://kiro.dev/docs/steering/}
+subagents: {supported: true, inherits_permissions: "agent json toolsSettings.subagent {availableAgents, trustedAgents}; V3 capability `subagent` in permissions", notes: "custom-agents/subagents docs not read in detail", source: https://kiro.dev/docs/custom-agents/configuration-reference/}
+telemetry: {default_on: true, opt_out: "IDE: Settings > User > Application > Telemetry and Content (two checkboxes); CLI: telemetry.enabled in ~/.kiro/settings/cli.json. Enterprise tier is opted out by AWS.", training_default: "Free tier + individual subscribers: content may be used for service improvement unless opted out; Enterprise: not used. Free tier inputs stored up to 60 days for abuse detection. Individual/free content stored in US East (N. Virginia).", source: https://kiro.dev/docs/privacy-and-security/data-protection/}
+headless:
+  command: "kiro-cli chat --no-interactive \"<prompt>\""
+  flags: ["--v3 / --agent-engine v1|v2|v3", "--agent <name>", "--model <id>", "--effort <level>", "--output-format stream-json", "--trust-all-tools", "--trust-tools=read_file,grep_search", "--sandbox", "--require-mcp-startup"]
+  ci_integrations: []   # only a documented GitHub Actions snippet; no dedicated action found
+  model_override: "--model <id>; KIRO_API_KEY for auth (Pro/Pro+/Pro Max/Power subscribers; admin must enable key generation)"
+  local_model_support: "none documented (Kiro-hosted models only: not verified exhaustively). Not usable with Ollama/OpenAI-compatible endpoints per docs read."
+
+security_policy: {security_md: null, bug_bounty: "AWS VDP via HackerOne (hackerone.com/aws_vdp); no monetary bounty stated; contact aws-security@amazon.com", advisories: https://aws.amazon.com/security/security-bulletins/}
+sources:
+  - {url: https://kiro.dev/docs/cli/2x-reference/, accessed: "2026-10-15", note: "flags, 2.x config"}
+  - {url: https://kiro.dev/docs/custom-agents/configuration-reference/, accessed: "2026-10-15", note: "agent json, paths"}
+  - {url: https://kiro.dev/docs/permissions/, accessed: "2026-10-15", note: "permissions.yaml, trust, protected paths"}
+  - {url: https://kiro.dev/docs/mcp/configuration/, accessed: "2026-10-15", note: "mcp.json"}
+  - {url: https://kiro.dev/docs/enterprise/governance/mcp/, accessed: "2026-10-15", note: "MCP registry"}
+  - {url: https://kiro.dev/docs/enterprise/governance/permissions/, accessed: "2026-10-15", note: "managed-settings.json"}
+  - {url: https://kiro.dev/docs/sandbox/, accessed: "2026-10-15", note: "sandbox"}
+  - {url: https://kiro.dev/docs/cli/headless/, accessed: "2026-10-15", note: "headless"}
+  - {url: https://kiro.dev/docs/hooks/, accessed: "2026-10-15", note: "hooks"}
+  - {url: https://kiro.dev/docs/steering/, accessed: "2026-10-15", note: "steering"}
+  - {url: https://kiro.dev/docs/reference/settings/, accessed: "2026-10-15", note: "cli.json keys"}
+  - {url: https://kiro.dev/docs/privacy-and-security/, accessed: "2026-10-15", note: "security guidance"}
+  - {url: https://kiro.dev/docs/privacy-and-security/data-protection/, accessed: "2026-10-15", note: "telemetry/training"}
+  - {url: https://kiro.dev/changelog/, accessed: "2026-10-15", note: "versions"}
+  - {url: https://cli.kiro.dev/install, accessed: "2026-10-15", note: "installer read"}
+  - {url: https://aws.amazon.com/security/security-bulletins/2026-074-aws/, accessed: "2026-10-15", note: "CVE-2026-18656/18657"}
+  - {url: https://aws.amazon.com/security/security-bulletins/2026-037-aws/, accessed: "2026-10-15", note: "CVE-2026-10591"}
+  - {url: https://aws.amazon.com/security/security-bulletins/2026-035-aws/, accessed: "2026-10-15", note: "CVE-2026-9255"}
+  - {url: https://aws.amazon.com/security/vulnerability-reporting/, accessed: "2026-10-15", note: "VDP"}
+extra:
+  mission_corrections: "Seeds `.kiro/steering|hooks|settings` are right. Additions: permissions live in ~/.kiro/settings/permissions.yaml (user) or ~/.kiro/workspace-roots/<hash>/ (NOT in repo); IDE 1.0 retired kiroAgent.trustedCommands. 'autopilot' is IDE setting kiroAgent.agentAutonomy; CLI has no autopilot, uses --trust-all-tools. CLI V3 engine (--v3) and 2.x coexist."
+  linter_risky_snippets:
+    - '.kiro/settings/mcp.json: {"mcpServers":{"x":{"command":"npx","args":["-y","pkg"],"autoApprove":["*"]}}}'
+    - '.kiro/hooks/x.json: {"version":"v1","hooks":[{"name":"a","trigger":"SessionStart","action":{"type":"command","command":"curl ... | sh"}}]}'
+    - '~/.kiro/settings/permissions.yaml: rules: [{capability: all, effect: allow}]  or {capability: shell, match: ["*"], effect: allow}'
+    - 'agent json (CLI 2.x): "toolsSettings":{"shell":{"allowedCommands":[".*"]}}'
+    - 'IDE settings: "kiroAgent.trustedCommands": ["*"] ; "kiroAgent.agentAutonomy": "Autopilot"'
+    - 'sandbox.json {"enabled": false} / {"networkAccess":"DEFAULT_ALLOWED"}'
+    - 'CI: kiro-cli chat --no-interactive --trust-all-tools with untrusted PR text'
+  safe_examples: 'managed-settings.json {"rules":[{"capability":"web_fetch","effect":"deny"},{"capability":"shell","match":["rm *","sudo *"],"effect":"deny"}]}'

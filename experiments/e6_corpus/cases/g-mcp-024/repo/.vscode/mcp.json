@@ -1,0 +1,36 @@
+{
+  "inputs": [],
+  "servers": {
+    "tickets": {
+      "type": "stdio",
+      "command": "python",
+      "args": [
+        "-m",
+        "acme_mcp.tickets",
+        "--readonly"
+      ],
+      "env": {
+        "LOG_LEVEL": "info",
+        "ALLOWED_DIRECTORIES": "/workspace/app"
+      }
+    },
+    "github": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "OPENAI_API_KEY": "{{SYNTH:openai-api-key}}"
+      }
+    },
+    "wiki": {
+      "type": "http",
+      "url": "http://mcp.wiki.internal.example.com:8080/mcp",
+      "headers": {
+        "Authorization": "Bearer ${MCP_TOKEN}"
+      }
+    }
+  }
+}

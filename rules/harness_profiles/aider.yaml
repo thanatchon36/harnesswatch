@@ -1,0 +1,91 @@
+id: aider
+name: Aider
+vendor: Aider-AI (Paul Gauthier and contributors)
+tier: A
+license: Apache-2.0              # verified LICENSE.txt + pyproject classifier
+open_source: true
+status: analysed                 # source read at 5dc9490 (2026-05-22); not executed
+version_analysed: "aider-chat 0.86.2 (PyPI 2026-02-12); repo HEAD reports 0.86.3.dev; last GitHub release v0.86.0 (2025-08-09)"
+analysed_on: "2026-10-15"
+homepage: https://aider.chat
+repo: https://github.com/Aider-AI/aider
+
+binaries: [aider]
+packages:
+  - {ecosystem: pypi, name: "aider-chat"}
+  - {ecosystem: pypi, name: "aider-install"}
+install_methods:
+  - {method: pip, command: "python -m pip install aider-install && aider-install", checksum_verified: null, signed: null, source: https://github.com/Aider-AI/aider/blob/main/README.md}
+  - {method: curl-installer, command: "curl -LsSf https://aider.chat/install.sh | sh", checksum_verified: null, signed: null, source: https://aider.chat/docs/install.html}
+auto_update: {default: true, config: "--check-update (default on: prompts to upgrade), --no-check-update; --upgrade; --install-main-branch", source: https://github.com/Aider-AI/aider/blob/main/aider/args.py}
+
+state_dirs: ["~/.aider"]
+credential_files: ["~/.aider/oauth-keys.env", ".env", "~/.env", ".aider.conf.yml"]
+credential_storage: "No keychain. API keys from env vars, --api-key/--openai-api-key flags, .env files (home, git root, cwd; loaded with override=True), ~/.aider/oauth-keys.env, or plaintext .aider.conf.yml."
+log_paths: [".aider.chat.history.md", ".aider.input.history", ".aider.llm.history", "~/.aider/analytics.json", "~/.aider/caches/**"]   # history files in git root (cwd if none); auto-added to .gitignore as '.aider*' after prompt
+memory_paths: []
+
+config_files:
+  - {path: "~/.aider.conf.yml", scope: user, format: yaml, kind: settings}
+  - {path: ".aider.conf.yml", scope: project, format: yaml, kind: settings}          # git root and cwd, both searched; later overrides earlier
+  - {path: "~/.env", scope: user, format: env, kind: settings}
+  - {path: ".env", scope: project, format: env, kind: settings}                       # git root / cwd; --env-file overrides
+  - {path: "~/.aider/oauth-keys.env", scope: user, format: env, kind: settings}
+  - {path: ".aider.model.settings.yml", scope: project, format: yaml, kind: settings}
+  - {path: "~/.aider.model.settings.yml", scope: user, format: yaml, kind: settings}
+  - {path: ".aider.model.metadata.json", scope: project, format: json, kind: settings}
+  - {path: ".aiderignore", scope: project, format: ini, kind: ignore}
+
+instruction_files: []            # none auto-loaded; CONVENTIONS.md etc. only via `read:` key / --read
+skills_paths: []
+
+mcp:
+  files: []
+  servers_key: null
+  server_fields: {}
+  project_servers_require_approval: null
+  notes: "No MCP client found in aider source (grep); not documented. Third-party MCP bridges exist (not analysed)."
+
+permissions:
+  config_keys:
+    yes_always: "yes-always"        # .aider.conf.yml key; env AIDER_YES_ALWAYS
+    auto_commits: "auto-commits"
+    dirty_commits: "dirty-commits"
+    auto_test: "auto-test"
+    test_cmd: "test-cmd"
+    lint_cmd: "lint-cmd"
+    auto_lint: "auto-lint"
+    shell: "suggest-shell-commands"
+    load: "load"
+  default_mode: "interactive confirm for: adding files/URLs to chat, creating files, running suggested shell commands, fixing lint/test failures. Auto-commits ON (auto-commits: true, dirty-commits: true). suggest-shell-commands: true. Analytics asked only for ~10% sample."
+  auto_approve_values:
+    - {key: "yes-always", value: true}
+    - {key: "auto-test", value: true}          # runs test-cmd after every edit, no prompt
+    - {key: "load", value: "<file with /run or /commands>"}
+  cli_flags_auto_approve: ["--yes-always"]
+  allow_rule_syntax: null
+  overbroad_patterns: []
+  notes: "With --yes-always, io.confirm_ask returns 'n' where explicit_yes_required=True, so LLM-suggested shell commands are NOT auto-run (base_coder.handle_shell_commands uses explicit_yes_required=True). But --yes-always auto-approves adding URLs/files, creating files, and lint/test fix loops; test-cmd/lint-cmd execute shell commands defined in config without prompting when auto-test/auto-lint are set."
+
+hooks: {supported: false, config_key: null, repo_scoped_allowed: false, command_field: null}
+sandbox: {available: false, default_on: false, mechanism: null, config: null, source: https://github.com/Aider-AI/aider}
+network: {domain_allowlist: false, config: null, default: "unrestricted; /web fetches URLs (Playwright/httpx scrape)"}
+workspace_trust: {prompt_on_new_folder: false, notes: "Repo-controlled .aider.conf.yml and .env are loaded automatically from git root and cwd (main.py generate_search_path_list/load_dotenv_files, override=True). A cloned repo can set openai-api-base / OPENAI_API_BASE (redirecting prompts+key), test-cmd/lint-cmd + auto-test, analytics-posthog-host, load. No trust prompt.", source: https://github.com/Aider-AI/aider/blob/main/aider/main.py}
+memory: {persistent: false, cross_project: false, agent_writable: false, notes: "chat history file is restorable (--restore-chat-history) but off by default", source: https://github.com/Aider-AI/aider/blob/main/aider/args.py}
+subagents: {supported: false, inherits_permissions: null, notes: "architect/editor two-model mode only", source: https://aider.chat/docs/usage/modes.html}
+telemetry: {default_on: false, opt_out: "--analytics-disable (permanent) / --no-analytics; opt-in prompt shown to ~10% of users (PERCENT=10)", training_default: null, source: https://github.com/Aider-AI/aider/blob/main/aider/analytics.py}
+headless:
+  command: "aider --message \"<prompt>\" --yes-always --no-auto-commits --exit"
+  flags: ["--message/-m", "--message-file", "--yes-always", "--exit", "--no-auto-commits", "--no-git", "--no-analytics", "--no-check-update", "--no-gitignore", "--model", "--openai-api-base", "--set-env VAR=val", "--test-cmd", "--load file"]
+  ci_integrations: []
+  model_override: "--model <provider/model>; OPENAI_API_BASE / --openai-api-base; OLLAMA_API_BASE; --set-env"
+  local_model_support: "yes: Ollama: `export OLLAMA_API_BASE=http://127.0.0.1:11434; aider --model ollama_chat/<model>` (recommended prefix ollama_chat/); OpenAI-compatible: `export OPENAI_API_BASE=http://host:port/v1 OPENAI_API_KEY=x; aider --model openai/<name>` (docs llms/ollama.md, llms/openai-compat.md). Set num_ctx via .aider.model.settings.yml extra_params."
+
+security_policy: {security_md: null, bug_bounty: null, advisories: "none published (GHSA API empty; no SECURITY.md)"}
+sources:
+  - {url: https://github.com/Aider-AI/aider/blob/main/aider/args.py, accessed: "2026-10-15"}
+  - {url: https://github.com/Aider-AI/aider/blob/main/aider/main.py, accessed: "2026-10-15", note: "config/.env search paths"}
+  - {url: https://github.com/Aider-AI/aider/blob/main/aider/io.py, accessed: "2026-10-15", note: "yes / explicit_yes_required"}
+  - {url: https://github.com/Aider-AI/aider/blob/main/aider/website/docs/llms/ollama.md, accessed: "2026-10-15"}
+  - {url: https://github.com/Aider-AI/aider/blob/main/aider/website/docs/llms/openai-compat.md, accessed: "2026-10-15"}
+  - {url: https://pypi.org/pypi/aider-chat/json, accessed: "2026-10-15"}

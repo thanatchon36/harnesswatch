@@ -1,0 +1,110 @@
+id: roo-code
+name: Roo Code (VS Code extension + @roo-code/cli) - DISCONTINUED
+vendor: Roo Code, Inc. (RooCodeInc)
+tier: A
+license: Apache-2.0            # verified LICENSE + GitHub API
+open_source: true
+status: analysed               # product shut down 2026-05-15; repo archived; analysed for completeness / historical CVEs
+version_analysed: "3.54.0 (final GitHub release 2026-05-15; src/package.json at HEAD b867ec9 reads 3.53.0); @roo-code/cli 0.1.17"
+analysed_on: "2026-10-15"
+homepage: https://github.com/RooCodeInc/Roo-Code
+repo: https://github.com/RooCodeInc/Roo-Code
+lifecycle: {archived: true, shutdown: "README Disclaimer: 'The Roo Code Extension was shut down on May 15th.' Community fork: Zoo-Code-Org/Zoo-Code (not analysed)", source: https://github.com/RooCodeInc/Roo-Code/blob/main/README.md}
+
+binaries: [roo]
+packages:
+  - {ecosystem: vscode-marketplace, name: "RooVeterinaryInc.roo-cline"}
+  - {ecosystem: npm, name: "@roo-code/cli"}
+install_methods:
+  - {method: curl-installer, command: "curl -fsSL https://raw.githubusercontent.com/RooCodeInc/Roo-Code/main/apps/cli/install.sh | sh", checksum_verified: null, signed: null, source: https://github.com/RooCodeInc/Roo-Code/blob/main/apps/cli/README.md}
+  - {method: vscode-marketplace, command: "ext install RooVeterinaryInc.roo-cline"}
+auto_update: {default: null, config: "CLI: `roo upgrade` / re-run install.sh", source: https://github.com/RooCodeInc/Roo-Code/blob/main/apps/cli/README.md}
+
+state_dirs: ["~/.roo", "<VS Code globalStorage>/rooveterinaryinc.roo-cline"]
+credential_files: []
+credential_storage: "Extension: API keys in VS Code SecretStorage (extension secrets). CLI: -k flag or env ANTHROPIC_API_KEY / OPENAI_API_KEY / OPENROUTER_API_KEY / GOOGLE_API_KEY / VERCEL_AI_GATEWAY_API_KEY (unverified where CLI persists)."
+log_paths: ["<globalStorage>/rooveterinaryinc.roo-cline/tasks/*/*.json", "~/.roo/cli-history.json"]
+memory_paths: []
+
+config_files:
+  - {path: "<VS Code globalStorage>/rooveterinaryinc.roo-cline/settings/mcp_settings.json", scope: user, format: json, kind: mcp}
+  - {path: ".roo/mcp.json", scope: project, format: json, kind: mcp}
+  - {path: "<globalStorage>/rooveterinaryinc.roo-cline/settings/custom_modes.yaml", scope: user, format: yaml, kind: settings}
+  - {path: ".roomodes", scope: project, format: yaml, kind: settings}
+  - {path: ".roo/rules/**", scope: project, format: markdown, kind: rules}
+  - {path: ".roo/rules-<mode>/**", scope: project, format: markdown, kind: rules}
+  - {path: ".roorules", scope: project, format: markdown, kind: rules}
+  - {path: "~/.roo/rules/**", scope: user, format: markdown, kind: rules}
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}   # roo-cline.useAgentRules
+  - {path: ".rooignore", scope: project, format: ini, kind: ignore}
+  - {path: ".roo/commands/*.md", scope: project, format: markdown, kind: skills}
+  - {path: "VS Code settings: roo-cline.allowedCommands / roo-cline.deniedCommands / roo-cline.autoImportSettingsPath", scope: user, format: json, kind: settings}
+
+instruction_files: [".roorules", ".roo/rules/**", ".roo/rules-<mode>/**", "AGENTS.md"]
+skills_paths: [".roo/skills/*/SKILL.md", ".agents/skills/*/SKILL.md", "~/.roo/skills/*/SKILL.md", ".roo/commands/*.md"]    # SkillsManager.ts
+
+mcp:
+  files: ["<globalStorage>/.../settings/mcp_settings.json", ".roo/mcp.json"]
+  servers_key: "mcpServers"
+  server_fields:
+    command: command
+    args: args
+    env: env
+    url: url
+    headers: headers
+    type: type              # stdio | sse | streamable-http
+    alwaysAllow: alwaysAllow   # tool names; "*" wildcard = all tools (McpHub.ts line 1024)
+    disabledTools: disabledTools
+    disabled: disabled
+    watchPaths: watchPaths
+  project_servers_require_approval: false    # source: .roo/mcp.json watched and connected on creation/change; no approval prompt in McpHub.ts (grep approv/confirm/trust none). Mitigation = writes to .roo/** need extra opt-in (GHSA-5x8h-m52g-5v54)
+  notes: ".roo/mcp.json takes precedence over global on name clash (unverified)."
+
+permissions:
+  config_keys:
+    master: "autoApprovalEnabled"
+    read: "alwaysAllowReadOnly / alwaysAllowReadOnlyOutsideWorkspace"
+    write: "alwaysAllowWrite / alwaysAllowWriteOutsideWorkspace / alwaysAllowWriteProtected"
+    execute: "alwaysAllowExecute"
+    mcp: "alwaysAllowMcp"
+    mode_switch: "alwaysAllowModeSwitch"
+    subtasks: "alwaysAllowSubtasks"
+    allow: "roo-cline.allowedCommands"
+    deny: "roo-cline.deniedCommands"
+  default_mode: "ask for everything (auto-approve off); roo-cline.allowedCommands default ['git log','git diff','git show']"
+  auto_approve_values:
+    - {key: "autoApprovalEnabled", value: true}
+    - {key: "alwaysAllowExecute", value: true}
+    - {key: "alwaysAllowWrite", value: true}
+    - {key: "alwaysAllowWriteProtected", value: true}
+    - {key: "alwaysAllowMcp", value: true}
+    - {key: "roo-cline.allowedCommands", value: "[\"*\"]"}
+    - {key: "mcpServers.*.alwaysAllow", value: "[\"*\"]"}
+  cli_flags_auto_approve: ["(default) roo \"prompt\"  # CLI auto-approves unless --require-approval / -a"]
+  allow_rule_syntax: "roo-cline.allowedCommands: [\"git log\", \"npm test\"] (prefix match); \"*\" allows all"
+  overbroad_patterns: ["*", "npm", "alwaysAllow: [\"*\"]"]
+  notes: "CLI default is auto-approve: README 'By default, the CLI auto-approves actions'; `-a/--require-approval` opts into prompts."
+
+hooks: {supported: false, config_key: null, repo_scoped_allowed: false, command_field: null}
+sandbox: {available: false, default_on: false, mechanism: null, config: null, source: https://github.com/RooCodeInc/Roo-Code}
+network: {domain_allowlist: false, config: null, default: unrestricted (browser tool, fetch via MCP)}
+workspace_trust: {prompt_on_new_folder: null, notes: "No untrustedWorkspaces capability declaration in src/package.json; project .roo/mcp.json, .roomodes, .roo/rules are read from the workspace. Protected-file list (.roo/**, .vscode/**, .roomodes, .roorules*, AGENTS.md, .rooprotected) requires separate alwaysAllowWriteProtected opt-in.", source: https://github.com/RooCodeInc/Roo-Code/blob/main/src/core/protect/RooProtectedController.ts}
+memory: {persistent: false, cross_project: false, agent_writable: false, notes: "none built in", source: https://github.com/RooCodeInc/Roo-Code}
+subagents: {supported: true, inherits_permissions: "subtasks (new_task) governed by alwaysAllowSubtasks", notes: "", source: https://github.com/RooCodeInc/Roo-Code}
+telemetry: {default_on: true, opt_out: "Settings > telemetry opt-out (PostHog; VS Code machine ID, feature usage, exceptions; no code/prompts claimed)", training_default: null, source: https://github.com/RooCodeInc/Roo-Code/blob/main/PRIVACY.md}
+headless:
+  command: "roo --print \"<prompt>\" -w <dir> --provider <p> -m <model>"
+  flags: ["--print", "--output-format text|json|stream-json", "--require-approval", "--ephemeral", "--oneshot", "--stdin-prompt-stream", "--provider anthropic|openai-native|gemini|openrouter|vercel-ai-gateway", "-k"]
+  ci_integrations: []
+  model_override: "--provider / -m / -k only; no base-URL flag in CLI (apps/cli/src/lib/utils/provider.ts)"
+  local_model_support: "Extension: providers 'ollama' and 'openai' (OpenAI-compatible base URL) exist; CLI exposes only 5 providers and no base URL => not usable for local endpoint without importing settings (roo-cline.autoImportSettingsPath, unverified). Project archived: not recommended for bench."
+
+security_policy: {security_md: https://github.com/RooCodeInc/Roo-Code/blob/main/SECURITY.md, bug_bounty: null, advisories: https://github.com/RooCodeInc/Roo-Code/security/advisories}
+extra:
+  advisories_count: 11
+sources:
+  - {url: https://github.com/RooCodeInc/Roo-Code/blob/main/README.md, accessed: "2026-10-15", note: "shutdown disclaimer"}
+  - {url: https://github.com/RooCodeInc/Roo-Code/security/advisories, accessed: "2026-10-15", note: "11 GHSAs"}
+  - {url: https://github.com/RooCodeInc/Roo-Code/blob/main/packages/types/src/global-settings.ts, accessed: "2026-10-15", note: "auto-approve keys"}
+  - {url: https://github.com/RooCodeInc/Roo-Code/blob/main/src/services/mcp/McpHub.ts, accessed: "2026-10-15", note: "MCP paths + schema"}
+  - {url: https://github.com/RooCodeInc/Roo-Code/blob/main/apps/cli/README.md, accessed: "2026-10-15", note: "CLI"}

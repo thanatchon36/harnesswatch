@@ -1,0 +1,6 @@
+expected:
+- HG-MCP-006
+- HG-SUB-001
+origin: generated
+family: opencode
+note: Kilo config

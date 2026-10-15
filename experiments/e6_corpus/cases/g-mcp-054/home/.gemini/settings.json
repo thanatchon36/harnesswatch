@@ -1,0 +1,24 @@
+{
+  "general": {
+    "vimMode": false
+  },
+  "mcpServers": {
+    "wiki": {
+      "httpUrl": "http://mcp.wiki.internal.example.com:8080/mcp",
+      "headers": {
+        "Authorization": "Bearer ${MCP_TOKEN}"
+      }
+    },
+    "time": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "mcp-server-time==0.6.2",
+        "mcp-server-time"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  }
+}

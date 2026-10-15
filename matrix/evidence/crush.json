@@ -1,0 +1,225 @@
+{
+  "harness": "crush",
+  "version": "0.98.1",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "permissions.allowed_tools lists tools that skip prompts; --yolo / -y auto-accepts all permissions; Bash has a hard-coded safe-command prefix list auto-approved when the command has no chaining.",
+          "source": "https://github.com/charmbracelet/crush/blob/main/internal/agent/tools/safe.go",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-082",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Non-interactive 'crush run' calls AutoApproveSession so every permission request is approved automatically.",
+          "source": "https://github.com/charmbracelet/crush/blob/main/internal/app/app.go",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-083",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "hooks.PreToolUse: [{matcher regex on tool name, command, timeout (default 30 s), name}] in crush.json; only PreToolUse is supported; hooks can rewrite tool input and auto-approve; project-level crush.json hooks are documented as normal usage.",
+          "source": "https://github.com/charmbracelet/crush/blob/main/docs/hooks/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-084"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Prompts by default with allowed_tools, --yolo and PreToolUse hooks; hard-coded safe-command prefixes skip prompts, and crush run approves everything."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "No OS-level sandbox for the bash tool was found in the source tree or README (searched internal/ for sandbox implementations).",
+          "source": "https://github.com/charmbracelet/crush/blob/main/",
+          "label": "unverified",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-092"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No OS-level sandbox found for the bash tool (unverified absence)."
+    },
+    "D03": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (no egress control evidence collected)."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "crushrc / .crushrc is a Bash script executed by an embedded shell interpreter at config load (same interpreter as the bash tool, $(...) works); project-level crushrc and $(...) in crush.json run at load time with no trust prompt; README says both are 'trusted code' and not to launch Crush in a directory whose config you have not reviewed.",
+          "source": "https://github.com/charmbracelet/crush/blob/main/internal/shellconfig/load.go",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-080",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Config lookup: /etc/crush/crush.json (lowest, Unix), ~/.config/crush/crush.json and crushrc, data-dir crush.json (~/.local/share/crush/crush.json), then project .crushrc, crushrc, .crush.json, crush.json walking up to the git root; higher-listed names win; CRUSH_GLOBAL_CONFIG / CRUSH_GLOBAL_DATA override locations.",
+          "source": "https://github.com/charmbracelet/crush/blob/main/internal/config/load.go",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-079",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "A 'trust configs' feature is an open, unmerged pull request (charmbracelet/crush#3607) as of 2026-10-15.",
+          "source": "https://github.com/charmbracelet/crush/pull/3607",
+          "label": "unverified",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-081"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "Project crushrc (full Bash) and $(...) in crush.json execute at config load with no trust gate; README labels them trusted code; trust-configs PR is open."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP servers under 'mcp': {command,args,env,type stdio|sse|http,url,headers,disabled,disabled_tools,enabled_tools,timeout,oauth}; no approval step for project-defined servers found in source.",
+          "source": "https://github.com/charmbracelet/crush/blob/main/schema.json",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-085",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "MCP servers declared in config with disabled/disabled_tools; no approval step for project servers found."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Context files auto-loaded: AGENTS.md, CLAUDE.md(.local), GEMINI.md, CRUSH.md(.local), .cursorrules, .cursor/rules/, .github/copilot-instructions.md; skills from .agents/skills, .crush/skills, .claude/skills, .cursor/skills and user dirs.",
+          "source": "https://github.com/charmbracelet/crush/blob/main/internal/config/config.go",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-086",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Skills auto-discovered from project and user dirs; no marketplace or vetting."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Project state in ./.crush/ (logs/crush.log, SQLite DB); user data dir ~/.local/share/crush/ holds crush.json used for app-written state (may include provider tokens; unverified).",
+          "source": "https://github.com/charmbracelet/crush/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-087"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Keys via config/$VAR; state in project .crush and user data dir; redaction not verified."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "Non-interactive 'crush run' calls AutoApproveSession so every permission request is approved automatically.",
+          "source": "https://github.com/charmbracelet/crush/blob/main/internal/app/app.go",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-083",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "crush run auto-approves every permission request."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Context files auto-loaded: AGENTS.md, CLAUDE.md(.local), GEMINI.md, CRUSH.md(.local), .cursorrules, .cursor/rules/, .github/copilot-instructions.md; skills from .agents/skills, .crush/skills, .claude/skills, .cursor/skills and user dirs.",
+          "source": "https://github.com/charmbracelet/crush/blob/main/internal/config/config.go",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-086",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (no persistent agent memory beyond context files)."
+    },
+    "D10": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed)."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Project state in ./.crush/ (logs/crush.log, SQLite DB); user data dir ~/.local/share/crush/ holds crush.json used for app-written state (may include provider tokens; unverified).",
+          "source": "https://github.com/charmbracelet/crush/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-087"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Local logs (./.crush/logs) and SQLite sessions only."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "Crush records pseudonymous usage metrics by default; opt out with CRUSH_DISABLE_METRICS=1 or DO_NOT_TRACK=1; prompts/responses are stated never collected.",
+          "source": "https://github.com/charmbracelet/crush/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-088"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Pseudonymous metrics on by default, documented opt-out (CRUSH_DISABLE_METRICS, DO_NOT_TRACK)."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "goreleaser config signs artifacts with cosign (.sigstore.json), publishes checksums.txt and SBOMs, signs deb/rpm and macOS binaries when signing keys are set; README documents cosign verify-blob.",
+          "source": "https://github.com/charmbracelet/crush/blob/main/.goreleaser.yml",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-090",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "cosign signatures, checksums and SBOMs published with releases."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "The system config /etc/crush/crush.json has the lowest priority and project config is merged after it, so it cannot enforce policy.",
+          "source": "https://github.com/charmbracelet/crush/blob/main/internal/config/load.go",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-093",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "System config /etc/crush/crush.json is lowest priority so nothing is enforceable."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "Org-level SECURITY.md (charmbracelet/.github) asks to email vt100@charm.sh; no GitHub security advisories are published for charmbracelet/crush and no bug bounty is documented.",
+          "source": "https://github.com/charmbracelet/.github/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-091"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Org-level SECURITY.md email only; no advisories or bounty."
+    }
+  }
+}

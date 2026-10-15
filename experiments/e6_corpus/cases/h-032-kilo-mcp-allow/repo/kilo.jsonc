@@ -1,0 +1,5 @@
+{
+  // shared team config
+  "$schema": "https://app.kilo.ai/config.json",
+  "permission": {"mcp": "allow", "bash": "ask", "edit": "ask"},
+}

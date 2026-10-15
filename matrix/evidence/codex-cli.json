@@ -1,0 +1,305 @@
+{
+  "harness": "codex-cli",
+  "version": "0.162.1",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "approval_policy values in schema: on-request (default), never, granular {sandbox_approval, rules, skill_approval, ...}; 'untrusted' is retired and on-failure is an alias of on-request.",
+          "source": "https://github.com/openai/codex/blob/main/codex-rs/protocol/src/protocol.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-037",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "sandbox_mode values: read-only, workspace-write, danger-full-access; defaults to network off and writes limited to workspace; protected paths .git, .agents, .codex, .aws are read-only inside writable roots.",
+          "source": "https://developers.openai.com/codex/agent-approvals-security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-038"
+        },
+        {
+          "claim": "--dangerously-bypass-approvals-and-sandbox (alias --yolo) skips all prompts and sandboxing; --full-auto is no longer supported (use --sandbox workspace-write or --approve-for-me); -a never with a sandbox keeps the sandbox.",
+          "source": "https://github.com/openai/codex/blob/main/codex-rs/utils/cli/src/shared_options.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-039",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "requirements.toml can constrain approval policy, approvals reviewer, sandbox mode / permission profiles, web search mode, managed hooks, MCP servers and plugin marketplace sources.",
+          "source": "https://developers.openai.com/codex/enterprise/managed-configuration",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-055"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Default on-request approvals inside an OS sandbox, execpolicy rules, granular policy and admin requirements; --yolo exists but is a deliberate flag."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "sandbox_mode values: read-only, workspace-write, danger-full-access; defaults to network off and writes limited to workspace; protected paths .git, .agents, .codex, .aws are read-only inside writable roots.",
+          "source": "https://developers.openai.com/codex/agent-approvals-security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-038"
+        },
+        {
+          "claim": "Sandbox is OS-enforced: Seatbelt on macOS, bubblewrap on Linux/WSL2 (first bwrap on PATH, bundled bwrap build released with sigstore signature), restricted sandbox on Windows; on by default for the CLI.",
+          "source": "https://developers.openai.com/codex/sandboxing",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-041"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "OS-enforced sandbox is on by default (Seatbelt/bubblewrap) with protected .git/.codex paths and a sigstore-signed bwrap build."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Network is off in workspace-write by default (sandbox_workspace_write.network_access=false); features.network_proxy enforces domain allow/deny rules (deny wins; DNS-rebinding check is best-effort); proxy does not filter web search, MCP connections, apps/connectors or model traffic.",
+          "source": "https://developers.openai.com/codex/agent-approvals-security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-042"
+        },
+        {
+          "claim": "sandbox_mode values: read-only, workspace-write, danger-full-access; defaults to network off and writes limited to workspace; protected paths .git, .agents, .codex, .aws are read-only inside writable roots.",
+          "source": "https://developers.openai.com/codex/agent-approvals-security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-038"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Network off by default in workspace-write; optional proxy with allow/deny domains; documented that web search/MCP/model traffic are outside the proxy."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Project .codex/ layers (config.toml, hooks, rules) load only when the project is trusted; untrusted projects ignore them; project config cannot override openai_base_url, chatgpt_base_url, model_provider(s), notify, profile(s), otel and similar.",
+          "source": "https://developers.openai.com/codex/config-advanced",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-043"
+        },
+        {
+          "claim": "Non-managed hooks must be reviewed and trusted (hash-recorded) before running; --dangerously-bypass-hook-trust bypasses for one invocation; requirements.toml allow_managed_hooks_only ignores user/project/session hooks.",
+          "source": "https://developers.openai.com/codex/hooks",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-044"
+        },
+        {
+          "claim": "CVE-2025-61260 / GHSA-xrxf-jgv3-qmrm: Codex CLI <= 0.23.0 automatically loaded project-local .env and .codex/config.toml (MCP servers) without confirmation, allowing command execution on running codex in a malicious repo (GHSA published 2026-04-14; Check Point research).",
+          "source": "https://github.com/advisories/GHSA-xrxf-jgv3-qmrm",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-057"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Project .codex layers and hooks are ignored until the project is trusted and hooks need hash-based review; the earlier CVE-2025-61260 shows past gaps and headless trust behaviour is not verified."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP servers live under [mcp_servers.<name>] in config.toml with fields command, args, env, env_vars, cwd, url, bearer_token_env_var, http_headers, env_http_headers, enabled, enabled_tools, disabled_tools, required, auth; admin requirements can allowlist MCP servers.",
+          "source": "https://github.com/openai/codex/blob/main/codex-rs/core/config.schema.json",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-045",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Destructive app/MCP tool calls require approval when the tool advertises a destructive annotation.",
+          "source": "https://developers.openai.com/codex/agent-approvals-security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-046"
+        },
+        {
+          "claim": "requirements.toml can constrain approval policy, approvals reviewer, sandbox mode / permission profiles, web search mode, managed hooks, MCP servers and plugin marketplace sources.",
+          "source": "https://developers.openai.com/codex/enterprise/managed-configuration",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-055"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "MCP servers are explicit config; admin allowlists and destructive-annotation approvals exist; no tool-description change detection verified."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "requirements.toml can constrain approval policy, approvals reviewer, sandbox mode / permission profiles, web search mode, managed hooks, MCP servers and plugin marketplace sources.",
+          "source": "https://developers.openai.com/codex/enterprise/managed-configuration",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-055"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Plugins/skills/marketplaces exist and managed requirements can restrict marketplace sources; vetting details not verified."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "cli_auth_credentials_store = file | keyring | auto | ephemeral; file mode stores tokens in $CODEX_HOME/auth.json (default ~/.codex/auth.json); docs say treat auth.json like a password.",
+          "source": "https://developers.openai.com/codex/config-reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-047"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Configurable file or OS keyring store (auto/file/keyring/ephemeral); file mode stores tokens in auth.json."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "codex exec runs in a read-only sandbox by default; flags include --sandbox, --json, --output-schema, --ephemeral, --ignore-user-config, --ignore-rules, --skip-git-repo-check, -o/--output-last-message, -m, --oss, --local-provider, -p/--profile, --cd, --add-dir.",
+          "source": "https://developers.openai.com/codex/noninteractive",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-040"
+        },
+        {
+          "claim": "openai/codex-action (Apache-2.0) has safety-strategy (default drop-sudo), allow-users, allow-bots=false, permission-profile / sandbox inputs.",
+          "source": "https://github.com/openai/codex-action",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-049"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "codex exec defaults to a read-only sandbox, --ephemeral/--ignore-user-config/--ignore-rules exist; codex-action drops sudo and checks users."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Memories are off by default (features.memories) and stored under ~/.codex/memories/; AGENTS.md and AGENTS.override.md are loaded as instructions.",
+          "source": "https://developers.openai.com/codex/memories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-050"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Memories are off by default, stored locally under ~/.codex/memories and described as generated state."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "approvals_reviewer = auto_review routes eligible approval requests to a reviewer subagent before execution (legacy value guardian_subagent).",
+          "source": "https://github.com/openai/codex/blob/main/codex-rs/core/config.schema.json",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-056",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (insufficient verified evidence on subagent permission inheritance; auto_review reviewer subagent exists)."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Sessions are persisted under $CODEX_HOME/sessions (rollouts) and history.jsonl; [otel] export is disabled by default with log_user_prompt off by default; --ephemeral skips persistence.",
+          "source": "https://developers.openai.com/codex/config-advanced",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-051"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Local rollout/history files and opt-in OTel export (prompt logging off by default)."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "By default Codex periodically sends anonymous usage and health metrics to OpenAI; disable with [analytics] enabled=false.",
+          "source": "https://developers.openai.com/codex/config-advanced",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-052"
+        },
+        {
+          "claim": "Sessions are persisted under $CODEX_HOME/sessions (rollouts) and history.jsonl; [otel] export is disabled by default with log_user_prompt off by default; --ephemeral skips persistence.",
+          "source": "https://developers.openai.com/codex/config-advanced",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-051"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Anonymous usage/health analytics on by default with a documented config opt-out; OTel is opt-in."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Installers: curl -fsSL https://chatgpt.com/codex/install.sh | sh (downloads from releases.openai.com, falls back to GitHub Releases), PowerShell installer, npm, Homebrew; release workflow cosigns Linux artifacts (.sigstore files).",
+          "source": "https://github.com/openai/codex/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-053"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Installer downloads from releases.openai.com with GitHub fallback and cosign signatures on Linux artifacts; installer-side verification not confirmed."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Config layers (highest first): CLI -c overrides, project .codex/config.toml (trusted projects only), --profile files (~/.codex/<name>.config.toml), ~/.codex/config.toml, cloud-managed defaults, /etc/codex/config.toml; admin requirements.toml (/etc/codex/requirements.toml, %ProgramData%\\OpenAI\\Codex\\requirements.toml, MDM key com.openai.codex:requirements_toml_base64) constrain values.",
+          "source": "https://developers.openai.com/codex/config-basic",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-036"
+        },
+        {
+          "claim": "requirements.toml can constrain approval policy, approvals reviewer, sandbox mode / permission profiles, web search mode, managed hooks, MCP servers and plugin marketplace sources.",
+          "source": "https://developers.openai.com/codex/enterprise/managed-configuration",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-055"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "requirements.toml (system file, MDM, cloud) enforces approval/sandbox/MCP/hooks/marketplace constraints that user config cannot override."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md directs reports to OpenAI's Bugcrowd program.",
+          "source": "https://github.com/openai/codex/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-054"
+        },
+        {
+          "claim": "CVE-2025-59532 / GHSA-w5fx-fh39-j5rw: model-generated cwd treated as sandbox writable root; fixed 0.39.0 (published 2025-09-19).",
+          "source": "https://github.com/openai/codex/security/advisories/GHSA-w5fx-fh39-j5rw",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-058"
+        },
+        {
+          "claim": "CVE-2025-61260 / GHSA-xrxf-jgv3-qmrm: Codex CLI <= 0.23.0 automatically loaded project-local .env and .codex/config.toml (MCP servers) without confirmation, allowing command execution on running codex in a malicious repo (GHSA published 2026-04-14; Check Point research).",
+          "source": "https://github.com/advisories/GHSA-xrxf-jgv3-qmrm",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-057"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "SECURITY.md with Bugcrowd program and published GHSAs/CVEs."
+    }
+  }
+}

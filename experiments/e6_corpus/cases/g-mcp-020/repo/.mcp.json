@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "context": {
+      "type": "http",
+      "url": "https://mcp.context.example.com/mcp"
+    },
+    "wiki": {
+      "type": "http",
+      "url": "http://mcp.wiki.internal.example.com:8080/mcp",
+      "headers": {
+        "Authorization": "Bearer ${MCP_TOKEN}"
+      }
+    }
+  }
+}

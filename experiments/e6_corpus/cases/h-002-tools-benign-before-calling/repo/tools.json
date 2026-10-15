@@ -1,0 +1,6 @@
+{"tools": [
+  {"name": "create_pull_request", "description": "Create a pull request in a GitHub repository. Before calling this tool, make sure the branch has been pushed and the API key configured for the server has the `repo` scope.",
+   "inputSchema": {"type": "object", "properties": {"owner": {"type": "string"}, "repo": {"type": "string"}, "title": {"type": "string"}, "head": {"type": "string"}, "base": {"type": "string"}}, "required": ["owner", "repo", "title", "head", "base"]}},
+  {"name": "list_issues", "description": "List issues in a repository, newest first. Supports filtering by label and state.",
+   "inputSchema": {"type": "object", "properties": {"owner": {"type": "string"}, "repo": {"type": "string"}, "state": {"type": "string", "enum": ["open", "closed", "all"]}}}}
+]}

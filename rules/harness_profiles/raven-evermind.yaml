@@ -1,0 +1,66 @@
+id: raven-evermind
+name: Raven (EverMind) - host agent / harness of harnesses
+vendor: EverMind
+tier: C   # lead asked for tier C; full harness
+license: Apache-2.0
+open_source: true
+status: analysed
+version_analysed: "0.2.4"
+analysed_on: "2026-10-15"
+homepage: https://raven.evermind.ai
+repo: https://github.com/EverMind-AI/Raven
+binaries: [raven]
+packages:
+  - {ecosystem: pip, name: raven}   # PyPI project name per pyproject.toml; actual PyPI publication unverified
+install_methods:
+  - {method: curl-installer, command: "curl -fsSL https://raven.evermind.ai/install.sh | bash", checksum_verified: null, signed: null, source: https://github.com/EverMind-AI/Raven/blob/main/README.md}
+  - {method: powershell, command: "irm https://raven.evermind.ai/install.ps1 | iex", checksum_verified: null, signed: null, source: https://github.com/EverMind-AI/Raven/blob/main/README.md}
+  - {method: docker-compose, command: "docker compose -f docker/docker-compose.yml up", checksum_verified: null, signed: null, source: https://github.com/EverMind-AI/Raven/blob/main/docker/README.md}
+auto_update: {default: null, config: "raven/updates, config/update_channels.py (not analysed)", source: null}
+state_dirs: ["~/.raven", "$RAVEN_HOME"]
+credential_files: ["~/.raven/config.json", "~/.raven/env", "~/.raven/credentials/mcp/"]
+credential_storage: "Provider api_key fields live in ~/.raven/config.json (source comment calls it a 'world-readable file'; file mode not verified); web-vendor keys mirrored to ~/.raven/env; MCP OAuth tokens under ~/.raven/credentials/mcp/. Playbook credentials file is created 0600 (raven/playbook/credentials.py)."
+log_paths: ["~/.raven/**/trajectory*", "~/.raven/serve.json", "~/.raven/redaction_history.json"]
+memory_paths: ["~/.raven/workspace/agent_memory/**", "~/.raven/workspace/AGENTS.md"]
+config_files:
+  - {path: "~/.raven/config.json", scope: user, format: json, kind: settings}
+  - {path: "~/.raven/env", scope: user, format: env, kind: settings}
+  - {path: "~/.raven/workspace/AGENTS.md", scope: user, format: markdown, kind: instructions}
+  - {path: "~/.raven/workspace/SOUL.md", scope: user, format: markdown, kind: instructions}
+instruction_files: ["AGENTS.md", "SOUL.md", "TOOLS.md", "USER.md", "HEARTBEAT.md"]   # workspace templates (raven/templates); project-level discovery unverified
+skills_paths: ["~/.raven/workspace/skills/*/SKILL.md"]   # unverified exact path
+mcp:
+  files: ["~/.raven/config.json"]
+  servers_key: "tools.mcpServers"
+  server_fields: {command: command, args: args, env: env, url: url, headers: headers, type: type, auth: auth, enabled: enabled, tool_timeout: toolTimeout}
+  project_servers_require_approval: false   # no project-scoped config; user file only
+  notes: "type: stdio|sse|streamableHttp; auth: none|apikey|oauth. Keys are camelCase aliases in JSON. Unknown MCP tools default to the ask tier. stdio MCP processes run in the BoxLite VM when sandbox is enabled, else on host."
+permissions:
+  config_keys: {mode: "permissions.mode", tools: "permissions.tools", judge_model: "permissions.judgeModel", extra_deny: "tools.exec.extraDenyPatterns"}
+  default_mode: "smart (a model reviewer approves or escalates ask-tier calls; builtin deny list + user deny always hold; reviewer failure escalates to prompt; no responder => refused)"
+  auto_approve_values:
+    - {key: "permissions.mode", value: "full"}
+    - {key: "permissions.tools.exec", value: "allow"}
+    - {key: "permissions.tools.exec.*", value: "allow"}
+  cli_flags_auto_approve: ["raven agent --permission-mode full"]
+  allow_rule_syntax: "permissions.tools.exec: {\"git status *\": \"allow\", \"git push *\": \"deny\", \"*\": \"ask\"}  (deny > ask > allow, strictest wins; NOT last-match)"
+  overbroad_patterns: ["permissions.mode=full", "permissions.tools.exec[\"*\"]=allow", "permissions.tools.<any>=allow", "tools.restrictToWorkspace=false (default)", "tools.sandbox.backend=none (default)"]
+hooks: {supported: true, config_key: "plugin-provided hooks (raven/plugins); no user hooks.json", repo_scoped_allowed: false, command_field: null}
+sandbox: {available: true, default_on: false, mechanism: "BoxLite microVM (optional dependency boxlite==0.9.5; uv sync --extra sandbox); backend none = DirectExecutor on host", config: "tools.sandbox.backend: none|auto|boxlite; allow_net: true|false|[domains]", source: https://github.com/EverMind-AI/Raven/blob/main/docs-site/docs/sandbox.md}
+network: {domain_allowlist: true, config: "tools.sandbox.allowNet", default: "true (unrestricted) inside sandbox; SSRF guard for web fetch (raven/security/network.py)", source: "docs-site/docs/sandbox.md"}
+workspace_trust: {prompt_on_new_folder: false, notes: "Config is user-global, not repo-scoped. Untrusted content fenced with nonce-tagged BEGIN/END UNTRUSTED markers.", source: "raven/security/trust.py"}
+memory: {persistent: true, cross_project: true, agent_writable: true, notes: "EverOS memory plugin (everos[multimodal]==1.4.1) plus workspace agent_memory; Curator/Evolver can rewrite tools, skills and prompts (self-evolution).", source: "README.md, CHANGELOG.md"}
+subagents: {supported: true, inherits_permissions: "Built-in agents get rendered deny rules only; ask tier and mode NOT carried to third-party ACP/CLI children; outbound ACP client auto-selects allow_always/allow_once; DAG confirm:true fails open without ask channel", notes: "13 third-party agent presets (Claude Code, Codex, OpenCode, ...)", source: "docs-site/docs/permissions.md"}
+telemetry: {default_on: false, opt_out: "No telemetry code found in grep. Bug-report upload only when RAVEN_BUGREPORT_URL is set (empty in this repo's default); own tracing is local (~/.raven).", training_default: null, source: "docs-site/docs/trajectory-debugging.md"}
+headless:
+  command: "raven agent -m \"task\""
+  flags: ["-m", "--permission-mode ask|smart|full"]
+  ci_integrations: []
+  model_override: "providers.<name>.apiBase / apiKey / models in config.json; RAVEN_PROVIDER, RAVEN_API_KEY env (docker entrypoint)"
+  local_model_support: "ollama / ollama_chat, lm_studio, hosted_vllm provider sections (schema.py ProvidersConfig); docker/README seeds RAVEN_PROVIDER=ollama-chat"
+security_policy: {security_md: "https://github.com/EverMind-AI/Raven/blob/main/SECURITY.md", bug_bounty: null, advisories: "https://github.com/EverMind-AI/Raven/security/advisories"}
+sources:
+  - {url: "https://github.com/EverMind-AI/Raven (HEAD 2a139f8)", accessed: "2026-10-15", note: "README, pyproject.toml, raven/config/schema.py, docs-site/docs/permissions.md, sandbox.md"}
+extra:
+  network_surfaces: "web page/RPC binds 127.0.0.1 with per-boot session cookie; docker compose defaults RAVEN_AUTO_LOGIN=1 (auto sign-in for any browser reaching the published port); GatewayConfig.host defaults 0.0.0.0 (channel gateway); A2A server off by default, shared bearer token; channel allowlists deny-all when empty"
+  status_note: "pre-alpha per README; pyproject license Apache-2.0 and LICENSE file Apache-2.0 verified - no conflict at HEAD"

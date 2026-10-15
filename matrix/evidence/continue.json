@@ -1,0 +1,198 @@
+{
+  "harness": "continue",
+  "version": "cn 1.5.47 / final 2.0.0",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Defaults: read-only tools allow; Edit/MultiEdit/Write/Bash ask; headless excludes ask tools",
+          "source": "https://github.com/continuedev/continue/blob/main/docs/cli/tool-permissions.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Precedence: --auto/--readonly > CLI flags > ~/.continue/permissions.yaml > defaults",
+          "source": "https://github.com/continuedev/continue/blob/main/docs/cli/tool-permissions.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "cn: read tools allow, write/Bash default ask; headless excludes ask tools; allow/ask/exclude with tool-argument globs; --auto is an absolute override."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "No sandbox in CLI or IDE extensions",
+          "source": "https://github.com/continuedev/continue/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No sandbox."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Fetch tool allowed by default (read-only class)",
+          "source": "https://github.com/continuedev/continue/blob/main/docs/cli/tool-permissions.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No egress control."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "hookConfig.ts loads ~/.continue, .continue, ~/.claude, .claude settings files; hooks from all sources run (merged, appended)",
+          "source": "https://github.com/continuedev/continue/blob/main/extensions/cli/src/hooks/hookConfig.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CLIPlatformClient reads <workspaceDir>/.continue/.env",
+          "source": "https://github.com/continuedev/continue/blob/main/extensions/cli/src/CLIPlatformClient.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "cn merges hooks from .continue/settings.json, .continue/settings.local.json and Claude Code's .claude/settings*.json in the project, and loads <workspace>/.continue/.env, with no trust prompt found."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "Files in .continue/mcpServers/ are 'automatically picked up'; JSON MCP configs from Claude/Cursor/Cline accepted",
+          "source": "https://github.com/continuedev/continue/blob/main/docs/customize/deep-dives/mcp.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Workspace .continue/mcpServers/*.yaml|json auto-picked up (IDE); secrets via ${{ secrets.X }}; no approval or tool-pinning described."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "README: authentication pulled out in final 2.0.0",
+          "source": "https://github.com/continuedev/continue/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Hub blocks/assistants (hub removed in 2.0), prompts and skills from repo."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Secret resolution order: process.env, ~/.continue/.env, <ws>/.continue/.env, <ws>/.env",
+          "source": "https://github.com/continuedev/continue/blob/main/extensions/cli/spec/mcp.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Secrets resolved from env and .env files in home/workspace/.continue; auth.json plaintext; no redaction claims."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "In headless mode, ask tools are excluded; enable with --allow Write etc.",
+          "source": "https://github.com/continuedev/continue/blob/main/docs/cli/headless-mode.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "actions/general-review composite action",
+          "source": "https://github.com/continuedev/continue/blob/main/actions/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Headless cn -p excludes ask-class tools unless explicitly --allow'd (safe default); official general-review composite action in repo."
+    },
+    "D09": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (no persistent agent memory)."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "SubagentStart/SubagentStop hook events",
+          "source": "https://github.com/continuedev/continue/blob/main/extensions/cli/src/hooks/types.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Hook events for subagents exist; permission inheritance undocumented."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "sessions saved as ~/.continue/sessions/<id>.json",
+          "source": "https://github.com/continuedev/continue/blob/main/extensions/cli/src/session.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Local session JSON and logs; OTLP metrics exporter (opt-in)."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "README: 'This included removing anonymous telemetry'",
+          "source": "https://github.com/continuedev/continue/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Final 2.0.0 removed anonymous telemetry."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "README: repository no longer actively maintained and read-only",
+          "source": "https://github.com/continuedev/continue/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "npm @continuedev/cli latest 1.5.47 published 2026-06-18",
+          "source": "https://registry.npmjs.org/@continuedev/cli",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "npm + marketplace; no documented provenance; project read-only/unmaintained so no further updates."
+    },
+    "D14": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "unverified (org config via hub removed; no managed-settings file documented)."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md",
+          "source": "https://github.com/continuedev/continue/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "SECURITY.md (email), no published advisories, project unmaintained."
+    }
+  }
+}

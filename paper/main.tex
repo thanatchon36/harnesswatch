@@ -1,0 +1,69 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage[T1]{fontenc}
+\usepackage{cite}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{adjustbox}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\def\UrlBreaks{\do\/\do-\do.\do\_\do=\do\&\do?}
+\Urlmuskip=0mu plus 1mu
+
+% Let floats pack densely (many generated tables).
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\dbltopfraction}{0.95}
+\renewcommand{\bottomfraction}{0.6}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.8}
+\renewcommand{\dblfloatpagefraction}{0.8}
+\setcounter{topnumber}{4}
+\setcounter{dbltopnumber}{3}
+\setcounter{totalnumber}{6}
+
+% All result numbers come from experiments/results/*.json via experiments/paper_numbers.py.
+\input{numbers.tex}
+
+% Evidence labels (MISSION §6.4), defined once in Section~\ref{sec:method}.
+\newcommand{\evT}{\textsuperscript{[T]}}
+\newcommand{\evD}{\textsuperscript{[D]}}
+\newcommand{\evTP}{\textsuperscript{[3P]}}
+\newcommand{\tool}{\texttt{harnesswatch}}
+\newcommand{\RQ}[1]{\textbf{#1}}
+\newcommand{\answers}[1]{\noindent\emph{Answers #1.}\ }
+
+\begin{document}
+
+\title{The Harness Is the Attack Surface: A Security Analysis of AI Coding-Agent Harnesses (2025--2026)}
+
+\author{\IEEEauthorblockN{Thanatchon Chongmankhong}
+\IEEEauthorblockA{Independent researcher\\
+\url{https://github.com/thanatchon36/harnessguard}}}
+
+\maketitle
+
+\input{sections/abstract}
+\input{sections/introduction}
+\input{sections/background}
+\input{sections/method}
+\input{sections/threats}
+\input{sections/controls}
+\input{sections/claims}
+\input{sections/incidents}
+\input{sections/tool}
+\input{sections/evaluation}
+\input{sections/governance}
+\input{sections/related}
+\input{sections/limitations}
+\input{sections/conclusion}
+
+\appendices
+\input{sections/appendix}
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+\end{document}

@@ -1,0 +1,14 @@
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - run: claude -p "summarise yesterday's commits" --allowedTools "Read"
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

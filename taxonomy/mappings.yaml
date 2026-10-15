@@ -1,0 +1,683 @@
+# Framework crosswalk (generated in Phase 2).
+schema_version: 1
+title: Framework-level crosswalk for the harnesswatch threat taxonomy (RQ1, RQ6)
+status: final for Phase 2; 2026-10-15. Interpretive mapping by the authors, not an endorsement by any framework
+  owner.
+frameworks:
+  nist_ai_rmf:
+    name: NIST AI Risk Management Framework 1.0 (NIST AI 100-1)
+    url: https://airc.nist.gov/AI_RMF_Knowledge_Base/Playbook
+    accessed: '2026-10-15'
+    verification: Subcategory statements for every id used (GOVERN 1.1, 3.2, 4.3, 6.1, 6.2; MAP 3.5, 4.1,
+      4.2; MEASURE 2.4, 2.6, 2.7, 2.8, 2.10; MANAGE 1.3, 2.2, 2.3, 2.4, 3.1, 4.1, 4.3) were read on the NIST AIRC
+      Playbook pages; MEASURE 3.x and MAP 5.x pages were truncated in the fetch and are not used.
+  nist_ai_600_1:
+    name: 'NIST AI 600-1, Artificial Intelligence Risk Management Framework: Generative AI Profile'
+    published: '2024-07-26'
+    url: https://doi.org/10.6028/NIST.AI.600-1
+    accessed: '2026-10-15'
+    verification: 'Publication date read from nist.gov. The PDF text could not be extracted in this environment,
+      so the twelve risk names and the section numbers 2.1-2.12 were not re-read: names are the standard ones and
+      are referenced by NAME; numbers 2.2, 2.5, 2.6 and 2.9 are corroborated by the authors'' airmkit crosswalk,
+      other numbers follow alphabetical order and are unverified.'
+    risk_names:
+    - CBRN Information or Capabilities
+    - Confabulation
+    - Dangerous, Violent, or Hateful Content
+    - Data Privacy
+    - Environmental Impacts
+    - Harmful Bias and Homogenization
+    - Human-AI Configuration
+    - Information Integrity
+    - Information Security
+    - Intellectual Property
+    - Obscene, Degrading, and/or Abusive Content
+    - Value Chain and Component Integration
+  iso_iec_42001:
+    name: ISO/IEC 42001:2023 Information technology - Artificial intelligence - Management system
+    url: https://www.iso.org/standard/81230.html
+    accessed: '2026-10-15'
+    verification: 'Annex A control ids and titles cross-read from two public listings that agree (riskprofs.com/iso-42001-annex-a-controls-list,
+      blckalpaca.at annex-a page); a third listing (certpro.com) used different numbering and was rejected. The
+      standard text is paywalled and was not read: confirm in a licensed copy before publication. Clause-level ids
+      (6.1.2, 6.1.4, 7.5, 8.2-8.4, 9.1, 10.2) are management-system clauses.'
+    annex_a_titles:
+      A.2.2: AI policy
+      A.3.3: Reporting of concerns
+      A.4.3: Data resources
+      A.4.4: Tooling resources
+      A.4.5: System and computing resources
+      A.5.4: Assessing impacts on individuals or groups
+      A.6.1.3: Processes for responsible design and development
+      A.6.2.4: AI system verification and validation
+      A.6.2.5: AI system deployment
+      A.6.2.6: AI system operation and monitoring
+      A.6.2.7: AI system technical documentation
+      A.6.2.8: AI system recording of event logs
+      A.7.3: Acquisition of data
+      A.7.4: Quality of data for AI systems
+      A.7.5: Data provenance
+      A.8.2: System documentation and information for users
+      A.8.4: Communication of incidents
+      A.9.2: Processes for responsible use of AI systems
+      A.9.3: Objectives for responsible use of AI systems
+      A.9.4: Intended use of the AI system
+      A.10.2: Allocation of responsibilities
+      A.10.3: Suppliers
+      A.10.4: Customers
+  mas_airm:
+    name: MAS Guidelines on Artificial Intelligence Risk Management
+    issued: '2026-10-07'
+    status: 'Final (consultation P017-2025 ran 2025-11-13 to 2026-01-31). Supervisory expectations. Per paragraph
+      1.8 as indexed in airmkit: Sections 3-4 expected from 2027-10-07, Sections 5-6 by 2028-10-07.'
+    sections:
+      '1': Introduction
+      '2': Application of the Guidelines
+      '3': AI Oversight
+      '4': Key AI Risk Management Systems, Policies and Procedures
+      '5': AI Life Cycle Controls
+      '6': AI Capability & Capacity
+    url: https://www.mas.gov.sg/-/media/mas-media-library/regulation/guidelines/bd/guidelines-on-artificial-intelligence-risk-management-for-financial-institutions/guidelines-on-artificial-intelligence-risk-management.pdf
+    accessed: '2026-10-15'
+    verification: PDF downloaded; SHA-256 d9a4095569da34078e2cd597cc992910e63cf88471c59cb654c0413dbaed5c6d matches
+      the hash recorded in airmkit docs/sources/MANIFEST.md; contents page and paragraph 5.16 read. The MAS HTML
+      landing pages returned 404/maintenance, so the media-release wording was not re-read. Paragraph-level clause
+      references below use the numbering of the PDF.
+  airmkit:
+    name: airmkit control vocabulary (user project)
+    url: https://github.com/thanatchon36/airmkit
+    path: src/airm/controls/controls.yaml
+    accessed: '2026-10-15'
+    verification: Every AIRM-* id below was checked to exist in controls.yaml (63 controls at read time). harnesswatch
+      checklist items should slot under these ids; no new ids are invented here.
+notes:
+- 'Coverage is thematic: a framework item is listed when the threat class is a plausible subject of that item, not
+  when the item prescribes a control for it.'
+- ISO 42001 and NIST AI RMF are voluntary; MAS AIRM is supervisory expectation for Singapore financial institutions
+  and applies to AI agents (paragraph 1.11, 1.5).
+- 'Harness-specific mappings to airmkit: AIRM-4.8-FN25-AGENT-ATTRIBUTES (record tools/guardrails per agent) and
+  AIRM-5.16-AGENT-PERMISSIONS are the natural landing points for the governance checklist.'
+classes:
+- id: T01
+  name: Indirect prompt injection via workspace and retrieved content
+  nist_ai_rmf:
+    subcategories:
+    - MEASURE 2.7
+    - MEASURE 2.6
+    - MANAGE 1.3
+    - MANAGE 2.3
+  nist_ai_600_1:
+    risks:
+    - Information Security
+    section_numbers_unverified:
+    - '2.9'
+  iso_iec_42001:
+    annex_a:
+    - A.6.1.3
+    - A.6.2.4
+    - A.6.2.6
+    clauses:
+    - 6.1.2
+    - '8.2'
+  mas_airm:
+    paragraphs:
+    - '5.15'
+    - '5.16'
+    - '5.22'
+    airmkit_controls:
+    - AIRM-5.15-GUARDRAIL-EFFECTIVENESS
+    - AIRM-5.15-GENAI-FAILURE-MODES
+    - AIRM-5.16-SECURITY-CONTROLS
+    - AIRM-5.22-SECURITY-REVIEW
+  rationale: Prompt injection is a security risk of the GenAI profile; MAS 5.15 fn46 names adversarial attack and
+    data leakage as GenAI test targets.
+- id: T02
+  name: Repository and workspace configuration as code execution
+  nist_ai_rmf:
+    subcategories:
+    - MEASURE 2.7
+    - MANAGE 1.3
+    - MAP 4.2
+  nist_ai_600_1:
+    risks:
+    - Information Security
+    section_numbers_unverified:
+    - '2.9'
+  iso_iec_42001:
+    annex_a:
+    - A.6.1.3
+    - A.6.2.5
+    - A.9.2
+    clauses:
+    - 6.1.2
+    - '8.3'
+  mas_airm:
+    paragraphs:
+    - '5.16'
+    - '5.22'
+    airmkit_controls:
+    - AIRM-5.16-SECURITY-CONTROLS
+    - AIRM-5.16-AGENT-PERMISSIONS
+    - AIRM-5.22-SECURITY-REVIEW
+  rationale: Secure-configuration and pre-deployment security review of the agent runtime environment.
+- id: T03
+  name: Permission-model weaknesses and approval bypass
+  nist_ai_rmf:
+    subcategories:
+    - GOVERN 3.2
+    - MAP 3.5
+    - MEASURE 2.6
+    - MANAGE 2.4
+  nist_ai_600_1:
+    risks:
+    - Human-AI Configuration
+    - Information Security
+    section_numbers_unverified:
+    - '2.7'
+    - '2.9'
+  iso_iec_42001:
+    annex_a:
+    - A.6.2.5
+    - A.9.2
+    - A.9.3
+    - A.9.4
+    clauses:
+    - '8.3'
+  mas_airm:
+    paragraphs:
+    - '5.9'
+    - '5.16'
+    airmkit_controls:
+    - AIRM-5.16-AGENT-PERMISSIONS
+    - AIRM-5.16-ACCESS-CONTROL
+    - AIRM-5.9-HUMAN-OVERSIGHT
+    - AIRM-5.9-DESIGN-FOR-OVERSIGHT
+  rationale: Approval and permission design is the human-oversight and least-privilege control; MAS 4.8 fn25 asks
+    for the tools and guardrails of each agent to be recorded.
+- id: T04
+  name: 'MCP trust: tool poisoning, rug pulls, OAuth and server identity'
+  nist_ai_rmf:
+    subcategories:
+    - MAP 4.1
+    - MAP 4.2
+    - MANAGE 3.1
+    - GOVERN 6.1
+  nist_ai_600_1:
+    risks:
+    - Value Chain and Component Integration
+    - Information Security
+    section_numbers_unverified:
+    - '2.12'
+    - '2.9'
+  iso_iec_42001:
+    annex_a:
+    - A.10.2
+    - A.10.3
+    - A.4.4
+    clauses:
+    - '8.3'
+  mas_airm:
+    paragraphs:
+    - '5.10'
+    - '5.11'
+    - '5.16'
+    - '5.25'
+    airmkit_controls:
+    - AIRM-5.16-THIRD-PARTY-COMPONENTS
+    - AIRM-5.11-SUPPLY-CHAIN
+    - AIRM-5.25-DYNAMIC-UPDATES
+    - AIRM-5.25-CHANGE-CONTROL
+  rationale: MAS 5.16(c) names plugins and APIs; 5.25 covers automatic updates, which is the rug-pull path.
+- id: T05
+  name: Skills, plugins, extensions and marketplaces
+  nist_ai_rmf:
+    subcategories:
+    - MAP 4.1
+    - MAP 4.2
+    - MANAGE 3.1
+    - GOVERN 6.1
+  nist_ai_600_1:
+    risks:
+    - Value Chain and Component Integration
+    section_numbers_unverified:
+    - '2.12'
+  iso_iec_42001:
+    annex_a:
+    - A.10.3
+    - A.4.4
+    - A.10.2
+    clauses:
+    - '8.3'
+  mas_airm:
+    paragraphs:
+    - '5.11'
+    - '5.16'
+    airmkit_controls:
+    - AIRM-5.16-THIRD-PARTY-COMPONENTS
+    - AIRM-5.11-SUPPLY-CHAIN
+    - AIRM-4.4-FN22-SHADOW-AI
+  rationale: Third-party plugin and skill governance; unapproved extensions are a shadow-AI surface (MAS 4.4 fn22).
+- id: T06
+  name: Harness distribution and dependency supply chain
+  nist_ai_rmf:
+    subcategories:
+    - MAP 4.1
+    - MAP 4.2
+    - MANAGE 3.1
+    - GOVERN 6.1
+    - GOVERN 6.2
+  nist_ai_600_1:
+    risks:
+    - Value Chain and Component Integration
+    - Information Security
+    section_numbers_unverified:
+    - '2.12'
+    - '2.9'
+  iso_iec_42001:
+    annex_a:
+    - A.10.3
+    - A.4.4
+    - A.6.2.5
+    clauses:
+    - '8.3'
+  mas_airm:
+    paragraphs:
+    - '5.10'
+    - '5.11'
+    - '5.25'
+    airmkit_controls:
+    - AIRM-5.11-SUPPLY-CHAIN
+    - AIRM-5.11-CHANGE-NOTIFICATION
+    - AIRM-5.25-DYNAMIC-UPDATES
+    - AIRM-5.10-THIRD-PARTY-TESTING
+  rationale: Third-party AI tooling accountability stays with the institution (MAS 5.11); update control is 5.25.
+- id: T07
+  name: Secret exposure and residue
+  nist_ai_rmf:
+    subcategories:
+    - MEASURE 2.10
+    - MEASURE 2.7
+    - GOVERN 1.1
+  nist_ai_600_1:
+    risks:
+    - Data Privacy
+    - Information Security
+    section_numbers_unverified:
+    - '2.4'
+    - '2.9'
+  iso_iec_42001:
+    annex_a:
+    - A.4.3
+    - A.4.5
+    - A.6.2.8
+    clauses:
+    - '8.3'
+  mas_airm:
+    paragraphs:
+    - '5.4'
+    - '5.16'
+    airmkit_controls:
+    - AIRM-5.4-DATA-SECURITY
+    - AIRM-5.4-DATA-PRIVACY
+    - AIRM-5.16-SECURITY-CONTROLS
+  rationale: Data security and DLP expectations for AI systems.
+- id: T08
+  name: Data exfiltration channels
+  nist_ai_rmf:
+    subcategories:
+    - MEASURE 2.10
+    - MEASURE 2.7
+    - MANAGE 1.3
+  nist_ai_600_1:
+    risks:
+    - Data Privacy
+    - Information Security
+    section_numbers_unverified:
+    - '2.4'
+    - '2.9'
+  iso_iec_42001:
+    annex_a:
+    - A.4.3
+    - A.6.2.6
+    - A.9.2
+    clauses:
+    - '8.3'
+  mas_airm:
+    paragraphs:
+    - '5.4'
+    - '5.16'
+    airmkit_controls:
+    - AIRM-5.4-DATA-SECURITY
+    - AIRM-5.16-SECURITY-CONTROLS
+    - AIRM-5.4-DATA-PRIVACY
+  rationale: MAS 5.16(a) lists data loss prevention and network segmentation.
+- id: T09
+  name: Headless and CI abuse (pwn request)
+  nist_ai_rmf:
+    subcategories:
+    - MEASURE 2.7
+    - MANAGE 4.1
+    - GOVERN 4.3
+    - MAP 3.5
+  nist_ai_600_1:
+    risks:
+    - Information Security
+    - Human-AI Configuration
+    section_numbers_unverified:
+    - '2.9'
+    - '2.7'
+  iso_iec_42001:
+    annex_a:
+    - A.6.2.5
+    - A.6.2.6
+    - A.9.2
+    - A.10.2
+    clauses:
+    - '8.3'
+    - '9.1'
+  mas_airm:
+    paragraphs:
+    - '5.16'
+    - '5.22'
+    - '5.23'
+    airmkit_controls:
+    - AIRM-5.16-AGENT-PERMISSIONS
+    - AIRM-5.22-SECURITY-REVIEW
+    - AIRM-5.23-AGENT-TRACE-MONITORING
+  rationale: Unattended agents need least privilege and action/tool monitoring (MAS 5.23).
+- id: T10
+  name: Persistent memory and long-lived context poisoning
+  nist_ai_rmf:
+    subcategories:
+    - MEASURE 2.4
+    - MANAGE 2.2
+    - MANAGE 4.1
+  nist_ai_600_1:
+    risks:
+    - Information Security
+    - Information Integrity
+    section_numbers_unverified:
+    - '2.9'
+    - '2.8'
+  iso_iec_42001:
+    annex_a:
+    - A.6.2.6
+    - A.7.4
+    - A.7.5
+    clauses:
+    - '9.1'
+  mas_airm:
+    paragraphs:
+    - '5.4'
+    - '5.23'
+    airmkit_controls:
+    - AIRM-5.23-AGENT-TRACE-MONITORING
+    - AIRM-5.15-GENAI-FAILURE-MODES
+    - AIRM-5.4-DATA-LINEAGE
+  rationale: Persistent context needs lineage and monitoring; closest MAS data and monitoring clauses.
+- id: T11
+  name: Sub-agent and cross-harness trust propagation
+  nist_ai_rmf:
+    subcategories:
+    - GOVERN 3.2
+    - MAP 3.5
+    - MANAGE 2.4
+  nist_ai_600_1:
+    risks:
+    - Value Chain and Component Integration
+    - Human-AI Configuration
+    section_numbers_unverified:
+    - '2.12'
+    - '2.7'
+  iso_iec_42001:
+    annex_a:
+    - A.6.1.3
+    - A.6.2.6
+    - A.10.2
+    clauses:
+    - '8.3'
+  mas_airm:
+    paragraphs:
+    - '4.8'
+    - '5.16'
+    - '5.23'
+    airmkit_controls:
+    - AIRM-4.8-FN25-AGENT-ATTRIBUTES
+    - AIRM-5.16-AGENT-PERMISSIONS
+    - AIRM-5.23-AGENT-TRACE-MONITORING
+  rationale: Agent inventory attributes (identifiers, accessible tools) and per-agent permissions.
+- id: T12
+  name: Browser and computer-use surfaces
+  nist_ai_rmf:
+    subcategories:
+    - MEASURE 2.7
+    - MEASURE 2.6
+  nist_ai_600_1:
+    risks:
+    - Information Security
+    - Data Privacy
+    section_numbers_unverified:
+    - '2.9'
+    - '2.4'
+  iso_iec_42001:
+    annex_a:
+    - A.6.2.6
+    - A.9.4
+    clauses:
+    - '8.3'
+  mas_airm:
+    paragraphs:
+    - '5.9'
+    - '5.16'
+    airmkit_controls:
+    - AIRM-5.16-SECURITY-CONTROLS
+    - AIRM-5.9-HUMAN-OVERSIGHT
+  rationale: Computer-use agents act under user identity; oversight and security controls.
+- id: T13
+  name: Multi-tenant isolation and authorization
+  nist_ai_rmf:
+    subcategories:
+    - MEASURE 2.10
+    - MEASURE 2.7
+    - GOVERN 6.1
+  nist_ai_600_1:
+    risks:
+    - Data Privacy
+    - Information Security
+    section_numbers_unverified:
+    - '2.4'
+    - '2.9'
+  iso_iec_42001:
+    annex_a:
+    - A.4.3
+    - A.9.4
+    - A.10.4
+    clauses:
+    - '8.3'
+  mas_airm:
+    paragraphs:
+    - '5.4'
+    - '5.16'
+    airmkit_controls:
+    - AIRM-5.16-ACCESS-CONTROL
+    - AIRM-5.4-DATA-SECURITY
+  rationale: Role-based access and data security for shared AI services.
+- id: T14
+  name: Destructive and unsafe autonomous actions
+  nist_ai_rmf:
+    subcategories:
+    - MEASURE 2.6
+    - MANAGE 2.4
+    - MANAGE 2.3
+    - MANAGE 1.3
+  nist_ai_600_1:
+    risks:
+    - Human-AI Configuration
+    section_numbers_unverified:
+    - '2.7'
+  iso_iec_42001:
+    annex_a:
+    - A.5.4
+    - A.9.3
+    - A.6.2.6
+    clauses:
+    - 6.1.4
+    - '8.4'
+  mas_airm:
+    paragraphs:
+    - '5.2'
+    - '5.3'
+    - '5.9'
+    airmkit_controls:
+    - AIRM-5.3-KILL-SWITCH
+    - AIRM-5.3-CONTINGENCY-PLAN
+    - AIRM-5.9-HUMAN-OVERSIGHT
+    - AIRM-5.2-FN28-PILOT-GUARDRAILS
+  rationale: Kill switch, contingency and human oversight (MAS 5.3, 5.9, fn28 pilot guardrails).
+- id: T15
+  name: Telemetry, data residency, retention and audit gaps
+  nist_ai_rmf:
+    subcategories:
+    - MEASURE 2.10
+    - MEASURE 2.8
+    - GOVERN 1.1
+    - MANAGE 4.3
+  nist_ai_600_1:
+    risks:
+    - Data Privacy
+    - Intellectual Property
+    section_numbers_unverified:
+    - '2.4'
+    - '2.10'
+  iso_iec_42001:
+    annex_a:
+    - A.4.3
+    - A.7.3
+    - A.8.2
+    - A.6.2.8
+    clauses:
+    - '7.5'
+    - '9.1'
+  mas_airm:
+    paragraphs:
+    - '5.4'
+    - '5.11'
+    - '5.23'
+    airmkit_controls:
+    - AIRM-5.4-DATA-PRIVACY
+    - AIRM-5.4-DATA-CLASSIFICATION
+    - AIRM-5.11-THIRD-PARTY-TRANSPARENCY
+    - AIRM-5.23-GENAI-LOGGING
+  rationale: Third-party transparency and GenAI logging (MAS 5.23).
+- id: T16
+  name: Offensive misuse of harnesses by attackers
+  nist_ai_rmf:
+    subcategories:
+    - MANAGE 4.3
+    - MANAGE 2.3
+    - GOVERN 4.3
+  nist_ai_600_1:
+    risks:
+    - Information Security
+    section_numbers_unverified:
+    - '2.9'
+  iso_iec_42001:
+    annex_a:
+    - A.8.4
+    - A.9.2
+    - A.3.3
+    clauses:
+    - '10.2'
+  mas_airm:
+    paragraphs:
+    - '4.4'
+    - '5.23'
+    airmkit_controls:
+    - AIRM-5.23-INCIDENT-MANAGEMENT
+    - AIRM-4.4-FN22-SHADOW-AI
+  rationale: Detection of unauthorised AI use and incident management.
+- id: T17
+  name: Execution sandbox and isolation escape
+  nist_ai_rmf:
+    subcategories:
+    - MEASURE 2.7
+    - MEASURE 2.6
+    - MANAGE 1.3
+  nist_ai_600_1:
+    risks:
+    - Information Security
+    section_numbers_unverified:
+    - '2.9'
+  iso_iec_42001:
+    annex_a:
+    - A.6.1.3
+    - A.6.2.5
+    - A.4.5
+    clauses:
+    - '8.3'
+  mas_airm:
+    paragraphs:
+    - '5.16'
+    - '5.22'
+    - '6.3'
+    airmkit_controls:
+    - AIRM-5.16-SECURITY-CONTROLS
+    - AIRM-5.22-SECURITY-REVIEW
+    - AIRM-6.3-INFRASTRUCTURE
+  rationale: Hardened secure environments (MAS 5.16(a)) and security review incl. red teaming (5.22).
+- id: T18
+  name: Agent control-plane exposure and authorization
+  nist_ai_rmf:
+    subcategories:
+    - MEASURE 2.7
+    - MANAGE 1.3
+    - MANAGE 3.1
+  nist_ai_600_1:
+    risks:
+    - Information Security
+    section_numbers_unverified:
+    - '2.9'
+  iso_iec_42001:
+    annex_a:
+    - A.6.2.5
+    - A.4.5
+    - A.6.2.6
+    clauses:
+    - '8.3'
+  mas_airm:
+    paragraphs:
+    - '5.16'
+    - '5.22'
+    airmkit_controls:
+    - AIRM-5.16-ACCESS-CONTROL
+    - AIRM-5.16-SECURITY-CONTROLS
+    - AIRM-5.22-SECURITY-REVIEW
+  rationale: API authentication and access control (MAS 5.16(a),(b)).
+- id: T19
+  name: Conventional software defects in agent runtimes and SDKs
+  nist_ai_rmf:
+    subcategories:
+    - MEASURE 2.7
+    - MANAGE 4.1
+  nist_ai_600_1:
+    risks:
+    - Information Security
+    section_numbers_unverified:
+    - '2.9'
+  iso_iec_42001:
+    annex_a:
+    - A.6.2.4
+    - A.6.2.5
+    - A.6.2.7
+    clauses:
+    - '8.3'
+  mas_airm:
+    paragraphs:
+    - '5.14'
+    - '5.22'
+    - '5.25'
+    airmkit_controls:
+    - AIRM-5.22-SECURITY-REVIEW
+    - AIRM-5.14-TESTING-APPROACHES
+    - AIRM-5.25-CHANGE-CONTROL
+  rationale: Ordinary vulnerability management of AI components.

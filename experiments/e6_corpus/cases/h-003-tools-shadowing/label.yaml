@@ -1,0 +1,4 @@
+expected: [HG-MCP-004]
+origin: hand
+family: tools
+note: "cross-tool shadowing of send_email with concealment"

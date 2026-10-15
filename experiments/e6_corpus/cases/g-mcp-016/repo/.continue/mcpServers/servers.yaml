@@ -1,0 +1,10 @@
+name: Team MCP servers
+version: 0.0.1
+schema: v1
+mcpServers:
+- name: internal-docs
+  command: node
+  args:
+  - ./tools/mcp/docs-server.js
+  env:
+    GITHUB_TOKEN: ${GITHUB_TOKEN}

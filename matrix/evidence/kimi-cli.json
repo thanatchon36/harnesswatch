@@ -1,0 +1,242 @@
+{
+  "harness": "kimi-cli",
+  "version": "2.2.0",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "default_permission_mode default is `manual`; modes manual/yolo/auto; yolo still asks for sensitive files, dangerous commands, plan exit; auto approves everything.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/configuration/config-files.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "[[permission.rules]] with decision allow|deny|ask, ToolName(arg-pattern); `dangerous_command_guard=false` disables built-in policy.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/configuration/config-files.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Default 'Always Ask' prompts for edits and commands; allow/deny/ask pattern rules; dangerous-command guard; but yolo/auto modes and -p (auto) are one flag away and `auto` approves sensitive files too."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "No sandbox/containment feature in docs tree searched (interaction, tools, configuration).",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/guides/interaction.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No OS sandbox documented."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "No network allowlist config found in config-files.md.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/configuration/config-files.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No egress control documented."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Project-level MCP servers in untrusted folders are shown in the workspace trust prompt (transport + launch target); headless runs keep them disabled unless trusted.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/customization/mcp.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "'The CLI currently reads a single user-level config file and has no project-level config file mechanism.'",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/configuration/overrides.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Hooks are declared only in ~/.kimi-code/config.toml.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/customization/hooks.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Workspace-trust prompt shows project MCP launch commands before enabling; headless keeps them disabled unless trusted; hooks and provider config are user-level only (no repo-level executable config besides MCP)."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "In Ask When Needed mode MCP tool calls are automatically approved.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/customization/mcp.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "MCP OAuth credentials in credentials/mcp/*.json (0600).",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/configuration/data-locations.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Project MCP gated by trust prompt; OAuth tokens stored 0600 per server; but yolo mode auto-approves MCP tool calls and no central allow/deny or tool-change detection."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "/plugins install accepts local dir, zip URL, GitHub repo (latest release/tag/commit pins); plugins can declare MCP servers and contribute system-prompt instructions.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/customization/plugins.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Plugin marketplace (Official/Curated/Custom tabs, GitHub URL install with pin-by-tag/commit); plugins can add skills, agents, system-prompt instructions and MCP servers; no signing documented."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "credentials/ directory 0700, files 0600, atomic tmp->fsync->rename writes.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/configuration/data-locations.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "api_key stored plaintext in config.toml; api_key_env reads a shell variable per request; shell env credentials are not read automatically.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/configuration/config-files.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Ask When Needed mode still asks before accessing sensitive files such as .env or SSH keys.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/guides/interaction.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "OAuth creds 0700/0600 with atomic writes; api_key_env avoids plaintext keys; env credentials intentionally not auto-read; plaintext `api_key` still permitted; sensitive-file approvals in yolo mode."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "In -p mode no human approval is requested; regular tool calls are handled under the `auto` permission policy while static deny rules remain in effect.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/reference/kimi-command.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "--prompt cannot be used with --yolo, --auto or --plan; non-interactive uses auto permission by default.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/reference/kimi-command.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "`kimi -p` runs with `auto` permission policy (no approvals; cannot combine with --yolo/--auto), static deny rules still apply; project MCP disabled unless trusted; no official CI action found."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "No memory feature in docs.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/guides/sessions.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (no persistent memory feature found)."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Built-in coder/explore/plan subagents run in isolated contexts.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "Sub-agent permission inheritance not verified."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "sessions/<workDirKey>/<sessionId>/, logs/kimi-code.log, user-history/<md5>.jsonl.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/configuration/data-locations.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Per-session data dirs, global diagnostic log, input history; session export; no structured audit/OTel found."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "`telemetry` defaults true; disabled by KIMI_DISABLE_TELEMETRY=1 or telemetry=false.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/configuration/env-vars.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Anonymous telemetry default on, documented opt-out via env var and config."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "tui.toml [upgrade].auto_install (auto-update) is on by default.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/configuration/data-locations.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "README install via `curl -fsSL https://code.kimi.com/kimi-code/install.sh | bash`.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "curl|bash installer and PowerShell iex without documented checksum/signature; auto-update installs by default (tui.toml upgrade.auto_install=true) with rollout log."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Single user-level config; no admin layer documented.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/configuration/overrides.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "No managed policy mechanism found."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md: GitHub Security Advisories or code@moonshot.ai; latest release supported.",
+          "source": "https://github.com/MoonshotAI/kimi-code/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "0 repository security advisories for kimi-code and kimi-cli.",
+          "source": "https://api.github.com/repos/MoonshotAI/kimi-code/security-advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "SECURITY.md with private GHSA/email channel (latest release only); no published advisories/CVEs found."
+    }
+  }
+}

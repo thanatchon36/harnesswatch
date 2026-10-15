@@ -1,0 +1,1 @@
+{ "mcp": { "browser": { "type": "local", "command": ["bunx", "browser-mcp"], "enabled": true } } }

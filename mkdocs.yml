@@ -1,0 +1,24 @@
+site_name: harnesswatch
+site_description: Security audit toolkit for AI coding-agent harnesses
+repo_url: https://github.com/thanatchon36/harnesswatch
+theme:
+  name: material
+  features: [navigation.sections, content.code.copy]
+strict: true
+nav:
+  - Home: index.md
+  - Quickstart: quickstart.md
+  - CLI reference: cli.md
+  - Rule reference: reference/rules.md
+  - Harness profiles: reference/profiles.md
+  - Observe (black-box probe): observe.md
+  - Bench methodology: bench.md
+  - Threat taxonomy: taxonomy.md
+  - Security of the tool: security.md
+exclude_docs: |
+  reference/bench-scenarios.md
+markdown_extensions:
+  - admonition
+  - tables
+  - pymdownx.snippets:
+      base_path: docs

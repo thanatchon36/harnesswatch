@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "workspace-tools": {"command": "npx", "args": ["-y", "./packages/mcp-server"]}
+  }
+}

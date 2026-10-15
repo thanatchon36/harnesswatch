@@ -1,0 +1,14 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "anthropic/claude-sonnet-4-5",
+  "permission": {
+    "webfetch": "allow",
+    "bash": "ask"
+  },
+  "mcp": {
+    "context": {
+      "type": "remote",
+      "url": "https://mcp.context.example.com/mcp"
+    }
+  }
+}

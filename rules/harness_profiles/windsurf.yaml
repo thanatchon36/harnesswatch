@@ -1,0 +1,105 @@
+id: windsurf
+name: Windsurf (renamed Devin Desktop on 2026-06-02; Cascade + Devin Local agent)
+vendor: Cognition (acquired Windsurf July 2025)
+tier: B
+license: Proprietary
+open_source: false
+status: docs-only
+version_analysed: "Devin Desktop v3.10.67 (docs changelog; documentation-level only)"
+analysed_on: "2026-10-15"
+homepage: https://docs.devin.ai/desktop        # docs.windsurf.com 307-redirects to docs.devin.ai/desktop
+repo: null
+
+binaries: [devin-desktop, windsurf]    # unverified exact launcher name; legacy `windsurf` launcher
+packages: []
+install_methods:
+  - {method: desktop-installer, command: "download from vendor site", checksum_verified: null, signed: null, source: https://docs.devin.ai/desktop/changelog.md}
+auto_update: {default: true, config: "policy UpdateMode (e.g. manual)", source: https://docs.devin.ai/desktop/enterprise-policies.md}
+
+state_dirs: ["~/.codeium/windsurf", "~/.config/devin", "~/.devin"]
+credential_files: []
+credential_storage: "unverified"
+log_paths: []
+memory_paths: ["~/.codeium/windsurf/memories/", "~/.codeium/windsurf/memories/global_rules.md"]
+
+config_files:
+  - {path: ".devin/rules/*.md", scope: project, format: markdown, kind: rules}          # preferred; frontmatter 'trigger': always_on|model_decision|glob|manual
+  - {path: ".windsurf/rules/*.md", scope: project, format: markdown, kind: rules}       # legacy fallback
+  - {path: ".windsurfrules", scope: project, format: markdown, kind: rules}             # legacy, still read
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: "~/.codeium/windsurf/memories/global_rules.md", scope: user, format: markdown, kind: rules}
+  - {path: "/etc/devin/rules/", scope: managed, format: markdown, kind: rules}
+  - {path: "/Library/Application Support/Devin/rules/", scope: managed, format: markdown, kind: rules}
+  - {path: "C:\\ProgramData\\Devin\\rules\\", scope: managed, format: markdown, kind: rules}
+  - {path: "~/.config/devin/mcp_config.json", scope: user, format: json, kind: mcp}      # per current Cascade MCP doc
+  - {path: "~/.codeium/windsurf/mcp_config.json", scope: user, format: json, kind: mcp}  # legacy path (read-config-from doc: ~/.codeium/<channel>/mcp_config.json); unverified for Desktop 3.x
+  - {path: ".devin/hooks.json", scope: project, format: json, kind: hooks}
+  - {path: ".windsurf/hooks.json", scope: project, format: json, kind: hooks}           # legacy fallback
+  - {path: "~/.codeium/windsurf/hooks.json", scope: user, format: json, kind: hooks}
+  - {path: "/etc/devin/hooks.json", scope: managed, format: json, kind: hooks}
+  - {path: "/Library/Application Support/Devin/hooks.json", scope: managed, format: json, kind: hooks}
+  - {path: "C:\\ProgramData\\Devin\\hooks.json", scope: managed, format: json, kind: hooks}
+  - {path: ".devin/config.json", scope: project, format: json, kind: settings}          # Devin Local agent permissions
+  - {path: "~/.config/devin/config.json", scope: user, format: json, kind: settings}
+  - {path: "/etc/vscode/policy.json", scope: managed, format: json, kind: settings}     # Linux device policy (TelemetryLevel, AllowedExtensions, EnableFeedback, UpdateMode)
+instruction_files: [".devin/rules/*.md", ".windsurf/rules/*.md", ".windsurfrules", "AGENTS.md"]
+skills_paths: []   # unverified for Desktop (CLI: .claude/skills etc.)
+
+mcp:
+  files: ["~/.config/devin/mcp_config.json", "~/.codeium/windsurf/mcp_config.json"]
+  servers_key: "mcpServers"
+  server_fields: {command: command, args: args, env: env, url: url, serverUrl: serverUrl, headers: headers, disabledTools: disabledTools}
+  project_servers_require_approval: null   # no project-level Cascade MCP config documented
+  notes: "${env:VAR} and ${file:/path} interpolation. Admin: allow MCP toggle, allowlist (server ID only | exact config | anchored regex for command/args; once any allowlisted all others blocked), registry URLs. Max 100 tools."
+
+permissions:
+  config_keys:
+    mode: "UI: Devin Settings panel > terminal auto-execution level (Cascade)"
+    allow: "UI allow list (entries ending ' *' = prefix)"
+    deny: "UI deny list"
+    devin_local: "permissions.allow / permissions.deny / permissions.ask in .devin/config.json"
+  default_mode: "unverified (Cascade levels Disabled | Allowlist Only | Auto | Turbo)"
+  auto_approve_values:
+    - {key: "terminal auto-execution level (Cascade)", value: "Turbo"}       # all commands except deny list
+    - {key: "terminal auto-execution level (Cascade)", value: "Auto"}        # model judges safety (premium models only)
+    - {key: "permissions.allow (Devin Local)", value: "Exec(*)"}
+  cli_flags_auto_approve: []
+  allow_rule_syntax: "Cascade list: 'git status' exact | 'npm run *' prefix; Devin Local: Exec(git status), Read(src/**), mcp__server__tool"
+  overbroad_patterns: ["*", "Exec(*)", "mcp__*", "Read(/**)"]
+
+hooks:
+  supported: true
+  config_key: "hooks"
+  repo_scoped_allowed: true      # .devin/hooks.json; docs: not loaded in Restricted Mode
+  command_field: "command"       # also `powershell`, `show_output`, `working_directory`
+  events: [pre_read_code, post_read_code, pre_write_code, post_write_code, pre_run_command, post_run_command, pre_mcp_tool_use, post_mcp_tool_use, pre_user_prompt, post_cascade_response, post_cascade_response_with_transcript, post_setup_worktree]
+
+sandbox: {available: true, default_on: false, mechanism: "Devin Local/CLI only: macOS Seatbelt, Linux bwrap+seccomp; Cascade terminal sandbox not documented", config: "sandbox.* in config.json; admin 'Devin Sandbox' forces it (Enterprise)", source: https://docs.devin.ai/desktop/devin-local.md}
+network: {domain_allowlist: true, config: "sandbox.allowed_domains / denied_domains / network_mode (Devin Local sandbox only); org-wide Sandbox domains", default: "network_mode=full, lists empty", source: https://docs.devin.ai/cli/sandbox.md}
+workspace_trust: {prompt_on_new_folder: true, notes: "VS Code-style Restricted Mode: Cascade, Devin Local and ACP agents disabled, hooks not loaded until trusted. Fixed Restricted Mode bypass via nested settings object (changelog v3.10.31, VS Code CVE-2026-81376).", source: https://docs.devin.ai/desktop/changelog.md}
+memory: {persistent: true, cross_project: false, agent_writable: true, notes: "Cascade memories auto-generated, workspace-scoped, ~/.codeium/windsurf/memories/; Devin Local (default agent for new tabs) does not persist memories.", source: https://docs.devin.ai/desktop/cascade/memories}
+subagents: {supported: true, inherits_permissions: "session approvals cover root agent and subagents (Devin Local)", notes: "profiles agents/<name>.md", source: https://docs.devin.ai/desktop/devin-local.md}
+telemetry: {default_on: true, opt_out: "Device policy TelemetryLevel=all|error|crash|off; EnableFeedback", training_default: "unverified for individual Desktop users", source: https://docs.devin.ai/desktop/enterprise-policies.md}
+headless:
+  command: "devin -p \"<prompt>\"  (Devin CLI; see profile 'devin'); Desktop itself is GUI"
+  flags: []
+  ci_integrations: []
+  model_override: "Devin CLI --model / DEVIN_MODEL; Desktop: UI"
+  local_model_support: "unverified (no BYOK/custom endpoint page found)"
+
+security_policy: {security_md: https://docs.devin.ai/desktop/security/reporting.md, bug_bounty: null, advisories: null}
+extra:
+  rename: "Windsurf -> Devin Desktop announced 2026-06-02; dirs .windsurf -> .devin (legacy still read); ~/.codeium/windsurf paths NOT renamed (memories, global rules, user hooks)."
+  admin_controls: "Maximum autonomy level (No auto-approvals|Allowlist only|Smart|Bypass), team Allowlist/Denylist (denylist wins), MCP allowlist, Cascade Hooks (Enterprise cloud JSON), marketplace URL (v3.10.67), device policies via .admx / .mobileconfig / /etc/vscode/policy.json."
+  security_contact: "security@windsurf.com (PGP), CVD, safe harbor; page last updated 2024-12-10."
+sources:
+  - {url: https://docs.devin.ai/desktop/terminal, accessed: "2026-10-15", note: "auto-execution levels"}
+  - {url: https://docs.devin.ai/desktop/cascade/mcp, accessed: "2026-10-15", note: "MCP"}
+  - {url: https://docs.devin.ai/desktop/cascade/memories, accessed: "2026-10-15", note: "rules/memories"}
+  - {url: https://docs.devin.ai/desktop/cascade/hooks.md, accessed: "2026-10-15", note: "hooks"}
+  - {url: https://docs.devin.ai/desktop/enterprise-policies.md, accessed: "2026-10-15", note: "policies"}
+  - {url: https://docs.devin.ai/desktop/controls.md, accessed: "2026-10-15", note: "admin controls"}
+  - {url: https://docs.devin.ai/desktop/devin-local.md, accessed: "2026-10-15", note: "Devin Local"}
+  - {url: https://docs.devin.ai/desktop/changelog.md, accessed: "2026-10-15", note: "v3.10.67"}
+  - {url: https://docs.devin.ai/desktop/security/reporting.md, accessed: "2026-10-15", note: "reporting"}
+  - {url: https://en.wikipedia.org/wiki/Cognition_AI, accessed: "2026-10-15", note: "rename (secondary)"}

@@ -1,0 +1,260 @@
+{
+ "harness": "cursor",
+ "version": "Cursor 3.23 docs (2026-10-01); CLI 2026.08.11-e8db854 (third-party)",
+ "analysed_on": "2026-10-15",
+ "status": "docs-only",
+ "dimensions": {
+  "D01": {
+   "facts": [
+    {
+     "claim": "IDE run modes: Auto-review (recommended default since 3.6), Allowlist, Run Everything (no sandbox/classifier). 'Ask Every Time' deprecated in 3.5.",
+     "source": "https://cursor.com/docs/agent/security/run-modes",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "CLI: approvalMode in cli-config.json = allowlist|auto-review|unrestricted; permissions.allow/deny tokens Shell()/Read()/Write()/WebFetch()/Mcp(); deny beats allow; print mode needs --force/--yolo to write.",
+     "source": "https://cursor.com/docs/cli/reference/configuration",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Allowlist bypass advisories: CVE-2025-54131, CVE-2026-22708 (env-var shell builtins), CVE-2026-31854.",
+     "source": "https://github.com/cursor/cursor/security/advisories",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Rich modes + classifier + deny precedence, safe-ish default, but repeated allowlist-bypass CVEs and a one-switch Run Everything."
+  },
+  "D02": {
+   "facts": [
+    {
+     "claim": "Sandbox: macOS Seatbelt (>=2.0); Linux Landlock+seccomp with bwrap fallback; Windows/WSL not documented; used for shell in Auto-review and optional Allowlist.",
+     "source": "https://cursor.com/docs/agent/security/run-modes",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Repeated sandbox-escape advisories 2026: CVE-2026-26268, 48124, 50548, 50549, 73217, 73218, 61613.",
+     "source": "https://github.com/cursor/cursor/security/advisories",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "OS-level sandbox on by default in recommended mode but cloud/Windows gaps and a series of escapes in 2026."
+  },
+  "D03": {
+   "facts": [
+    {
+     "claim": "Sandboxed network modes: sandbox.json Only / sandbox.json + Defaults (default, ~100 package domains) / Allow All; CLI WebFetch(domain) tokens.",
+     "source": "https://cursor.com/docs/agent/security/run-modes",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Domain allowlisting exists for sandboxed commands; default allowlist is broad; no egress control outside the sandbox."
+  },
+  "D04": {
+   "facts": [
+    {
+     "claim": "Project hooks require a trusted workspace.",
+     "source": "https://cursor.com/docs/agent/hooks",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Oasis Security: Cursor ships with VS Code Workspace Trust disabled so tasks.json runOn:folderOpen runs without prompt (vendor: users can enable it).",
+     "source": "https://devops.com/oasis-security-identifies-security-weakness-in-cursor-ai-coding-tool/",
+     "label": "third-party-report",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "CVE-2026-48124: workspace .claude/settings.local.json hooks executed without approval (fixed 3.0.0).",
+     "source": "https://github.com/cursor/cursor/security/advisories/GHSA-pc9j-3qc2-95wv",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Trust prompt not on by default per third-party report; hooks gated but repeated pre-consent execution issues."
+  },
+  "D05": {
+   "facts": [
+    {
+     "claim": "Tools prompt by default; docs describe no separate approval for project-level servers.",
+     "source": "https://cursor.com/docs/context/mcp",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Admin MCP allowlist (command/URL patterns, tool allowlists) under Team Settings > MCP Configuration; user denylist.",
+     "source": "https://cursor.com/docs/context/mcp",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "CVE-2025-54136 MCPoison (edited approved MCP definition not re-approved), CVE-2025-54135, CVE-2025-64109/61591 (CLI MCP).",
+     "source": "https://github.com/cursor/cursor/security/advisories",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Central MCP allowlist available to teams; project-server approval and change detection historically flawed."
+  },
+  "D06": {
+   "facts": [
+    {
+     "claim": "Hooks, Team Marketplace and plugins distributed through dashboard; extension allowlisting via MDM.",
+     "source": "https://cursor.com/docs/enterprise",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": null,
+   "rationale": "N/A (Insufficient verified detail on plugin vetting/signing.)"
+  },
+  "D07": {
+   "facts": [
+    {
+     "claim": "CURSOR_API_KEY env for CLI; .cursorignore; sensitive-file protection bypass CVEs (CVE-2025-64107/64108/64110, 59944, 61593).",
+     "source": "https://github.com/cursor/cursor/security/advisories",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": null,
+   "rationale": "N/A (Credential storage location not documented in pages read.)"
+  },
+  "D08": {
+   "facts": [
+    {
+     "claim": "Print mode: -p, --force/--yolo permits writes; permissions.allow/deny still apply; no CI hardening guidance found.",
+     "source": "https://cursor.com/docs/cli/headless",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "CVE-2025-61592: permissive CLI config enabled arbitrary code execution (fixed 2025.09.17).",
+     "source": "https://github.com/cursor/cursor/security/advisories/GHSA-v64q-396f-7m79",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Headless exists with allow/deny but no documented CI safeguards or official Action."
+  },
+  "D09": {
+   "facts": [
+    {
+     "claim": "User Rules and Team Rules; Memories not covered in pages read.",
+     "source": "https://cursor.com/docs/context/rules",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": null,
+   "rationale": "N/A (Memory behaviour unverified.)"
+  },
+  "D10": {
+   "facts": [
+    {
+     "claim": "subagentStart/subagentStop hook events exist; isolation model undocumented in pages read.",
+     "source": "https://cursor.com/docs/agent/hooks",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Cloud Agents run on Cursor machines and never ask for approval.",
+     "source": "https://cursor.com/docs/agent/security/run-modes",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": null,
+   "rationale": "N/A (Unverified.)"
+  },
+  "D11": {
+   "facts": [
+    {
+     "claim": "Enterprise audit logs with SIEM streaming; hooks usable for logging.",
+     "source": "https://cursor.com/docs/enterprise",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Enterprise audit log + hooks; local transcript paths not documented."
+  },
+  "D12": {
+   "facts": [
+    {
+     "claim": "Privacy Mode on: no training, ZDR with providers; off: Cursor may store/train. Default for new users not stated.",
+     "source": "https://cursor.com/data-use",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Privacy Mode enforceable org-wide on Teams/Enterprise.",
+     "source": "https://cursor.com/docs/enterprise",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Strong enforceable control, but default unknown."
+  },
+  "D13": {
+   "facts": [
+    {
+     "claim": "Installer curl|bash from cursor.com; no signature/checksum documentation found.",
+     "source": "https://cursor.com/docs/cli/headless",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Install channel documented; integrity verification undocumented."
+  },
+  "D14": {
+   "facts": [
+    {
+     "claim": "Team settings override local; MDM hooks; Enterprise: enforce sandbox, auto-run/browser/network controls, model restrictions, repo blocklist.",
+     "source": "https://cursor.com/docs/enterprise",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Hooks precedence Enterprise > Team > Project > User.",
+     "source": "https://cursor.com/docs/agent/hooks",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 3,
+   "rationale": "Broad admin-enforced policy incl. sandbox and MDM."
+  },
+  "D15": {
+   "facts": [
+    {
+     "claim": "security-reports@cursor.com, acks within 5 business days; no bug bounty; GitHub Security Advisories with CVEs (29 published).",
+     "source": "https://cursor.com/security",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "github.com/cursor/cursor/security/advisories lists CVE-numbered advisories 2024-09..2026-07.",
+     "source": "https://github.com/cursor/cursor/security/advisories",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 3,
+   "rationale": "Active CVE-issuing advisory channel despite no bounty."
+  }
+ }
+}

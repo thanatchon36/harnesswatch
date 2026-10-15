@@ -1,0 +1,21 @@
+{
+  "general": {
+    "defaultApprovalMode": "auto_edit"
+  },
+  "tools": {
+    "allowed": [
+      "run_shell_command(go test ./...)",
+      "glob"
+    ],
+    "exclude": [
+      "run_shell_command(rm -rf)",
+      "run_shell_command(git push --force)",
+      "read_file(.env)"
+    ]
+  },
+  "telemetry": {
+    "enabled": true,
+    "target": "local",
+    "logPrompts": true
+  }
+}

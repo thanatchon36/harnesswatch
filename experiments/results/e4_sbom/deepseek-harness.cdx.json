@@ -1,0 +1,8764 @@
+{
+ "bomFormat": "CycloneDX",
+ "specVersion": "1.5",
+ "version": 1,
+ "metadata": {
+  "timestamp": "2026-10-15T00:00:00Z",
+  "tools": [
+   {
+    "name": "harnesswatch experiments/e4_supply.py"
+   }
+  ],
+  "component": {
+   "type": "application",
+   "name": "@deepseek-ai/dsh",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh@0.2.1-alpha.3",
+   "bom-ref": "root:deepseek-harness"
+  },
+  "properties": [
+   {
+    "name": "harnesswatch:note",
+    "value": "resolved from lockfile/compile output; not installed"
+   }
+  ]
+ },
+ "components": [
+  {
+   "type": "library",
+   "name": "@agentclientprotocol/sdk",
+   "version": "1.4.0",
+   "purl": "pkg:npm/%40agentclientprotocol/sdk@1.4.0",
+   "bom-ref": "pkg:npm/%40agentclientprotocol/sdk@1.4.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@anthropic-ai/sdk",
+   "version": "0.129.0",
+   "purl": "pkg:npm/%40anthropic-ai/sdk@0.129.0",
+   "bom-ref": "pkg:npm/%40anthropic-ai/sdk@0.129.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/client-bedrock-runtime",
+   "version": "3.1127.0",
+   "purl": "pkg:npm/%40aws-sdk/client-bedrock-runtime@3.1127.0",
+   "bom-ref": "pkg:npm/%40aws-sdk/client-bedrock-runtime@3.1127.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/core",
+   "version": "3.978.3",
+   "purl": "pkg:npm/%40aws-sdk/core@3.978.3",
+   "bom-ref": "pkg:npm/%40aws-sdk/core@3.978.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/credential-provider-env",
+   "version": "3.972.74",
+   "purl": "pkg:npm/%40aws-sdk/credential-provider-env@3.972.74",
+   "bom-ref": "pkg:npm/%40aws-sdk/credential-provider-env@3.972.74",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/credential-provider-http",
+   "version": "3.972.76",
+   "purl": "pkg:npm/%40aws-sdk/credential-provider-http@3.972.76",
+   "bom-ref": "pkg:npm/%40aws-sdk/credential-provider-http@3.972.76",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/credential-provider-ini",
+   "version": "3.973.19",
+   "purl": "pkg:npm/%40aws-sdk/credential-provider-ini@3.973.19",
+   "bom-ref": "pkg:npm/%40aws-sdk/credential-provider-ini@3.973.19",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/credential-provider-login",
+   "version": "3.972.81",
+   "purl": "pkg:npm/%40aws-sdk/credential-provider-login@3.972.81",
+   "bom-ref": "pkg:npm/%40aws-sdk/credential-provider-login@3.972.81",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/credential-provider-node",
+   "version": "3.972.86",
+   "purl": "pkg:npm/%40aws-sdk/credential-provider-node@3.972.86",
+   "bom-ref": "pkg:npm/%40aws-sdk/credential-provider-node@3.972.86",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/credential-provider-process",
+   "version": "3.972.74",
+   "purl": "pkg:npm/%40aws-sdk/credential-provider-process@3.972.74",
+   "bom-ref": "pkg:npm/%40aws-sdk/credential-provider-process@3.972.74",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/credential-provider-sso",
+   "version": "3.973.18",
+   "purl": "pkg:npm/%40aws-sdk/credential-provider-sso@3.973.18",
+   "bom-ref": "pkg:npm/%40aws-sdk/credential-provider-sso@3.973.18",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/token-providers",
+   "version": "3.1150.0",
+   "purl": "pkg:npm/%40aws-sdk/token-providers@3.1150.0",
+   "bom-ref": "pkg:npm/%40aws-sdk/token-providers@3.1150.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/credential-provider-web-identity",
+   "version": "3.972.80",
+   "purl": "pkg:npm/%40aws-sdk/credential-provider-web-identity@3.972.80",
+   "bom-ref": "pkg:npm/%40aws-sdk/credential-provider-web-identity@3.972.80",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/eventstream-handler-node",
+   "version": "3.972.36",
+   "purl": "pkg:npm/%40aws-sdk/eventstream-handler-node@3.972.36",
+   "bom-ref": "pkg:npm/%40aws-sdk/eventstream-handler-node@3.972.36",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/middleware-eventstream",
+   "version": "3.972.31",
+   "purl": "pkg:npm/%40aws-sdk/middleware-eventstream@3.972.31",
+   "bom-ref": "pkg:npm/%40aws-sdk/middleware-eventstream@3.972.31",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/middleware-websocket",
+   "version": "3.972.56",
+   "purl": "pkg:npm/%40aws-sdk/middleware-websocket@3.972.56",
+   "bom-ref": "pkg:npm/%40aws-sdk/middleware-websocket@3.972.56",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/nested-clients",
+   "version": "3.997.48",
+   "purl": "pkg:npm/%40aws-sdk/nested-clients@3.997.48",
+   "bom-ref": "pkg:npm/%40aws-sdk/nested-clients@3.997.48",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/signature-v4-multi-region",
+   "version": "3.996.48",
+   "purl": "pkg:npm/%40aws-sdk/signature-v4-multi-region@3.996.48",
+   "bom-ref": "pkg:npm/%40aws-sdk/signature-v4-multi-region@3.996.48",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/token-providers",
+   "version": "3.1127.0",
+   "purl": "pkg:npm/%40aws-sdk/token-providers@3.1127.0",
+   "bom-ref": "pkg:npm/%40aws-sdk/token-providers@3.1127.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/types",
+   "version": "3.974.6",
+   "purl": "pkg:npm/%40aws-sdk/types@3.974.6",
+   "bom-ref": "pkg:npm/%40aws-sdk/types@3.974.6",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws-sdk/xml-builder",
+   "version": "3.972.41",
+   "purl": "pkg:npm/%40aws-sdk/xml-builder@3.972.41",
+   "bom-ref": "pkg:npm/%40aws-sdk/xml-builder@3.972.41",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@aws/lambda-invoke-store",
+   "version": "0.3.0",
+   "purl": "pkg:npm/%40aws/lambda-invoke-store@0.3.0",
+   "bom-ref": "pkg:npm/%40aws/lambda-invoke-store@0.3.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@babel/code-frame",
+   "version": "7.29.7",
+   "purl": "pkg:npm/%40babel/code-frame@7.29.7",
+   "bom-ref": "pkg:npm/%40babel/code-frame@7.29.7",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@babel/helper-validator-identifier",
+   "version": "7.29.7",
+   "purl": "pkg:npm/%40babel/helper-validator-identifier@7.29.7",
+   "bom-ref": "pkg:npm/%40babel/helper-validator-identifier@7.29.7",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@babel/runtime",
+   "version": "7.29.10",
+   "purl": "pkg:npm/%40babel/runtime@7.29.10",
+   "bom-ref": "pkg:npm/%40babel/runtime@7.29.10",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/cordis",
+   "version": "4.0.5-alpha.2",
+   "purl": "pkg:npm/%40deepseek-ai/cordis@4.0.5-alpha.2",
+   "bom-ref": "pkg:npm/%40deepseek-ai/cordis@4.0.5-alpha.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/cordis-plugin-group",
+   "version": "1.0.5-alpha.2",
+   "purl": "pkg:npm/%40deepseek-ai/cordis-plugin-group@1.0.5-alpha.2",
+   "bom-ref": "pkg:npm/%40deepseek-ai/cordis-plugin-group@1.0.5-alpha.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/cordis-plugin-include",
+   "version": "1.0.10-alpha.2",
+   "purl": "pkg:npm/%40deepseek-ai/cordis-plugin-include@1.0.10-alpha.2",
+   "bom-ref": "pkg:npm/%40deepseek-ai/cordis-plugin-include@1.0.10-alpha.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/cordis-plugin-loader",
+   "version": "1.0.6-alpha.2",
+   "purl": "pkg:npm/%40deepseek-ai/cordis-plugin-loader@1.0.6-alpha.2",
+   "bom-ref": "pkg:npm/%40deepseek-ai/cordis-plugin-loader@1.0.6-alpha.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/cordis-plugin-timer",
+   "version": "1.1.7-alpha.2",
+   "purl": "pkg:npm/%40deepseek-ai/cordis-plugin-timer@1.1.7-alpha.2",
+   "bom-ref": "pkg:npm/%40deepseek-ai/cordis-plugin-timer@1.1.7-alpha.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/cosmokit",
+   "version": "1.8.6-alpha.2",
+   "purl": "pkg:npm/%40deepseek-ai/cosmokit@1.8.6-alpha.2",
+   "bom-ref": "pkg:npm/%40deepseek-ai/cosmokit@1.8.6-alpha.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-acp",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-acp@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-acp@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-acp-app",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-acp-app@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-acp-app@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-agent",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-agent@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-agent@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-agent-default-model",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-agent-default-model@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-agent-default-model@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-agent-instructions",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-agent-instructions@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-agent-instructions@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-agent-loop",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-agent-loop@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-agent-loop@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "zod",
+   "version": "4.4.3",
+   "purl": "pkg:npm/zod@4.4.3",
+   "bom-ref": "pkg:npm/zod@4.4.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-agent-preset",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-agent-preset@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-agent-preset@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-agent-preset-registry",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-agent-preset-registry@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-agent-preset-registry@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-agent-tool-presentation",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-agent-tool-presentation@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-agent-tool-presentation@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-anonymous-user-id",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-anonymous-user-id@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-anonymous-user-id@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-api-account-controller",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-api-account-controller@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-api-account-controller@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-api-gateway",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-api-gateway@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-api-gateway@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-api-job-controller",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-api-job-controller@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-api-job-controller@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-api-remote-access",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-api-remote-access@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-api-remote-access@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-api-remotes",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-api-remotes@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-api-remotes@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-api-session-controller",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-api-session-controller@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-api-session-controller@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-api-settings-controller",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-api-settings-controller@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-api-settings-controller@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-api-terminal-controller",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-api-terminal-controller@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-api-terminal-controller@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-api-workspace-controller",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-api-workspace-controller@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-api-workspace-controller@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-api-workspace-files",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-api-workspace-files@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-api-workspace-files@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-app-boot",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-app-boot@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-app-boot@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-atomic-write",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-atomic-write@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-atomic-write@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-attachment",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-attachment@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-attachment@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-attachment-local",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-attachment-local@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-attachment-local@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-authorization",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-authorization@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-authorization@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-base",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-base@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-base@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-bash-local",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-bash-local@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-bash-local@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-bash-sandbox",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-bash-sandbox@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-bash-sandbox@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-brand",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-brand@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-brand@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-chunked-list",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-chunked-list@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-chunked-list@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-connection",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-connection@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-connection@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-file-upload",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-file-upload@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-file-upload@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-hmr",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-hmr@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-hmr@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-locale",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-locale@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-locale@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-modules",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-modules@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-modules@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-product-analytics",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-product-analytics@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-product-analytics@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-resources",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-resources@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-resources@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-shortcuts",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-shortcuts@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-shortcuts@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-store",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-store@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-store@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-agent-preset",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-agent-preset@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-agent-preset@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-approval",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-approval@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-approval@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-attachment",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-attachment@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-attachment@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-brand-official",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-brand-official@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-brand-official@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-chat",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-chat@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-chat@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-commands",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-commands@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-commands@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-conversation",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-conversation@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-conversation@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-cordis",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-cordis@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-cordis@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-deliverables",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-deliverables@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-deliverables@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-directory-picker-browse",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-directory-picker-browse@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-directory-picker-browse@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-directory-picker-native",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-directory-picker-native@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-directory-picker-native@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-goal",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-goal@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-goal@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-input-trigger",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-input-trigger@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-input-trigger@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-jobs",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-jobs@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-jobs@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-layout",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-layout@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-layout@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-message-feedback",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-message-feedback@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-message-feedback@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-model-selection",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-model-selection@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-model-selection@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-open-in-app",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-open-in-app@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-open-in-app@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-permission-presets",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-permission-presets@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-permission-presets@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-plan",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-plan@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-plan@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-plugin-manager",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-plugin-manager@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-plugin-manager@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-primitives",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-primitives@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-primitives@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-reference",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-reference@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-reference@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-renderer",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-renderer@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-renderer@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-schedule",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-schedule@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-schedule@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-secret-mask",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-secret-mask@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-secret-mask@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-session",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-session@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-session@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-settings",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-settings-account",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-account@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-account@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-settings-agent-loop",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-agent-loop@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-agent-loop@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-settings-general",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-general@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-general@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-settings-models",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-models@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-models@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-settings-plugin-inventory",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-plugin-inventory@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-plugin-inventory@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-settings-plugins",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-plugins@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-plugins@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-settings-session-log",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-session-log@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-session-log@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-settings-shell",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-shell@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-shell@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-settings-subagent",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-subagent@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-subagent@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-settings-web-search",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-web-search@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-settings-web-search@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-shortcuts",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-shortcuts@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-shortcuts@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-sidebar",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-sidebar@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-sidebar@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-sidebar-browser",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-sidebar-browser@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-sidebar-browser@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-sidebar-documentpreview",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-sidebar-documentpreview@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-sidebar-documentpreview@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-sidebar-files",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-sidebar-files@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-sidebar-files@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-sidebar-right",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-sidebar-right@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-sidebar-right@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-sidebar-terminal",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-sidebar-terminal@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-sidebar-terminal@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-skill",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-skill@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-skill@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-slots",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-slots@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-slots@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-subagent",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-subagent@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-subagent@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-theme",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-theme@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-theme@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-tool",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-tool@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-tool@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-trajectory",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-trajectory@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-trajectory@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-user-questions",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-user-questions@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-user-questions@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-workflow-run",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-workflow-run@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-workflow-run@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-client-ui-workspace",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-client-ui-workspace@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-client-ui-workspace@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-cmdline",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-cmdline@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-cmdline@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-command-compact",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-command-compact@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-command-compact@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-command-feedback",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-command-feedback@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-command-feedback@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-command-goal",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-command-goal@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-command-goal@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-commands",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-commands@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-commands@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-compaction",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-compaction@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-compaction@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-compaction-basic",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-compaction-basic@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-compaction-basic@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-compaction-image-offload",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-compaction-image-offload@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-compaction-image-offload@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-compaction-tool-result-pruner",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-compaction-tool-result-pruner@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-compaction-tool-result-pruner@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-config-editor",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-config-editor@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-config-editor@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-cordis-client-runner",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-cordis-client-runner@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-cordis-client-runner@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-cordis-host-runner",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-cordis-host-runner@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-cordis-host-runner@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-credentials",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-credentials@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-credentials@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-credentials-local",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-credentials-local@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-credentials-local@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-deepseek-account",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-deepseek-account@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-deepseek-account@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-deepseek-account-platform",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-deepseek-account-platform@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-deepseek-account-platform@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-deepseek-llm-api-extensions",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-deepseek-llm-api-extensions@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-deepseek-llm-api-extensions@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-deque",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-deque@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-deque@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-agent-team",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-agent-team@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-agent-team@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-agent-team-profile",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-agent-team-profile@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-agent-team-profile@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-api-speech-to-text",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-api-speech-to-text@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-api-speech-to-text@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-auto-review",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-auto-review@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-auto-review@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-badge-skill-bundle",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-badge-skill-bundle@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-badge-skill-bundle@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-client-ui-agent-team",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-client-ui-agent-team@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-client-ui-agent-team@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-client-ui-cot-translation",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-client-ui-cot-translation@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-client-ui-cot-translation@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-client-ui-voice-input",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-client-ui-voice-input@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-client-ui-voice-input@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-cot-translation-bundle",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-cot-translation-bundle@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-cot-translation-bundle@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-inspector",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-inspector@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-inspector@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-inspector-profile",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-inspector-profile@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-inspector-profile@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-ralph-bundle",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-ralph-bundle@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-ralph-bundle@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-session-inspector",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-session-inspector@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-session-inspector@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-session-search",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-session-search@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-session-search@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-session-titles-bundle",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-session-titles-bundle@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-session-titles-bundle@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-speech-to-text",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-speech-to-text@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-speech-to-text@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-speech-to-text-sensevoice",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-speech-to-text-sensevoice@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-speech-to-text-sensevoice@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-terminal-bundle",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-terminal-bundle@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-terminal-bundle@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-tool-agent-team",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-tool-agent-team@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-tool-agent-team@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-tool-worktree",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-tool-worktree@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-tool-worktree@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-translator",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-translator@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-translator@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-voice-input-bundle",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-voice-input-bundle@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-voice-input-bundle@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-experimental-worktree",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-experimental-worktree@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-experimental-worktree@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-file-reference",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-file-reference@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-file-reference@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-file-reference-local",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-file-reference-local@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-file-reference-local@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-fs",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-fs@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-fs@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-fs-local",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-fs-local@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-fs-local@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-fs-observation-policy",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-fs-observation-policy@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-fs-observation-policy@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-fs-sandbox",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-fs-sandbox@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-fs-sandbox@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-goal",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-goal@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-goal@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-goal-round-driver",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-goal-round-driver@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-goal-round-driver@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-harness-dev-context",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-harness-dev-context@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-harness-dev-context@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-headless",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-headless@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-headless@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-hmr",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-hmr@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-hmr@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-home-paths",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-home-paths@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-home-paths@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-host-directory-picker",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-host-directory-picker@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-host-directory-picker@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-host-directory-picker-auto",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-host-directory-picker-auto@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-host-directory-picker-auto@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-host-directory-picker-browse",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-host-directory-picker-browse@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-host-directory-picker-browse@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-host-directory-picker-native",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-host-directory-picker-native@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-host-directory-picker-native@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-host-frontend-static",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-host-frontend-static@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-host-frontend-static@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-host-open-in-app",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-host-open-in-app@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-host-open-in-app@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-host-plugin-inventory",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-host-plugin-inventory@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-host-plugin-inventory@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-host-product-telemetry-otel",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-host-product-telemetry-otel@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-host-product-telemetry-otel@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-host-webserver",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-host-webserver@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-host-webserver@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-http-proxy",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-http-proxy@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-http-proxy@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-jobs",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-jobs@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-jobs@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-jobs-local",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-jobs-local@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-jobs-local@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-launch-environment",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-launch-environment@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-launch-environment@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-lazy-require",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-lazy-require@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-lazy-require@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-llm",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-llm@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-llm@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-llm-deepseek",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-llm-deepseek@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-llm-deepseek@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-llm-deepseek-account",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-llm-deepseek-account@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-llm-deepseek-account@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-llm-deepseek-api-key",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-llm-deepseek-api-key@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-llm-deepseek-api-key@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-llm-pi-ai",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-llm-pi-ai@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-llm-pi-ai@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-llm-retry",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-llm-retry@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-llm-retry@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-mcp-client",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-mcp-client@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-mcp-client@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-mcp-resources",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-mcp-resources@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-mcp-resources@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-message-feedback",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-message-feedback@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-message-feedback@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-native-command",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-native-command@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-native-command@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-office-to-pdf",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-office-to-pdf@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-office-to-pdf@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-otel",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-otel@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-otel@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-output-retention",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-output-retention@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-output-retention@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-package-manifest",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-package-manifest@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-package-manifest@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-permission-presets",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-permission-presets@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-permission-presets@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-persona",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-persona@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-persona@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-plan-mode",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-plan-mode@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-plan-mode@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-plugin-manager",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-plugin-manager@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-plugin-manager@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-plugin-package-inventory-deepseek",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-plugin-package-inventory-deepseek@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-plugin-package-inventory-deepseek@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-ptc-runtime",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-ptc-runtime@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-ptc-runtime@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-ptc-runtime-node",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-ptc-runtime-node@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-ptc-runtime-node@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-pwsh-local",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-pwsh-local@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-pwsh-local@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-pwsh-sandbox",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-pwsh-sandbox@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-pwsh-sandbox@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-repeat-tool-reminder",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-repeat-tool-reminder@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-repeat-tool-reminder@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-sandbox",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-sandbox@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-sandbox@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-sandbox-local",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-sandbox-local@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-sandbox-local@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-sandbox-policy",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-sandbox-policy@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-sandbox-policy@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-sandbox-windows-acl",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-sandbox-windows-acl@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-sandbox-windows-acl@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-schedule",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-schedule@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-schedule@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-scope",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-scope@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-scope@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-sdk-app",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-sdk-app@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-sdk-app@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-sdk-jsonrpc-server",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-sdk-jsonrpc-server@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-sdk-jsonrpc-server@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-sdk-minimal",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-sdk-minimal@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-sdk-minimal@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-sdk-protocol",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-sdk-protocol@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-sdk-protocol@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-checkpoint-policy",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-checkpoint-policy@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-checkpoint-policy@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-format",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-format@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-format@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-format-catalog",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-format-catalog@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-format-catalog@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-format-v0-to-v1",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-format-v0-to-v1@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-format-v0-to-v1@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-format-v1-to-v2",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-format-v1-to-v2@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-format-v1-to-v2@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-format-v2-to-v3",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-format-v2-to-v3@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-format-v2-to-v3@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-format-v3-to-v4",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-format-v3-to-v4@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-format-v3-to-v4@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-log-deepseek",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-log-deepseek@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-log-deepseek@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-log-export",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-log-export@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-log-export@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-persistence",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-persistence@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-persistence@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-persistence-jsonl",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-persistence-jsonl@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-persistence-jsonl@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-projection",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-projection@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-projection@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-projection-cache",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-projection-cache@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-projection-cache@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-query",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-query@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-query@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-query-sqlite",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-query-sqlite@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-query-sqlite@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-reference",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-reference@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-reference@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-stats",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-stats@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-stats@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-telemetry",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-telemetry@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-telemetry@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-telemetry-otel",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-telemetry-otel@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-telemetry-otel@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-title",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-title@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-title@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-title-all-prompts-llm",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-title-all-prompts-llm@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-title-all-prompts-llm@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-title-first-prompt-llm",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-title-first-prompt-llm@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-title-first-prompt-llm@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-title-llm",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-title-llm@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-title-llm@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-session-turn-outline",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-session-turn-outline@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-session-turn-outline@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-settings",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-settings@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-settings@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-shell",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-shell@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-shell@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-shell-env",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-shell-env@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-shell-env@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-skill",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-skill@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-skill@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-skill-badge",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-skill-badge@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-skill-badge@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-skill-filesystem",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-skill-filesystem@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-skill-filesystem@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-skill-office",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-skill-office@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-skill-office@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-spill",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-spill@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-spill@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-spill-local",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-spill-local@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-spill-local@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-spill-policy",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-spill-policy@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-spill-policy@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-storage",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-storage@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-storage@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-storage-domain",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-storage-domain@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-storage-domain@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-storage-json",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-storage-json@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-storage-json@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-subagent",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-subagent@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-subagent@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-subagent-fork-in-process",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-subagent-fork-in-process@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-subagent-fork-in-process@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-subagent-spawn-in-process",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-subagent-spawn-in-process@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-subagent-spawn-in-process@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-subprocess",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-subprocess@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-subprocess@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-subprocess-local",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-subprocess-local@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-subprocess-local@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-system-prompt",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-system-prompt@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-system-prompt@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-terminal",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-terminal@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-terminal@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-terminal-bash",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-terminal-bash@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-terminal-bash@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-time-context",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-time-context@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-time-context@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-timeout",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-timeout@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-timeout@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tmux-context",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tmux-context@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tmux-context@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-token-meter",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-token-meter@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-token-meter@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-ask-user",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-ask-user@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-ask-user@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-bash",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-bash@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-bash@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-bash-persistent",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-bash-persistent@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-bash-persistent@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-call-timeout-policy",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-call-timeout-policy@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-call-timeout-policy@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-cordis",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-cordis@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-cordis@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-fs",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-fs@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-fs@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-fs-search",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-fs-search@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-fs-search@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-goal",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-goal@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-goal@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-jobs",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-jobs@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-jobs@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-present",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-present@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-present@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-pwsh",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-pwsh@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-pwsh@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-pwsh-persistent",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-pwsh-persistent@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-pwsh-persistent@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-ralph",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-ralph@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-ralph@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-schedule",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-schedule@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-schedule@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-session-query",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-session-query@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-session-query@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-skill",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-skill@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-skill@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-str-replace-editor",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-str-replace-editor@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-str-replace-editor@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-subagent",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-subagent@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-subagent@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-subagent-control",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-subagent-control@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-subagent-control@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-terminal",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-terminal@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-terminal@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-todo",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-todo@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-todo@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-web",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-web@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-web@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-workflow",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-workflow@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-workflow@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-working-directory",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-working-directory@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-working-directory@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tool-workspace-dependencies",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tool-workspace-dependencies@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tool-workspace-dependencies@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-tools",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-tools@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-tools@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-typert-loader",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-typert-loader@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-typert-loader@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-typert-protocol",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-typert-protocol@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-typert-protocol@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-typert-registry",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-typert-registry@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-typert-registry@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-user-approval",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-user-approval@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-user-approval@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-user-questions",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-user-questions@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-user-questions@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-util-code-language",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-util-code-language@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-util-code-language@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-util-crypto",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-util-crypto@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-util-crypto@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-util-time",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-util-time@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-util-time@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-util-values",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-util-values@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-util-values@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-util-workspace-path",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-util-workspace-path@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-util-workspace-path@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-web",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-web@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-web@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-web-app",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-web-app@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-web-app@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-web-fetch-http",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-web-fetch-http@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-web-fetch-http@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-web-frontend",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-web-frontend@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-web-frontend@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-web-search-deepseek",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-web-search-deepseek@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-web-search-deepseek@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-win32-process",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-win32-process@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-win32-process@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-workflow",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-workflow@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-workflow@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-workflow-ptc",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-workflow-ptc@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-workflow-ptc@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-working-directory",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-working-directory@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-working-directory@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-workspace",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-workspace@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-workspace@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/dsh-workspace-changes",
+   "version": "0.2.1-alpha.3",
+   "purl": "pkg:npm/%40deepseek-ai/dsh-workspace-changes@0.2.1-alpha.3",
+   "bom-ref": "pkg:npm/%40deepseek-ai/dsh-workspace-changes@0.2.1-alpha.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/libreoffice-kit",
+   "version": "0.1.5",
+   "purl": "pkg:npm/%40deepseek-ai/libreoffice-kit@0.1.5",
+   "bom-ref": "pkg:npm/%40deepseek-ai/libreoffice-kit@0.1.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "MPL-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/libreoffice-kit-darwin-arm64",
+   "version": "0.1.5",
+   "purl": "pkg:npm/%40deepseek-ai/libreoffice-kit-darwin-arm64@0.1.5",
+   "bom-ref": "pkg:npm/%40deepseek-ai/libreoffice-kit-darwin-arm64@0.1.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "MPL-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/libreoffice-kit-darwin-x64",
+   "version": "0.1.5",
+   "purl": "pkg:npm/%40deepseek-ai/libreoffice-kit-darwin-x64@0.1.5",
+   "bom-ref": "pkg:npm/%40deepseek-ai/libreoffice-kit-darwin-x64@0.1.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "MPL-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/libreoffice-kit-wasm",
+   "version": "0.1.5",
+   "purl": "pkg:npm/%40deepseek-ai/libreoffice-kit-wasm@0.1.5",
+   "bom-ref": "pkg:npm/%40deepseek-ai/libreoffice-kit-wasm@0.1.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "MPL-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/libreoffice-kit-win32-arm64",
+   "version": "0.1.5",
+   "purl": "pkg:npm/%40deepseek-ai/libreoffice-kit-win32-arm64@0.1.5",
+   "bom-ref": "pkg:npm/%40deepseek-ai/libreoffice-kit-win32-arm64@0.1.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "MPL-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/libreoffice-kit-win32-x64",
+   "version": "0.1.5",
+   "purl": "pkg:npm/%40deepseek-ai/libreoffice-kit-win32-x64@0.1.5",
+   "bom-ref": "pkg:npm/%40deepseek-ai/libreoffice-kit-win32-x64@0.1.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "MPL-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "fflate",
+   "version": "0.8.2",
+   "purl": "pkg:npm/fflate@0.8.2",
+   "bom-ref": "pkg:npm/fflate@0.8.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/node-addon-system",
+   "version": "0.1.2",
+   "purl": "pkg:npm/%40deepseek-ai/node-addon-system@0.1.2",
+   "bom-ref": "pkg:npm/%40deepseek-ai/node-addon-system@0.1.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/node-addon-system-darwin-arm64",
+   "version": "0.1.2",
+   "purl": "pkg:npm/%40deepseek-ai/node-addon-system-darwin-arm64@0.1.2",
+   "bom-ref": "pkg:npm/%40deepseek-ai/node-addon-system-darwin-arm64@0.1.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/node-addon-system-darwin-x64",
+   "version": "0.1.2",
+   "purl": "pkg:npm/%40deepseek-ai/node-addon-system-darwin-x64@0.1.2",
+   "bom-ref": "pkg:npm/%40deepseek-ai/node-addon-system-darwin-x64@0.1.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/node-addon-system-linux-arm64",
+   "version": "0.1.2",
+   "purl": "pkg:npm/%40deepseek-ai/node-addon-system-linux-arm64@0.1.2",
+   "bom-ref": "pkg:npm/%40deepseek-ai/node-addon-system-linux-arm64@0.1.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/node-addon-system-linux-x64",
+   "version": "0.1.2",
+   "purl": "pkg:npm/%40deepseek-ai/node-addon-system-linux-x64@0.1.2",
+   "bom-ref": "pkg:npm/%40deepseek-ai/node-addon-system-linux-x64@0.1.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@deepseek-ai/schemastery",
+   "version": "3.18.5-alpha.2",
+   "purl": "pkg:npm/%40deepseek-ai/schemastery@3.18.5-alpha.2",
+   "bom-ref": "pkg:npm/%40deepseek-ai/schemastery@3.18.5-alpha.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@earendil-works/pi-ai",
+   "version": "1.2.0",
+   "purl": "pkg:npm/%40earendil-works/pi-ai@1.2.0",
+   "bom-ref": "pkg:npm/%40earendil-works/pi-ai@1.2.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@earendil-works/pi-telemetry",
+   "version": "1.2.0",
+   "purl": "pkg:npm/%40earendil-works/pi-telemetry@1.2.0",
+   "bom-ref": "pkg:npm/%40earendil-works/pi-telemetry@1.2.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@emnapi/runtime",
+   "version": "1.11.3",
+   "purl": "pkg:npm/%40emnapi/runtime@1.11.3",
+   "bom-ref": "pkg:npm/%40emnapi/runtime@1.11.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@eslint-community/regexpp",
+   "version": "4.12.2",
+   "purl": "pkg:npm/%40eslint-community/regexpp@4.12.2",
+   "bom-ref": "pkg:npm/%40eslint-community/regexpp@4.12.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@google/genai",
+   "version": "2.21.0",
+   "purl": "pkg:npm/%40google/genai@2.21.0",
+   "bom-ref": "pkg:npm/%40google/genai@2.21.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/colour",
+   "version": "1.1.0",
+   "purl": "pkg:npm/%40img/colour@1.1.0",
+   "bom-ref": "pkg:npm/%40img/colour@1.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-darwin-arm64",
+   "version": "0.35.5",
+   "purl": "pkg:npm/%40img/sharp-darwin-arm64@0.35.5",
+   "bom-ref": "pkg:npm/%40img/sharp-darwin-arm64@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-darwin-x64",
+   "version": "0.35.5",
+   "purl": "pkg:npm/%40img/sharp-darwin-x64@0.35.5",
+   "bom-ref": "pkg:npm/%40img/sharp-darwin-x64@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-freebsd-wasm32",
+   "version": "0.35.5",
+   "purl": "pkg:npm/%40img/sharp-freebsd-wasm32@0.35.5",
+   "bom-ref": "pkg:npm/%40img/sharp-freebsd-wasm32@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-libvips-darwin-arm64",
+   "version": "1.3.4",
+   "purl": "pkg:npm/%40img/sharp-libvips-darwin-arm64@1.3.4",
+   "bom-ref": "pkg:npm/%40img/sharp-libvips-darwin-arm64@1.3.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "LGPL-3.0-or-later"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-libvips-darwin-x64",
+   "version": "1.3.4",
+   "purl": "pkg:npm/%40img/sharp-libvips-darwin-x64@1.3.4",
+   "bom-ref": "pkg:npm/%40img/sharp-libvips-darwin-x64@1.3.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "LGPL-3.0-or-later"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-libvips-linux-arm",
+   "version": "1.3.4",
+   "purl": "pkg:npm/%40img/sharp-libvips-linux-arm@1.3.4",
+   "bom-ref": "pkg:npm/%40img/sharp-libvips-linux-arm@1.3.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "LGPL-3.0-or-later"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-libvips-linux-arm64",
+   "version": "1.3.4",
+   "purl": "pkg:npm/%40img/sharp-libvips-linux-arm64@1.3.4",
+   "bom-ref": "pkg:npm/%40img/sharp-libvips-linux-arm64@1.3.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "LGPL-3.0-or-later"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-libvips-linux-ppc64",
+   "version": "1.3.4",
+   "purl": "pkg:npm/%40img/sharp-libvips-linux-ppc64@1.3.4",
+   "bom-ref": "pkg:npm/%40img/sharp-libvips-linux-ppc64@1.3.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "LGPL-3.0-or-later"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-libvips-linux-riscv64",
+   "version": "1.3.4",
+   "purl": "pkg:npm/%40img/sharp-libvips-linux-riscv64@1.3.4",
+   "bom-ref": "pkg:npm/%40img/sharp-libvips-linux-riscv64@1.3.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "LGPL-3.0-or-later"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-libvips-linux-s390x",
+   "version": "1.3.4",
+   "purl": "pkg:npm/%40img/sharp-libvips-linux-s390x@1.3.4",
+   "bom-ref": "pkg:npm/%40img/sharp-libvips-linux-s390x@1.3.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "LGPL-3.0-or-later"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-libvips-linux-x64",
+   "version": "1.3.4",
+   "purl": "pkg:npm/%40img/sharp-libvips-linux-x64@1.3.4",
+   "bom-ref": "pkg:npm/%40img/sharp-libvips-linux-x64@1.3.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "LGPL-3.0-or-later"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-libvips-linuxmusl-arm64",
+   "version": "1.3.4",
+   "purl": "pkg:npm/%40img/sharp-libvips-linuxmusl-arm64@1.3.4",
+   "bom-ref": "pkg:npm/%40img/sharp-libvips-linuxmusl-arm64@1.3.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "LGPL-3.0-or-later"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-libvips-linuxmusl-x64",
+   "version": "1.3.4",
+   "purl": "pkg:npm/%40img/sharp-libvips-linuxmusl-x64@1.3.4",
+   "bom-ref": "pkg:npm/%40img/sharp-libvips-linuxmusl-x64@1.3.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "LGPL-3.0-or-later"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-linux-arm",
+   "version": "0.35.5",
+   "purl": "pkg:npm/%40img/sharp-linux-arm@0.35.5",
+   "bom-ref": "pkg:npm/%40img/sharp-linux-arm@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-linux-arm64",
+   "version": "0.35.5",
+   "purl": "pkg:npm/%40img/sharp-linux-arm64@0.35.5",
+   "bom-ref": "pkg:npm/%40img/sharp-linux-arm64@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-linux-ppc64",
+   "version": "0.35.5",
+   "purl": "pkg:npm/%40img/sharp-linux-ppc64@0.35.5",
+   "bom-ref": "pkg:npm/%40img/sharp-linux-ppc64@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-linux-riscv64",
+   "version": "0.35.5",
+   "purl": "pkg:npm/%40img/sharp-linux-riscv64@0.35.5",
+   "bom-ref": "pkg:npm/%40img/sharp-linux-riscv64@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-linux-s390x",
+   "version": "0.35.5",
+   "purl": "pkg:npm/%40img/sharp-linux-s390x@0.35.5",
+   "bom-ref": "pkg:npm/%40img/sharp-linux-s390x@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-linux-x64",
+   "version": "0.35.5",
+   "purl": "pkg:npm/%40img/sharp-linux-x64@0.35.5",
+   "bom-ref": "pkg:npm/%40img/sharp-linux-x64@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-linuxmusl-arm64",
+   "version": "0.35.5",
+   "purl": "pkg:npm/%40img/sharp-linuxmusl-arm64@0.35.5",
+   "bom-ref": "pkg:npm/%40img/sharp-linuxmusl-arm64@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-linuxmusl-x64",
+   "version": "0.35.5",
+   "purl": "pkg:npm/%40img/sharp-linuxmusl-x64@0.35.5",
+   "bom-ref": "pkg:npm/%40img/sharp-linuxmusl-x64@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-wasm32",
+   "version": "0.35.5",
+   "purl": "pkg:npm/%40img/sharp-wasm32@0.35.5",
+   "bom-ref": "pkg:npm/%40img/sharp-wasm32@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0 AND LGPL-3.0-or-later AND MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-webcontainers-wasm32",
+   "version": "0.35.5",
+   "purl": "pkg:npm/%40img/sharp-webcontainers-wasm32@0.35.5",
+   "bom-ref": "pkg:npm/%40img/sharp-webcontainers-wasm32@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-win32-arm64",
+   "version": "0.35.5",
+   "purl": "pkg:npm/%40img/sharp-win32-arm64@0.35.5",
+   "bom-ref": "pkg:npm/%40img/sharp-win32-arm64@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0 AND LGPL-3.0-or-later"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-win32-ia32",
+   "version": "0.35.5",
+   "purl": "pkg:npm/%40img/sharp-win32-ia32@0.35.5",
+   "bom-ref": "pkg:npm/%40img/sharp-win32-ia32@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0 AND LGPL-3.0-or-later"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@img/sharp-win32-x64",
+   "version": "0.35.5",
+   "purl": "pkg:npm/%40img/sharp-win32-x64@0.35.5",
+   "bom-ref": "pkg:npm/%40img/sharp-win32-x64@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0 AND LGPL-3.0-or-later"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@joplin/turndown-plugin-gfm",
+   "version": "1.0.68",
+   "purl": "pkg:npm/%40joplin/turndown-plugin-gfm@1.0.68",
+   "bom-ref": "pkg:npm/%40joplin/turndown-plugin-gfm@1.0.68",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@js-temporal/polyfill",
+   "version": "0.5.1",
+   "purl": "pkg:npm/%40js-temporal/polyfill@0.5.1",
+   "bom-ref": "pkg:npm/%40js-temporal/polyfill@0.5.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "ISC"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@keyv/serialize",
+   "version": "1.1.1",
+   "purl": "pkg:npm/%40keyv/serialize@1.1.1",
+   "bom-ref": "pkg:npm/%40keyv/serialize@1.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@koromix/koffi-darwin-arm64",
+   "version": "3.1.1",
+   "purl": "pkg:npm/%40koromix/koffi-darwin-arm64@3.1.1",
+   "bom-ref": "pkg:npm/%40koromix/koffi-darwin-arm64@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@koromix/koffi-darwin-x64",
+   "version": "3.1.1",
+   "purl": "pkg:npm/%40koromix/koffi-darwin-x64@3.1.1",
+   "bom-ref": "pkg:npm/%40koromix/koffi-darwin-x64@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@koromix/koffi-freebsd-arm64",
+   "version": "3.1.1",
+   "purl": "pkg:npm/%40koromix/koffi-freebsd-arm64@3.1.1",
+   "bom-ref": "pkg:npm/%40koromix/koffi-freebsd-arm64@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@koromix/koffi-freebsd-ia32",
+   "version": "3.1.1",
+   "purl": "pkg:npm/%40koromix/koffi-freebsd-ia32@3.1.1",
+   "bom-ref": "pkg:npm/%40koromix/koffi-freebsd-ia32@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@koromix/koffi-freebsd-x64",
+   "version": "3.1.1",
+   "purl": "pkg:npm/%40koromix/koffi-freebsd-x64@3.1.1",
+   "bom-ref": "pkg:npm/%40koromix/koffi-freebsd-x64@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@koromix/koffi-linux-arm64",
+   "version": "3.1.1",
+   "purl": "pkg:npm/%40koromix/koffi-linux-arm64@3.1.1",
+   "bom-ref": "pkg:npm/%40koromix/koffi-linux-arm64@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@koromix/koffi-linux-ia32",
+   "version": "3.1.1",
+   "purl": "pkg:npm/%40koromix/koffi-linux-ia32@3.1.1",
+   "bom-ref": "pkg:npm/%40koromix/koffi-linux-ia32@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@koromix/koffi-linux-loong64",
+   "version": "3.1.1",
+   "purl": "pkg:npm/%40koromix/koffi-linux-loong64@3.1.1",
+   "bom-ref": "pkg:npm/%40koromix/koffi-linux-loong64@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@koromix/koffi-linux-riscv64",
+   "version": "3.1.1",
+   "purl": "pkg:npm/%40koromix/koffi-linux-riscv64@3.1.1",
+   "bom-ref": "pkg:npm/%40koromix/koffi-linux-riscv64@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@koromix/koffi-linux-x64",
+   "version": "3.1.1",
+   "purl": "pkg:npm/%40koromix/koffi-linux-x64@3.1.1",
+   "bom-ref": "pkg:npm/%40koromix/koffi-linux-x64@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@koromix/koffi-openbsd-ia32",
+   "version": "3.1.1",
+   "purl": "pkg:npm/%40koromix/koffi-openbsd-ia32@3.1.1",
+   "bom-ref": "pkg:npm/%40koromix/koffi-openbsd-ia32@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@koromix/koffi-openbsd-x64",
+   "version": "3.1.1",
+   "purl": "pkg:npm/%40koromix/koffi-openbsd-x64@3.1.1",
+   "bom-ref": "pkg:npm/%40koromix/koffi-openbsd-x64@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@koromix/koffi-win32-arm64",
+   "version": "3.1.1",
+   "purl": "pkg:npm/%40koromix/koffi-win32-arm64@3.1.1",
+   "bom-ref": "pkg:npm/%40koromix/koffi-win32-arm64@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@koromix/koffi-win32-ia32",
+   "version": "3.1.1",
+   "purl": "pkg:npm/%40koromix/koffi-win32-ia32@3.1.1",
+   "bom-ref": "pkg:npm/%40koromix/koffi-win32-ia32@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@koromix/koffi-win32-x64",
+   "version": "3.1.1",
+   "purl": "pkg:npm/%40koromix/koffi-win32-x64@3.1.1",
+   "bom-ref": "pkg:npm/%40koromix/koffi-win32-x64@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@mixmark-io/domino",
+   "version": "2.2.0",
+   "purl": "pkg:npm/%40mixmark-io/domino@2.2.0",
+   "bom-ref": "pkg:npm/%40mixmark-io/domino@2.2.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-2-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@modelcontextprotocol/client",
+   "version": "2.2.0",
+   "purl": "pkg:npm/%40modelcontextprotocol/client@2.2.0",
+   "bom-ref": "pkg:npm/%40modelcontextprotocol/client@2.2.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@modelcontextprotocol/core",
+   "version": "2.2.0",
+   "purl": "pkg:npm/%40modelcontextprotocol/core@2.2.0",
+   "bom-ref": "pkg:npm/%40modelcontextprotocol/core@2.2.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@opentelemetry/api",
+   "version": "1.9.1",
+   "purl": "pkg:npm/%40opentelemetry/api@1.9.1",
+   "bom-ref": "pkg:npm/%40opentelemetry/api@1.9.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@opentelemetry/api-logs",
+   "version": "0.222.0",
+   "purl": "pkg:npm/%40opentelemetry/api-logs@0.222.0",
+   "bom-ref": "pkg:npm/%40opentelemetry/api-logs@0.222.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@opentelemetry/core",
+   "version": "2.11.0",
+   "purl": "pkg:npm/%40opentelemetry/core@2.11.0",
+   "bom-ref": "pkg:npm/%40opentelemetry/core@2.11.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@opentelemetry/otlp-exporter-base",
+   "version": "0.222.0",
+   "purl": "pkg:npm/%40opentelemetry/otlp-exporter-base@0.222.0",
+   "bom-ref": "pkg:npm/%40opentelemetry/otlp-exporter-base@0.222.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@opentelemetry/otlp-transformer",
+   "version": "0.222.0",
+   "purl": "pkg:npm/%40opentelemetry/otlp-transformer@0.222.0",
+   "bom-ref": "pkg:npm/%40opentelemetry/otlp-transformer@0.222.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@opentelemetry/resources",
+   "version": "2.11.0",
+   "purl": "pkg:npm/%40opentelemetry/resources@2.11.0",
+   "bom-ref": "pkg:npm/%40opentelemetry/resources@2.11.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@opentelemetry/sdk-logs",
+   "version": "0.222.0",
+   "purl": "pkg:npm/%40opentelemetry/sdk-logs@0.222.0",
+   "bom-ref": "pkg:npm/%40opentelemetry/sdk-logs@0.222.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@opentelemetry/sdk-metrics",
+   "version": "2.11.0",
+   "purl": "pkg:npm/%40opentelemetry/sdk-metrics@2.11.0",
+   "bom-ref": "pkg:npm/%40opentelemetry/sdk-metrics@2.11.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@opentelemetry/sdk-trace",
+   "version": "2.11.0",
+   "purl": "pkg:npm/%40opentelemetry/sdk-trace@2.11.0",
+   "bom-ref": "pkg:npm/%40opentelemetry/sdk-trace@2.11.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@opentelemetry/semantic-conventions",
+   "version": "1.43.0",
+   "purl": "pkg:npm/%40opentelemetry/semantic-conventions@1.43.0",
+   "bom-ref": "pkg:npm/%40opentelemetry/semantic-conventions@1.43.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@protobufjs/aspromise",
+   "version": "1.1.2",
+   "purl": "pkg:npm/%40protobufjs/aspromise@1.1.2",
+   "bom-ref": "pkg:npm/%40protobufjs/aspromise@1.1.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@protobufjs/base64",
+   "version": "1.1.2",
+   "purl": "pkg:npm/%40protobufjs/base64@1.1.2",
+   "bom-ref": "pkg:npm/%40protobufjs/base64@1.1.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@protobufjs/codegen",
+   "version": "2.0.5",
+   "purl": "pkg:npm/%40protobufjs/codegen@2.0.5",
+   "bom-ref": "pkg:npm/%40protobufjs/codegen@2.0.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@protobufjs/eventemitter",
+   "version": "1.1.1",
+   "purl": "pkg:npm/%40protobufjs/eventemitter@1.1.1",
+   "bom-ref": "pkg:npm/%40protobufjs/eventemitter@1.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@protobufjs/fetch",
+   "version": "1.1.1",
+   "purl": "pkg:npm/%40protobufjs/fetch@1.1.1",
+   "bom-ref": "pkg:npm/%40protobufjs/fetch@1.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@protobufjs/float",
+   "version": "1.0.2",
+   "purl": "pkg:npm/%40protobufjs/float@1.0.2",
+   "bom-ref": "pkg:npm/%40protobufjs/float@1.0.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@protobufjs/path",
+   "version": "1.1.2",
+   "purl": "pkg:npm/%40protobufjs/path@1.1.2",
+   "bom-ref": "pkg:npm/%40protobufjs/path@1.1.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@protobufjs/pool",
+   "version": "1.1.0",
+   "purl": "pkg:npm/%40protobufjs/pool@1.1.0",
+   "bom-ref": "pkg:npm/%40protobufjs/pool@1.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@protobufjs/utf8",
+   "version": "1.1.2",
+   "purl": "pkg:npm/%40protobufjs/utf8@1.1.2",
+   "bom-ref": "pkg:npm/%40protobufjs/utf8@1.1.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@sec-ant/readable-stream",
+   "version": "0.4.1",
+   "purl": "pkg:npm/%40sec-ant/readable-stream@0.4.1",
+   "bom-ref": "pkg:npm/%40sec-ant/readable-stream@0.4.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@sindresorhus/is",
+   "version": "7.2.0",
+   "purl": "pkg:npm/%40sindresorhus/is@7.2.0",
+   "bom-ref": "pkg:npm/%40sindresorhus/is@7.2.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@sindresorhus/merge-streams",
+   "version": "4.0.0",
+   "purl": "pkg:npm/%40sindresorhus/merge-streams@4.0.0",
+   "bom-ref": "pkg:npm/%40sindresorhus/merge-streams@4.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@smithy/core",
+   "version": "3.36.0",
+   "purl": "pkg:npm/%40smithy/core@3.36.0",
+   "bom-ref": "pkg:npm/%40smithy/core@3.36.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@smithy/credential-provider-imds",
+   "version": "4.5.2",
+   "purl": "pkg:npm/%40smithy/credential-provider-imds@4.5.2",
+   "bom-ref": "pkg:npm/%40smithy/credential-provider-imds@4.5.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@smithy/fetch-http-handler",
+   "version": "5.8.0",
+   "purl": "pkg:npm/%40smithy/fetch-http-handler@5.8.0",
+   "bom-ref": "pkg:npm/%40smithy/fetch-http-handler@5.8.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@smithy/node-http-handler",
+   "version": "4.12.1",
+   "purl": "pkg:npm/%40smithy/node-http-handler@4.12.1",
+   "bom-ref": "pkg:npm/%40smithy/node-http-handler@4.12.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@smithy/signature-v4",
+   "version": "5.7.4",
+   "purl": "pkg:npm/%40smithy/signature-v4@5.7.4",
+   "bom-ref": "pkg:npm/%40smithy/signature-v4@5.7.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@smithy/types",
+   "version": "4.19.0",
+   "purl": "pkg:npm/%40smithy/types@4.19.0",
+   "bom-ref": "pkg:npm/%40smithy/types@4.19.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@stablelib/base64",
+   "version": "1.0.1",
+   "purl": "pkg:npm/%40stablelib/base64@1.0.1",
+   "bom-ref": "pkg:npm/%40stablelib/base64@1.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@standard-schema/spec",
+   "version": "1.1.0",
+   "purl": "pkg:npm/%40standard-schema/spec@1.1.0",
+   "bom-ref": "pkg:npm/%40standard-schema/spec@1.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@swc/helpers",
+   "version": "0.5.23",
+   "purl": "pkg:npm/%40swc/helpers@0.5.23",
+   "bom-ref": "pkg:npm/%40swc/helpers@0.5.23",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@types/http-cache-semantics",
+   "version": "4.2.0",
+   "purl": "pkg:npm/%40types/http-cache-semantics@4.2.0",
+   "bom-ref": "pkg:npm/%40types/http-cache-semantics@4.2.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@types/node",
+   "version": "26.6.5",
+   "purl": "pkg:npm/%40types/node@26.6.5",
+   "bom-ref": "pkg:npm/%40types/node@26.6.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@types/retry",
+   "version": "0.12.0",
+   "purl": "pkg:npm/%40types/retry@0.12.0",
+   "bom-ref": "pkg:npm/%40types/retry@0.12.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@vscode/ripgrep",
+   "version": "1.18.0",
+   "purl": "pkg:npm/%40vscode/ripgrep@1.18.0",
+   "bom-ref": "pkg:npm/%40vscode/ripgrep@1.18.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@vscode/ripgrep-darwin-arm64",
+   "version": "1.18.0",
+   "purl": "pkg:npm/%40vscode/ripgrep-darwin-arm64@1.18.0",
+   "bom-ref": "pkg:npm/%40vscode/ripgrep-darwin-arm64@1.18.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@vscode/ripgrep-darwin-x64",
+   "version": "1.18.0",
+   "purl": "pkg:npm/%40vscode/ripgrep-darwin-x64@1.18.0",
+   "bom-ref": "pkg:npm/%40vscode/ripgrep-darwin-x64@1.18.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@vscode/ripgrep-linux-arm",
+   "version": "1.18.0",
+   "purl": "pkg:npm/%40vscode/ripgrep-linux-arm@1.18.0",
+   "bom-ref": "pkg:npm/%40vscode/ripgrep-linux-arm@1.18.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@vscode/ripgrep-linux-arm64",
+   "version": "1.18.0",
+   "purl": "pkg:npm/%40vscode/ripgrep-linux-arm64@1.18.0",
+   "bom-ref": "pkg:npm/%40vscode/ripgrep-linux-arm64@1.18.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@vscode/ripgrep-linux-ia32",
+   "version": "1.18.0",
+   "purl": "pkg:npm/%40vscode/ripgrep-linux-ia32@1.18.0",
+   "bom-ref": "pkg:npm/%40vscode/ripgrep-linux-ia32@1.18.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@vscode/ripgrep-linux-ppc64",
+   "version": "1.18.0",
+   "purl": "pkg:npm/%40vscode/ripgrep-linux-ppc64@1.18.0",
+   "bom-ref": "pkg:npm/%40vscode/ripgrep-linux-ppc64@1.18.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@vscode/ripgrep-linux-riscv64",
+   "version": "1.18.0",
+   "purl": "pkg:npm/%40vscode/ripgrep-linux-riscv64@1.18.0",
+   "bom-ref": "pkg:npm/%40vscode/ripgrep-linux-riscv64@1.18.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@vscode/ripgrep-linux-s390x",
+   "version": "1.18.0",
+   "purl": "pkg:npm/%40vscode/ripgrep-linux-s390x@1.18.0",
+   "bom-ref": "pkg:npm/%40vscode/ripgrep-linux-s390x@1.18.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@vscode/ripgrep-linux-x64",
+   "version": "1.18.0",
+   "purl": "pkg:npm/%40vscode/ripgrep-linux-x64@1.18.0",
+   "bom-ref": "pkg:npm/%40vscode/ripgrep-linux-x64@1.18.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@vscode/ripgrep-win32-arm64",
+   "version": "1.18.0",
+   "purl": "pkg:npm/%40vscode/ripgrep-win32-arm64@1.18.0",
+   "bom-ref": "pkg:npm/%40vscode/ripgrep-win32-arm64@1.18.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@vscode/ripgrep-win32-ia32",
+   "version": "1.18.0",
+   "purl": "pkg:npm/%40vscode/ripgrep-win32-ia32@1.18.0",
+   "bom-ref": "pkg:npm/%40vscode/ripgrep-win32-ia32@1.18.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@vscode/ripgrep-win32-x64",
+   "version": "1.18.0",
+   "purl": "pkg:npm/%40vscode/ripgrep-win32-x64@1.18.0",
+   "bom-ref": "pkg:npm/%40vscode/ripgrep-win32-x64@1.18.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@xterm/addon-serialize",
+   "version": "0.14.0",
+   "purl": "pkg:npm/%40xterm/addon-serialize@0.14.0",
+   "bom-ref": "pkg:npm/%40xterm/addon-serialize@0.14.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@xterm/headless",
+   "version": "6.0.0",
+   "purl": "pkg:npm/%40xterm/headless@6.0.0",
+   "bom-ref": "pkg:npm/%40xterm/headless@6.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "agent-base",
+   "version": "9.0.0",
+   "purl": "pkg:npm/agent-base@9.0.0",
+   "bom-ref": "pkg:npm/agent-base@9.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "ajv",
+   "version": "8.20.0",
+   "purl": "pkg:npm/ajv@8.20.0",
+   "bom-ref": "pkg:npm/ajv@8.20.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "argparse",
+   "version": "2.0.1",
+   "purl": "pkg:npm/argparse@2.0.1",
+   "bom-ref": "pkg:npm/argparse@2.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "Python-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "base64-js",
+   "version": "1.5.1",
+   "purl": "pkg:npm/base64-js@1.5.1",
+   "bom-ref": "pkg:npm/base64-js@1.5.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "bignumber.js",
+   "version": "9.3.1",
+   "purl": "pkg:npm/bignumber.js@9.3.1",
+   "bom-ref": "pkg:npm/bignumber.js@9.3.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "bowser",
+   "version": "2.14.1",
+   "purl": "pkg:npm/bowser@2.14.1",
+   "bom-ref": "pkg:npm/bowser@2.14.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "brotli",
+   "version": "1.3.3",
+   "purl": "pkg:npm/brotli@1.3.3",
+   "bom-ref": "pkg:npm/brotli@1.3.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "buffer-equal-constant-time",
+   "version": "1.0.1",
+   "purl": "pkg:npm/buffer-equal-constant-time@1.0.1",
+   "bom-ref": "pkg:npm/buffer-equal-constant-time@1.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "bundle-name",
+   "version": "4.1.1",
+   "purl": "pkg:npm/bundle-name@4.1.1",
+   "bom-ref": "pkg:npm/bundle-name@4.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "byte-counter",
+   "version": "0.1.0",
+   "purl": "pkg:npm/byte-counter@0.1.0",
+   "bom-ref": "pkg:npm/byte-counter@0.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "bytes",
+   "version": "3.1.2",
+   "purl": "pkg:npm/bytes@3.1.2",
+   "bom-ref": "pkg:npm/bytes@3.1.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "cacheable-lookup",
+   "version": "7.0.0",
+   "purl": "pkg:npm/cacheable-lookup@7.0.0",
+   "bom-ref": "pkg:npm/cacheable-lookup@7.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "cacheable-request",
+   "version": "13.0.19",
+   "purl": "pkg:npm/cacheable-request@13.0.19",
+   "bom-ref": "pkg:npm/cacheable-request@13.0.19",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "chokidar",
+   "version": "5.0.0",
+   "purl": "pkg:npm/chokidar@5.0.0",
+   "bom-ref": "pkg:npm/chokidar@5.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "clone",
+   "version": "2.1.2",
+   "purl": "pkg:npm/clone@2.1.2",
+   "bom-ref": "pkg:npm/clone@2.1.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "commander",
+   "version": "15.0.0",
+   "purl": "pkg:npm/commander@15.0.0",
+   "bom-ref": "pkg:npm/commander@15.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "compressible",
+   "version": "2.0.18",
+   "purl": "pkg:npm/compressible@2.0.18",
+   "bom-ref": "pkg:npm/compressible@2.0.18",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "compression",
+   "version": "1.8.2",
+   "purl": "pkg:npm/compression@1.8.2",
+   "bom-ref": "pkg:npm/compression@1.8.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "negotiator",
+   "version": "0.6.4",
+   "purl": "pkg:npm/negotiator@0.6.4",
+   "bom-ref": "pkg:npm/negotiator@0.6.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "content-type",
+   "version": "2.1.0",
+   "purl": "pkg:npm/content-type@2.1.0",
+   "bom-ref": "pkg:npm/content-type@2.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "cross-spawn",
+   "version": "7.0.6",
+   "purl": "pkg:npm/cross-spawn@7.0.6",
+   "bom-ref": "pkg:npm/cross-spawn@7.0.6",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "data-uri-to-buffer",
+   "version": "4.0.1",
+   "purl": "pkg:npm/data-uri-to-buffer@4.0.1",
+   "bom-ref": "pkg:npm/data-uri-to-buffer@4.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "debug",
+   "version": "2.6.9",
+   "purl": "pkg:npm/debug@2.6.9",
+   "bom-ref": "pkg:npm/debug@2.6.9",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "decompress-response",
+   "version": "10.0.0",
+   "purl": "pkg:npm/decompress-response@10.0.0",
+   "bom-ref": "pkg:npm/decompress-response@10.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "default-browser",
+   "version": "5.5.1",
+   "purl": "pkg:npm/default-browser@5.5.1",
+   "bom-ref": "pkg:npm/default-browser@5.5.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "default-browser-id",
+   "version": "5.0.1",
+   "purl": "pkg:npm/default-browser-id@5.0.1",
+   "bom-ref": "pkg:npm/default-browser-id@5.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "define-lazy-prop",
+   "version": "3.0.0",
+   "purl": "pkg:npm/define-lazy-prop@3.0.0",
+   "bom-ref": "pkg:npm/define-lazy-prop@3.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "depd",
+   "version": "2.0.0",
+   "purl": "pkg:npm/depd@2.0.0",
+   "bom-ref": "pkg:npm/depd@2.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "destroy",
+   "version": "1.2.0",
+   "purl": "pkg:npm/destroy@1.2.0",
+   "bom-ref": "pkg:npm/destroy@1.2.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "detect-libc",
+   "version": "2.1.2",
+   "purl": "pkg:npm/detect-libc@2.1.2",
+   "bom-ref": "pkg:npm/detect-libc@2.1.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "dfa",
+   "version": "1.2.0",
+   "purl": "pkg:npm/dfa@1.2.0",
+   "bom-ref": "pkg:npm/dfa@1.2.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "diff",
+   "version": "9.0.0",
+   "purl": "pkg:npm/diff@9.0.0",
+   "bom-ref": "pkg:npm/diff@9.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "ecdsa-sig-formatter",
+   "version": "1.0.11",
+   "purl": "pkg:npm/ecdsa-sig-formatter@1.0.11",
+   "bom-ref": "pkg:npm/ecdsa-sig-formatter@1.0.11",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "ee-first",
+   "version": "1.1.1",
+   "purl": "pkg:npm/ee-first@1.1.1",
+   "bom-ref": "pkg:npm/ee-first@1.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "encodeurl",
+   "version": "2.0.0",
+   "purl": "pkg:npm/encodeurl@2.0.0",
+   "bom-ref": "pkg:npm/encodeurl@2.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "escape-html",
+   "version": "1.0.3",
+   "purl": "pkg:npm/escape-html@1.0.3",
+   "bom-ref": "pkg:npm/escape-html@1.0.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "etag",
+   "version": "1.8.1",
+   "purl": "pkg:npm/etag@1.8.1",
+   "bom-ref": "pkg:npm/etag@1.8.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "eventsource",
+   "version": "3.0.7",
+   "purl": "pkg:npm/eventsource@3.0.7",
+   "bom-ref": "pkg:npm/eventsource@3.0.7",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "eventsource-parser",
+   "version": "3.1.1",
+   "purl": "pkg:npm/eventsource-parser@3.1.1",
+   "bom-ref": "pkg:npm/eventsource-parser@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "execa",
+   "version": "10.1.1",
+   "purl": "pkg:npm/execa@10.1.1",
+   "bom-ref": "pkg:npm/execa@10.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "extend",
+   "version": "3.0.2",
+   "purl": "pkg:npm/extend@3.0.2",
+   "bom-ref": "pkg:npm/extend@3.0.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "fast-deep-equal",
+   "version": "3.1.3",
+   "purl": "pkg:npm/fast-deep-equal@3.1.3",
+   "bom-ref": "pkg:npm/fast-deep-equal@3.1.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "fast-sha256",
+   "version": "1.3.0",
+   "purl": "pkg:npm/fast-sha256@1.3.0",
+   "bom-ref": "pkg:npm/fast-sha256@1.3.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Unlicense"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "fast-uri",
+   "version": "3.1.8",
+   "purl": "pkg:npm/fast-uri@3.1.8",
+   "bom-ref": "pkg:npm/fast-uri@3.1.8",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "fetch-blob",
+   "version": "3.2.0",
+   "purl": "pkg:npm/fetch-blob@3.2.0",
+   "bom-ref": "pkg:npm/fetch-blob@3.2.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "fflate",
+   "version": "0.8.3",
+   "purl": "pkg:npm/fflate@0.8.3",
+   "bom-ref": "pkg:npm/fflate@0.8.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "figures",
+   "version": "6.1.0",
+   "purl": "pkg:npm/figures@6.1.0",
+   "bom-ref": "pkg:npm/figures@6.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "fontkit",
+   "version": "2.0.4",
+   "purl": "pkg:npm/fontkit@2.0.4",
+   "bom-ref": "pkg:npm/fontkit@2.0.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "form-data-encoder",
+   "version": "4.1.0",
+   "purl": "pkg:npm/form-data-encoder@4.1.0",
+   "bom-ref": "pkg:npm/form-data-encoder@4.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "formdata-polyfill",
+   "version": "4.0.10",
+   "purl": "pkg:npm/formdata-polyfill@4.0.10",
+   "bom-ref": "pkg:npm/formdata-polyfill@4.0.10",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "fresh",
+   "version": "2.0.0",
+   "purl": "pkg:npm/fresh@2.0.0",
+   "bom-ref": "pkg:npm/fresh@2.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "gaxios",
+   "version": "7.3.1",
+   "purl": "pkg:npm/gaxios@7.3.1",
+   "bom-ref": "pkg:npm/gaxios@7.3.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "agent-base",
+   "version": "7.1.4",
+   "purl": "pkg:npm/agent-base@7.1.4",
+   "bom-ref": "pkg:npm/agent-base@7.1.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "debug",
+   "version": "4.4.3",
+   "purl": "pkg:npm/debug@4.4.3",
+   "bom-ref": "pkg:npm/debug@4.4.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "https-proxy-agent",
+   "version": "7.0.6",
+   "purl": "pkg:npm/https-proxy-agent@7.0.6",
+   "bom-ref": "pkg:npm/https-proxy-agent@7.0.6",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "ms",
+   "version": "2.1.3",
+   "purl": "pkg:npm/ms@2.1.3",
+   "bom-ref": "pkg:npm/ms@2.1.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "gcp-metadata",
+   "version": "8.1.2",
+   "purl": "pkg:npm/gcp-metadata@8.1.2",
+   "bom-ref": "pkg:npm/gcp-metadata@8.1.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "get-stream",
+   "version": "9.0.1",
+   "purl": "pkg:npm/get-stream@9.0.1",
+   "bom-ref": "pkg:npm/get-stream@9.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "google-auth-library",
+   "version": "10.9.1",
+   "purl": "pkg:npm/google-auth-library@10.9.1",
+   "bom-ref": "pkg:npm/google-auth-library@10.9.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "google-logging-utils",
+   "version": "1.1.3",
+   "purl": "pkg:npm/google-logging-utils@1.1.3",
+   "bom-ref": "pkg:npm/google-logging-utils@1.1.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "got",
+   "version": "14.6.6",
+   "purl": "pkg:npm/got@14.6.6",
+   "bom-ref": "pkg:npm/got@14.6.6",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "http-cache-semantics",
+   "version": "4.3.0",
+   "purl": "pkg:npm/http-cache-semantics@4.3.0",
+   "bom-ref": "pkg:npm/http-cache-semantics@4.3.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-2-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "http-errors",
+   "version": "2.0.1",
+   "purl": "pkg:npm/http-errors@2.0.1",
+   "bom-ref": "pkg:npm/http-errors@2.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "http-proxy-agent",
+   "version": "9.1.0",
+   "purl": "pkg:npm/http-proxy-agent@9.1.0",
+   "bom-ref": "pkg:npm/http-proxy-agent@9.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "http2-wrapper",
+   "version": "2.2.1",
+   "purl": "pkg:npm/http2-wrapper@2.2.1",
+   "bom-ref": "pkg:npm/http2-wrapper@2.2.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "https-proxy-agent",
+   "version": "9.1.0",
+   "purl": "pkg:npm/https-proxy-agent@9.1.0",
+   "bom-ref": "pkg:npm/https-proxy-agent@9.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "human-signals",
+   "version": "8.0.1",
+   "purl": "pkg:npm/human-signals@8.0.1",
+   "bom-ref": "pkg:npm/human-signals@8.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "inherits",
+   "version": "2.0.4",
+   "purl": "pkg:npm/inherits@2.0.4",
+   "bom-ref": "pkg:npm/inherits@2.0.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "ISC"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "ipaddr.js",
+   "version": "2.5.0",
+   "purl": "pkg:npm/ipaddr.js@2.5.0",
+   "bom-ref": "pkg:npm/ipaddr.js@2.5.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "is-docker",
+   "version": "3.0.0",
+   "purl": "pkg:npm/is-docker@3.0.0",
+   "bom-ref": "pkg:npm/is-docker@3.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "is-in-ssh",
+   "version": "1.0.0",
+   "purl": "pkg:npm/is-in-ssh@1.0.0",
+   "bom-ref": "pkg:npm/is-in-ssh@1.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "is-inside-container",
+   "version": "1.0.0",
+   "purl": "pkg:npm/is-inside-container@1.0.0",
+   "bom-ref": "pkg:npm/is-inside-container@1.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "is-plain-obj",
+   "version": "4.1.0",
+   "purl": "pkg:npm/is-plain-obj@4.1.0",
+   "bom-ref": "pkg:npm/is-plain-obj@4.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "is-stream",
+   "version": "4.0.1",
+   "purl": "pkg:npm/is-stream@4.0.1",
+   "bom-ref": "pkg:npm/is-stream@4.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "is-unicode-supported",
+   "version": "2.1.0",
+   "purl": "pkg:npm/is-unicode-supported@2.1.0",
+   "bom-ref": "pkg:npm/is-unicode-supported@2.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "is-wsl",
+   "version": "3.1.1",
+   "purl": "pkg:npm/is-wsl@3.1.1",
+   "bom-ref": "pkg:npm/is-wsl@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "isexe",
+   "version": "2.0.0",
+   "purl": "pkg:npm/isexe@2.0.0",
+   "bom-ref": "pkg:npm/isexe@2.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "ISC"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "jose",
+   "version": "6.2.12",
+   "purl": "pkg:npm/jose@6.2.12",
+   "bom-ref": "pkg:npm/jose@6.2.12",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "js-tokens",
+   "version": "4.0.0",
+   "purl": "pkg:npm/js-tokens@4.0.0",
+   "bom-ref": "pkg:npm/js-tokens@4.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "js-yaml",
+   "version": "4.3.2",
+   "purl": "pkg:npm/js-yaml@4.3.2",
+   "bom-ref": "pkg:npm/js-yaml@4.3.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "jsbi",
+   "version": "4.3.2",
+   "purl": "pkg:npm/jsbi@4.3.2",
+   "bom-ref": "pkg:npm/jsbi@4.3.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "json-bigint",
+   "version": "1.0.0",
+   "purl": "pkg:npm/json-bigint@1.0.0",
+   "bom-ref": "pkg:npm/json-bigint@1.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "json-schema-to-ts",
+   "version": "3.1.1",
+   "purl": "pkg:npm/json-schema-to-ts@3.1.1",
+   "bom-ref": "pkg:npm/json-schema-to-ts@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "json-schema-traverse",
+   "version": "1.0.0",
+   "purl": "pkg:npm/json-schema-traverse@1.0.0",
+   "bom-ref": "pkg:npm/json-schema-traverse@1.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "jwa",
+   "version": "2.0.1",
+   "purl": "pkg:npm/jwa@2.0.1",
+   "bom-ref": "pkg:npm/jwa@2.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "jws",
+   "version": "4.0.1",
+   "purl": "pkg:npm/jws@4.0.1",
+   "bom-ref": "pkg:npm/jws@4.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "keyv",
+   "version": "5.6.0",
+   "purl": "pkg:npm/keyv@5.6.0",
+   "bom-ref": "pkg:npm/keyv@5.6.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "koffi",
+   "version": "3.1.1",
+   "purl": "pkg:npm/koffi@3.1.1",
+   "bom-ref": "pkg:npm/koffi@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "long",
+   "version": "5.3.2",
+   "purl": "pkg:npm/long@5.3.2",
+   "bom-ref": "pkg:npm/long@5.3.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "lowercase-keys",
+   "version": "3.0.0",
+   "purl": "pkg:npm/lowercase-keys@3.0.0",
+   "bom-ref": "pkg:npm/lowercase-keys@3.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "mime-db",
+   "version": "1.54.0",
+   "purl": "pkg:npm/mime-db@1.54.0",
+   "bom-ref": "pkg:npm/mime-db@1.54.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "mime-types",
+   "version": "3.0.2",
+   "purl": "pkg:npm/mime-types@3.0.2",
+   "bom-ref": "pkg:npm/mime-types@3.0.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "mimic-response",
+   "version": "4.0.0",
+   "purl": "pkg:npm/mimic-response@4.0.0",
+   "bom-ref": "pkg:npm/mimic-response@4.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "ms",
+   "version": "2.0.0",
+   "purl": "pkg:npm/ms@2.0.0",
+   "bom-ref": "pkg:npm/ms@2.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "negotiator",
+   "version": "1.1.0",
+   "purl": "pkg:npm/negotiator@1.1.0",
+   "bom-ref": "pkg:npm/negotiator@1.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-addon-api",
+   "version": "7.1.1",
+   "purl": "pkg:npm/node-addon-api@7.1.1",
+   "bom-ref": "pkg:npm/node-addon-api@7.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-addon-native-custom-loader",
+   "version": "0.1.9",
+   "purl": "pkg:npm/node-addon-native-custom-loader@0.1.9",
+   "bom-ref": "pkg:npm/node-addon-native-custom-loader@0.1.9",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-addon-require-builtin",
+   "version": "0.1.9",
+   "purl": "pkg:npm/node-addon-require-builtin@0.1.9",
+   "bom-ref": "pkg:npm/node-addon-require-builtin@0.1.9",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-addon-require-builtin-darwin-arm64",
+   "version": "0.1.9",
+   "purl": "pkg:npm/node-addon-require-builtin-darwin-arm64@0.1.9",
+   "bom-ref": "pkg:npm/node-addon-require-builtin-darwin-arm64@0.1.9",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-addon-require-builtin-darwin-x64",
+   "version": "0.1.9",
+   "purl": "pkg:npm/node-addon-require-builtin-darwin-x64@0.1.9",
+   "bom-ref": "pkg:npm/node-addon-require-builtin-darwin-x64@0.1.9",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-addon-require-builtin-linux-arm64-gnu",
+   "version": "0.1.9",
+   "purl": "pkg:npm/node-addon-require-builtin-linux-arm64-gnu@0.1.9",
+   "bom-ref": "pkg:npm/node-addon-require-builtin-linux-arm64-gnu@0.1.9",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-addon-require-builtin-linux-arm64-musl",
+   "version": "0.1.9",
+   "purl": "pkg:npm/node-addon-require-builtin-linux-arm64-musl@0.1.9",
+   "bom-ref": "pkg:npm/node-addon-require-builtin-linux-arm64-musl@0.1.9",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-addon-require-builtin-linux-x64-gnu",
+   "version": "0.1.9",
+   "purl": "pkg:npm/node-addon-require-builtin-linux-x64-gnu@0.1.9",
+   "bom-ref": "pkg:npm/node-addon-require-builtin-linux-x64-gnu@0.1.9",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-addon-require-builtin-linux-x64-musl",
+   "version": "0.1.9",
+   "purl": "pkg:npm/node-addon-require-builtin-linux-x64-musl@0.1.9",
+   "bom-ref": "pkg:npm/node-addon-require-builtin-linux-x64-musl@0.1.9",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-addon-require-builtin-win32-arm64-msvc",
+   "version": "0.1.9",
+   "purl": "pkg:npm/node-addon-require-builtin-win32-arm64-msvc@0.1.9",
+   "bom-ref": "pkg:npm/node-addon-require-builtin-win32-arm64-msvc@0.1.9",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-addon-require-builtin-win32-ia32-msvc",
+   "version": "0.1.9",
+   "purl": "pkg:npm/node-addon-require-builtin-win32-ia32-msvc@0.1.9",
+   "bom-ref": "pkg:npm/node-addon-require-builtin-win32-ia32-msvc@0.1.9",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-addon-require-builtin-win32-x64-msvc",
+   "version": "0.1.9",
+   "purl": "pkg:npm/node-addon-require-builtin-win32-x64-msvc@0.1.9",
+   "bom-ref": "pkg:npm/node-addon-require-builtin-win32-x64-msvc@0.1.9",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-domexception",
+   "version": "1.0.0",
+   "purl": "pkg:npm/node-domexception@1.0.0",
+   "bom-ref": "pkg:npm/node-domexception@1.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-fetch",
+   "version": "3.3.2",
+   "purl": "pkg:npm/node-fetch@3.3.2",
+   "bom-ref": "pkg:npm/node-fetch@3.3.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-pty",
+   "version": "1.2.0-beta.15",
+   "purl": "pkg:npm/node-pty@1.2.0-beta.15",
+   "bom-ref": "pkg:npm/node-pty@1.2.0-beta.15",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "normalize-url",
+   "version": "8.1.1",
+   "purl": "pkg:npm/normalize-url@8.1.1",
+   "bom-ref": "pkg:npm/normalize-url@8.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "npm-run-path",
+   "version": "6.0.0",
+   "purl": "pkg:npm/npm-run-path@6.0.0",
+   "bom-ref": "pkg:npm/npm-run-path@6.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "path-key",
+   "version": "4.0.0",
+   "purl": "pkg:npm/path-key@4.0.0",
+   "bom-ref": "pkg:npm/path-key@4.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "on-finished",
+   "version": "2.4.1",
+   "purl": "pkg:npm/on-finished@2.4.1",
+   "bom-ref": "pkg:npm/on-finished@2.4.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "on-headers",
+   "version": "1.1.0",
+   "purl": "pkg:npm/on-headers@1.1.0",
+   "bom-ref": "pkg:npm/on-headers@1.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "open",
+   "version": "11.0.4",
+   "purl": "pkg:npm/open@11.0.4",
+   "bom-ref": "pkg:npm/open@11.0.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "openai",
+   "version": "7.19.0",
+   "purl": "pkg:npm/openai@7.19.0",
+   "bom-ref": "pkg:npm/openai@7.19.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "p-cancelable",
+   "version": "4.0.1",
+   "purl": "pkg:npm/p-cancelable@4.0.1",
+   "bom-ref": "pkg:npm/p-cancelable@4.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "p-limit",
+   "version": "7.3.3",
+   "purl": "pkg:npm/p-limit@7.3.3",
+   "bom-ref": "pkg:npm/p-limit@7.3.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "p-retry",
+   "version": "4.6.2",
+   "purl": "pkg:npm/p-retry@4.6.2",
+   "bom-ref": "pkg:npm/p-retry@4.6.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "pako",
+   "version": "0.2.9",
+   "purl": "pkg:npm/pako@0.2.9",
+   "bom-ref": "pkg:npm/pako@0.2.9",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "parse-ms",
+   "version": "4.0.0",
+   "purl": "pkg:npm/parse-ms@4.0.0",
+   "bom-ref": "pkg:npm/parse-ms@4.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "parseurl",
+   "version": "1.3.3",
+   "purl": "pkg:npm/parseurl@1.3.3",
+   "bom-ref": "pkg:npm/parseurl@1.3.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "partial-json",
+   "version": "0.1.7",
+   "purl": "pkg:npm/partial-json@0.1.7",
+   "bom-ref": "pkg:npm/partial-json@0.1.7",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "path-key",
+   "version": "3.1.1",
+   "purl": "pkg:npm/path-key@3.1.1",
+   "bom-ref": "pkg:npm/path-key@3.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "picocolors",
+   "version": "1.1.1",
+   "purl": "pkg:npm/picocolors@1.1.1",
+   "bom-ref": "pkg:npm/picocolors@1.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "ISC"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "picomatch",
+   "version": "4.0.7",
+   "purl": "pkg:npm/picomatch@4.0.7",
+   "bom-ref": "pkg:npm/picomatch@4.0.7",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "pkce-challenge",
+   "version": "5.0.1",
+   "purl": "pkg:npm/pkce-challenge@5.0.1",
+   "bom-ref": "pkg:npm/pkce-challenge@5.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "powershell-utils",
+   "version": "0.2.1",
+   "purl": "pkg:npm/powershell-utils@0.2.1",
+   "bom-ref": "pkg:npm/powershell-utils@0.2.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "pretty-ms",
+   "version": "9.3.1",
+   "purl": "pkg:npm/pretty-ms@9.3.1",
+   "bom-ref": "pkg:npm/pretty-ms@9.3.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "protobufjs",
+   "version": "7.6.6",
+   "purl": "pkg:npm/protobufjs@7.6.6",
+   "bom-ref": "pkg:npm/protobufjs@7.6.6",
+   "licenses": [
+    {
+     "license": {
+      "name": "BSD-3-Clause"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "proxy-agent-negotiate",
+   "version": "1.1.0",
+   "purl": "pkg:npm/proxy-agent-negotiate@1.1.0",
+   "bom-ref": "pkg:npm/proxy-agent-negotiate@1.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "quick-lru",
+   "version": "5.1.1",
+   "purl": "pkg:npm/quick-lru@5.1.1",
+   "bom-ref": "pkg:npm/quick-lru@5.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "range-parser",
+   "version": "1.3.0",
+   "purl": "pkg:npm/range-parser@1.3.0",
+   "bom-ref": "pkg:npm/range-parser@1.3.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "readdirp",
+   "version": "5.1.1",
+   "purl": "pkg:npm/readdirp@5.1.1",
+   "bom-ref": "pkg:npm/readdirp@5.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "require-from-string",
+   "version": "2.0.2",
+   "purl": "pkg:npm/require-from-string@2.0.2",
+   "bom-ref": "pkg:npm/require-from-string@2.0.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "resolve-alpn",
+   "version": "1.2.1",
+   "purl": "pkg:npm/resolve-alpn@1.2.1",
+   "bom-ref": "pkg:npm/resolve-alpn@1.2.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "resolve.exports",
+   "version": "2.0.4",
+   "purl": "pkg:npm/resolve.exports@2.0.4",
+   "bom-ref": "pkg:npm/resolve.exports@2.0.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "responselike",
+   "version": "4.0.2",
+   "purl": "pkg:npm/responselike@4.0.2",
+   "bom-ref": "pkg:npm/responselike@4.0.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "restructure",
+   "version": "3.0.2",
+   "purl": "pkg:npm/restructure@3.0.2",
+   "bom-ref": "pkg:npm/restructure@3.0.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "retry",
+   "version": "0.13.1",
+   "purl": "pkg:npm/retry@0.13.1",
+   "bom-ref": "pkg:npm/retry@0.13.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "run-applescript",
+   "version": "7.1.0",
+   "purl": "pkg:npm/run-applescript@7.1.0",
+   "bom-ref": "pkg:npm/run-applescript@7.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "safe-buffer",
+   "version": "5.2.1",
+   "purl": "pkg:npm/safe-buffer@5.2.1",
+   "bom-ref": "pkg:npm/safe-buffer@5.2.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "saxes",
+   "version": "6.0.0",
+   "purl": "pkg:npm/saxes@6.0.0",
+   "bom-ref": "pkg:npm/saxes@6.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "ISC"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "semver",
+   "version": "7.8.5",
+   "purl": "pkg:npm/semver@7.8.5",
+   "bom-ref": "pkg:npm/semver@7.8.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "ISC"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "send",
+   "version": "1.2.1",
+   "purl": "pkg:npm/send@1.2.1",
+   "bom-ref": "pkg:npm/send@1.2.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "serve-static",
+   "version": "2.2.1",
+   "purl": "pkg:npm/serve-static@2.2.1",
+   "bom-ref": "pkg:npm/serve-static@2.2.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "setprototypeof",
+   "version": "1.2.0",
+   "purl": "pkg:npm/setprototypeof@1.2.0",
+   "bom-ref": "pkg:npm/setprototypeof@1.2.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "ISC"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "sharp",
+   "version": "0.35.5",
+   "purl": "pkg:npm/sharp@0.35.5",
+   "bom-ref": "pkg:npm/sharp@0.35.5",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "shebang-command",
+   "version": "2.0.0",
+   "purl": "pkg:npm/shebang-command@2.0.0",
+   "bom-ref": "pkg:npm/shebang-command@2.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "shebang-regex",
+   "version": "3.0.0",
+   "purl": "pkg:npm/shebang-regex@3.0.0",
+   "bom-ref": "pkg:npm/shebang-regex@3.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "sherpa-onnx-darwin-arm64",
+   "version": "1.13.8",
+   "purl": "pkg:npm/sherpa-onnx-darwin-arm64@1.13.8",
+   "bom-ref": "pkg:npm/sherpa-onnx-darwin-arm64@1.13.8",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "sherpa-onnx-darwin-x64",
+   "version": "1.13.8",
+   "purl": "pkg:npm/sherpa-onnx-darwin-x64@1.13.8",
+   "bom-ref": "pkg:npm/sherpa-onnx-darwin-x64@1.13.8",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "sherpa-onnx-linux-arm64",
+   "version": "1.13.8",
+   "purl": "pkg:npm/sherpa-onnx-linux-arm64@1.13.8",
+   "bom-ref": "pkg:npm/sherpa-onnx-linux-arm64@1.13.8",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "sherpa-onnx-linux-x64",
+   "version": "1.13.8",
+   "purl": "pkg:npm/sherpa-onnx-linux-x64@1.13.8",
+   "bom-ref": "pkg:npm/sherpa-onnx-linux-x64@1.13.8",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "sherpa-onnx-node",
+   "version": "1.13.8",
+   "purl": "pkg:npm/sherpa-onnx-node@1.13.8",
+   "bom-ref": "pkg:npm/sherpa-onnx-node@1.13.8",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "sherpa-onnx-win-ia32",
+   "version": "1.13.8",
+   "purl": "pkg:npm/sherpa-onnx-win-ia32@1.13.8",
+   "bom-ref": "pkg:npm/sherpa-onnx-win-ia32@1.13.8",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "sherpa-onnx-win-x64",
+   "version": "1.13.8",
+   "purl": "pkg:npm/sherpa-onnx-win-x64@1.13.8",
+   "bom-ref": "pkg:npm/sherpa-onnx-win-x64@1.13.8",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "signal-exit",
+   "version": "4.1.0",
+   "purl": "pkg:npm/signal-exit@4.1.0",
+   "bom-ref": "pkg:npm/signal-exit@4.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "ISC"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "standardwebhooks",
+   "version": "1.1.1",
+   "purl": "pkg:npm/standardwebhooks@1.1.1",
+   "bom-ref": "pkg:npm/standardwebhooks@1.1.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "statuses",
+   "version": "2.0.2",
+   "purl": "pkg:npm/statuses@2.0.2",
+   "bom-ref": "pkg:npm/statuses@2.0.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "strip-final-newline",
+   "version": "4.0.0",
+   "purl": "pkg:npm/strip-final-newline@4.0.0",
+   "bom-ref": "pkg:npm/strip-final-newline@4.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "tiny-inflate",
+   "version": "1.0.3",
+   "purl": "pkg:npm/tiny-inflate@1.0.3",
+   "bom-ref": "pkg:npm/tiny-inflate@1.0.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "toidentifier",
+   "version": "1.0.1",
+   "purl": "pkg:npm/toidentifier@1.0.1",
+   "bom-ref": "pkg:npm/toidentifier@1.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "ts-algebra",
+   "version": "2.0.0",
+   "purl": "pkg:npm/ts-algebra@2.0.0",
+   "bom-ref": "pkg:npm/ts-algebra@2.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "tslib",
+   "version": "2.8.1",
+   "purl": "pkg:npm/tslib@2.8.1",
+   "bom-ref": "pkg:npm/tslib@2.8.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "0BSD"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "turndown",
+   "version": "7.2.4",
+   "purl": "pkg:npm/turndown@7.2.4",
+   "bom-ref": "pkg:npm/turndown@7.2.4",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "type-fest",
+   "version": "4.41.0",
+   "purl": "pkg:npm/type-fest@4.41.0",
+   "bom-ref": "pkg:npm/type-fest@4.41.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "(MIT OR CC0-1.0)"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "typebox",
+   "version": "1.3.27",
+   "purl": "pkg:npm/typebox@1.3.27",
+   "bom-ref": "pkg:npm/typebox@1.3.27",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "undici",
+   "version": "8.11.2",
+   "purl": "pkg:npm/undici@8.11.2",
+   "bom-ref": "pkg:npm/undici@8.11.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "undici-types",
+   "version": "8.9.0",
+   "purl": "pkg:npm/undici-types@8.9.0",
+   "bom-ref": "pkg:npm/undici-types@8.9.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "unicode-properties",
+   "version": "1.4.1",
+   "purl": "pkg:npm/unicode-properties@1.4.1",
+   "bom-ref": "pkg:npm/unicode-properties@1.4.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "unicode-trie",
+   "version": "2.0.0",
+   "purl": "pkg:npm/unicode-trie@2.0.0",
+   "bom-ref": "pkg:npm/unicode-trie@2.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "unicorn-magic",
+   "version": "0.3.0",
+   "purl": "pkg:npm/unicorn-magic@0.3.0",
+   "bom-ref": "pkg:npm/unicorn-magic@0.3.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "vary",
+   "version": "1.1.2",
+   "purl": "pkg:npm/vary@1.1.2",
+   "bom-ref": "pkg:npm/vary@1.1.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "web-streams-polyfill",
+   "version": "3.3.3",
+   "purl": "pkg:npm/web-streams-polyfill@3.3.3",
+   "bom-ref": "pkg:npm/web-streams-polyfill@3.3.3",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "which",
+   "version": "2.0.2",
+   "purl": "pkg:npm/which@2.0.2",
+   "bom-ref": "pkg:npm/which@2.0.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "ISC"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "which-command",
+   "version": "0.1.0",
+   "purl": "pkg:npm/which-command@0.1.0",
+   "bom-ref": "pkg:npm/which-command@0.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "ws",
+   "version": "8.22.0",
+   "purl": "pkg:npm/ws@8.22.0",
+   "bom-ref": "pkg:npm/ws@8.22.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "wsl-utils",
+   "version": "1.0.1",
+   "purl": "pkg:npm/wsl-utils@1.0.1",
+   "bom-ref": "pkg:npm/wsl-utils@1.0.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "xmlchars",
+   "version": "2.2.0",
+   "purl": "pkg:npm/xmlchars@2.2.0",
+   "bom-ref": "pkg:npm/xmlchars@2.2.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "yaml",
+   "version": "2.9.1",
+   "purl": "pkg:npm/yaml@2.9.1",
+   "bom-ref": "pkg:npm/yaml@2.9.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "ISC"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "yocto-queue",
+   "version": "1.2.2",
+   "purl": "pkg:npm/yocto-queue@1.2.2",
+   "bom-ref": "pkg:npm/yocto-queue@1.2.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "yoctocolors",
+   "version": "2.2.0",
+   "purl": "pkg:npm/yoctocolors@2.2.0",
+   "bom-ref": "pkg:npm/yoctocolors@2.2.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "zod",
+   "version": "4.6.7",
+   "purl": "pkg:npm/zod@4.6.7",
+   "bom-ref": "pkg:npm/zod@4.6.7",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  }
+ ]
+}

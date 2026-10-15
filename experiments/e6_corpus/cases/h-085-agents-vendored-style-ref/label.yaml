@@ -1,0 +1,4 @@
+expected: []
+origin: hand
+family: instr
+note: "cites the upstream style guide URL but uses a vendored copy"

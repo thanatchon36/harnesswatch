@@ -1,0 +1,149 @@
+id: claude-code
+name: Claude Code
+vendor: Anthropic
+tier: B
+license: Proprietary          # GitHub API: no SPDX for anthropics/claude-code (docs/changelog/issues repo only)
+open_source: false
+status: analysed                 # black-box (Tier B): official docs, npm metadata, local file names/modes; no decompilation (rule 8)
+version_analysed: "2.1.300"   # local install `claude --version` = 2.1.300; latest GitHub release v2.1.300 (2026-10-14)
+analysed_on: "2026-10-15"
+homepage: https://code.claude.com/docs
+repo: https://github.com/anthropics/claude-code   # public repo = changelog, issues, plugins, examples (not full source)
+
+binaries: [claude]
+packages:
+  - {ecosystem: npm, name: "@anthropic-ai/claude-code"}
+install_methods:
+  - {method: curl-installer, command: "curl -fsSL https://claude.ai/install.sh | bash", checksum_verified: null, signed: true, source: https://code.claude.com/docs/en/setup}   # release manifest.json (SHA256 per binary) is GPG-signed and user-verifiable; whether install.sh itself verifies it is unverified
+  - {method: homebrew, command: "brew install --cask claude-code", checksum_verified: null, signed: null, source: https://code.claude.com/docs/en/setup}
+  - {method: winget, command: "winget install Anthropic.ClaudeCode", checksum_verified: null, signed: null, source: https://code.claude.com/docs/en/setup}
+  - {method: apt-dnf-apk, command: "signed Anthropic repositories", checksum_verified: true, signed: true, source: https://code.claude.com/docs/en/setup}
+  - {method: npm, command: "npm install -g @anthropic-ai/claude-code", checksum_verified: null, signed: true, source: https://code.claude.com/docs/en/setup}   # 2.1.300 registry metadata: npm trusted publisher (GitHub Actions OIDC), registry ECDSA signatures, no provenance attestation; postinstall `node install.cjs` fetches the platform optionalDependency (ledger B1-011)
+auto_update: {default: true, config: "autoUpdatesChannel latest|stable, minimumVersion (settings.json); DISABLE_AUTOUPDATER=1 (background check only) / DISABLE_UPDATES=1 (all update paths); CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC also disables auto-updates; update checks go to downloads.claude.ai (native) or registry.npmjs.org (npm); brew/winget/apt/dnf/apk do not auto-update by default; Linux binaries not individually code-signed, manifest.json GPG-signed from 2.1.89", source: https://code.claude.com/docs/en/setup}
+
+state_dirs: ["~/.claude", "~/.claude.json", "$CLAUDE_CONFIG_DIR"]
+credential_files: ["~/.claude/.credentials.json"]       # mode 0600 (verified locally); macOS uses Keychain first
+credential_storage: "macOS Keychain (file fallback); Linux/Windows ~/.claude/.credentials.json (0600 on Linux); API keys via ANTHROPIC_API_KEY env or apiKeyHelper command in settings"
+log_paths: ["~/.claude/projects/*/*.jsonl", "~/.claude/history.jsonl", "~/.claude/file-history/**"]
+memory_paths: ["~/.claude/CLAUDE.md", "~/.claude/rules/*.md", "~/.claude/projects/*/memory/MEMORY.md", "~/.claude/projects/*/memory/*.md"]
+
+config_files:
+  - {path: "/etc/claude-code/managed-settings.json", scope: managed, format: json, kind: settings}          # Linux/WSL
+  - {path: "/etc/claude-code/managed-settings.d/*.json", scope: managed, format: json, kind: settings}
+  - {path: "/Library/Application Support/ClaudeCode/managed-settings.json", scope: managed, format: json, kind: settings}   # macOS
+  - {path: "C:\\Program Files\\ClaudeCode\\managed-settings.json", scope: managed, format: json, kind: settings}            # Windows
+  - {path: "/etc/claude-code/managed-mcp.json", scope: managed, format: json, kind: mcp}
+  - {path: "/etc/claude-code/CLAUDE.md", scope: managed, format: markdown, kind: instructions}
+  - {path: "~/.claude/settings.json", scope: user, format: json, kind: settings}
+  - {path: "~/.claude.json", scope: user, format: json, kind: mcp}        # mcpServers (user) and projects.<path>.mcpServers (local); also hasTrustDialogAccepted per project
+  - {path: "~/.claude/CLAUDE.md", scope: user, format: markdown, kind: instructions}
+  - {path: "~/.claude/rules/*.md", scope: user, format: markdown, kind: rules}
+  - {path: "~/.claude/skills/*/SKILL.md", scope: user, format: markdown, kind: skills}
+  - {path: "~/.claude/agents/*.md", scope: user, format: markdown, kind: agents}
+  - {path: "~/.claude/commands/*.md", scope: user, format: markdown, kind: skills}
+  - {path: "~/.claude/plugins/**", scope: user, format: json, kind: skills}
+  - {path: ".claude/settings.json", scope: project, format: json, kind: settings}
+  - {path: ".claude/settings.local.json", scope: project-local, format: json, kind: settings}
+  - {path: ".mcp.json", scope: project, format: json, kind: mcp}
+  - {path: "CLAUDE.md", scope: project, format: markdown, kind: instructions}
+  - {path: ".claude/CLAUDE.md", scope: project, format: markdown, kind: instructions}
+  - {path: "CLAUDE.local.md", scope: project-local, format: markdown, kind: instructions}
+  - {path: ".claude/rules/*.md", scope: project, format: markdown, kind: rules}
+  - {path: ".claude/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+  - {path: ".claude/agents/*.md", scope: project, format: markdown, kind: agents}
+  - {path: ".claude/commands/*.md", scope: project, format: markdown, kind: skills}
+  - {path: ".claude-plugin/marketplace.json", scope: project, format: json, kind: skills}
+
+instruction_files: ["CLAUDE.md", ".claude/CLAUDE.md", "CLAUDE.local.md", ".claude/rules/*.md", "AGENTS.md"]   # AGENTS.md read when CLAUDE.md absent / via import (see docs memory#agents-md)
+skills_paths: [".claude/skills/*/SKILL.md", "~/.claude/skills/*/SKILL.md"]
+
+mcp:
+  files: [".mcp.json", "~/.claude.json", "/etc/claude-code/managed-mcp.json", "--mcp-config <file|json>"]
+  servers_key: "mcpServers"          # also: ~/.claude.json -> projects["<abs path>"].mcpServers (local scope); settings.json managedMcpServers (managed only)
+  server_fields:
+    command: command
+    args: args
+    env: env
+    url: url
+    headers: headers
+    type: type                       # stdio (default if no type) | http (alias streamable-http) | sse | ws; entry with url but no type is an error
+    headersHelper: headersHelper     # command run to mint headers (gated by workspace trust)
+    oauth: oauth
+  project_servers_require_approval: true   # per-server prompt; keys enabledMcpjsonServers / enableAllProjectMcpServers / disabledMcpjsonServers; ignored when committed in an UNTRUSTED folder; `claude -p` connects .mcp.json servers without asking in never-trusted folders (docs permissions#what-runs-before-you-trust-a-folder)
+  approval_keys: {enable_all: "enableAllProjectMcpServers", enabled: "enabledMcpjsonServers", disabled: "disabledMcpjsonServers"}
+  managed_policy_keys: ["allowedMcpServers", "deniedMcpServers", "allowManagedMcpServersOnly", "managedMcpServers"]
+  notes: "${VAR} / ${VAR:-default} expansion in command, args, env, url, headers. `npx -y` style launches are common in .mcp.json."
+
+permissions:
+  config_keys:
+    mode: "permissions.defaultMode"
+    allow: "permissions.allow"
+    ask: "permissions.ask"
+    deny: "permissions.deny"
+    additional_dirs: "permissions.additionalDirectories"
+    disable_bypass: "permissions.disableBypassPermissionsMode"   # value "disable"
+  default_mode: "auto"             # built-in starting mode (no defaultMode set): interactive terminal/VS Code = auto on >=2.1.283; `claude -p`/SDK = default when feature flags are fetched, auto on >=2.1.285 when not (third-party provider, telemetry off); falls back to Manual (default) when auto is unavailable (model, disableAutoMode, server-side). Values: default | acceptEdits | plan | auto | dontAsk | bypassPermissions | manual (alias of default). Source: permission-modes (ledger B1-005)
+  auto_approve_values:
+    - {key: "permissions.defaultMode", value: "bypassPermissions", note: "ignored from project/local settings since v2.1.257; honoured in user/managed/--settings"}
+    - {key: "permissions.defaultMode", value: "auto", note: "LLM-classifier approval; not honoured from project/local settings"}
+    - {key: "permissions.defaultMode", value: "acceptEdits", note: "auto-approves file edits and common fs commands"}
+    - {key: "skipDangerousModePermissionPrompt", value: true, note: "suppresses the bypass confirmation dialog; user/local/managed only"}
+  cli_flags_auto_approve: ["--dangerously-skip-permissions", "--permission-mode bypassPermissions", "--allow-dangerously-skip-permissions (adds mode to cycle)"]   # bypass refused as root/sudo on Linux/macOS unless in a "recognized sandbox" (mechanism undocumented); since 2.1.126 also skips prompts for writes to .claude/, .git/, shell rc files
+  allow_rule_syntax: "Bash(npm run test:*)"      # also Bash(npm run *), Read(./src/**), Edit(...), WebFetch(domain:example.com), mcp__server__tool, Agent(...)
+  overbroad_patterns: ["Bash", "Bash(*)", "*", "Bash(curl *)", "Bash(git *)", "WebFetch", "mcp__*", "Edit", "Write"]
+  evaluation: "deny > ask > allow; deny rules apply in every mode including bypassPermissions"
+  managed_only_keys: ["allowManagedPermissionRulesOnly", "permissions.disableBypassPermissionsMode", "permissions.disableAutoMode"]
+
+hooks:
+  supported: true
+  config_key: "hooks"              # {EventName: [{matcher, hooks: [{type, command, args, if, timeout}]}]}
+  repo_scoped_allowed: true        # .claude/settings.json, .claude/settings.local.json, project skills/agents frontmatter, plugins
+  command_field: "command"
+  handler_types: ["command", "http", "mcp_tool", "prompt", "agent"]
+  events: [SessionStart, Setup, UserPromptSubmit, UserPromptExpansion, PreToolUse, PermissionRequest, PermissionDenied, PostToolUse, PostToolUseFailure, PostToolBatch, Notification, MessageDisplay, SubagentStart, SubagentStop, TaskCreated, TaskCompleted, Stop, StopFailure, TeammateIdle, InstructionsLoaded, ConfigChange, CwdChanged, DirectoryAdded, FileChanged, WorktreeCreate, WorktreeRemove, PreCompact, PostCompact, PreModelSwitch, PostModelSwitch, Elicitation, ElicitationResult, SessionEnd]
+  managed_controls: ["allowManagedHooksOnly", "disableAllHooks", "allowedHttpHookUrls"]
+  trust_gate: "interactive: all settings hooks (even user) held until workspace trust accepted; `-p`/SDK: never prompts, repo hooks run"
+
+sandbox: {available: true, default_on: false, mechanism: "Seatbelt (macOS); bubblewrap + socat (Linux/WSL2), optional seccomp filter from @anthropic-ai/sandbox-runtime, enableWeakerNestedSandbox for unprivileged containers; native Windows unsandboxed; fails open unless sandbox.failIfUnavailable", config: "sandbox.enabled (+ sandbox.filesystem.*, sandbox.network.allowedDomains, sandbox.autoAllowBashIfSandboxed, sandbox.excludedCommands, sandbox.allowUnsandboxedCommands)", source: https://code.claude.com/docs/en/sandboxing}
+network: {domain_allowlist: true, config: "sandbox.network.allowedDomains / deniedDomains / allowManagedDomainsOnly; WebFetch(domain:...) permission rules", default: "sandbox off by default; with sandbox on, allowed domains start empty and unknown hosts prompt", source: https://code.claude.com/docs/en/sandboxing}
+workspace_trust: {prompt_on_new_folder: true, notes: "Interactive only; `claude -p` / SDK never show it and treat the folder as trusted for hooks/env/apiKeyHelper/.mcp.json; project permissions.allow ignored until trusted; ~/.claude.json projects[<path>].hasTrustDialogAccepted; pre-trust execution CVEs fixed (CVE-2025-59536, CVE-2025-65099, CVE-2026-33068, CVE-2026-40068, CVE-2026-21852)", source: https://code.claude.com/docs/en/permissions}
+memory: {persistent: true, cross_project: true, agent_writable: true, notes: "CLAUDE.md hierarchy (managed/user/project/local) plus auto memory at ~/.claude/projects/<project>/memory/ (on by default; autoMemoryEnabled, autoMemoryDirectory, CLAUDE_CODE_DISABLE_AUTO_MEMORY); external imports need approval", source: https://code.claude.com/docs/en/memory}
+subagents: {supported: true, inherits_permissions: "built-in subagents inherit the parent's permission rules; custom agents may set permissionMode (bypassPermissions ignored if disabled); plugin agents ignore hooks/mcpServers/permissionMode; isolation: worktree optional", notes: ".claude/agents/*.md frontmatter: tools, disallowedTools, model, permissionMode, mcpServers, hooks, isolation, memory", source: https://code.claude.com/docs/en/sub-agents}
+telemetry: {default_on: true, hosts: ["api.anthropic.com (feature flags, telemetry event logging, WebFetch preflight)", "http-intake.logs.us5.datadoghq.com (metrics)", "browser-intake-us5-datadoghq.com (error reports)"], opt_out: "DISABLE_TELEMETRY=1; DISABLE_ERROR_REPORTING=1; CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 (0/false also disables); DO_NOT_TRACK=1; OTel export is opt-in via CLAUDE_CODE_ENABLE_TELEMETRY=1. Metrics default-on only for the Claude API (off for Bedrock/Vertex/Foundry); error reports only for Pro/Max sign-ins on >=2.1.198. WebFetch hostname preflight to api.anthropic.com runs on every provider and is NOT covered by NONESSENTIAL (skipWebFetchPreflight: true)", training_default: "Consumer (Free/Pro/Max): per account setting, 5-year retention if allowed else 30 days; commercial: no training by default, 30-day retention, ZDR for qualified Enterprise", source: https://code.claude.com/docs/en/data-usage}
+headless:
+  command: "claude -p"
+  flags: ["--output-format text|json|stream-json", "--input-format stream-json", "--permission-mode", "--allowedTools", "--disallowedTools", "--max-turns", "--max-budget-usd", "--no-session-persistence", "--bare", "--setting-sources user", "--settings", "--mcp-config", "--strict-mcp-config", "--model", "--append-system-prompt"]
+  ci_integrations: ["anthropics/claude-code-action", "claude-code GitLab CI/CD"]
+  model_override: "--model / ANTHROPIC_MODEL / ANTHROPIC_BASE_URL (+ ANTHROPIC_AUTH_TOKEN or ANTHROPIC_API_KEY); ANTHROPIC_DEFAULT_{OPUS,SONNET,HAIKU}_MODEL; CLAUDE_CODE_USE_BEDROCK|VERTEX|FOUNDRY for cloud providers"
+  local_model_support: "Yes via an Anthropic Messages-compatible endpoint (docs: Anthropic does not support routing to non-Claude models through gateways; support statement, not a ban). Plan: evidence/research/B1_observe_plan.md. Ollama (>= v0.14) serves /v1/messages; docs: ANTHROPIC_AUTH_TOKEN=ollama ANTHROPIC_BASE_URL=http://localhost:11434 claude --model <ollama-model>. count_tokens unsupported; non-first-party base URL disables MCP tool search unless ENABLE_TOOL_SEARCH=true. Not verified by test here."
+
+security_policy: {security_md: https://github.com/anthropics/claude-code/blob/main/SECURITY.md, bug_bounty: https://hackerone.com/anthropic, advisories: https://github.com/anthropics/claude-code/security/advisories}
+sources:
+  - {url: https://code.claude.com/docs/en/settings, accessed: "2026-10-15", note: "settings scopes/precedence"}
+  - {url: https://code.claude.com/docs/en/settings-reference, accessed: "2026-10-15", note: "keys: permissions, sandbox, MCP approval, hooks, marketplaces"}
+  - {url: https://code.claude.com/docs/en/managed-settings, accessed: "2026-10-15", note: "managed paths, drop-ins"}
+  - {url: https://code.claude.com/docs/en/permissions, accessed: "2026-10-15", note: "trust gating table"}
+  - {url: https://code.claude.com/docs/en/hooks, accessed: "2026-10-15", note: "events, locations, workspace trust"}
+  - {url: https://code.claude.com/docs/en/mcp, accessed: "2026-10-15", note: "scopes and project approvals"}
+  - {url: https://code.claude.com/docs/en/sandboxing, accessed: "2026-10-15", note: "sandbox"}
+  - {url: https://code.claude.com/docs/en/memory, accessed: "2026-10-15", note: "CLAUDE.md and auto memory"}
+  - {url: https://code.claude.com/docs/en/cli-reference, accessed: "2026-10-15", note: "flags"}
+  - {url: https://code.claude.com/docs/en/env-vars, accessed: "2026-10-15", note: "env vars"}
+  - {url: https://code.claude.com/docs/en/data-usage, accessed: "2026-10-15", note: "telemetry/retention"}
+  - {url: https://code.claude.com/docs/en/setup, accessed: "2026-10-15", note: "install, signing, updates"}
+  - {url: https://code.claude.com/docs/en/authentication, accessed: "2026-10-15", note: "credential storage"}
+  - {url: https://docs.ollama.com/api/anthropic-compatibility, accessed: "2026-10-15", note: "Ollama /v1/messages"}
+  - {url: https://github.com/anthropics/claude-code/security/advisories, accessed: "2026-10-15", note: "35 GHSAs via API"}
+  - {url: "local:~/.claude (structure only)", accessed: "2026-10-15", note: "settings.json keys, credentials mode 0600; contents not read"}
+  - {url: https://code.claude.com/docs/en/network-config, accessed: "2026-10-15", note: "network access requirements (host list) - B1"}
+  - {url: https://code.claude.com/docs/en/permission-modes, accessed: "2026-10-15", note: "built-in starting mode, root refusal - B1"}
+  - {url: https://code.claude.com/docs/en/headless, accessed: "2026-10-15", note: "bare mode; -p runs repo hooks/.mcp.json - B1"}
+  - {url: https://registry.npmjs.org/@anthropic-ai/claude-code, accessed: "2026-10-15", note: "npm metadata via disposable container - B1"}
+extra:
+  user_settings_keys_seen_locally: [permissions, statusLine, enabledPlugins, extraKnownMarketplaces, skipDangerousModePermissionPrompt, theme]
+  claude_json_top_level_keys_seen_locally: [installMethod, autoUpdates, projects, oauthAccount, userID, machineID]   # key names only; oauthAccount/userID are identifiers
+  settings_env_block_ignored_in_project: "CLAUDE_CONFIG_DIR and OTel exporter variables are ignored in project/local `env`"
+  local_state_modes_2026_10_15: "~/.claude 0755; transcripts projects/*/*.jsonl 0600; history.jsonl 0600; ~/.claude.json 0600; projects/*/memory/* 0644; sessions/ 0700 (names/modes only; ledger B1-012)"
+  subprocess_env_scrub: "CLAUDE_CODE_SUBPROCESS_ENV_SCRUB=1 strips credentials from Bash/hook/stdio-MCP subprocess env; off by default"
+  npm_package_2_1_300: "postinstall `node install.cjs`; dependencies {}; 8 platform optionalDependencies; 7 files / 189,328 B; trusted publisher GitHub Actions OIDC; no provenance attestation; dist-tag stable=2.1.292"
+  leaked_source_map_event: "2.1.88 npm package shipped a source map (2026-03-31); cited as an event only, source not used"

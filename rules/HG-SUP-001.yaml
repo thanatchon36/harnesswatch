@@ -1,0 +1,15 @@
+id: HG-SUP-001
+title: Harness installed through a `curl | sh` installer without checksum or signature verification
+area: SUP
+severity: low
+confidence: medium
+kind: design-weakness
+taxonomy: [T06]
+description: >
+  The installed binary lives where the vendor's script installer puts it, and the harness profile
+  records that this installer does not verify a published checksum or signature (or that this is
+  undocumented). Combined with on-by-default auto-update, whoever controls the download host or CDN
+  path controls code that runs with the developer's credentials.
+remediation: Install from a package manager with lockfiles or verify the vendor's published checksums/signatures (Sigstore, GPG); pin versions and control auto-update centrally where supported.
+references:
+  - https://slsa.dev/spec/v1.0/

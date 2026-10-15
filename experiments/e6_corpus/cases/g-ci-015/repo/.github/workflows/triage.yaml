@@ -1,0 +1,17 @@
+name: agent
+'on':
+  issue_comment:
+    types:
+    - created
+jobs:
+  agent:
+    runs-on: ubuntu-latest
+    if: contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association || github.event.issue.author_association)
+    permissions: read-all
+    steps:
+    - uses: actions/checkout@v5
+    - uses: anthropics/claude-code-action@v1
+      with:
+        prompt: Review this change and suggest fixes.
+        anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+        claude_args: --dangerously-skip-permissions

@@ -1,0 +1,52 @@
+id: HG-PERM-001
+title: Approve-everything (YOLO / bypass / full-auto) mode enabled in config
+area: PERM
+severity: medium
+confidence: high
+kind: design-weakness
+taxonomy: [T03, T14, T01]
+description: >
+  The harness is configured to run tools and shell commands without asking (Claude Code
+  `bypassPermissions`, Codex `approval_policy = "never"` / `danger-full-access`, Gemini/Qwen `yolo`,
+  OpenCode `"permission": "allow"`, Cursor `unrestricted`, Cline/Roo auto-approve, Goose `auto`, …).
+  Spellings come from each harness profile. Every prompt injection then reaches the shell directly.
+  Raised to high when a repository config file sets it, because it then applies to every person and
+  CI job that opens the repository (some harnesses now ignore this from project scope; older versions
+  do not). Classifier-mediated and edits-only modes are not counted (see `ignore`).
+remediation: >
+  Use the harness's default (ask) mode, or a narrow allowlist of read-only and test commands. Reserve
+  bypass modes for disposable sandboxes/containers without credentials, and disable them centrally
+  where the harness supports it (Claude Code `permissions.disableBypassPermissionsMode`, Gemini
+  `security.disableYoloMode`, Codex `requirements.toml`).
+references:
+  - https://code.claude.com/docs/en/permissions
+  - https://developers.openai.com/codex/security
+params:
+  ignore_keys:
+    - sandbox_workspace_write.network_access     # HG-NET-001
+    - projects.<path>.trust_level
+    - skipDangerousModePermissionPrompt
+    - security.autoAddToPolicyByDefault
+    - security.enablePermanentToolApproval
+    - security.disableYoloMode
+    - tools.allowed                              # allowlists → HG-PERM-002
+    - permissions.allow
+    - permissions.allowed_tools
+    - allow                                      # Continue CLI permissions.yaml allowlist
+    - mcpServers.<name>.trust                    # MCP approval → HG-MCP-006
+    - mcpServers.*.trust
+    - mcpServers.*.autoApprove
+    - mcpServers.*.alwaysAllow
+    - mcpServers.<name>.autoApprove
+  ignore:                                        # bounded modes: classifier review or edits only
+    - permissions.defaultMode=auto
+    - permissions.defaultMode=acceptEdits
+    - general.defaultApprovalMode=auto_edit
+    - tools.approvalMode=auto
+    - tools.approvalMode=auto-edit
+    - approvals_reviewer=auto_review
+    - general.defaultPermissionMode=auto
+    - general.defaultPermissionMode=accept_edits
+    - sessionDefaultSettings.autonomyLevel=medium
+    - toolPermission=proceed-in-sandbox
+    - ui.permission_mode=auto

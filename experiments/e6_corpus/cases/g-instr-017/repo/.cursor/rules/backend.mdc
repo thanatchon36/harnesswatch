@@ -1,0 +1,24 @@
+---
+description: Backend conventions
+globs: src/**/*.py
+alwaysApply: false
+---
+
+## Do not
+
+- Do not modify files under `vendor/` or `generated/`.
+- Do not add new dependencies without asking.
+
+## Architecture
+
+- `src/api/` HTTP handlers
+- `src/core/` domain logic (no I/O)
+- `src/db/` repositories and migrations
+
+## Tests
+
+Run `pytest -q` before every commit. New code needs unit tests; keep coverage above 85%.
+
+## Build
+
+Run `npm ci` once, then `npm run build`. Use Node 22 (see `.nvmrc`).

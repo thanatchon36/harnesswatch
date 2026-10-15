@@ -1,0 +1,290 @@
+{
+  "harness": "grok-build",
+  "version": "1.0.52",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Modes: Ask (default), Auto (classifier), Always-approve (grok --always-approve, /always-approve, Ctrl+O, Shift+Tab); deny rules and PreToolUse hooks still apply.",
+          "source": "https://docs.x.ai/build/features/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Default mode is set only in user config ([ui] permission_mode = ask|auto|always-approve), not in project .grok/config.toml; legacy keys approval_mode and yolo = true still work.",
+          "source": "https://docs.x.ai/build/features/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Rules: [permission] rules = [{action=allow|deny, tool, pattern}]; deny wins; an explicit config/CLI allow auto-approves even dangerous patterns such as rm and git push.",
+          "source": "https://docs.x.ai/build/features/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "[ui] disable_bypass_permissions_mode = true in /etc/grok/requirements.toml disables --yolo, --permission-mode bypassPermissions and all toggles; honoured only from root-owned sources.",
+          "source": "https://docs.x.ai/build/enterprise",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Ask by default; auto classifier mode; always-approve (--always-approve/--yolo) available; deny rules and PreToolUse hooks still bind; enterprise can lock bypass off from root-owned requirements.toml."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Sandbox profiles off (default), workspace, devbox, read-only, strict via --sandbox, [sandbox] profile, or GROK_SANDBOX; managed pin via requirements.toml.",
+          "source": "https://docs.x.ai/build/features/sandbox",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Limitations: child network enforcement Linux only (no-op on macOS for read-only/strict); built-ins do not protect ~/.ssh; in-process model/web tools not blocked by child-network settings.",
+          "source": "https://docs.x.ai/build/features/sandbox",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Landlock (Linux) / Seatbelt (macOS) profiles off|workspace|devbox|read-only|strict; OFF by default; child-network blocking Linux only; credentials not protected by built-ins."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "web_fetch tool is off by default for security (GROK_WEB_FETCH=0); GROK_WEB_FETCH_PROXY sets an egress proxy.",
+          "source": "https://docs.x.ai/build/settings/reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Network control only through sandbox profiles (restrict_network, Linux) and web_fetch off by default (GROK_WEB_FETCH=0); no domain allowlist."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Project hooks require trust (/hooks-trust or --trust), stored in ~/.grok/trusted_folders.toml, which also covers project MCP and LSP servers.",
+          "source": "https://docs.x.ai/build/features/hooks",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Source: folder_trust.rs gates .mcp.json, .grok/config.toml [permission]/[mcp_servers]/[plugins].paths, .grok/lsp.json, AGENTS.md/CLAUDE.md and .grok/skills, citing 1-click RCE / policy bypass as the threat.",
+          "source": "https://github.com/xai-org/grok-build/blob/main/crates/codegen/xai-grok-shell/src/agent/folder_trust.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Project .grok/config.toml only contributes [mcp_servers], [plugins] and [permission].",
+          "source": "https://docs.x.ai/build/settings/reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Folder-trust gate resolved once per workspace before repo-local MCP/LSP servers, permission policy, project instructions, skills and hooks are honoured; trust stored in ~/.grok/trusted_folders.toml; --trust bypasses."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP servers: [mcp_servers.<name>] command/args/env/startup_timeout_sec/tool_timeout_sec or url/headers; ${VAR} expansion; project scope in .grok/config.toml; also loads ~/.claude.json, .cursor/mcp.json, .mcp.json (merged below config.toml).",
+          "source": "https://docs.x.ai/build/features/mcp-servers",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "OAuth tokens are stored under ~/.grok/mcp_credentials.json.",
+          "source": "https://docs.x.ai/build/features/mcp-servers",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Grok reads a subset of Claude Code managed-settings.json (permission rules, MCP server allowlists, a few telemetry flags, marketplace restrictions) for compatibility.",
+          "source": "https://docs.x.ai/build/enterprise",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "grok mcp add/doctor, project-scope servers behind folder trust, imports ~/.claude.json, .cursor/mcp.json and .mcp.json; OAuth tokens in ~/.grok/mcp_credentials.json; enterprise MCP allowlist only via Claude managed-settings compatibility."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Per-plugin trust store at ~/.grok/trusted-plugins is separate from the folder-trust store.",
+          "source": "https://github.com/xai-org/grok-build/blob/main/crates/codegen/xai-grok-shell/src/agent/folder_trust.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Skills, plugins and marketplaces with a per-plugin trust store (~/.grok/trusted-plugins); marketplace restrictions via managed policy."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Home for config, auth, sessions, skills, plugins and logs is ~/.grok (GROK_HOME); external auth_provider_command and OIDC supported.",
+          "source": "https://docs.x.ai/build/settings/reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Credential resolution order per model: model.api_key > model.env_key > session token > XAI_API_KEY.",
+          "source": "https://docs.x.ai/build/enterprise",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Session auth tokens and MCP OAuth tokens stored under ~/.grok (auth.json, mcp_credentials.json); keychain use unverified; XAI_API_KEY env."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "Headless: grok -p, --output-format plain|json|streaming-json, --always-approve, --permission-mode dontAsk (silently deny without explicit allow), --allow/--deny, --sandbox strict, --no-auto-update.",
+          "source": "https://docs.x.ai/build/cli/headless-scripting",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Official CI example runs grok -p ... --permission-mode dontAsk --allow 'Bash(git *)' ... --sandbox strict.",
+          "source": "https://docs.x.ai/build/enterprise",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "grok -p headless with --output-format; dontAsk and acceptEdits permission modes for CI; but --always-approve exists for headless and documented in examples."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "GROK_MEMORY defaults to 0 (cross-session memory off); GROK_SUBAGENTS defaults to 0.",
+          "source": "https://docs.x.ai/build/settings/reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Cross-session memory is opt-in (GROK_MEMORY=0 default); AGENTS.md/CLAUDE.md/.grok/rules loaded."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Subagents/task tool are disabled by default (GROK_SUBAGENTS=0).",
+          "source": "https://docs.x.ai/build/settings/reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Subagents reportedly run in isolated git worktrees.",
+          "source": "https://mer.vin/2026/05/grok-build-cli-xai-terminal-coding-agent-with-plan-mode-subagents-and-headless-ci/",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Subagents are off by default (GROK_SUBAGENTS=0) and use isolated git worktrees per third-party reports; permission inheritance not verified."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Headless sessions stored in ~/.grok/sessions; GROK_LOG_FILE sets log path; mcp stderr in ~/.grok/logs/mcp/.",
+          "source": "https://docs.x.ai/build/cli/headless-scripting",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Local sessions in ~/.grok/sessions and logs; crash reports opt-in (GROK_CRASH_HANDLER=0); an OTel crate exists but enterprise audit export not read."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "Source crates xai-grok-telemetry (product events + Mixpanel + Sentry) and xai-grok-secrets (regex scrubbing of outbound telemetry) exist; GROK_TELEMETRY_EVENTS_URL redirects event posting in tests.",
+          "source": "https://github.com/xai-org/grok-build/tree/main/crates/codegen",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Zero Data Retention is enforced at team level; local session history stays in ~/.grok.",
+          "source": "https://docs.x.ai/build/enterprise",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Researcher 'Cereblab' reported v0.2.93 uploaded entire workspaces (5.1 GB in 73 chunks for a 192 KB task, including unopened .env files) to a grok-code-session-traces bucket irrespective of the Improve-the-model toggle; xAI disabled the upload server-side on 2026-07-13.",
+          "source": "https://devops.com/xai-open-sources-grok-build-coding-agent-after-cloud-upload-exposes-ssh-keys-repos/",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Product events (Mixpanel), Sentry and session trace upload exist in source; a 2026 incident showed whole-workspace uploads independent of the 'Improve the model' toggle; current defaults and a documented opt-out are unverified; ZDR for enterprise teams."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Install: curl -fsSL https://x.ai/cli/install.sh | bash, or npm install -g @xai-official/grok (avoids x.ai/storage.googleapis.com hosts).",
+          "source": "https://docs.x.ai/build/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "npm @xai-official/grok 1.0.52 published 2026-10-11, Apache-2.0, postinstall script bin/postinstall.js, platform binaries as optionalDependencies.",
+          "source": "https://registry.npmjs.org/@xai-official/grok",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Auto-update is on by default (cli.auto_update); suppress with GROK_DISABLE_AUTOUPDATER or --no-auto-update.",
+          "source": "https://docs.x.ai/build/settings/reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Apache-2.0 source (Rust) public since 2026-07-15; npm @xai-official/grok with platform binary packages and a postinstall script; curl|bash installer from x.ai; auto-update on, GROK_DISABLE_AUTOUPDATER; signature/provenance of binaries unverified."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Config layers low to high: /etc/grok/managed_config.toml, ~/.grok/managed_config.toml, ~/.grok/config.toml, ~/.grok/requirements.toml, /etc/grok/requirements.toml; requirements pins cannot be overridden by user config, env or remote settings.",
+          "source": "https://docs.x.ai/build/enterprise",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Layered managed_config.toml and fail-closed requirements.toml in /etc/grok (MDM) that users cannot override; OIDC, disable_api_key_auth, force_login_team_uuid, locked sandbox profile and bypass mode."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "xAI runs a bug bounty on HackerOne (hackerone.com/x); product security reports to vulnerabilities@x.ai.",
+          "source": "https://x.ai/security.txt",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Repo SECURITY.md: report via HackerOne, no public GitHub issues; repo has no published security advisories.",
+          "source": "https://github.com/xai-org/grok-build/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "xAI disabled the upload server-side without a security advisory or version note (per devops.com).",
+          "source": "https://devops.com/xai-open-sources-grok-build-coding-agent-after-cloud-upload-exposes-ssh-keys-repos/",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "SECURITY.md routes to HackerOne (hackerone.com/x); xAI security.txt lists vulnerabilities@x.ai; no GHSA advisories on the repo; the 2026 upload incident was disclosed by a third party with no advisory."
+    }
+  }
+}

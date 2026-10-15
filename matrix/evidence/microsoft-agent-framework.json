@@ -1,0 +1,159 @@
+{
+  "harness": "microsoft-agent-framework",
+  "version": "python 1.21.0 / dotnet 1.25.0",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "tier": "C",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Plain tools default approval_mode never_require; MCPTool approval_mode + allowed_tools",
+          "source": "https://github.com/microsoft/agent-framework/blob/main/python/packages/core/agent_framework/_tools.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Harness agent: tool approval with standing rules and heuristic auto-approval enabled by default",
+          "source": "https://github.com/microsoft/agent-framework/blob/main/python/samples/02-agents/harness/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Harness layer enables approval by default with standing rules; base tools default to no approval."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Hyperlight CodeAct sandbox package; harness shell tool only when shell_executor provided",
+          "source": "https://github.com/microsoft/agent-framework/blob/main/python/packages/hyperlight/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Micro-VM style CodeAct sandbox is optional; shell executor is builder-supplied."
+    },
+    "D03": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D04": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "GHSA-q7g7 (approval TOCTOU), GHSA-9f26 (secrets forwarded to MCP), GHSA-r2mq (bearer token to wrong origin) all in MCP paths",
+          "source": "https://github.com/microsoft/agent-framework/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "MCPTool allowed_tools allow-list",
+          "source": "https://github.com/microsoft/agent-framework/blob/main/python/packages/core/agent_framework/_mcp.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Approval and allow-list exist; three MCP-path advisories in Oct 2026."
+    },
+    "D06": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "GHSA-9f26-7mqc-9vc4 declarative workflows could forward Sensitive values to MCP server",
+          "source": "https://github.com/microsoft/agent-framework/security/advisories/GHSA-9f26-7mqc-9vc4",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Sensitivity labelling exists but was bypassable in declarative MCP invocation (fixed 1.24.0)."
+    },
+    "D08": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "harness MemoryContextProvider file-based durable memory when memory_store provided",
+          "source": "https://github.com/microsoft/agent-framework/blob/main/python/samples/02-agents/harness/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "Memory is opt-in; review/poisoning controls not examined."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Harness background agents module (_background_agents.py)",
+          "source": "https://github.com/microsoft/agent-framework/blob/main/python/packages/core/agent_framework/_harness/_background_agents.py",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "Not examined."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "OpenTelemetry observability module; enable_sensitive_data opt-in",
+          "source": "https://github.com/microsoft/agent-framework/blob/main/python/packages/core/agent_framework/observability.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Built-in OTel with sensitive-content opt-in."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "User-agent telemetry on unless AGENT_FRAMEWORK_USER_AGENT_DISABLED=true",
+          "source": "https://github.com/microsoft/agent-framework/blob/main/python/packages/core/agent_framework/_telemetry.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Minimal user-agent feature telemetry with env opt-out; content telemetry opt-in."
+    },
+    "D13": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D14": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "Microsoft MSRC SECURITY.md; GHSAs published Oct 2026",
+          "source": "https://github.com/microsoft/agent-framework/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "MSRC process plus published GHSAs with credited reporters."
+    }
+  }
+}

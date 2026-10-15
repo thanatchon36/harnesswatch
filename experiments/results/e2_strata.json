@@ -1,0 +1,226 @@
+{
+  "strata_sizes": {
+    "config": 600,
+    "instructions": 240,
+    "workflows": 177
+  },
+  "rules": [
+    {
+      "rule_id": "HG-CI-002",
+      "title": "Agent CI job runs with a write-scoped GITHUB_TOKEN",
+      "stratum": "workflows",
+      "k": 112,
+      "n": 177,
+      "rate": 0.6328,
+      "ci95": [
+        0.5596,
+        0.7003
+      ]
+    },
+    {
+      "rule_id": "HG-MCP-005",
+      "title": "MCP server declared in a repository config",
+      "stratum": "config",
+      "k": 311,
+      "n": 600,
+      "rate": 0.5183,
+      "ci95": [
+        0.4784,
+        0.5581
+      ]
+    },
+    {
+      "rule_id": "HG-MCP-001",
+      "title": "MCP server fetched from a registry at launch without a version pin",
+      "stratum": "config",
+      "k": 170,
+      "n": 600,
+      "rate": 0.2833,
+      "ci95": [
+        0.2487,
+        0.3207
+      ]
+    },
+    {
+      "rule_id": "HG-CI-001",
+      "title": "Headless agent in a workflow triggered by untrusted input (\"pwn request\")",
+      "stratum": "workflows",
+      "k": 50,
+      "n": 177,
+      "rate": 0.2825,
+      "ci95": [
+        0.2213,
+        0.3529
+      ]
+    },
+    {
+      "rule_id": "HG-MCP-002",
+      "title": "Remote MCP server over plaintext HTTP, wildcard host, or without authentication",
+      "stratum": "config",
+      "k": 86,
+      "n": 600,
+      "rate": 0.1433,
+      "ci95": [
+        0.1176,
+        0.1736
+      ]
+    },
+    {
+      "rule_id": "HG-HOOK-001",
+      "title": "Repository config defines hooks that execute shell commands",
+      "stratum": "config",
+      "k": 43,
+      "n": 600,
+      "rate": 0.0717,
+      "ci95": [
+        0.0536,
+        0.0951
+      ]
+    },
+    {
+      "rule_id": "HG-MCP-003",
+      "title": "Literal secret in an MCP server's env, headers or arguments",
+      "stratum": "config",
+      "k": 21,
+      "n": 600,
+      "rate": 0.035,
+      "ci95": [
+        0.023,
+        0.0529
+      ]
+    },
+    {
+      "rule_id": "HG-SEC-003",
+      "title": "Credential stored in plaintext in a harness config file",
+      "stratum": "config",
+      "k": 14,
+      "n": 600,
+      "rate": 0.0233,
+      "ci95": [
+        0.0139,
+        0.0388
+      ]
+    },
+    {
+      "rule_id": "HG-PERM-001",
+      "title": "Approve-everything (YOLO / bypass / full-auto) mode enabled in config",
+      "stratum": "config",
+      "k": 12,
+      "n": 600,
+      "rate": 0.02,
+      "ci95": [
+        0.0115,
+        0.0346
+      ]
+    },
+    {
+      "rule_id": "HG-PERM-003",
+      "title": "Unrestricted execution without a deny list for destructive or credential-reading commands",
+      "stratum": "config",
+      "k": 12,
+      "n": 600,
+      "rate": 0.02,
+      "ci95": [
+        0.0115,
+        0.0346
+      ]
+    },
+    {
+      "rule_id": "HG-INJ-002",
+      "title": "Prompt-injection phrasing in an instruction file",
+      "stratum": "instructions",
+      "k": 2,
+      "n": 240,
+      "rate": 0.0083,
+      "ci95": [
+        0.0023,
+        0.0299
+      ]
+    },
+    {
+      "rule_id": "HG-NET-001",
+      "title": "Unrestricted network egress for agent tools where the harness supports restriction",
+      "stratum": "config",
+      "k": 5,
+      "n": 600,
+      "rate": 0.0083,
+      "ci95": [
+        0.0036,
+        0.0194
+      ]
+    },
+    {
+      "rule_id": "HG-MCP-006",
+      "title": "MCP servers or their tools are auto-approved without a per-server prompt",
+      "stratum": "config",
+      "k": 3,
+      "n": 600,
+      "rate": 0.005,
+      "ci95": [
+        0.0017,
+        0.0146
+      ]
+    },
+    {
+      "rule_id": "HG-INJ-001",
+      "title": "Hidden or confusable Unicode in an instruction file",
+      "stratum": "instructions",
+      "k": 1,
+      "n": 240,
+      "rate": 0.0042,
+      "ci95": [
+        0.0007,
+        0.0232
+      ]
+    },
+    {
+      "rule_id": "HG-SUB-001",
+      "title": "Sub-agent or delegated agent configured with bypass permissions",
+      "stratum": "config",
+      "k": 2,
+      "n": 600,
+      "rate": 0.0033,
+      "ci95": [
+        0.0009,
+        0.0121
+      ]
+    },
+    {
+      "rule_id": "HG-HOOK-002",
+      "title": "Hook command fetches or sends data over the network, or runs code fetched at runtime",
+      "stratum": "config",
+      "k": 1,
+      "n": 600,
+      "rate": 0.0017,
+      "ci95": [
+        0.0003,
+        0.0094
+      ]
+    },
+    {
+      "rule_id": "HG-MEM-001",
+      "title": "Persistent agent-writable memory enabled (or shared through version control)",
+      "stratum": "config",
+      "k": 1,
+      "n": 600,
+      "rate": 0.0017,
+      "ci95": [
+        0.0003,
+        0.0094
+      ]
+    },
+    {
+      "rule_id": "HG-PERM-002",
+      "title": "Over-broad tool allowlist",
+      "stratum": "config",
+      "k": 1,
+      "n": 600,
+      "rate": 0.0017,
+      "ci95": [
+        0.0003,
+        0.0094
+      ]
+    }
+  ],
+  "note": "rate = repos with a finding / audited files in the stratum that can carry the rule"
+}

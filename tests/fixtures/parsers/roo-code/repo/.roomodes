@@ -1,0 +1,6 @@
+customModes:
+- groups:
+  - read
+  name: Docs
+  roleDefinition: Writes docs
+  slug: docs

@@ -1,0 +1,8 @@
+expected:
+- HG-HOOK-002
+- HG-MCP-006
+- HG-PERM-001
+- HG-PERM-003
+origin: generated
+family: claude
+note: Claude Code settings (home)

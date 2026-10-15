@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "search": {"type": "stdio", "command": "npx", "args": ["-y", "@acme/search-mcp@1.2.0"], "env": {"API_KEY": "${API_KEY:-}", "REGION": "${REGION:-eu-west-1}"}}
+  }
+}

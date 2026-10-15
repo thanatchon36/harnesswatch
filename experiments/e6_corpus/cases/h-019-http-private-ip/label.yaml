@@ -1,0 +1,4 @@
+expected: [HG-MCP-002]
+origin: hand
+family: mcp
+note: "plaintext http to a LAN address, token sent in clear"

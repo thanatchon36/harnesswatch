@@ -1,0 +1,5 @@
+expected:
+- HG-HOOK-001
+origin: generated
+family: misc
+note: Cursor hooks

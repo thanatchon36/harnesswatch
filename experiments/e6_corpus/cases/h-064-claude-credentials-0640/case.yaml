@@ -1,0 +1,1 @@
+chmod: {home/.claude/.credentials.json: "0640"}

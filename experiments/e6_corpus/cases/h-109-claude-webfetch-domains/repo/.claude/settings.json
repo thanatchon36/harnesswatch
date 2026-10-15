@@ -1,0 +1,4 @@
+{
+  "permissions": {"allow": ["WebFetch(domain:docs.djangoproject.com)", "WebFetch(domain:pypi.org)", "WebSearch"]},
+  "sandbox": {"enabled": true, "network": {"allowedDomains": ["pypi.org", "files.pythonhosted.org"]}}
+}

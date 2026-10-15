@@ -1,0 +1,125 @@
+id: junie
+name: JetBrains Junie (Junie CLI `junie` + IDE plugin + GitHub Action)
+vendor: JetBrains
+tier: B
+license: Proprietary (JetBrains AI Service Terms of Service; github.com/JetBrains/junie holds installers/registry only, LICENSE.md = "All rights reserved")
+open_source: false
+status: docs-only
+version_analysed: "CLI release tag 3800.1 (GitHub JetBrains/junie latest release, 2026-10-14); npm @jetbrains/junie latest 3110.7.0 (modified 2026-09-09)"
+analysed_on: "2026-10-15"
+homepage: https://junie.jetbrains.com
+repo: https://github.com/JetBrains/junie   # distribution/installer repo, NOT source
+
+binaries: [junie]
+packages:
+  - {ecosystem: npm, name: "@jetbrains/junie"}
+  - {ecosystem: homebrew, name: "jetbrains-junie/junie/junie"}
+install_methods:
+  - {method: curl-installer, command: "curl -fsSL https://junie.jetbrains.com/install.sh | bash", checksum_verified: true, signed: null, source: "JetBrains/junie install.sh computes SHA-256 (skips with a warning if no sha tool available)"}
+  - {method: powershell, command: "powershell -NoProfile -ExecutionPolicy Bypass -Command \"iex (irm 'https://junie.jetbrains.com/install.ps1')\"", checksum_verified: null, signed: null, source: https://github.com/JetBrains/junie}
+  - {method: npm, command: "npm install -g @jetbrains/junie"}
+  - {method: brew, command: "brew tap jetbrains-junie/junie && brew install junie"}
+auto_update: {default: true, config: "config.json `auto-update`; `--skip-update-check`; `junie update`; channels via --channel=eap|nightly|experimental|release", source: https://junie.jetbrains.com/docs/junie-cli-configuration.html}
+
+state_dirs: ["~/.junie", "~/.local/share/junie", "$JUNIE_HOME"]
+credential_files: []   # JUNIE_API_KEY env / --auth; BYOK provider keys via env (JUNIE_ANTHROPIC_API_KEY etc.) or `byok` in config.json. On-disk storage of login/BYOK keys not documented (unverified).
+credential_storage: "unverified"
+log_paths: ["<session>/transcript.md", "<session>/events.jsonl", "~/.junie/**/sessions/*  (exact dir unverified)"]
+memory_paths: ["~/.junie/AGENTS.md", ".junie/AGENTS.md", ".junie/playbook.md", ".junie/rules/*.md"]
+
+config_files:
+  - {path: "~/.junie/config.json", scope: user, format: json, kind: settings}
+  - {path: ".junie/config.json", scope: project, format: json, kind: settings}   # not loaded in untrusted projects; `hooks` ignored by default unless passed via --config-location
+  - {path: "~/.junie/settings.json", scope: user, format: json, kind: settings}  # separate channel, contents unverified
+  - {path: "~/.junie/allowlist.json", scope: user, format: json, kind: settings}  # Action Allowlist (global only documented)
+  - {path: "~/.junie/sandbox.json", scope: user, format: json, kind: settings}    # project-local .junie/sandbox.json is ignored with warning
+  - {path: "~/.junie/mcp/mcp.json", scope: user, format: json, kind: mcp}
+  - {path: ".junie/mcp/mcp.json", scope: project, format: json, kind: mcp}
+  - {path: "~/.junie/models/*.json", scope: user, format: json, kind: settings}   # custom LLM profiles; $JUNIE_HOME/models
+  - {path: ".junie/models/*.json", scope: project, format: json, kind: settings}
+  - {path: ".junie/AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: ".junie/rules/*.md", scope: project, format: markdown, kind: rules}
+  - {path: ".junie/playbook.md", scope: project, format: markdown, kind: instructions}
+  - {path: ".junie/guidelines.md", scope: project, format: markdown, kind: instructions}   # legacy
+  - {path: "~/.junie/AGENTS.md", scope: user, format: markdown, kind: instructions}
+  - {path: ".aiignore", scope: project, format: ignore, kind: ignore}
+  - {path: "~/.junie/trust/*", scope: user, format: ini, kind: settings}   # trust markers (format unverified)
+
+instruction_files: ["AGENTS.md", ".junie/AGENTS.md", ".junie/playbook.md", ".junie/rules/*.md", ".junie/guidelines.md", ".junie/guidelines/"]
+skills_paths: ["(agent skills: default locations configurable via JUNIE_SKILL_LOCATIONS; exact default dirs unverified)"]
+
+mcp:
+  files: ["~/.junie/mcp/mcp.json", ".junie/mcp/mcp.json"]
+  servers_key: "mcpServers"
+  server_fields:
+    command: command
+    args: args
+    env: env
+    url: url
+    headers: headers
+    type: null
+  project_servers_require_approval: true   # untrusted project => project MCP servers not loaded; BUT trust prompt exists only in interactive sessions: headless/one-shot/piped/ACP runs are trusted by design and load project MCP, hooks, agents, skills, guidelines
+  notes: "Configured servers are enabled by default; MCP tool invocation requires user approval (category mcpTools in allowlist); MCP servers are NOT covered by the sandbox. IDE plugin uses same paths (Settings | Tools | Junie | MCP Settings). Sources: https://junie.jetbrains.com/docs/junie-cli-mcp-configuration.html ; https://junie.jetbrains.com/docs/junie-cli.html"
+
+permissions:
+  config_keys:
+    brave: "brave"                    # ~/.junie/config.json; enables brave mode by default
+    allowlist_file: "~/.junie/allowlist.json  {defaultBehavior, allowReadonlyCommands, rules.<category>.rules[]}"
+    sandbox: "--sandbox / ~/.junie/sandbox.json"
+  default_mode: "ask: most terminal commands, code execution, MCP tools need approval; allowlist defaultBehavior 'ask'; brave mode off; sandbox off"
+  auto_approve_values:
+    - {key: "brave (config.json)", value: true}
+    - {key: "allowlist.json defaultBehavior", value: "allow"}
+    - {key: "allowlist.json rules.executables.rules[]", value: "{pattern: '**', action: allow}"}
+    - {key: "allowlist.json rules.mcpTools.rules[]", value: "{pattern: '**', action: allow}"}
+    - {key: "IDE: Brave Mode checkbox", value: "on (also lets Junie access .aiignore'd files)"}
+  cli_flags_auto_approve: ["--brave (interactive only)", "/brave", "Ctrl+B"]
+  allow_rule_syntax: '{"rules":{"executables":{"rules":[{"prefix":"git","action":"allow"},{"pattern":"npm [iur]*","action":"ask"}]}}}  categories: fileEditing executables mcpTools readOutsideProject readSecretFile; first match wins; chained commands checked per part; $(...) and backtick substitutions checked; multi-line commands always prompt'
+  overbroad_patterns: ["pattern: **", "pattern: *", "prefix: \"\"", "defaultBehavior: allow"]
+
+hooks:
+  supported: true
+  config_key: "hooks   # ~/.junie/config.json: {hooks:{<Event>:[{matcher, hooks:[{type:'command', command, timeout, async}]}]}}"
+  repo_scoped_allowed: false   # project .junie/config.json hooks ignored by default; BUT headless/non-interactive runs are trusted by design and 'load the project's Junie configuration, including hooks' (headless doc)
+  command_field: "command"
+  notes: "events: SessionStart UserPromptSubmit PreToolUse Stop StopFailure PermissionRequest SessionEnd. Source https://junie.jetbrains.com/docs/junie-cli-hooks.html"
+
+sandbox: {available: true, default_on: false, mechanism: "`srt` wrapper (JetBrains build of srt for unrestricted mode) around every agent terminal command + restricted native edit tools; writes limited to project, git dir, temp, tool caches; reads unrestricted except ~/.ssh; macOS/Linux only", config: "--sandbox flag (new sessions off unless used); policy ~/.junie/sandbox.json; network.unrestricted=false + allowedDomains to filter; JUNIE_SRT_PATH", source: https://junie.jetbrains.com/docs/junie-cli.html}
+network: {domain_allowlist: true, config: "~/.junie/sandbox.json network.unrestricted=false + allowedDomains (only inside sandbox)", default: "unrestricted", source: https://junie.jetbrains.com/docs/junie-cli.html}
+workspace_trust: {prompt_on_new_folder: true, notes: "Interactive CLI asks trust (project dir / parent). Untrusted: project config, MCP, hooks not loaded. Non-interactive runs auto-trusted. Marker under <Junie Home>/trust.", source: https://junie.jetbrains.com/docs/junie-headless.html}
+memory: {persistent: true, cross_project: true, agent_writable: null, notes: "guidelines/AGENTS.md files (global ~/.junie/AGENTS.md + project); on first open Junie offers to import other agents' guideline/memory files into .junie/AGENTS.md; no autonomous memory write documented", source: https://junie.jetbrains.com/docs/guidelines-and-memory.html}
+subagents: {supported: true, inherits_permissions: "unverified", notes: "docs page junie-cli-subagents.html not read; subagent transcripts stored in session `subagents` folder", source: https://junie.jetbrains.com/docs/junie-cli.html}
+telemetry: {default_on: null, opt_out: "JUNIE_SHARE_ANONYMOUS_STATISTICS=false / --share-anonymous-statistics=false (per-run); default value unverified. IDE: JetBrains AI Data Collection and Use Policy (not read).", training_default: "unverified (see JetBrains AI Data Collection and Use Policy)", source: https://junie.jetbrains.com/docs/environment-variables.html}
+headless:
+  command: 'junie --auth="$JUNIE_API_KEY" "<prompt>"'
+  flags: ["--auth/-a", "--task / JUNIE_TASK", "--project/-p", "--model", "--effort", "--provider", "--input-format text|json", "--output-format text|json|json-stream", "--json-output-file", "--skip-update-check", "--sandbox", "--plan", "--review", "--acp", "--config-location", "--mcp-location", "--share-anonymous-statistics"]
+  ci_integrations: ["JetBrains/junie-github-action@v1", "GitLab CI (junie-gitlab-ci-cd.html)"]
+  model_override: "--model / JUNIE_MODEL; BYOK: --provider/JUNIE_LLM_PROVIDER (openai anthropic google xai openrouter copilot litellm) with JUNIE_<PROVIDER>_API_KEY; JUNIE_LITELLM_URL; custom profile JSON"
+  local_model_support: 'yes: JSON profile in $JUNIE_HOME/models/*.json or .junie/models/*.json {id, baseUrl (full endpoint incl. /v1/chat/completions), apiType: OpenAICompletion|OpenAIResponses|Google|Anthropic, apiKey optional, extraHeaders}; Ollama example baseUrl http://localhost:11434/v1/chat/completions. Source https://junie.jetbrains.com/docs/custom-llm-models.html. No-login: startup offers "Use custom models and endpoints" as alternative to JetBrains account (https://junie.jetbrains.com/docs/junie-cli.html); headless run without --auth not explicitly documented, verify in container (B4 2026-10-15).'
+
+security_policy: {security_md: null, bug_bounty: "No formal bug bounty; discretionary rewards; report via youtrack.jetbrains.com issue type 'Security Problem'", advisories: https://www.jetbrains.com/privacy-security/issues-fixed/}
+sources:
+  - {url: https://junie.jetbrains.com/docs/junie-cli.html, accessed: "2026-10-15", note: "CLI quickstart, sandbox, BYOK"}
+  - {url: https://junie.jetbrains.com/docs/junie-ide-plugin.html, accessed: "2026-10-15", note: "IDE allowlist, brave, guidelines, MCP paths"}
+  - {url: https://junie.jetbrains.com/docs/action-allowlist-junie-cli.html, accessed: "2026-10-15", note: "allowlist.json"}
+  - {url: https://junie.jetbrains.com/docs/junie-cli-mcp-configuration.html, accessed: "2026-10-15", note: "mcp.json"}
+  - {url: https://junie.jetbrains.com/docs/junie-headless.html, accessed: "2026-10-15", note: "headless + project trust"}
+  - {url: https://junie.jetbrains.com/docs/environment-variables.html, accessed: "2026-10-15", note: "env vars"}
+  - {url: https://junie.jetbrains.com/docs/parameters.html, accessed: "2026-10-15", note: "flags"}
+  - {url: https://junie.jetbrains.com/docs/custom-llm-models.html, accessed: "2026-10-15", note: "custom LLM"}
+  - {url: https://junie.jetbrains.com/docs/junie-cli-hooks.html, accessed: "2026-10-15", note: "hooks"}
+  - {url: https://junie.jetbrains.com/docs/junie-cli-configuration.html, accessed: "2026-10-15", note: "config.json"}
+  - {url: https://junie.jetbrains.com/docs/guidelines-and-memory.html, accessed: "2026-10-15", note: "guidelines"}
+  - {url: https://junie.jetbrains.com/docs/junie-on-github.html, accessed: "2026-10-15", note: "GitHub Action"}
+  - {url: https://github.com/JetBrains/junie, accessed: "2026-10-15", note: "README, LICENSE.md, install.sh, releases"}
+  - {url: https://www.jetbrains.com/legal/docs/terms/coordinated-disclosure/, accessed: "2026-10-15", note: "disclosure policy"}
+extra:
+  mission_corrections: "Junie is now primarily a standalone CLI (`junie`) as well as IDE plugin; project MCP file is .junie/mcp/mcp.json (not .junie/mcp.json); guidelines now AGENTS.md-first (.junie/guidelines.md deprecated)."
+  linter_risky_snippets:
+    - '~/.junie/config.json {"brave": true}'
+    - '~/.junie/allowlist.json {"defaultBehavior":"allow"}  or executables rule {"pattern":"**","action":"allow"}'
+    - '.junie/mcp/mcp.json in repo with command servers (loaded automatically in headless/trusted runs)'
+    - '.junie/config.json hooks in repo (ignored interactively, honoured if passed via --config-location or JUNIE_CONFIG_LOCATION)'
+    - 'CI: junie --auth="$JUNIE_API_KEY" "..." on PR-comment text; Action grants contents/pull-requests/issues: write, trigger phrase @junie-agent, only write-permission actor check documented'
+    - '~/.junie/sandbox.json {"network":{"unrestricted":true}} (default)'

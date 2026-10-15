@@ -1,0 +1,4 @@
+{"type":"user","message":{"role":"user","content":"how do I configure the client?"}}
+{"type":"assistant","message":{"role":"assistant","content":"Set OPENAI_API_KEY=sk-your-key-here in .env, and export GITHUB_TOKEN=<your token> before running."}}
+{"type":"tool_result","content":"$ cat .env.example\nOPENAI_API_KEY=xxxxxxxxxxxxxxxxxxxx\nDATABASE_URL=postgresql://localhost/app\n"}
+{"type":"usage","input_tokens":2203,"output_tokens":118}

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": "cargo fmt --all",
+        "cwd": ".",
+        "timeoutSec": 15
+      }
+    ]
+  }
+}

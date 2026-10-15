@@ -1,0 +1,93 @@
+id: openai-agents-sdk
+tier: C
+analysed_on: '2026-10-15'
+config_files: []
+binaries: []
+name: OpenAI Agents SDK (Python; JS sibling openai-agents-js)
+vendor: OpenAI
+license: MIT
+open_source: true
+status: analysed
+version_analysed: 0.24.0
+homepage: https://openai.github.io/openai-agents-python/
+repo: https://github.com/openai/openai-agents-python
+packages:
+- ecosystem: pypi
+  name: openai-agents
+- ecosystem: npm
+  name: '@openai/agents'
+  note: JS sibling repo openai/openai-agents-js, 0.20.0
+state_dirs: []
+credential_files: []
+credential_storage: API key from OPENAI_API_KEY env (or set_default_openai_key); no on-disk credential store in SDK
+log_paths: []
+memory_paths: []
+mcp:
+  files: []
+  servers_key: null
+  server_fields:
+    note: 'programmatic: MCPServerStdio(params={command,args,env}), MCPServerStreamableHttp(params={url,headers}), MCPServerSse; no config file'
+  project_servers_require_approval: null
+  notes: require_approval accepts always/never/per-tool dict; default None
+permissions:
+  config_keys: {}
+  default_mode: no approval for function tools (needs_approval=False); MCP require_approval=None
+  auto_approve_values:
+  - key: require_approval
+    value: never
+  - key: needs_approval
+    value: false
+  cli_flags_auto_approve: []
+  allow_rule_syntax: null
+  overbroad_patterns:
+  - require_approval="never"
+hooks:
+  supported: true
+  config_key: lifecycle hooks (agents/lifecycle.py RunHooks/AgentHooks), code-only
+  repo_scoped_allowed: false
+sandbox:
+  available: true
+  default_on: false
+  mechanism: 'agents.sandbox: UnixLocalSandboxClient (no OS confinement on Linux), Docker, hosted e2b/modal/daytona/cloudflare/vercel/runloop/blaxel'
+  config: RunConfig(sandbox=SandboxRunConfig(client=...))
+  source: https://github.com/openai/openai-agents-python/blob/main/docs/sandbox_agents.md
+telemetry:
+  default_on: true
+  opt_out: OPENAI_AGENTS_DISABLE_TRACING=1 / set_tracing_disabled(True) / RunConfig.tracing_disabled; OPENAI_AGENTS_TRACE_INCLUDE_SENSITIVE_DATA=false
+  destination: https://api.openai.com/v1/traces/ingest
+  training_default: null
+  source: https://github.com/openai/openai-agents-python/blob/main/docs/tracing.md
+headless:
+  command: null
+  model_override: AsyncOpenAI(base_url=...) via OpenAIChatCompletionsModel or set_default_openai_client; LiteLLM/any-llm extensions in agents/extensions/models
+  local_model_support: OpenAI-compatible endpoints via custom AsyncOpenAI client; LiteLLM extension (docs-level, not tested)
+security_policy:
+  security_md: https://github.com/openai/openai-agents-python/blob/main/SECURITY.md
+  bug_bounty: https://openai.com/policies/coordinated-vulnerability-disclosure-policy/
+  advisories: https://github.com/openai/openai-agents-python/security/advisories
+extra:
+  telemetry_env_vars:
+  - OPENAI_AGENTS_DISABLE_TRACING
+  - OPENAI_AGENTS_TRACE_INCLUDE_SENSITIVE_DATA
+  - OPENAI_ORG_ID
+  js_sibling: https://github.com/openai/openai-agents-js (MIT, @openai/agents 0.20.0, tracing disabled by same env var)
+  mission_note: 'Tier C runtime: no config files; risky settings are code-level (see research notes).'
+sources:
+- url: https://github.com/openai/openai-agents-python/blob/main/docs/tracing.md
+  accessed: '2026-10-15'
+  note: tracing default
+- url: https://github.com/openai/openai-agents-python/blob/main/src/agents/tracing/processors.py
+  accessed: '2026-10-15'
+  note: ingest endpoint
+- url: https://github.com/openai/openai-agents-python/blob/main/src/agents/run_config.py
+  accessed: '2026-10-15'
+  note: sensitive data default
+- url: https://github.com/openai/openai-agents-python/blob/main/docs/sandbox_agents.md
+  accessed: '2026-10-15'
+  note: sandbox
+- url: https://github.com/openai/openai-agents-python/blob/main/docs/mcp.md
+  accessed: '2026-10-15'
+  note: mcp
+- url: https://github.com/openai/openai-agents-python/blob/main/SECURITY.md
+  accessed: '2026-10-15'
+  note: policy

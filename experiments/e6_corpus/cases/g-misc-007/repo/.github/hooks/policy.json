@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "type": "command",
+        "bash": "prettier --write --log-level warn .",
+        "cwd": ".",
+        "timeoutSec": 15
+      }
+    ]
+  }
+}

@@ -1,0 +1,120 @@
+id: grok-build
+name: Grok Build (xAI / SpaceXAI CLI, binary `grok`)
+vendor: "SpaceXAI (xAI; docs.x.ai now says 'SpaceXSI (xAI)')"
+tier: A       # hybrid (B3, 2026-10-15): Apache-2.0 source xai-org/grok-build (first public commit 2026-07-16T05:46Z = 07-15 US Pacific) is read white-box at 1.0.45, but the public tree lags the npm release (1.0.45 vs 1.0.52) and injects endpoints at build time, so empirical cells observe the official binary black-box (evidence/research/B3_observe_plan.md)
+license: Apache-2.0
+open_source: true
+status: docs-only     # docs + source read (1.0.45) + npm package metadata; never installed or run; local-model bench path identified (B3_observe_plan.md)
+version_analysed: "1.0.52"    # npm @xai-official/grok latest 2026-10-11 (docs/package); source read at crate version 1.0.45 (HEAD 2bdd1d6a, SOURCE_REV 559751fd, 2026-09-29); alpha 1.0.60
+analysed_on: "2026-10-15"
+homepage: https://docs.x.ai/build/overview
+repo: https://github.com/xai-org/grok-build
+
+binaries: [grok]
+packages:
+  - {ecosystem: npm, name: "@xai-official/grok"}     # postinstall brotli-decompresses the binary from @xai-official/grok-<os>-<arch> into ~/.grok/bin/grok-<ver> and writes [cli] installer/npm_registry into ~/.grok/config.toml; no provenance attestation, no repository field
+install_methods:
+  - {method: curl-installer, command: "curl -fsSL https://x.ai/cli/install.sh | bash", checksum_verified: null, signed: null, source: https://docs.x.ai/build/overview.md}
+  - {method: npm, command: "npm install -g @xai-official/grok", source: https://docs.x.ai/build/enterprise.md}
+auto_update: {default: true, config: "[cli] auto_update; env GROK_DISABLE_AUTOUPDATER; flag --no-auto-update; [cli] channel stable|alpha. Headless -p skips the update check (source main.rs); hosts x.ai/cli, storage.googleapis.com/grok-build-public-artifacts, registry.npmjs.org", source: https://docs.x.ai/build/settings/reference.md}
+
+state_dirs: ["~/.grok"]          # $GROK_HOME overrides
+credential_files: ["~/.grok/auth.json", "~/.grok/mcp_credentials.json"]     # $GROK_AUTH_PATH overrides auth.json; both written 0600 (source xai-grok-login/src/storage.rs, xai-grok-mcp/src/credentials.rs); no OS keychain
+credential_storage: "plaintext JSON files, mode 0600, no keychain: session token (browser OIDC / device code / auth_provider_command) in auth.json; XAI_API_KEY is also persisted there when used for ACP/headless auth; MCP OAuth tokens in mcp_credentials.json; model.api_key may sit inline in config.toml"
+log_paths: ["~/.grok/sessions/*", "~/.grok/logs/*", "~/.grok/logs/mcp/*.stderr.log", "~/.grok/upload_queue/*", "$GROK_HOME/crash/*"]   # crash handler off by default (GROK_CRASH_HANDLER=0), local only
+memory_paths: ["~/.grok/*.md"]   # global rules; cross-session memory is opt-in (GROK_MEMORY=1)
+
+config_files:
+  - {path: "~/.grok/config.toml", scope: user, format: toml, kind: settings}
+  - {path: ".grok/config.toml", scope: project, format: toml, kind: settings}     # only [mcp_servers], [plugins], [permission] honoured
+  - {path: "~/.grok/managed_config.toml", scope: managed, format: toml, kind: settings}
+  - {path: "/etc/grok/managed_config.toml", scope: managed, format: toml, kind: settings}
+  - {path: "~/.grok/requirements.toml", scope: managed, format: toml, kind: settings}
+  - {path: "/etc/grok/requirements.toml", scope: managed, format: toml, kind: settings}      # highest priority, fail-closed pins
+  - {path: "~/.grok/sandbox.toml", scope: user, format: toml, kind: settings}
+  - {path: ".grok/sandbox.toml", scope: project, format: toml, kind: settings}
+  - {path: "~/.grok/hooks/*.json", scope: user, format: json, kind: hooks}
+  - {path: ".grok/hooks/*.json", scope: project, format: json, kind: hooks}
+  - {path: ".claude/settings.json", scope: project, format: json, kind: hooks}      # hooks read for compat
+  - {path: ".cursor/hooks.json", scope: project, format: json, kind: hooks}
+  - {path: ".mcp.json", scope: project, format: json, kind: mcp}     # compat import
+  - {path: ".cursor/mcp.json", scope: project, format: json, kind: mcp}
+  - {path: "~/.claude.json", scope: user, format: json, kind: mcp}
+  - {path: ".grok/rules/*.md", scope: project, format: markdown, kind: rules}
+  - {path: ".claude/rules/*.md", scope: project, format: markdown, kind: rules}
+  - {path: ".cursor/rules/*", scope: project, format: markdown, kind: rules}
+  - {path: ".grok/lsp.json", scope: project, format: json, kind: settings}
+  - {path: "~/.grok/trusted_folders.toml", scope: user, format: toml, kind: settings}
+  - {path: ".envrc", scope: project, format: text, kind: settings}      # [session] load_envrc default true; trust-gated
+  - {path: ".grok/agents/*", scope: project, format: markdown, kind: settings}   # subagent definitions; trust-gated
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+
+instruction_files: ["AGENTS.md", "Agents.md", "AGENT.md", "CLAUDE.md", "Claude.md", "CLAUDE.local.md", ".grok/rules/*.md"]
+skills_paths: [".grok/skills/*", "~/.grok/skills/*"]      # exact layout unverified; .grok/skills named in source comment
+
+mcp:
+  files: ["~/.grok/config.toml", ".grok/config.toml", ".mcp.json", ".cursor/mcp.json", "~/.claude.json"]
+  servers_key: "mcp_servers"      # TOML tables [mcp_servers.<name>]; JSON imports use mcpServers
+  server_fields: {command: command, args: args, env: env, url: url, headers: headers, enabled: enabled, startup_timeout_sec: startup_timeout_sec, tool_timeout_sec: tool_timeout_sec}
+  project_servers_require_approval: true      # folder trust gates .mcp.json, .cursor/mcp.json, .grok/config.toml [mcp_servers] and ~/.claude.json projects.<cwd>.mcpServers; headless without --trust drops them silently; trust inert in unstamped self-builds; can be disabled by GROK_FOLDER_TRUST=0 or a remote flag
+  notes: "${VAR} / ${VAR:-default} expansion in url/command/args/env/headers; bearer_token_env_var for HTTP. Project server with same name replaces user one entirely. Compat imports default on; [compat.claude]/[compat.cursor] mcps=false was not enforced before 0.2.118 (B3-I008)."
+
+permissions:
+  config_keys:
+    mode: "ui.permission_mode"
+    rules: "permission.rules"
+    lock_bypass: "ui.disable_bypass_permissions_mode"
+  default_mode: "ask"
+  auto_approve_values:
+    - {key: "ui.permission_mode", value: "always-approve"}
+    - {key: "ui.permission_mode", value: "auto"}
+    - {key: "ui.approval_mode", value: "always-approve", note: "legacy key"}
+    - {key: "ui.yolo", value: true, note: "legacy key; documented as 'yolo = true'"}
+  cli_flags_auto_approve: ["--always-approve", "--yolo", "--permission-mode bypassPermissions"]
+  allow_rule_syntax: '[permission] rules = [{ action = "allow", tool = "bash", pattern = "git *" }]'
+  overbroad_patterns: ['{ action = "allow", tool = "bash" }', '{ action = "allow", tool = "bash", pattern = "*" }']
+  headless_modes: ["default", "acceptEdits", "auto", "dontAsk", "bypassPermissions", "plan"]   # -p without a mode = ask, and every approval request is auto-cancelled (deny)
+  first_prompt_default: "always_allow_all_sessions"   # GROK_DEFAULT_SELECTED_PERMISSION / [ui] default_selected_permission
+
+hooks:
+  supported: true
+  config_key: "hooks"         # JSON files, top-level key "hooks": {Event: [{matcher, hooks:[{type: command|http, command|url, timeout}]}]}
+  repo_scoped_allowed: true   # .grok/hooks/*.json, .claude/settings.json, .cursor/hooks.json; gated by folder trust (/hooks-trust or --trust); fail-open on timeout/crash; types command|http
+  command_field: "command"
+
+sandbox: {available: true, default_on: false, mechanism: "Landlock (Linux) / Seatbelt (macOS); profiles off|workspace|devbox|read-only|strict + custom sandbox.toml", config: "[sandbox] profile / --sandbox / GROK_SANDBOX", source: https://docs.x.ai/build/features/sandbox.md}
+network: {domain_allowlist: true, config: "web_fetch off by default (GROK_WEB_FETCH / [features] web_fetch); [toolset.web_fetch] allowed_domains + proxy_endpoint; sandbox restrict_network (Linux only); model/web tools in-process are not covered", default: "unrestricted", source: https://docs.x.ai/build/settings/reference.md}
+workspace_trust: {prompt_on_new_folder: true, notes: "TTY prompts; headless = untrusted and repo inputs silently dropped unless --trust (persisted). Gates MCP/LSP, [permission], plugins, hooks (incl. Claude/Cursor), AGENTS.md/CLAUDE.md/rules (since ~1.0.24), skills, agents, .envrc. No-config repos, $HOME and / are provisional allows. Enablement: GROK_FOLDER_TRUST > user > managed > remote flag > on; inert in unstamped self-builds", source: https://github.com/xai-org/grok-build/blob/2bdd1d6a6369de0e8c68132ea4539e9abd9e14a8/crates/codegen/xai-grok-permission-rules/src/folder_trust.rs}
+memory: {persistent: true, cross_project: true, agent_writable: null, notes: "opt-in via GROK_MEMORY=1 (default 0)", source: https://docs.x.ai/build/settings/reference.md}
+subagents: {supported: true, inherits_permissions: null, notes: "docs contradict: features/subagents says on when unset, settings/reference says GROK_SUBAGENTS=0; types general-purpose/explore/plan; .grok/agents (trust-gated); worktrees documented", source: https://docs.x.ai/build/features/subagents.md}
+telemetry: {default_on: null, opt_out: "client default Disabled, but remote /v1/settings (logged-in users only) can enable it; off via DISABLE_TELEMETRY=1, GROK_TELEMETRY_ENABLED=0, requirements.toml pin; Sentry off via DISABLE_ERROR_REPORTING=1; trace upload GROK_TELEMETRY_TRACE_UPLOAD=0 (forced off when telemetry off); OTel OTEL_TRACES_EXPORTER=none; /privacy is a server-side retention flag, not a transmission block (TPR)", training_default: "retention disabled by default for all users from 2026-07-12 per vendor statement (second-hand); ZDR per team", source: https://github.com/xai-org/grok-build/blob/2bdd1d6a6369de0e8c68132ea4539e9abd9e14a8/crates/codegen/xai-grok-shell/src/agent/config.rs}
+headless:
+  command: "grok -p \"<prompt>\""
+  flags: ["--output-format plain|json|streaming-json", "-m/--model", "--always-approve", "--permission-mode dontAsk|acceptEdits", "--allow 'Bash(git *)'", "--deny", "--sandbox strict", "--no-auto-update", "--trust", "-s/--session-id", "-r/--resume", "-c/--continue", "--cwd"]
+  ci_integrations: []      # xai-org/grok-build-plugin-cc is a Claude Code plugin delegating to Grok Build, not a CI action
+  model_override: "user/managed config only: [model.<name>] model/base_url/env_key/api_key/api_backend (chat_completions default|responses|messages); [models] default; -m; env GROK_MODELS_BASE_URL, GROK_XAI_API_BASE_URL, GROK_DEFAULT_MODEL. A model without its own key receives the logged-in session token (may_receive_session = true for all URLs) or XAI_API_KEY"
+  local_model_support: "yes (source 1.0.45; container run pending): [model.local] base_url=http://ollama:11434/v1, api_backend=chat_completions, dummy api_key (required: headless fails closed without an auth method; per-model keys are not probed); [features] remote_fetch=false; no login, no XAI_API_KEY"
+  env: {api_key: XAI_API_KEY, home: GROK_HOME}
+
+security_policy: {security_md: https://github.com/xai-org/grok-build/blob/main/SECURITY.md, bug_bounty: https://hackerone.com/x, advisories: null, contact: "vulnerabilities@x.ai (security.txt)"}
+extra:
+  acp: "grok agent stdio (Agent Client Protocol agent)"
+  compat_imports: "default on: Claude Code (.claude/settings.json hooks + permission rules, ~/.claude.json MCP, CLAUDE.md, .claude/rules, skills, agents), Cursor (.cursor/mcp.json, hooks.json, rules, skills, agents) and Codex sessions; disable per surface with [compat.claude|cursor] skills|rules|agents|mcps|hooks=false or GROK_<VENDOR>_<SURFACE>_ENABLED=0; repo-side inputs are folder-trust gated"
+  incident: "0.2.93 workspace upload to grok-code-session-traces (cereblab, disclosed 2026-07-10; server-side disable by 2026-07-13; no client fix version); 13 vendor-self-disclosed security fixes 0.2.101-1.0.45 without advisories; see incidents.d/B3.csv"
+  source_vs_binary: "public tree lags npm (1.0.45 vs 1.0.52) and omits crates linked into the shipped binary (grove*, xai-grok-cursor*, xai-identity-sdk, prod/grok/build); telemetry/Sentry/bucket defaults build-injected"
+sources:
+  - {url: https://docs.x.ai/build/overview.md, accessed: "2026-10-15"}
+  - {url: https://docs.x.ai/build/features/permissions.md, accessed: "2026-10-15"}
+  - {url: https://docs.x.ai/build/features/sandbox.md, accessed: "2026-10-15"}
+  - {url: https://docs.x.ai/build/features/mcp-servers.md, accessed: "2026-10-15"}
+  - {url: https://docs.x.ai/build/features/hooks.md, accessed: "2026-10-15"}
+  - {url: https://docs.x.ai/build/features/project-rules.md, accessed: "2026-10-15"}
+  - {url: https://docs.x.ai/build/settings.md, accessed: "2026-10-15"}
+  - {url: https://docs.x.ai/build/settings/reference.md, accessed: "2026-10-15"}
+  - {url: https://docs.x.ai/build/cli/headless-scripting.md, accessed: "2026-10-15"}
+  - {url: https://docs.x.ai/build/enterprise.md, accessed: "2026-10-15"}
+  - {url: https://github.com/xai-org/grok-build, accessed: "2026-10-15", note: "source at 2bdd1d6a (1.0.45): folder_trust, login/storage, headless, telemetry config, compat, sync changelogs"}
+  - {url: https://gist.github.com/cereblab/dc9a40bc26120f4540e4e09b75ffb547, accessed: "2026-10-15", note: "upload incident primary write-up"}
+  - {url: https://registry.npmjs.org/@xai-official/grok, accessed: "2026-10-15"}
+  - {url: https://x.ai/security.txt, accessed: "2026-10-15"}
+  - {url: https://devops.com/xai-open-sources-grok-build-coding-agent-after-cloud-upload-exposes-ssh-keys-repos/, accessed: "2026-10-15", note: "third-party incident report"}

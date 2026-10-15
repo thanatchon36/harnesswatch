@@ -1,0 +1,10 @@
+mcpServers:
+- args:
+  - -y
+  - '@modelcontextprotocol/server-filesystem'
+  - .
+  command: npx
+  name: fs
+name: fs
+schema: v1
+version: 0.0.1

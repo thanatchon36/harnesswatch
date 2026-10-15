@@ -1,0 +1,5 @@
+# master auto-approve (autoApprovalEnabled) lives in VS Code extension state, not a file; alwaysAllow of named tools is not a wildcard
+mcp_servers: [fs]
+auto_approve: false
+hooks: 0
+instruction_files: [AGENTS.md]

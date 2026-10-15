@@ -1,0 +1,1 @@
+{"mcpServers": {"heroku": {"command": "/opt/heroku/bin/heroku-mcp", "env": {"HEROKU_API_KEY": "6b1f0e2a-93c4-4d7e-b8a5-1c2d3e4f5a6b"}}}}

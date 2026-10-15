@@ -1,0 +1,176 @@
+{
+  "counting_rule": "verified=yes AND independent ID check confirmed (or ID-less with primary source); disclosed 2025-2026 (A11)",
+  "total_rows": 357,
+  "counted": 323,
+  "excluded": {
+    "not_verified": 29,
+    "id_check_failed": 4,
+    "outside_2025_2026": 1
+  },
+  "by_year": {
+    "2025": 99,
+    "2026": 224
+  },
+  "by_quarter": {
+    "2025-Q1": 1,
+    "2025-Q2": 8,
+    "2025-Q3": 42,
+    "2025-Q4": 48,
+    "2026-Q1": 60,
+    "2026-Q2": 71,
+    "2026-Q3": 74,
+    "2026-Q4": 19
+  },
+  "by_kind": {
+    "vulnerability": 292,
+    "design-weakness": 19,
+    "supply-chain": 8,
+    "misuse": 3,
+    "incident": 1
+  },
+  "by_taxonomy_class": {
+    "T03": 74,
+    "T02": 52,
+    "T19": 45,
+    "T18": 34,
+    "T08": 23,
+    "T17": 22,
+    "T04": 15,
+    "T01": 14,
+    "T07": 12,
+    "T06": 9,
+    "T13": 7,
+    "T09": 5,
+    "T16": 3,
+    "T11": 2,
+    "T05": 2,
+    "T10": 2,
+    "T15": 1,
+    "T12": 1
+  },
+  "by_root_cause": {
+    "RC3": 104,
+    "RC2": 52,
+    "RC10": 51,
+    "RC4": 24,
+    "RC8": 20,
+    "RC6": 20,
+    "RC1": 17,
+    "RC7": 12,
+    "RC5": 11,
+    "RC9": 8,
+    "RC12": 3,
+    "RC11": 1
+  },
+  "by_tier": {
+    "A": 98,
+    "B": 93,
+    "ecosystem": 73,
+    "C": 59
+  },
+  "top_harnesses": {
+    "claude-code": 37,
+    "cursor": 30,
+    "openclaw": 24,
+    "pydantic-ai": 16,
+    "roo-code": 14,
+    "grok-build": 14,
+    "antigravity": 13,
+    "hermes-agent": 11,
+    "langgraph": 10,
+    "warp": 10,
+    "zed": 7,
+    "vscode-copilot-agent": 7,
+    "bedrock-agentcore": 6,
+    "smolagents": 5,
+    "cline": 5
+  },
+  "with_cve": 239,
+  "with_ghsa": 237,
+  "root_cause_by_class": {
+    "T01": {
+      "RC1": 12,
+      "RC6": 2
+    },
+    "T02": {
+      "RC2": 49,
+      "RC6": 2,
+      "RC3": 1
+    },
+    "T03": {
+      "RC3": 69,
+      "RC6": 4,
+      "RC11": 1
+    },
+    "T04": {
+      "RC1": 1,
+      "RC10": 2,
+      "RC3": 9,
+      "RC6": 1,
+      "RC5": 1,
+      "RC2": 1
+    },
+    "T05": {
+      "RC1": 1,
+      "RC5": 1
+    },
+    "T06": {
+      "RC5": 9
+    },
+    "T07": {
+      "RC7": 12
+    },
+    "T08": {
+      "RC9": 8,
+      "RC6": 5,
+      "RC3": 10
+    },
+    "T09": {
+      "RC10": 3,
+      "RC1": 1,
+      "RC2": 1
+    },
+    "T10": {
+      "RC1": 2
+    },
+    "T11": {
+      "RC8": 1,
+      "RC6": 1
+    },
+    "T12": {
+      "RC8": 1
+    },
+    "T13": {
+      "RC10": 1,
+      "RC3": 6
+    },
+    "T15": {
+      "RC6": 1
+    },
+    "T16": {
+      "RC12": 3
+    },
+    "T17": {
+      "RC8": 18,
+      "RC6": 2,
+      "RC2": 1,
+      "RC3": 1
+    },
+    "T18": {
+      "RC4": 24,
+      "RC6": 2,
+      "RC3": 8
+    },
+    "T19": {
+      "RC10": 45
+    }
+  },
+  "patch_latency_days": {
+    "n": 148,
+    "median": -5.0,
+    "fixed_before_disclosure": 135,
+    "within_30_days": 144,
+    "p90": 0,
+    "max": 288
+  }
+}

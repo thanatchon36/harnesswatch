@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "WebFetch(domain:docs.python.org)",
+      "Bash(uv run pytest:*)",
+      "Bash(npm run test:*)",
+      "Bash(git log:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(git push --force:*)",
+      "Read(./.env)",
+      "Read(~/.ssh/**)"
+    ]
+  },
+  "env": {
+    "ANTHROPIC_API_KEY": "{{SYNTH:anthropic-api-key}}"
+  },
+  "autoMemoryEnabled": true,
+  "enableAllProjectMcpServers": false,
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  }
+}

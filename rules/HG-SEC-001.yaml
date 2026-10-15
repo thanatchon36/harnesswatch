@@ -1,0 +1,17 @@
+id: HG-SEC-001
+title: Secret-like strings in harness logs, transcripts or memory
+area: SEC
+severity: high
+confidence: medium
+kind: design-weakness
+taxonomy: [T07]
+description: >
+  Harnesses persist session transcripts, tool output, trajectories and memory files. Any secret that
+  passed through a session (pasted, read from .env, printed by a command) is then stored at rest,
+  often indefinitely, and may be swept up by backups, sync tools or other local processes. Matches are
+  counted and redacted; their values are never stored or printed.
+remediation: >
+  Rotate the exposed credential, delete or redact the affected session files, configure transcript
+  retention (e.g. Claude Code `cleanupPeriodDays`), and deny agent reads of secret files.
+references:
+  - https://owasp.org/www-project-top-10-for-large-language-model-applications/

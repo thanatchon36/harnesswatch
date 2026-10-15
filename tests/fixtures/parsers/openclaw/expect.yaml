@@ -1,0 +1,4 @@
+# hooks.* is webhook ingress / HOOK.md internal hooks, not command hooks
+mcp_servers: [fs]
+auto_approve: true
+hooks: 0

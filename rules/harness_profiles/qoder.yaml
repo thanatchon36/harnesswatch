@@ -1,0 +1,115 @@
+id: qoder
+name: Qoder (CLI + IDE + desktop app)
+vendor: Alibaba (Qoder; docs.qoder.com)
+tier: B
+license: Proprietary (npm package declares no license; QoderAI/qoder-action is MIT)
+open_source: false
+status: docs-only
+version_analysed: null            # CLI latest at access date was 1.1.71 (release notes, 2026-10-14); not executed
+analysed_on: "2026-10-15"
+homepage: https://qoder.com
+repo: null                        # CLI/IDE closed. Public org github.com/QoderAI has only changelog repos, homebrew-qoder, qoder-action (MIT)
+
+binaries: [qoder, qodercli]       # install page says `qoder --version`; npm-era pages/summary say `qodercli`; docs inconsistent -> look up both
+packages:
+  - {ecosystem: npm, name: "@qoder-ai/qodercli", note: "legacy JS-bundle channel; dist-tags latest=1.1.71 beta=1.1.54-beta.1 (npm view 2026-10-15)"}
+install_methods:
+  - {method: curl-installer, command: "curl -fsSL https://qoder.com/install | bash", checksum_verified: null, signed: null, source: https://docs.qoder.com/cli/installation.md}
+  - {method: powershell-installer, command: "irm https://qoder.com/install.ps1 | iex", checksum_verified: null, signed: null, source: https://docs.qoder.com/cli/installation.md}
+  - {method: npm, command: "npm install -g @qoder-ai/qodercli", checksum_verified: null, signed: null, source: https://docs.qoder.com/cli/installation.md}
+auto_update: {default: true, config: "general.enableAutoUpdate (settings.json); `qoder update`", source: https://docs.qoder.com/cli/installation.md}
+
+state_dirs: ["~/.qoder", ".qoder"]   # default overridable via QODER_CONFIG_DIR or --config-dir; China-variant docs mention ~/.qoder-cn (unverified)
+credential_files: []              # storage location NOT documented (login flow / QODER_PERSONAL_ACCESS_TOKEN env). unverified
+credential_storage: "unverified (docs describe browser login and QODER_PERSONAL_ACCESS_TOKEN for scripts; no keychain/plaintext statement found)"
+log_paths: []                     # session storage path not confirmed; `--no-session-persistence` exists in print mode; unverified
+memory_paths: ["~/.qoder/AGENTS.md", "AGENTS.md", "AGENTS.local.md", ".qoder/rules/**/*.md"]   # Auto-Memory folder path not confirmed (opened via /memory)
+
+config_files:
+  - {path: "~/.qoder/settings.json", scope: user, format: json, kind: settings}
+  - {path: ".qoder/settings.json", scope: project, format: json, kind: settings}
+  - {path: ".qoder/settings.local.json", scope: project-local, format: json, kind: settings}
+  - {path: ".mcp.json", scope: project, format: json, kind: mcp}      # per docs.qoder.com/cli/mcp-servers; settings-reference says mcpServers live in settings files. Both documented -> parse both
+  - {path: "--settings <path|inline json>", scope: env, format: json, kind: settings}   # highest priority
+  - {path: ".qoder/rules/**/*.md", scope: project, format: markdown, kind: rules}
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: "AGENTS.local.md", scope: project-local, format: markdown, kind: instructions}
+  - {path: "~/.qoder/AGENTS.md", scope: user, format: markdown, kind: instructions}
+  - {path: ".qoder/skills/*", scope: project, format: markdown, kind: skills}
+  # managed/enterprise policy file path: NOT documented (only key allowManagedPermissionRulesOnly) -> unverified
+
+instruction_files: ["AGENTS.md", "AGENTS.local.md", ".qoder/rules/**/*.md"]   # context.fileName can rename; CLI searches upward from cwd to .git root, only in trusted workspace
+skills_paths: [".qoder/skills/*", "~/.qoder/skills/*"]
+
+mcp:
+  files: ["~/.qoder/settings.json", ".qoder/settings.json", ".qoder/settings.local.json", ".mcp.json"]
+  servers_key: "mcpServers"
+  server_fields: {command: command, args: args, env: env, cwd: cwd, url: url, headers: headers, type: type, timeout: timeout, trust: trust, description: description}
+  project_servers_require_approval: null   # settings keys mcp.enableAllProjectMcpServers / mcp.enabledProjectMcpServers exist (default values not confirmed); .mcp.json approval flow undocumented
+  notes: "transport type: stdio(default)|sse|http|streamable-http|ws|sdk. Per-server `trust: true` skips tool-call confirmation. Flags: --mcp-config, --strict-mcp-config, --allowed-mcp-server-names. Settings: mcp.allowed, mcp.excluded, mcp.lazyLoad. Tool name pattern mcp__<server>__<tool>."
+
+permissions:
+  config_keys:
+    mode: "general.defaultPermissionMode"
+    allow: "permissions.allow"
+    ask: "permissions.ask"
+    deny: "permissions.deny"
+    trusted_dirs: "permissions.trustDirectories"      # global settings only
+    extra_dirs: "permissions.additionalDirectories"
+    disable_yolo: "security.disableYoloMode"
+    managed_only: "allowManagedPermissionRulesOnly"
+    folder_trust: "security.folderTrust.enabled"
+  default_mode: "default"
+  auto_approve_values:
+    - {key: "general.defaultPermissionMode", value: "bypass_permissions"}    # aliases bypassPermissions/yolo/YOLO documented for --permission-mode
+    - {key: "general.defaultPermissionMode", value: "auto"}                  # model decides authorization (weaker auto-approve)
+    - {key: "general.defaultPermissionMode", value: "accept_edits"}          # auto-approves workspace file edits only
+    - {key: "env.QODER_PERMISSION_MODE", value: "bypass_permissions"}
+    - {key: "security.disableYoloMode", value: false}                        # absence/false means YOLO is reachable
+    - {key: "mcpServers.*.trust", value: true}
+    - {key: "mcp.enableAllProjectMcpServers", value: true}
+  cli_flags_auto_approve: ["--yolo", "--dangerously-skip-permissions", "--permission-mode bypass_permissions", "--permission-mode yolo"]
+  allow_rule_syntax: "Bash(npm run test:*)"      # also Read(/src/**), Edit(~/Documents/specs/**), WebFetch, Agent(explore), mcp__github__*
+  overbroad_patterns: ["*", "Bash", "Bash(*)", "mcp__*"]
+  notes: "Rule order deny > tool safety checks > ask > allow. Non-default modes only take effect in trusted dirs; untrusted dir falls back to default. Headless: operations that would prompt are auto-denied. Desktop app uses a different UI: 'Ask for approval' (default) / 'Auto approve' / 'Full access'."
+
+hooks:
+  supported: true
+  config_key: "hooks"
+  repo_scoped_allowed: true        # project .qoder/settings.json can define hooks; loaded only if folder trusted (security.folderTrust.enabled default true)
+  command_field: "command"         # hook entry types: command | http | prompt | agent
+  events: [PreToolUse, PostToolUse, UserPromptSubmit, SessionStart, SessionEnd, Stop, SubagentStart, SubagentStop, PermissionRequest, ConfigChange, InstructionsLoaded, FileChanged, Setup]
+
+sandbox: {available: true, default_on: false, mechanism: "IDE/desktop 'Experts Mode' runs risky commands in a sandbox (macOS built-in; other platform requirements not read). Qoder CLI: no sandbox documented (unverified)", config: null, source: https://docs.qoder.com/user-guide/quest/terminal-and-sandbox.md}
+network: {domain_allowlist: false, config: "CLI: only proxy env (HTTP(S)_PROXY, NO_PROXY, NODE_EXTRA_CA_CERTS); no egress policy documented. Desktop: network access requires approval in Ask mode", default: "unrestricted in CLI", source: https://docs.qoder.com/cli/network.md}
+workspace_trust: {prompt_on_new_folder: true, notes: "security.folderTrust.enabled default true; untrusted cwd => project/local settings.json and project memory ignored, only user-level config loaded", source: https://docs.qoder.com/cli/settings.md}
+memory: {persistent: true, cross_project: true, agent_writable: true, notes: "Static (AGENTS.md, rules) + Auto-Memory markdown saved locally when enabled (QODER_MEMORY, QODER_MEMORY_USER env); project-level, optionally user-level", source: https://docs.qoder.com/cli/memory.md}
+subagents: {supported: true, inherits_permissions: "subagents declaring bypass are downgraded to acceptEdits when security.disableYoloMode=true", notes: "QODER_SUBAGENT_MODEL env; --agents json", source: https://docs.qoder.com/en/cli/permissions}
+telemetry: {default_on: true, opt_out: "settings: privacy.usageStatisticsEnabled=false (enters Privacy mode); aiCodeStatistics.enabled=false", training_default: "unverified (privacy policy not analysed in depth)", source: https://docs.qoder.com/cli/settings-reference}
+headless:
+  command: "qoder -p \"<prompt>\""     # also --print; stdin pipe supported
+  flags: ["-o/--output-format text|json|stream-json", "--input-format", "--max-turns", "--permission-mode", "--allowed-tools", "--disallowed-tools", "-m/--model", "--session-id", "-w/--cwd", "--no-session-persistence", "--settings", "--config-dir"]
+  ci_integrations: ["QoderAI/qoder-action@v0 (GitHub Action, MIT; needs QODER_PERSONAL_ACCESS_TOKEN secret)"]
+  model_override: "--model auto|lite|performance|<BYOK key>; env QODER_MODEL"
+  local_model_support: "NOT SUPPORTED/unverified: BYOK only via interactive /model Custom wizard (Individual plan); docs warn not to hand-edit settings.json; no base-URL flag/env documented. Needs Qoder account auth, so bench cell likely N/A (no access)."
+
+security_policy: {security_md: null, bug_bounty: null, advisories: null}   # none found; qoder.com/security is the Code-Security product page, not a disclosure policy
+sources:
+  - {url: https://docs.qoder.com/cli/settings-reference, accessed: "2026-10-15", note: "settings keys/env vars"}
+  - {url: https://docs.qoder.com/en/cli/permissions, accessed: "2026-10-15", note: "modes, flags, trust"}
+  - {url: https://docs.qoder.com/cli/mcp-reference.md, accessed: "2026-10-15", note: "mcpServers fields"}
+  - {url: https://docs.qoder.com/cli/mcp-servers, accessed: "2026-10-15", note: "scopes, .mcp.json"}
+  - {url: https://docs.qoder.com/cli/settings.md, accessed: "2026-10-15", note: "folder trust"}
+  - {url: https://docs.qoder.com/cli/cli-reference, accessed: "2026-10-15", note: "flags"}
+  - {url: https://docs.qoder.com/cli/hooks-reference.md, accessed: "2026-10-15", note: "hooks"}
+  - {url: https://docs.qoder.com/cli/memory.md, accessed: "2026-10-15", note: "memory/rules paths"}
+  - {url: https://docs.qoder.com/cli/custom-models.md, accessed: "2026-10-15", note: "BYOK"}
+  - {url: https://docs.qoder.com/cli/installation.md, accessed: "2026-10-15", note: "install/auto-update"}
+  - {url: https://docs.qoder.com/release-notes/qoder-cli.md, accessed: "2026-10-15", note: "CLI 1.1.71 2026-10-14"}
+  - {url: https://docs.qoder.com/qoder/approval-and-sandbox.md, accessed: "2026-10-15", note: "desktop access permissions"}
+  - {url: https://docs.qoder.com/user-guide/quest/terminal-and-sandbox.md, accessed: "2026-10-15", note: "IDE sandbox"}
+  - {url: https://docs.qoder.com/cli/qoder-action.md, accessed: "2026-10-15", note: "GitHub Action"}
+extra:
+  product_family: "Qoder IDE (legacy, 'Quest' window retired), new Qoder desktop app, Qoder CLI, JetBrains plugin, Agent SDK, Cloud Agents, QoderWork/QoderWake"
+  ide_rules_path: ".qoder/rules (Always Apply / Model Decision / Specific Files / Apply Manually; 100k char cap; AGENTS.md compatible)"
+  ide_mcp_paths: "unverified (IDE settings UI; desktop docs say custom MCP config saved in ~/.qoder/settings.json)"

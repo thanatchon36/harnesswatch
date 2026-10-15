@@ -1,0 +1,210 @@
+{
+ "bomFormat": "CycloneDX",
+ "specVersion": "1.5",
+ "version": 1,
+ "metadata": {
+  "timestamp": "2026-10-15T00:00:00Z",
+  "tools": [
+   {
+    "name": "harnesswatch experiments/e4_supply.py"
+   }
+  ],
+  "component": {
+   "type": "application",
+   "name": "@kilocode/cli",
+   "version": "7.8.10",
+   "purl": "pkg:npm/%40kilocode/cli@7.8.10",
+   "bom-ref": "root:kilo-code"
+  },
+  "properties": [
+   {
+    "name": "harnesswatch:note",
+    "value": "resolved from lockfile/compile output; not installed"
+   }
+  ]
+ },
+ "components": [
+  {
+   "type": "library",
+   "name": "@kilocode/cli",
+   "version": "7.8.10",
+   "purl": "pkg:npm/%40kilocode/cli@7.8.10",
+   "bom-ref": "pkg:npm/%40kilocode/cli@7.8.10",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@kilocode/cli-darwin-arm64",
+   "version": "7.8.10",
+   "purl": "pkg:npm/%40kilocode/cli-darwin-arm64@7.8.10",
+   "bom-ref": "pkg:npm/%40kilocode/cli-darwin-arm64@7.8.10",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@kilocode/cli-darwin-x64",
+   "version": "7.8.10",
+   "purl": "pkg:npm/%40kilocode/cli-darwin-x64@7.8.10",
+   "bom-ref": "pkg:npm/%40kilocode/cli-darwin-x64@7.8.10",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@kilocode/cli-darwin-x64-baseline",
+   "version": "7.8.10",
+   "purl": "pkg:npm/%40kilocode/cli-darwin-x64-baseline@7.8.10",
+   "bom-ref": "pkg:npm/%40kilocode/cli-darwin-x64-baseline@7.8.10",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@kilocode/cli-linux-arm64",
+   "version": "7.8.10",
+   "purl": "pkg:npm/%40kilocode/cli-linux-arm64@7.8.10",
+   "bom-ref": "pkg:npm/%40kilocode/cli-linux-arm64@7.8.10",
+   "licenses": [
+    {
+     "license": {
+      "name": "SEE LICENSE IN LICENSE"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@kilocode/cli-linux-arm64-musl",
+   "version": "7.8.10",
+   "purl": "pkg:npm/%40kilocode/cli-linux-arm64-musl@7.8.10",
+   "bom-ref": "pkg:npm/%40kilocode/cli-linux-arm64-musl@7.8.10",
+   "licenses": [
+    {
+     "license": {
+      "name": "SEE LICENSE IN LICENSE"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@kilocode/cli-linux-x64",
+   "version": "7.8.10",
+   "purl": "pkg:npm/%40kilocode/cli-linux-x64@7.8.10",
+   "bom-ref": "pkg:npm/%40kilocode/cli-linux-x64@7.8.10",
+   "licenses": [
+    {
+     "license": {
+      "name": "SEE LICENSE IN LICENSE"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@kilocode/cli-linux-x64-baseline",
+   "version": "7.8.10",
+   "purl": "pkg:npm/%40kilocode/cli-linux-x64-baseline@7.8.10",
+   "bom-ref": "pkg:npm/%40kilocode/cli-linux-x64-baseline@7.8.10",
+   "licenses": [
+    {
+     "license": {
+      "name": "SEE LICENSE IN LICENSE"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@kilocode/cli-linux-x64-baseline-musl",
+   "version": "7.8.10",
+   "purl": "pkg:npm/%40kilocode/cli-linux-x64-baseline-musl@7.8.10",
+   "bom-ref": "pkg:npm/%40kilocode/cli-linux-x64-baseline-musl@7.8.10",
+   "licenses": [
+    {
+     "license": {
+      "name": "SEE LICENSE IN LICENSE"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@kilocode/cli-linux-x64-musl",
+   "version": "7.8.10",
+   "purl": "pkg:npm/%40kilocode/cli-linux-x64-musl@7.8.10",
+   "bom-ref": "pkg:npm/%40kilocode/cli-linux-x64-musl@7.8.10",
+   "licenses": [
+    {
+     "license": {
+      "name": "SEE LICENSE IN LICENSE"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@kilocode/cli-windows-arm64",
+   "version": "7.8.10",
+   "purl": "pkg:npm/%40kilocode/cli-windows-arm64@7.8.10",
+   "bom-ref": "pkg:npm/%40kilocode/cli-windows-arm64@7.8.10",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@kilocode/cli-windows-x64",
+   "version": "7.8.10",
+   "purl": "pkg:npm/%40kilocode/cli-windows-x64@7.8.10",
+   "bom-ref": "pkg:npm/%40kilocode/cli-windows-x64@7.8.10",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@kilocode/cli-windows-x64-baseline",
+   "version": "7.8.10",
+   "purl": "pkg:npm/%40kilocode/cli-windows-x64-baseline@7.8.10",
+   "bom-ref": "pkg:npm/%40kilocode/cli-windows-x64-baseline@7.8.10",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  }
+ ]
+}

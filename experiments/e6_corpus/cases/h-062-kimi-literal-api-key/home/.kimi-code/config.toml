@@ -1,0 +1,6 @@
+default_model = "kimi-k2"
+
+[providers.moonshot]
+type = "kimi"
+base_url = "https://api.moonshot.example.com/v1"
+api_key = "{{SYNTH:high-entropy}}"

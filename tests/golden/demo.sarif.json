@@ -1,0 +1,564 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "toolExecutionNotifications": []
+        }
+      ],
+      "originalUriBaseIds": {
+        "%SRCROOT%": {
+          "description": {
+            "text": "Repository root"
+          }
+        }
+      },
+      "results": [
+        {
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".github/workflows/agent.yml",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 6
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Headless agent in untrusted-input workflow (job a): trigger issue_comment; agent `claude -p`; repository secrets exposed; untrusted event text interpolated; no actor/association gate"
+          },
+          "partialFingerprints": {
+            "harnesswatch/v1": "fc5620c3aaa34bd8"
+          },
+          "properties": {
+            "confidence": "high",
+            "harness": null,
+            "security-severity": "9.5",
+            "severity": "critical"
+          },
+          "ruleId": "HG-CI-001",
+          "ruleIndex": 0
+        },
+        {
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".claude/settings.json",
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Hook (SessionStart) runs network/remote code: `curl`"
+          },
+          "partialFingerprints": {
+            "harnesswatch/v1": "4f87ef58109348e6"
+          },
+          "properties": {
+            "confidence": "medium",
+            "harness": "claude-code",
+            "security-severity": "8.0",
+            "severity": "high"
+          },
+          "ruleId": "HG-HOOK-002",
+          "ruleIndex": 3
+        },
+        {
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "AGENTS.md",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Injection indicators, score 14: concealment, exfiltration, override, secret-access (lines 1)"
+          },
+          "partialFingerprints": {
+            "harnesswatch/v1": "c9a2ebea5c7ad963"
+          },
+          "properties": {
+            "confidence": "medium",
+            "harness": null,
+            "security-severity": "8.0",
+            "severity": "high"
+          },
+          "ruleId": "HG-INJ-002",
+          "ruleIndex": 4
+        },
+        {
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".claude/settings.json",
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Approve-everything mode enabled (permissions.defaultMode=bypassPermissions) in a repository config that applies to everyone who opens the repo"
+          },
+          "partialFingerprints": {
+            "harnesswatch/v1": "35a3c82146e0a8db"
+          },
+          "properties": {
+            "confidence": "high",
+            "harness": "claude-code",
+            "security-severity": "8.0",
+            "severity": "high"
+          },
+          "ruleId": "HG-PERM-001",
+          "ruleIndex": 7
+        },
+        {
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".claude/settings.json",
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Allowlist grants unrestricted access: Bash(*)"
+          },
+          "partialFingerprints": {
+            "harnesswatch/v1": "66a44f4def58326f"
+          },
+          "properties": {
+            "confidence": "high",
+            "harness": "claude-code",
+            "security-severity": "8.0",
+            "severity": "high"
+          },
+          "ruleId": "HG-PERM-002",
+          "ruleIndex": 8
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".github/workflows/agent.yml",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Agent job `a` runs with no `permissions:` block (GITHUB_TOKEN gets the repository default)"
+          },
+          "partialFingerprints": {
+            "harnesswatch/v1": "3d063ef02f6b3c30"
+          },
+          "properties": {
+            "confidence": "medium",
+            "harness": null,
+            "security-severity": "5.5",
+            "severity": "medium"
+          },
+          "ruleId": "HG-CI-002",
+          "ruleIndex": 1
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".claude/settings.json",
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Repository config defines 1 shell hook(s) (SessionStart) that run for anyone who opens the repo with this harness"
+          },
+          "partialFingerprints": {
+            "harnesswatch/v1": "ca6e1b98f8ac51f4"
+          },
+          "properties": {
+            "confidence": "high",
+            "harness": "claude-code",
+            "security-severity": "5.5",
+            "severity": "medium"
+          },
+          "ruleId": "HG-HOOK-001",
+          "ruleIndex": 2
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".mcp.json",
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "MCP server `github`: `npx -y @modelcontextprotocol/server-github` resolves the latest registry version at every launch"
+          },
+          "partialFingerprints": {
+            "harnesswatch/v1": "8f035c5157323a98"
+          },
+          "properties": {
+            "confidence": "high",
+            "harness": "claude-code",
+            "security-severity": "5.5",
+            "severity": "medium"
+          },
+          "ruleId": "HG-MCP-001",
+          "ruleIndex": 5
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".claude/settings.json",
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Unrestricted execution with no deny rule for 3 destructive command class(es) (e.g. rm -rf, force-push, credential reads)"
+          },
+          "partialFingerprints": {
+            "harnesswatch/v1": "5ab8d8492be315d4"
+          },
+          "properties": {
+            "confidence": "medium",
+            "harness": "claude-code",
+            "security-severity": "5.5",
+            "severity": "medium"
+          },
+          "ruleId": "HG-PERM-003",
+          "ruleIndex": 9
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".mcp.json",
+                  "uriBaseId": "%SRCROOT%"
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Repository declares local MCP server `github` (`npx`), started for anyone who approves/opens the project"
+          },
+          "partialFingerprints": {
+            "harnesswatch/v1": "3ae2c8de54506a89"
+          },
+          "properties": {
+            "confidence": "high",
+            "harness": "claude-code",
+            "security-severity": "3.0",
+            "severity": "low"
+          },
+          "ruleId": "HG-MCP-005",
+          "ruleIndex": 6
+        }
+      ],
+      "tool": {
+        "driver": {
+          "informationUri": "https://github.com/thanatchon36/harnesswatch",
+          "name": "harnesswatch",
+          "rules": [
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "fullDescription": {
+                "text": "A coding agent running non-interactively in CI on events that outsiders control (issue and PR comments, pull_request_target, issues) reads attacker-written text. If the job also exposes repository secrets, runs with auto-approve, or interpolates event text into the prompt, a crafted issue/PR can steer the agent to leak secrets or push code. Critical when secrets plus auto-approve or interpolation are present without an author-association/actor gate; medium when gated."
+              },
+              "help": {
+                "text": "Gate the job on `github.event.comment.author_association` (OWNER/MEMBER/COLLABORATOR) or an actor allowlist; never pass event text via `${{ }}` interpolation (use environment variables); do not expose deployment secrets to agent jobs; keep tool allowlists narrow instead of bypass modes; prefer `pull_request` over `pull_request_target`."
+              },
+              "helpUri": "https://securitylab.github.com/resources/github-actions-preventing-pwn-requests/",
+              "id": "HG-CI-001",
+              "name": "HGCI001",
+              "properties": {
+                "security-severity": "8.0",
+                "tags": [
+                  "security",
+                  "T09",
+                  "T01",
+                  "T08"
+                ]
+              },
+              "shortDescription": {
+                "text": "Headless agent in a workflow triggered by untrusted input (\"pwn request\")"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "A job that runs a coding agent and has write-scoped (or default) GITHUB_TOKEN permissions lets a steered agent push commits, edit workflows, comment or publish packages. Least privilege bounds the blast radius of a successful injection."
+              },
+              "help": {
+                "text": "Add an explicit `permissions:` block with read-only scopes for agent jobs, granting only the single write scope the job needs (e.g. `pull-requests: write` to comment)."
+              },
+              "helpUri": "https://docs.github.com/en/actions/security-for-github-actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token",
+              "id": "HG-CI-002",
+              "name": "HGCI002",
+              "properties": {
+                "security-severity": "5.5",
+                "tags": [
+                  "security",
+                  "T09",
+                  "T14"
+                ]
+              },
+              "shortDescription": {
+                "text": "Agent CI job runs with a write-scoped GITHUB_TOKEN"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "Hooks in a committed project file (`.claude/settings.json`, `.cursor/hooks.json`, `.codex/hooks.json`, `.gemini/settings.json`, `.kiro/hooks/`, \u2026) run shell commands on agent events for everyone who opens the repository. Several harnesses gate them behind a workspace-trust prompt in interactive mode, but headless modes (`claude -p`, SDKs, CI) often do not prompt. CVE-2025-59536 (Claude Code) and similar issues in other harnesses were pre-trust execution of exactly this surface."
+              },
+              "help": {
+                "text": "Keep hooks in user-level or managed settings; if a project hook is required, keep it to a reviewed script inside the repo, document it, and protect the config file with CODEOWNERS. Admins can restrict hooks centrally (Claude Code `allowManagedHooksOnly`)."
+              },
+              "helpUri": "https://code.claude.com/docs/en/hooks",
+              "id": "HG-HOOK-001",
+              "name": "HGHOOK001",
+              "properties": {
+                "security-severity": "5.5",
+                "tags": [
+                  "security",
+                  "T02"
+                ]
+              },
+              "shortDescription": {
+                "text": "Repository config defines hooks that execute shell commands"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "A hook that pipes a download into a shell, calls curl/wget/nc, or uses an inline interpreter to reach the network turns every agent event into remote code execution or an exfiltration channel. High when defined in a repository file."
+              },
+              "help": {
+                "text": "Vendor the hook script into the repository, pin its dependencies, and avoid network calls in hooks."
+              },
+              "helpUri": "https://code.claude.com/docs/en/hooks",
+              "id": "HG-HOOK-002",
+              "name": "HGHOOK002",
+              "properties": {
+                "security-severity": "5.5",
+                "tags": [
+                  "security",
+                  "T02",
+                  "T06",
+                  "T08"
+                ]
+              },
+              "shortDescription": {
+                "text": "Hook command fetches or sends data over the network, or runs code fetched at runtime"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "Scored heuristic over instruction/rules/skill files: instruction-override phrases (\"ignore previous instructions\"), concealment (\"do not tell the user\"), fake authority headers, requests to read credential files, exfiltration verbs next to URLs, pipe-to-shell commands, auto-approve flags, tool-shadowing (\"before using any tool\u2026\"), markdown-image exfil templates, long encoded blobs and HTML comments that hide text. The rule fires when the weighted score reaches `min_score`; severity scales with the score."
+              },
+              "help": {
+                "text": "Read the flagged lines. Legitimate project guidance rarely needs concealment, override or exfiltration language. Remove it, or move genuinely needed commands into reviewed scripts. Consider enforcing instruction-file policy with a deterministic checker (e.g. rulewarden)."
+              },
+              "helpUri": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+              "id": "HG-INJ-002",
+              "name": "HGINJ002",
+              "properties": {
+                "security-severity": "5.5",
+                "tags": [
+                  "security",
+                  "T01",
+                  "T05",
+                  "T08"
+                ]
+              },
+              "shortDescription": {
+                "text": "Prompt-injection phrasing in an instruction file"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "`npx -y pkg`, `uvx pkg`, `bunx`, `pnpm dlx`, `pipx run`, `pip install` or a mutable Docker tag in an MCP server command downloads whatever the registry serves at each launch. A compromised maintainer account, typosquat or malicious update (e.g. the 2025 postmark-mcp backdoor) then runs with the agent's privileges and sees every tool call."
+              },
+              "help": {
+                "text": "Pin exact versions (`npx -y pkg@1.2.3`, `uvx pkg==1.2.3`, `image@sha256:\u2026`), or install servers into a lockfile-managed environment and reference the local binary."
+              },
+              "helpUri": "https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices",
+              "id": "HG-MCP-001",
+              "name": "HGMCP001",
+              "properties": {
+                "security-severity": "5.5",
+                "tags": [
+                  "security",
+                  "T04",
+                  "T06"
+                ]
+              },
+              "shortDescription": {
+                "text": "MCP server fetched from a registry at launch without a version pin"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "fullDescription": {
+                "text": "A committed `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json`, `.kiro/settings/mcp.json`, \u2026 asks every cloner's harness to start a local process. Most harnesses prompt once per server, but approval fatigue, \"enable all\" settings and headless modes (which may not prompt) make this an execution path controlled by whoever can change the file. Informational unless combined with HG-MCP-001/006."
+              },
+              "help": {
+                "text": "Document each server, pin it (HG-MCP-001), protect the file with CODEOWNERS, and prefer user-level MCP config for personal tooling."
+              },
+              "helpUri": "https://code.claude.com/docs/en/mcp",
+              "id": "HG-MCP-005",
+              "name": "HGMCP005",
+              "properties": {
+                "security-severity": "3.0",
+                "tags": [
+                  "security",
+                  "T02",
+                  "T04"
+                ]
+              },
+              "shortDescription": {
+                "text": "MCP server declared in a repository config"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "The harness is configured to run tools and shell commands without asking (Claude Code `bypassPermissions`, Codex `approval_policy = \"never\"` / `danger-full-access`, Gemini/Qwen `yolo`, OpenCode `\"permission\": \"allow\"`, Cursor `unrestricted`, Cline/Roo auto-approve, Goose `auto`, \u2026). Spellings come from each harness profile. Every prompt injection then reaches the shell directly. Raised to high when a repository config file sets it, because it then applies to every person and CI job that opens the repository (some harnesses now ignore this from project scope; older versions do not). Classifier-mediated and edits-only modes are not counted (see `ignore`)."
+              },
+              "help": {
+                "text": "Use the harness's default (ask) mode, or a narrow allowlist of read-only and test commands. Reserve bypass modes for disposable sandboxes/containers without credentials, and disable them centrally where the harness supports it (Claude Code `permissions.disableBypassPermissionsMode`, Gemini `security.disableYoloMode`, Codex `requirements.toml`)."
+              },
+              "helpUri": "https://code.claude.com/docs/en/permissions",
+              "id": "HG-PERM-001",
+              "name": "HGPERM001",
+              "properties": {
+                "security-severity": "5.5",
+                "tags": [
+                  "security",
+                  "T03",
+                  "T14",
+                  "T01"
+                ]
+              },
+              "shortDescription": {
+                "text": "Approve-everything (YOLO / bypass / full-auto) mode enabled in config"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "An allowlist entry that grants an entire tool or shell (`Bash`, `Bash(*)`, `*`, `Shell(*)`, `run_shell_command`, `Exec(*)`, `mcp__*`, `WebFetch`, \u2026) is equivalent to auto-approve for that tool: any injected instruction that reaches the tool runs without a prompt. Wildcard-prefix rules such as `Bash(git *)` are also included where the harness profile marks them over-broad, since many subcommands (`git -c core.sshCommand=\u2026`, `git config alias.x '!\u2026'`) execute arbitrary programs. High when set in a repository file."
+              },
+              "help": {
+                "text": "Allow specific commands with fixed arguments (`Bash(npm run test)`, `Bash(pytest:*)`); keep shell interpreters, network tools, package managers and `git` with arbitrary arguments behind a prompt."
+              },
+              "helpUri": "https://code.claude.com/docs/en/permissions",
+              "id": "HG-PERM-002",
+              "name": "HGPERM002",
+              "properties": {
+                "security-severity": "5.5",
+                "tags": [
+                  "security",
+                  "T03",
+                  "T14"
+                ]
+              },
+              "shortDescription": {
+                "text": "Over-broad tool allowlist"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "fullDescription": {
+                "text": "When approve-everything or an over-broad allowlist is active, deny rules are the only remaining guard (deny rules still apply in bypass mode in harnesses such as Claude Code). The rule fires when the deny list does not cover each destructive class: recursive deletion, history-rewriting git pushes, and reads of credential/secret files."
+              },
+              "help": {
+                "text": "Add deny rules, e.g. Claude Code: `\"deny\": [\"Bash(rm -rf:*)\", \"Bash(git push --force:*)\", \"Read(./.env)\", \"Read(~/.ssh/**)\", \"Read(~/.aws/**)\"]`; Cursor CLI `Shell(rm)`; Gemini `tools.exclude`. Prefer an OS sandbox over deny lists, which are bypassable."
+              },
+              "helpUri": "https://code.claude.com/docs/en/settings",
+              "id": "HG-PERM-003",
+              "name": "HGPERM003",
+              "properties": {
+                "security-severity": "5.5",
+                "tags": [
+                  "security",
+                  "T14",
+                  "T07"
+                ]
+              },
+              "shortDescription": {
+                "text": "Unrestricted execution without a deny list for destructive or credential-reading commands"
+              }
+            }
+          ],
+          "version": "TEST"
+        }
+      }
+    }
+  ],
+  "version": "2.1.0"
+}

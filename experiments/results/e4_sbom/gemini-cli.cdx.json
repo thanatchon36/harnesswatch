@@ -1,0 +1,196 @@
+{
+ "bomFormat": "CycloneDX",
+ "specVersion": "1.5",
+ "version": 1,
+ "metadata": {
+  "timestamp": "2026-10-15T00:00:00Z",
+  "tools": [
+   {
+    "name": "harnesswatch experiments/e4_supply.py"
+   }
+  ],
+  "component": {
+   "type": "application",
+   "name": "@google/gemini-cli",
+   "version": "0.64.0",
+   "purl": "pkg:npm/%40google/gemini-cli@0.64.0",
+   "bom-ref": "root:gemini-cli"
+  },
+  "properties": [
+   {
+    "name": "harnesswatch:note",
+    "value": "resolved from lockfile/compile output; not installed"
+   }
+  ]
+ },
+ "components": [
+  {
+   "type": "library",
+   "name": "@github/keytar",
+   "version": "7.10.6",
+   "purl": "pkg:npm/%40github/keytar@7.10.6",
+   "bom-ref": "pkg:npm/%40github/keytar@7.10.6",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@google/gemini-cli",
+   "version": "0.64.0",
+   "purl": "pkg:npm/%40google/gemini-cli@0.64.0",
+   "bom-ref": "pkg:npm/%40google/gemini-cli@0.64.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@lydell/node-pty",
+   "version": "1.1.0",
+   "purl": "pkg:npm/%40lydell/node-pty@1.1.0",
+   "bom-ref": "pkg:npm/%40lydell/node-pty@1.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@lydell/node-pty-darwin-arm64",
+   "version": "1.1.0",
+   "purl": "pkg:npm/%40lydell/node-pty-darwin-arm64@1.1.0",
+   "bom-ref": "pkg:npm/%40lydell/node-pty-darwin-arm64@1.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@lydell/node-pty-darwin-x64",
+   "version": "1.1.0",
+   "purl": "pkg:npm/%40lydell/node-pty-darwin-x64@1.1.0",
+   "bom-ref": "pkg:npm/%40lydell/node-pty-darwin-x64@1.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@lydell/node-pty-linux-arm64",
+   "version": "1.1.0",
+   "purl": "pkg:npm/%40lydell/node-pty-linux-arm64@1.1.0",
+   "bom-ref": "pkg:npm/%40lydell/node-pty-linux-arm64@1.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@lydell/node-pty-linux-x64",
+   "version": "1.1.0",
+   "purl": "pkg:npm/%40lydell/node-pty-linux-x64@1.1.0",
+   "bom-ref": "pkg:npm/%40lydell/node-pty-linux-x64@1.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@lydell/node-pty-win32-arm64",
+   "version": "1.1.0",
+   "purl": "pkg:npm/%40lydell/node-pty-win32-arm64@1.1.0",
+   "bom-ref": "pkg:npm/%40lydell/node-pty-win32-arm64@1.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@lydell/node-pty-win32-x64",
+   "version": "1.1.0",
+   "purl": "pkg:npm/%40lydell/node-pty-win32-x64@1.1.0",
+   "bom-ref": "pkg:npm/%40lydell/node-pty-win32-x64@1.1.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "nan",
+   "version": "2.29.0",
+   "purl": "pkg:npm/nan@2.29.0",
+   "bom-ref": "pkg:npm/nan@2.29.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-addon-api",
+   "version": "8.9.2",
+   "purl": "pkg:npm/node-addon-api@8.9.2",
+   "bom-ref": "pkg:npm/node-addon-api@8.9.2",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "node-pty",
+   "version": "1.0.0",
+   "purl": "pkg:npm/node-pty@1.0.0",
+   "bom-ref": "pkg:npm/node-pty@1.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  }
+ ]
+}

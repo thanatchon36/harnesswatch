@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "context": {
+      "url": "https://mcp.context.example.com/mcp"
+    },
+    "browser": {
+      "url": "http://0.0.0.0:8931/sse"
+    }
+  }
+}

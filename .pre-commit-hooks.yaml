@@ -1,0 +1,31 @@
+- id: harnesswatch-config
+  name: harnesswatch config audit
+  description: Audit AI coding-agent harness configs (permissions, hooks, network, credentials).
+  entry: harnesswatch audit config . --no-user --fail-on high
+  language: python
+  pass_filenames: false
+  always_run: true
+
+- id: harnesswatch-mcp
+  name: harnesswatch MCP audit
+  description: Audit MCP server declarations (pinning, auth, inline secrets, tool poisoning).
+  entry: harnesswatch audit mcp . --no-user --fail-on high
+  language: python
+  pass_filenames: false
+  always_run: true
+
+- id: harnesswatch-instructions
+  name: harnesswatch instructions audit
+  description: Scan instruction, rules and skill files for injection indicators.
+  entry: harnesswatch audit instructions . --no-user --fail-on high
+  language: python
+  pass_filenames: false
+  always_run: true
+
+- id: harnesswatch-ci
+  name: harnesswatch CI audit
+  description: Audit workflows that run headless coding agents on untrusted triggers.
+  entry: harnesswatch audit ci . --fail-on high
+  language: python
+  pass_filenames: false
+  files: ^\.github/workflows/

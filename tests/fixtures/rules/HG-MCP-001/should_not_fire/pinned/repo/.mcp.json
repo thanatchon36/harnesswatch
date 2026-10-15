@@ -1,0 +1,6 @@
+{ "mcpServers": {
+  "github": { "command": "npx", "args": ["-y", "@modelcontextprotocol/server-github@2025.4.8"] },
+  "fetch": { "command": "uvx", "args": ["mcp-server-fetch==2025.4.7"] },
+  "local": { "command": "node", "args": ["./tools/mcp/server.js"] },
+  "img": { "command": "docker", "args": ["run", "-i", "--rm", "ghcr.io/org/mcp@sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"] }
+} }

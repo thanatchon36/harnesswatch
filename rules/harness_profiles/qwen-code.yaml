@@ -1,0 +1,105 @@
+id: qwen-code
+name: Qwen Code
+vendor: Alibaba (Qwen team)
+tier: A
+license: Apache-2.0
+open_source: true
+status: analysed
+version_analysed: "0.25.1"      # tag v0.25.1 (release 2026-10-11); source read at main 0ed9976 (2026-10-15); v0.25.2-preview.0 exists
+analysed_on: "2026-10-15"
+homepage: https://qwenlm.github.io/qwen-code-docs
+repo: https://github.com/QwenLM/qwen-code      # Gemini CLI fork, now with Web Shell, `qwen serve` daemon, desktop app, channels
+
+binaries: [qwen]
+packages:
+  - {ecosystem: npm, name: "@qwen-code/qwen-code"}
+install_methods:
+  - {method: curl-installer, command: "curl -fsSL https://qwen-code-assets.oss-cn-hangzhou.aliyuncs.com/installation/install-qwen-standalone.sh | bash", checksum_verified: null, signed: null, source: https://github.com/QwenLM/qwen-code/blob/main/README.md}
+  - {method: npm, command: "npm install -g @qwen-code/qwen-code@latest", checksum_verified: null, signed: null, source: https://github.com/QwenLM/qwen-code/blob/main/README.md}
+  - {method: homebrew, command: "brew install qwen-code", checksum_verified: null, signed: null, source: https://github.com/QwenLM/qwen-code/blob/main/README.md}      # exact formula name unverified
+auto_update: {default: null, config: "general.enableAutoUpdate (inherited from Gemini CLI settings; unverified)", source: https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/settings.md}
+
+state_dirs: ["~/.qwen"]
+credential_files: ["~/.qwen/oauth_creds.json", "~/.qwen/settings.json"]     # OAuth cache (free tier discontinued 2026-04-15); API keys may sit plaintext in settings.json `env`
+credential_storage: "API keys via env vars, .env or settings.json env block (plaintext, lowest priority); modelProviders[].envKey names the variable; Qwen OAuth cache file"
+log_paths: ["~/.qwen/tmp/*", "~/.qwen/file-history/**", "~/.qwen/projects/**"]       # paths partly inferred from settings docs; unverified
+memory_paths: ["~/.qwen/QWEN.md", "QWEN.md", ".qwen/team-memory/**", "~/.qwen/memory/**"]
+
+config_files:
+  - {path: "/etc/qwen-code/settings.json", scope: managed, format: json, kind: settings}            # QWEN_CODE_SYSTEM_SETTINGS_PATH; macOS /Library/Application Support/QwenCode; Windows C:\ProgramData\qwen-code
+  - {path: "/etc/qwen-code/system-defaults.json", scope: managed, format: json, kind: settings}
+  - {path: "~/.qwen/settings.json", scope: user, format: json, kind: settings}
+  - {path: "~/.qwen/trustedFolders.json", scope: user, format: json, kind: settings}
+  - {path: "~/.qwen/QWEN.md", scope: user, format: markdown, kind: instructions}
+  - {path: "~/.qwen/skills/*/SKILL.md", scope: user, format: markdown, kind: skills}
+  - {path: ".qwen/settings.json", scope: project, format: json, kind: settings}                     # honoured unless folder trust is enabled AND folder untrusted
+  - {path: ".qwen/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+  - {path: ".qwen/team-memory/*", scope: project, format: markdown, kind: instructions}
+  - {path: ".env", scope: project, format: env, kind: settings}
+  - {path: "QWEN.md", scope: project, format: markdown, kind: instructions}
+  - {path: ".qwenignore", scope: project, format: ini, kind: ignore}
+
+instruction_files: ["QWEN.md", "AGENTS.md (configurable via context.fileName)"]
+skills_paths: [".qwen/skills/*/SKILL.md", "~/.qwen/skills/*/SKILL.md", ".agents/skills (SKILL_PROVIDER_CONFIG_DIRS includes .agents)"]
+
+mcp:
+  files: ["~/.qwen/settings.json", ".qwen/settings.json", "/etc/qwen-code/settings.json"]
+  servers_key: "mcpServers"
+  server_fields: {command: command, args: args, env: env, url: url, headers: headers, type: type, httpUrl: httpUrl, trust: trust}     # Gemini-CLI-derived shape (docs/users/features/mcp.md)
+  project_servers_require_approval: false      # only gated indirectly by folder trust, which is OFF by default
+  notes: "trust:true skips confirmation for that server's tools."
+
+permissions:
+  config_keys:
+    mode: "tools.approvalMode"          # plan | default | auto-edit | auto | yolo  (schema default: auto)
+    allow: "permissions.allow"
+    ask: "permissions.ask"
+    deny: "permissions.deny"
+    legacy: ["tools.allowed", "tools.exclude", "tools.core"]
+  default_mode: "auto (LLM classifier approves safe actions / blocks risky ones)"
+  auto_approve_values:
+    - {key: "tools.approvalMode", value: "yolo"}
+    - {key: "tools.approvalMode", value: "auto", note: "default; classifier-evaluated"}
+    - {key: "tools.approvalMode", value: "auto-edit"}
+    - {key: "permissions.allow", value: "run_shell_command", note: "bare tool name"}
+  cli_flags_auto_approve: ["--yolo", "-y", "--approval-mode yolo", "--approval-mode auto-edit"]
+  allow_rule_syntax: "\"permissions\": { \"allow\": [\"run_shell_command(git status)\"], \"deny\": [\"run_shell_command(rm *)\"] }   # exact specifier grammar unverified"
+  overbroad_patterns: ["run_shell_command", "write_file", "edit", "web_fetch"]
+
+hooks:
+  supported: true
+  config_key: "hooks"                  # {PreToolUse: [{matcher, hooks: [{type: command, command}]}]} (Claude-compatible shape)
+  repo_scoped_allowed: true
+  command_field: "command"
+  managed_controls: ["disableAllHooks", "security.allowedHttpHookUrls (operator scopes only)", "security.allowPrivateNetworkHooks (operator scopes only)"]
+
+sandbox: {available: true, default_on: false, mechanism: "Linux: tools.executionSandbox (bwrap, or Landlock helper fallback); whole-CLI sandbox via Docker/Podman/Seatbelt; workspace settings cannot change the policy", config: "tools.executionSandbox {backend, filesystem, network} in user/system settings; `qwen sandbox --verify`", source: https://github.com/QwenLM/qwen-code/blob/main/docs/users/features/sandbox.md}
+network: {domain_allowlist: false, config: "tools.executionSandbox.network = closed|open", default: "no sandbox, no egress control by default", source: https://github.com/QwenLM/qwen-code/blob/main/docs/users/features/sandbox.md}
+workspace_trust: {prompt_on_new_folder: false, notes: "security.folderTrust.enabled defaults false in code (docs say disabled by default); when enabled, untrusted folders ignore .qwen/settings.json and .env and disable auto-accept; fails closed until user chooses. `qwen serve` daemon: loopback bind without auth by default.", source: https://github.com/QwenLM/qwen-code/blob/main/packages/cli/src/config/trustedFolders.ts}
+memory: {persistent: true, cross_project: true, agent_writable: true, notes: "auto-memory, optional team memory (.qwen/team-memory/, git-tracked, secret-scanned; memory.enableTeamMemorySync commits and pushes), optional Mem0", source: https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/settings.md}
+subagents: {supported: true, inherits_permissions: null, notes: "named subagents and fork subagents inherit parent context; permission inheritance not verified", source: https://github.com/QwenLM/qwen-code/blob/main/docs/users/features/sub-agents.md}
+telemetry: {default_on: true, opt_out: "privacy.usageStatisticsEnabled=false; telemetry.enabled (OTel) opt-in, telemetry.logPrompts opt-in", training_default: null, source: https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/settings.md}
+headless:
+  command: "qwen -p"
+  flags: ["-p/--prompt", "--approval-mode", "--yolo/-y", "--output-format", "--input-format", "--continue/--resume", "--system-prompt", "--model"]
+  ci_integrations: ["QwenLM/qwen-code-action"]
+  model_override: "settings modelProviders.{openai|anthropic|gemini|vertex-ai}[] {id,name,baseUrl,envKey}; env OPENAI_BASE_URL / OPENAI_API_KEY / OPENAI_MODEL (alias QWEN_MODEL), ANTHROPIC_BASE_URL, security.auth.selectedType"
+  local_model_support: "Yes: OpenAI-compatible local servers - modelProviders.openai[{id:\"<model>\", baseUrl:\"http://localhost:11434/v1\", envKey:\"OLLAMA_API_KEY\"}] with OLLAMA_API_KEY=ollama and security.auth.selectedType=openai (docs model-providers.md). Anthropic protocol also supported via ANTHROPIC_BASE_URL."
+daemon:
+  command: "qwen serve"
+  default_bind: "127.0.0.1:4170, bearer auth off on loopback; non-loopback requires/generates bearer token (QWEN_SERVER_TOKEN)"
+
+security_policy: {security_md: https://github.com/QwenLM/qwen-code/blob/main/SECURITY.md, bug_bounty: null, advisories: null}
+sources:
+  - {url: https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/settings.md, accessed: "2026-10-15", note: "settings/paths"}
+  - {url: https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/trusted-folders.md, accessed: "2026-10-15", note: "trusted folders"}
+  - {url: https://github.com/QwenLM/qwen-code/blob/main/packages/cli/src/config/trustedFolders.ts, accessed: "2026-10-15", note: "default false"}
+  - {url: https://github.com/QwenLM/qwen-code/blob/main/packages/cli/src/config/settingsSchema.ts, accessed: "2026-10-15", note: "approvalMode default AUTO"}
+  - {url: https://github.com/QwenLM/qwen-code/blob/main/docs/users/features/approval-mode.md, accessed: "2026-10-15", note: "modes"}
+  - {url: https://github.com/QwenLM/qwen-code/blob/main/docs/users/features/sandbox.md, accessed: "2026-10-15", note: "sandbox"}
+  - {url: https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/auth.md, accessed: "2026-10-15", note: "auth, OAuth discontinued"}
+  - {url: https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/model-providers.md, accessed: "2026-10-15", note: "Ollama"}
+  - {url: https://github.com/QwenLM/qwen-code/blob/main/docs/users/qwen-serve.md, accessed: "2026-10-15", note: "daemon"}
+  - {url: https://github.com/QwenLM/qwen-code/blob/main/SECURITY.md, accessed: "2026-10-15", note: "disclosure"}
+extra:
+  mission_check: "MISSION: 'fork of Gemini CLI' - true historically; now diverged (own classifier-based Auto mode, qwen serve daemon, Web Shell, modelProviders)."

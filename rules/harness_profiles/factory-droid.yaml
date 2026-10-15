@@ -1,0 +1,110 @@
+id: factory-droid
+name: Factory Droid (Droid CLI / droid exec)
+vendor: Factory AI
+tier: B
+license: "Proprietary (npm package 'droid': UNLICENSED)"
+open_source: false
+status: docs-only
+version_analysed: "0.242.0"      # CLI v0.242.0 released 2026-10-15 per changelog
+analysed_on: "2026-10-15"
+homepage: https://factory.ai
+repo: null                       # github.com/Factory-AI/factory is a public docs/issues repo, not the CLI source
+
+binaries: [droid]
+packages:
+  - {ecosystem: npm, name: "droid"}
+install_methods:
+  - {method: curl-installer, command: "curl -fsSL https://app.factory.ai/cli | sh", checksum_verified: null, signed: null, source: https://docs.factory.com/droid-cli/quickstart.md}
+  - {method: homebrew, command: "brew install --cask droid", source: https://docs.factory.com/droid-cli/quickstart.md}
+  - {method: npm, command: "npm install -g droid", source: https://docs.factory.com/droid-cli/quickstart.md}
+auto_update: {default: null, config: "not documented in pages read (unverified)", source: null}
+
+state_dirs: ["~/.factory"]
+credential_files: []
+credential_storage: "OAuth login; docs: encrypted token storage with OS-level file permissions, MCP OAuth tokens in system keyring with file fallback; FACTORY_API_KEY env for CI/service accounts"
+log_paths: ["~/.factory/projects/*/*.jsonl"]    # hook payload transcript_path example: ~/.factory/projects/.../session.jsonl
+memory_paths: ["AGENTS.md"]
+
+config_files:
+  - {path: "~/.factory/settings.json", scope: user, format: json, kind: settings}
+  - {path: "~/.factory/settings.local.json", scope: user, format: json, kind: settings}
+  - {path: ".factory/settings.json", scope: project, format: json, kind: settings}
+  - {path: ".factory/settings.local.json", scope: project-local, format: json, kind: settings}
+  - {path: "~/.factory/config.json", scope: user, format: json, kind: settings}      # legacy: snake_case custom_models/base_url still loaded
+  - {path: "~/.factory/mcp.json", scope: user, format: json, kind: mcp}
+  - {path: ".factory/mcp.json", scope: project, format: json, kind: mcp}
+  - {path: "~/.factory/hooks.json", scope: user, format: json, kind: hooks}
+  - {path: ".factory/hooks.json", scope: project, format: json, kind: hooks}
+  - {path: ".factory/hooks/hooks.json", scope: project, format: json, kind: hooks}      # legacy, still loads
+  - {path: "/etc/factory/settings.json", scope: managed, format: json, kind: settings}      # Linux & WSL
+  - {path: "/Library/Application Support/Factory/settings.json", scope: managed, format: json, kind: settings}
+  - {path: "C:\\Program Files\\Factory\\settings.json", scope: managed, format: json, kind: settings}
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: ".factory/droids/*.md", scope: project, format: markdown, kind: agents}      # custom droids (path inferred from docs section; verify)
+
+instruction_files: ["AGENTS.md"]
+skills_paths: [".factory/skills/*/SKILL.md", "~/.factory/skills/*/SKILL.md"]    # unverified exact paths (docs page /harness/skills not read)
+
+mcp:
+  files: ["~/.factory/mcp.json", ".factory/mcp.json"]
+  servers_key: "mcpServers"
+  server_fields: {command: command, args: args, env: env, url: url, headers: headers, type: type}   # type: stdio|http|sse, default stdio
+  project_servers_require_approval: null     # tool approvals are remembered per server fingerprint; project-file trust gating not documented
+  notes: "Org mcpPolicy is allowlist-only. Project mcp.json is committed; docs say never put secrets there. droid mcp add <name> <urlOrCommand> --type stdio|http|sse [--env K=V] [--header 'K: V']; servers added via CLI go to user config."
+
+permissions:
+  config_keys:
+    autonomy: "sessionDefaultSettings.autonomyLevel"
+    interaction_mode: "sessionDefaultSettings.interactionMode"
+    rules: "permissionRules.rules"
+    legacy_allow: "commandAllowlist"
+    legacy_ask: "commandDenylist"
+    legacy_block: "commandBlocklist"
+    org_cap: "maxAutonomyLevel"
+  default_mode: "autonomy off (manual approvals) interactively; droid exec read-only unless --auto"
+  auto_approve_values:
+    - {key: "sessionDefaultSettings.autonomyLevel", value: "high"}
+    - {key: "sessionDefaultSettings.autonomyLevel", value: "medium", note: "installs/commits without prompts"}
+  cli_flags_auto_approve: ["--skip-permissions-unsafe", "--auto high", "--auto medium"]
+  allow_rule_syntax: '{"id":"user/git-push","decision":"ask","match":{"prefix":["git","push"]},"tests":{"match":["git push origin main"],"noMatch":["git status"]}}'
+  overbroad_patterns: ["permissionRules decision allow with match.prefix [\"sudo\"] / [\"bash\"] / [\"sh\"]", "commandAllowlist containing \"*\" or shells (deprecated list)"]
+
+hooks:
+  supported: true
+  config_key: "hooks"            # in settings.json when hooks.json absent; also standalone hooks.json keyed by event name
+  repo_scoped_allowed: true      # .factory/hooks.json; org allowManagedHooksOnly drops user+project hooks
+  command_field: "command"
+  disable_key: "hooksDisabled"
+
+sandbox: {available: true, default_on: false, mechanism: "macOS Seatbelt; Linux/WSL2 bubblewrap + seccomp; HTTP/SOCKS filtering proxy for network; modes per-command (default) | whole-process", config: "sandbox.enabled (+ sandbox.mode, sandbox.filesystem.allowWrite/denyWrite/denyRead, sandbox.network.allowedDomains)", source: https://docs.factory.com/autonomy-and-safety/sandbox.md}
+network: {domain_allowlist: true, config: "sandbox.network.allowedDomains", default: "when sandbox enabled: deny all except Factory and WorkOS domains; sandbox itself off by default", source: https://docs.factory.com/autonomy-and-safety/sandbox.md}
+workspace_trust: {prompt_on_new_folder: null, notes: "Project/folder permissionRules require workspace trust; apiKeyHelper only from org-managed settings. Trust gating for project hooks/MCP not documented (unverified).", source: https://docs.factory.com/autonomy-and-safety/permission-rules.md}
+memory: {persistent: false, cross_project: false, agent_writable: null, notes: "only AGENTS.md documented", source: https://docs.factory.com/harness/agents-md.md}
+subagents: {supported: true, inherits_permissions: "inherits parent autonomy level by default; subagent autonomy setting inherit|off|low|medium|high, clamped to org max", notes: "custom droids", source: https://docs.factory.com/autonomy-and-safety/auto-run.md}
+telemetry: {default_on: true, opt_out: "org-level telemetry.granularity=aggregate; airgapped deployment sends nothing; OTEL_TELEMETRY_ENDPOINT / OTEL_LOG_MESSAGE_CONTENT for own collector; user-level opt-out of Factory metrics not documented", training_default: "not stated in pages read (unverified)", source: https://docs.factory.com/enterprise/telemetry/privacy.md}
+headless:
+  command: "droid exec \"<prompt>\" --auto low"
+  flags: ["--auto low|medium|high", "--skip-permissions-unsafe", "-o/--output-format text|json|stream-jsonrpc", "-m/--model <id>", "--use-spec", "--input-format stream-jsonrpc", "--mission"]
+  ci_integrations: ["Factory-AI/droid-action (existence unverified)", "https://docs.factory.com/software-factory/code-review-ci"]
+  model_override: "customModels[] in ~/.factory/settings.json: {model, baseUrl, apiKey: \"${VAR}\", provider: generic-chat-completion-api|openai|anthropic, displayName, extraArgs}; then -m custom:<id> (id format unverified)"
+  local_model_support: "BYOK yes, but login still required (B4 2026-10-15): customModels provider generic-chat-completion-api, baseUrl http://localhost:11434/v1, apiKey optional (https://docs.factory.com/cli/byok/overview). droid exec setup requires FACTORY_API_KEY (https://docs.factory.com/cli/droid-exec/overview); no-login mode exists only in enterprise airgap builds not publicly distributed (https://docs.factory.com/enterprise/airgapped-deployment.md). Bench: N/A (no access) for public build."
+  env: {api_key: FACTORY_API_KEY}
+
+security_policy: {security_md: null, bug_bounty: null, advisories: null, trust_center: https://trust.factory.com}
+extra:
+  droid_shield: "enableDroidShield (secret scan of git commits/pushes)"
+  org_only_keys: ["mcpPolicy", "modelPolicy", "maxAutonomyLevel", "allowManagedHooksOnly", "strictEnabledPlugins", "strictKnownMarketplaces", "telemetry", "apiKeyHelper"]
+  other_settings: {cloudSessionSync: "mirrors sessions to Factory web", ideAutoConnect: false}
+sources:
+  - {url: https://docs.factory.com/droid-cli/settings.md, accessed: "2026-10-15"}
+  - {url: https://docs.factory.com/autonomy-and-safety/auto-run.md, accessed: "2026-10-15"}
+  - {url: https://docs.factory.com/autonomy-and-safety/permission-rules.md, accessed: "2026-10-15"}
+  - {url: https://docs.factory.com/autonomy-and-safety/sandbox.md, accessed: "2026-10-15"}
+  - {url: https://docs.factory.com/droid-exec/overview.md, accessed: "2026-10-15"}
+  - {url: https://docs.factory.com/harness/mcp.md, accessed: "2026-10-15"}
+  - {url: https://docs.factory.com/harness/hooks.md, accessed: "2026-10-15"}
+  - {url: https://docs.factory.com/model-independence/byok.md, accessed: "2026-10-15"}
+  - {url: https://docs.factory.com/enterprise/hierarchical-settings-and-org-control.md, accessed: "2026-10-15"}
+  - {url: https://docs.factory.com/enterprise/telemetry/privacy.md, accessed: "2026-10-15"}
+  - {url: https://docs.factory.com/changelog/release-notes.md, accessed: "2026-10-15", note: "CLI v0.242.0 Oct 15 2026"}
+  - {url: https://registry.npmjs.org/droid, accessed: "2026-10-15"}

@@ -1,0 +1,4 @@
+{
+  "memory": {"enableTeamMemorySync": true},
+  "tools": {"approvalMode": "default"}
+}

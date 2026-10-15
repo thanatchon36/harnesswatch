@@ -1,0 +1,5 @@
+{
+  "editor.formatOnSave": true,
+  // approve every terminal command the agent proposes
+  "chat.tools.terminal.autoApprove": {"/.*/": true}
+}

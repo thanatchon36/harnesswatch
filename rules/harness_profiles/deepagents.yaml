@@ -1,0 +1,172 @@
+id: deepagents
+tier: C
+analysed_on: '2026-10-15'
+config_files:
+- path: ~/.deepagents/config.toml
+  scope: user
+  format: toml
+  kind: settings
+- path: ~/.deepagents/hooks.json
+  scope: user
+  format: json
+  kind: hooks
+- path: .deepagents/hooks.json
+  scope: project
+  format: json
+  kind: hooks
+  note: loads only after workspace trust; headless needs --trust-project-hooks
+- path: ~/.deepagents/.mcp.json
+  scope: user
+  format: json
+  kind: mcp
+- path: .mcp.json
+  scope: project
+  format: json
+  kind: mcp
+- path: .deepagents/.mcp.json
+  scope: project
+  format: json
+  kind: mcp
+- path: .deepagents/agents/*
+  scope: project
+  format: markdown
+  kind: agents
+- path: managed_config.toml
+  scope: managed
+  format: toml
+  kind: settings
+  note: fixed admin path not captured; see THREAT_MODEL TB (unverified path)
+binaries:
+- dcode
+- deepagents-code
+name: Deep Agents (SDK) and deepagents-code (dcode CLI)
+vendor: LangChain
+license: MIT
+open_source: true
+status: analysed
+version_analysed: deepagents 0.7.25; deepagents-code 0.1.85
+homepage: https://docs.langchain.com/oss/python/deepagents/overview
+repo: https://github.com/langchain-ai/deepagents
+packages:
+- ecosystem: pypi
+  name: deepagents
+- ecosystem: pypi
+  name: deepagents-code
+- ecosystem: pypi
+  name: deepagents-acp
+install_methods:
+- method: curl-installer
+  command: curl -LsSf https://langch.in/dcode | bash
+  checksum_verified: null
+  signed: null
+  source: https://github.com/langchain-ai/deepagents/blob/main/libs/code/README.md
+state_dirs:
+- ~/.deepagents
+- $DEEPAGENTS_HOME
+credential_files:
+- ~/.deepagents/.env
+credential_storage: Keys expected in process env; ~/.deepagents/.env dotenv layer exists; THREAT_MODEL states CLI never writes API keys to disk
+log_paths:
+- ~/.deepagents/*.db
+memory_paths:
+- AGENTS.md
+- ~/.deepagents/agents/*
+instruction_files:
+- AGENTS.md
+mcp:
+  files:
+  - ~/.deepagents/.mcp.json
+  - .mcp.json
+  - .deepagents/.mcp.json
+  servers_key: mcpServers
+  server_fields:
+    command: command
+    args: args
+    env: env
+    url: url
+    headers: headers
+    type: type
+  project_servers_require_approval: true
+  notes: servers_key and field names assumed Claude-style .mcp.json - UNVERIFIED; trust stored in ~/.deepagents/.state/mcp_trust.json; env DEEPAGENTS_CODE_DANGEROUSLY_ENABLE_PROJECT_MCP_SERVERS bypasses
+permissions:
+  config_keys:
+    shell_allow_list: shell.allow_list (config.toml, unverified exact key)
+    startup_mode: startup.mode
+  default_mode: interactive Manual HITL; non-interactive runs non-shell tools unattended
+  auto_approve_values:
+  - key: startup.mode
+    value: yolo (unverified spelling)
+  - key: shell.allow_list
+    value: all
+  cli_flags_auto_approve:
+  - -y
+  - --auto-approve
+  - --yolo
+  allow_rule_syntax: --shell-allow-list / DEEPAGENTS_SHELL_ALLOW_LIST (first-token match only)
+  overbroad_patterns:
+  - all
+  - python3
+  - bash
+  - env
+  - xargs
+hooks:
+  supported: true
+  config_key: hooks.json (JSON event->handler commands)
+  repo_scoped_allowed: true
+  command_field: command (unverified)
+sandbox:
+  available: true
+  default_on: false
+  mechanism: remote sandbox providers LangSmith/AgentCore/Daytona/Modal/Runloop via --sandbox; SDK LocalShellBackend unisolated
+  config: --sandbox
+  source: https://github.com/langchain-ai/deepagents/blob/main/libs/code/README.md
+workspace_trust:
+  prompt_on_new_folder: true
+  notes: hooks and project MCP trust-gated; AGENTS.md and artifacts read before approvals
+  source: https://github.com/langchain-ai/deepagents/blob/main/libs/code/HOOKS.md
+subagents:
+  supported: true
+  inherits_permissions: null
+  notes: SubAgentMiddleware; interrupt/permissions applied per graph.py comment
+  source: https://github.com/langchain-ai/deepagents/blob/main/libs/deepagents/deepagents/graph.py
+telemetry:
+  default_on: null
+  opt_out: LangSmith tracing opt-in via env; DEEPAGENTS_CODE_OFFLINE
+  training_default: null
+  source: https://github.com/langchain-ai/deepagents/blob/main/libs/code/THREAT_MODEL.md
+headless:
+  command: dcode -n "<prompt>" (or piped stdin)
+  flags:
+  - -n
+  - --non-interactive
+  - --shell-allow-list
+  - --trust-project-hooks
+  - --sandbox
+  - --model
+  ci_integrations:
+  - langchain-ai/deepagents action.yml (GitHub Action)
+  model_override: --model provider:model; config.toml providers (base_url key unverified)
+  local_model_support: ollama extra (DEEPAGENTS_CODE_EXTRAS=ollama) per README
+security_policy:
+  security_md: null
+  bug_bounty: null
+  advisories: https://github.com/langchain-ai/deepagents/security/advisories
+extra:
+  note: 'deepagents-code (dcode) is a full terminal coding agent; recommend lead consider a separate Tier A profile id deepagents-code. Telemetry env: LANGSMITH_*, DEEPAGENTS_CODE_OFFLINE.'
+  threat_model: https://github.com/langchain-ai/deepagents/blob/main/libs/code/THREAT_MODEL.md
+sources:
+- url: https://github.com/langchain-ai/deepagents/blob/main/libs/code/THREAT_MODEL.md
+  accessed: '2026-10-15'
+  note: dcode threat model
+- url: https://github.com/langchain-ai/deepagents/blob/main/libs/code/README.md
+  accessed: '2026-10-15'
+  note: dcode readme
+- url: https://github.com/langchain-ai/deepagents/blob/main/libs/code/HOOKS.md
+  accessed: '2026-10-15'
+  note: hooks
+- url: https://github.com/langchain-ai/deepagents/blob/main/libs/deepagents/deepagents/graph.py
+  accessed: '2026-10-15'
+  note: SDK api
+- url: https://github.com/langchain-ai/deepagents/security/advisories/GHSA-459r-276m-w72x
+  accessed: '2026-10-15'
+  note: GHSA

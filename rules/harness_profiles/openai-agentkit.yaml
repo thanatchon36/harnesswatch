@@ -1,0 +1,69 @@
+id: openai-agentkit
+name: OpenAI AgentKit (Agent Builder, ChatKit, Connector Registry, Guardrails)
+vendor: OpenAI
+tier: C
+license: "Proprietary hosted; chatkit-python/js Apache-2.0; openai-guardrails-python MIT"
+open_source: false
+status: docs-only
+version_analysed: null
+analysed_on: "2026-10-15"
+homepage: https://developers.openai.com/api/docs/guides/agent-builder
+repo: https://github.com/openai/openai-guardrails-python
+
+binaries: []
+packages:
+  - {ecosystem: pypi, name: "openai-guardrails"}   # package name unverified; repo is openai/openai-guardrails-python
+  - {ecosystem: pypi, name: "openai-chatkit"}      # unverified
+  - {ecosystem: pypi, name: "openai-agents"}
+  - {ecosystem: npm, name: "@openai/agents"}       # unverified
+install_methods: []
+auto_update: {default: null, config: null, source: null}
+
+state_dirs: []
+credential_files: []
+credential_storage: "hosted; connector OAuth tokens are supplied per request by the developer"
+log_paths: []
+memory_paths: []
+
+config_files:
+  - {path: "guardrails_config.json", scope: project, format: json, kind: rules}   # OpenAI Guardrails pipeline definition (name from docs example)
+
+mcp:
+  files: []
+  servers_key: "tools[] entries of type mcp (Responses API): server_url | connector_id | tunnel_id, require_approval"
+  server_fields: {url: server_url, headers: headers, type: type}
+  project_servers_require_approval: true
+  notes: "require_approval accepts 'always' | 'never' | {never: {tool_names: [...]}}; default requires approval. connector_id deprecated for models released after 2026-09-01."
+
+permissions:
+  config_keys:
+    mode: "tools[].require_approval"
+  default_mode: "approval required for MCP/connector calls"
+  auto_approve_values:
+    - {key: "tools[].require_approval", value: "never"}
+  cli_flags_auto_approve: []
+  allow_rule_syntax: '{"require_approval": {"never": {"tool_names": ["read_only_tool"]}}}'
+  overbroad_patterns: ['"require_approval": "never"']
+
+hooks: {supported: false}
+sandbox: {available: null, default_on: null, mechanism: null, config: null, source: null}
+network: {domain_allowlist: null, config: null, default: null, source: null}
+workspace_trust: {prompt_on_new_folder: false, notes: "no local workspace", source: null}
+memory: {persistent: null, cross_project: null, agent_writable: null, notes: "not documented for Agent Builder in pages read", source: null}
+subagents: {supported: null, inherits_permissions: null, notes: null, source: null}
+telemetry: {default_on: null, opt_out: null, training_default: "Responses API store=true logged for 30 days unless ZDR", source: https://developers.openai.com/api/docs/guides/tools-connectors-mcp}
+headless:
+  command: null
+  flags: []
+  ci_integrations: []
+  model_override: "model chosen per agent node; Agents SDK export can use other providers (unverified)"
+  local_model_support: "none for hosted Agent Builder; exported Agents SDK code may target OpenAI-compatible endpoints (unverified)"
+
+security_policy: {security_md: null, bug_bounty: null, advisories: null}
+sources:
+  - {url: https://developers.openai.com/api/docs/guides/agent-builder, accessed: "2026-10-15", note: "shutdown notice 2026-11-30; components"}
+  - {url: https://developers.openai.com/api/docs/guides/agent-builder-safety, accessed: "2026-10-15", note: "prompt injection, tool approvals, guardrails"}
+  - {url: https://developers.openai.com/api/docs/guides/tools-connectors-mcp, accessed: "2026-10-15", note: "require_approval, connectors, retention"}
+  - {url: https://openai.github.io/openai-guardrails-python/, accessed: "2026-10-15", note: "Guardrails library"}
+extra:
+  lifecycle: "Agent Builder 'scheduled to shut down on November 30, 2026' (OpenAI docs); ChatKit remains. openai.com/index/introducing-agentkit returned HTTP 403 to the fetcher; AgentKit component list (Agent Builder, ChatKit, Connector Registry, Guardrails) is from third-party reports."

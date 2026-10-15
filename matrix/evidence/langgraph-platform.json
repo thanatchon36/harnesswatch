@@ -1,0 +1,171 @@
+{
+  "harness": "langgraph-platform",
+  "version": "langgraph 1.2.15 / langgraph-api 0.16.0",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Authorization is app-defined via @auth.on handlers; most specific handler wins.",
+          "source": "https://docs.langchain.com/langsmith/auth",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Authz bugs: CVE-2026-55236 (run-creation assistant authz), CVE-2026-104873 (actions= ignored).",
+          "source": "https://github.com/advisories/GHSA-fvww-7h3r-vfhp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "No built-in tool-call approval at platform level; resource authz is builder-written and has had bypass CVEs."
+    },
+    "D02": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (platform runs user graph code in the customer container; no agent-tool sandbox is provided)"
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Webhook loopback delivery now denied by default (webhooks.url.disable_loopback).",
+          "source": "https://github.com/advisories/GHSA-2c9q-c2q9-qgqv",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Some SSRF-style hardening for webhooks; general egress control is customer infrastructure."
+    },
+    "D04": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (server runtime; no workspace trust concept)"
+    },
+    "D05": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (platform-level MCP governance not found; MCP is app-level)"
+    },
+    "D06": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (no extension marketplace in the platform)"
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Runtime encrypts assistant metadata/config/context at rest.",
+          "source": "https://github.com/advisories/GHSA-jfj5-wrj9-63x4",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Client-side hide inputs/outputs and anonymizer for traces.",
+          "source": "https://docs.langchain.com/langsmith/data-purging-compliance",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Encryption at rest for sensitive config and trace redaction options; secrets otherwise env-based."
+    },
+    "D08": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (server runtime; no CI agent mode)"
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Persistent threads/checkpoints/Store; Store scoped per-user by namespace rewriting.",
+          "source": "https://docs.langchain.com/langsmith/auth",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Checkpoint deserialization and store-prefix CVEs 2025-2026.",
+          "source": "https://github.com/advisories/GHSA-47pj-3jcm-6whg",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Memory exists and is auth-scopable, with repeated state-store vulnerabilities."
+    },
+    "D10": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (multi-agent isolation is application-defined)"
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Tracing to LangSmith (cloud or self-hosted); retention base 14d, extended tier configurable.",
+          "source": "https://docs.langchain.com/langsmith/data-purging-compliance",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "First-class tracing product; default-on status for deployments not verified."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "Regions US/EU/APAC; SOC 2 Type 2, GDPR, HIPAA stated; training default not stated.",
+          "source": "https://docs.langchain.com/langsmith/regions-faq",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Retention base 14d; deletes async weekends.",
+          "source": "https://docs.langchain.com/langsmith/data-purging-compliance",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Residency and retention controls documented; training policy not confirmed."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "langgraph-api is Elastic-2.0; self-hosted images/Helm via Enterprise license; provenance/signing not verified.",
+          "source": "https://docs.langchain.com/langsmith/deploy-to-self-hosted-overview.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Distribution via PyPI/containers without verified signing or SBOM statements."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Self-hosted has no default authentication; custom auth hooks required.",
+          "source": "https://docs.langchain.com/langsmith/auth",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Auth is mandatory to add yourself on self-hosted; no managed org policy file."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "Regular GHSA/CVE issuance (12+ in 12 months); no SECURITY.md at repo root; no bounty found.",
+          "source": "https://github.com/langchain-ai/langgraph/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Advisories and CVEs are published, but disclosure policy/bounty not found."
+    }
+  }
+}

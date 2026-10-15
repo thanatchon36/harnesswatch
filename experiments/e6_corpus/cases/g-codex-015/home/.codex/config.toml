@@ -1,0 +1,11 @@
+model = "o4-mini"
+model_reasoning_effort = "high"
+approval_policy = "on-failure"
+sandbox_mode = "workspace-write"
+
+[sandbox_workspace_write]
+network_access = true
+
+[otel]
+environment = "dev"
+log_user_prompt = false

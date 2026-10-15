@@ -1,0 +1,5 @@
+expected:
+- HG-HOOK-002
+origin: generated
+family: gemini
+note: Gemini settings

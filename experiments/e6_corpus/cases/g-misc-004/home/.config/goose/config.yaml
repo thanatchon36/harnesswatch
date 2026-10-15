@@ -1,0 +1,15 @@
+GOOSE_PROVIDER: openai
+GOOSE_MODEL: gpt-5.1
+GOOSE_MODE: auto
+GOOSE_TELEMETRY_ENABLED: false
+extensions:
+  developer:
+    enabled: true
+    type: builtin
+    name: developer
+    timeout: 300
+  memory:
+    enabled: false
+    type: builtin
+    name: memory
+    timeout: 300

@@ -1,0 +1,72 @@
+id: pydantic-ai
+name: Pydantic AI (framework) + clai CLI + Pydantic AI Harness
+vendor: Pydantic Services Inc.
+tier: C
+license: MIT
+open_source: true
+status: analysed
+version_analysed: "2.56.0"
+analysed_on: "2026-10-15"
+homepage: https://pydantic.dev/docs/ai/
+repo: https://github.com/pydantic/pydantic-ai
+runtime_kind: python-library   # no config file of its own; behaviour is set in code
+binaries: [clai, pai]
+packages:
+  - {ecosystem: pip, name: pydantic-ai}
+  - {ecosystem: pip, name: pydantic-ai-slim}
+  - {ecosystem: pip, name: clai}
+  - {ecosystem: pip, name: pydantic-ai-harness}   # separate 0.x package: Shell, Memory, BubblewrapSandbox, ApprovalReviewer
+install_methods:
+  - {method: pip, command: "pip install pydantic-ai   # or pydantic-ai-slim[extras]", checksum_verified: null, signed: null, source: https://github.com/pydantic/pydantic-ai/blob/main/docs/install.md}
+auto_update: {default: false, config: null, source: "library; no self-update"}
+state_dirs: [".logfire"]            # written by `logfire auth` / projects new in CWD (only if Logfire is used)
+credential_files: []
+credential_storage: "None of its own. Provider keys are read from env vars (e.g. ANTHROPIC_API_KEY, OPENAI_API_KEY) by the provider classes."
+log_paths: []
+memory_paths: [".agent-memory/MEMORY.md"]   # only with pydantic-ai-harness Memory(FileStore('.agent-memory')) (docs example path, user-chosen)
+config_files:
+  - {path: "<any>.json passed to clai --mcp-config / load_mcp_servers()", scope: env, format: json, kind: mcp}
+instruction_files: []
+skills_paths: []
+mcp:
+  files: ["<user-supplied path>"]
+  servers_key: "mcpServers"
+  server_fields: {command: command, args: args, env: env, cwd: cwd, url: url, headers: headers}
+  project_servers_require_approval: false   # no project auto-discovery at all; file must be passed explicitly (--mcp-config)
+  notes: "Format matches Claude Desktop/Code/Cursor. Unknown keys such as `disabled` and `type` are IGNORED (a 'disabled': true server is still launched). ${VAR} / ${VAR:-default} expanded against the FULL process env (no allowlist). Transport inferred from URL (/sse suffix = SSE, else streamable HTTP). MCP sampling is enabled only when sampling_model is set / agent.set_mcp_sampling_model() is called."
+permissions:
+  config_keys: {}   # code-level API, not a config file
+  default_mode: "No built-in tools execute shell/files; every tool is code the developer registers. Tools run without approval unless requires_approval=True / ApprovalRequired / ApprovalRequiredToolset."
+  auto_approve_values:
+    - {key: "DeferredToolRequests.build_results(approve_all=True)", value: true}
+    - {key: "HandleDeferredToolCalls handler returning True for every call", value: true}
+  cli_flags_auto_approve: []
+  allow_rule_syntax: "@agent.tool_plain(requires_approval=True)"
+  overbroad_patterns: ["approve_all=True", "Shell(denied_commands=[])", "LocalWorkspace('/')", "Shell(allowed_commands=['python'])  # first-token check only"]
+hooks: {supported: true, config_key: "capabilities=[Hooks(...)] (code)", repo_scoped_allowed: false, command_field: null}
+sandbox: {available: true, default_on: false, mechanism: "pydantic-ai-harness: BubblewrapSandbox (bwrap; no network by default, seccomp), Modal/E2B/Sprites/smol sandboxes; core LocalWorkspace runs commands on the host as the user", config: "capabilities=[BubblewrapSandbox(LocalWorkspace(...))]", source: "https://github.com/pydantic/pydantic-ai/blob/main/docs/harness/bubblewrap-sandbox.md"}
+network: {domain_allowlist: true, config: "WebFetch tool allowed_domains/blocked_domains + _ssrf private-IP/metadata blocklist (bypassed several times, see incidents)", default: "web_fetch not enabled unless added; BubblewrapSandbox network off by default", source: "https://github.com/pydantic/pydantic-ai/security/advisories"}
+workspace_trust: {prompt_on_new_folder: false, notes: "No folder trust concept; no repo-level config is auto-loaded.", source: "https://github.com/pydantic/pydantic-ai/blob/main/docs/mcp/client.md"}
+memory: {persistent: true, cross_project: false, agent_writable: true, notes: "Opt-in via pydantic-ai-harness Memory capability (Markdown notebook; FileStore/SQLite/Postgres); namespace resolved by app code, not model.", source: "https://github.com/pydantic/pydantic-ai/blob/main/docs/harness/memory.md"}
+subagents: {supported: true, inherits_permissions: "n/a (code-defined); deps/usage passed explicitly", notes: "Multi-agent via tools calling other agents; pydantic-ai-harness Subagents capability.", source: "https://github.com/pydantic/pydantic-ai/blob/main/docs/multi-agent-applications.md"}
+telemetry:
+  default_on: false
+  opt_out: "nothing is sent unless logfire/OTel is configured AND instrumentation enabled (Agent.instrument_all(True) / instrument=True / logfire.instrument_pydantic_ai()). Pass InstrumentationSettings(include_content=False) to drop prompts/outputs (note GHSA-4x9p-g9wm-8q7f / GHSA-3gh4-cghq-f8v4: content leaked despite include_content=False before 2.44.0 / 2.27.1)"
+  training_default: null
+  source: https://github.com/pydantic/pydantic-ai/blob/main/docs/logfire.md
+headless:
+  command: "clai 'prompt'    # also: python -c 'agent.run_sync(...)'"
+  flags: ["-m MODEL", "--mcp-config FILE", "-t TOOL", "--agent module:var"]
+  ci_integrations: []
+  model_override: "model string 'provider:model' or Model(provider=OpenAIProvider(base_url=...)); env OPENAI_BASE_URL honoured by OpenAI provider"
+  local_model_support: "Ollama and any OpenAI-compatible server via OpenAIChatModel(provider=OllamaProvider(base_url='http://localhost:11434/v1')) (documented in docs/models)"
+security_policy: {security_md: "https://github.com/pydantic/.github/blob/main/SECURITY.md", bug_bounty: null, advisories: "https://github.com/pydantic/pydantic-ai/security/advisories"}
+sources:
+  - {url: "https://github.com/pydantic/pydantic-ai (HEAD 9ac853b)", accessed: "2026-10-15", note: "source + docs/ read via shallow clone"}
+  - {url: "https://github.com/pydantic/pydantic-ai/blob/main/docs/deferred-tools.md", accessed: "2026-10-15", note: "HITL approval"}
+  - {url: "https://github.com/pydantic/pydantic-ai/blob/main/docs/mcp/client.md", accessed: "2026-10-15", note: "MCP config format and trust warning"}
+  - {url: "https://github.com/pydantic/pydantic-ai/blob/main/docs/harness/shell.md", accessed: "2026-10-15", note: "Shell best-effort warning"}
+  - {url: "https://api.github.com/advisories?affects=pydantic-ai&ecosystem=pip", accessed: "2026-10-15", note: "17 GHSAs"}
+extra:
+  clai_web: "`clai web` / Agent.to_web(): local Starlette chat UI; had DNS-rebinding and cross-site run-trigger advisories (CVE-2026-107292, CVE-2026-107295); fixed 2.30.0 / 2.28.0."
+  dangerous_apis: ["LocalWorkspace(...).run (host exec as user)", "Shell(...) allowlist is first-token only", "load_mcp_servers(<untrusted file>) spawns processes and expands ${VAR} from full env", "UI adapters (AG-UI/Vercel AI) accept client-supplied message history/tool calls: sanitize server-side"]

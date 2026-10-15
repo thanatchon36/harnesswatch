@@ -1,0 +1,68 @@
+id: crewai
+name: CrewAI (core framework + crewai CLI)
+vendor: CrewAI Inc.
+tier: C
+license: MIT
+open_source: true
+status: analysed
+version_analysed: "1.15.28"
+analysed_on: "2026-10-15"
+homepage: https://docs.crewai.com
+repo: https://github.com/crewAIInc/crewAI
+runtime_kind: python-library
+binaries: [crewai]
+packages:
+  - {ecosystem: pip, name: crewai}
+  - {ecosystem: pip, name: crewai-tools}
+install_methods:
+  - {method: pip, command: "pip install crewai   # or: uv tool install crewai", checksum_verified: null, signed: null, source: https://docs.crewai.com/en/installation}
+auto_update: {default: false, config: null, source: "library"}
+state_dirs: ["$XDG_DATA_HOME/CrewAI/<project-dir-name>", "~/.local/share/CrewAI/<project-dir-name>"]   # appdirs.user_data_dir(CREWAI_STORAGE_DIR or cwd name, 'CrewAI')
+credential_files: [".env"]
+credential_storage: "Provider keys from env/.env (project-local); crewai login (CrewAI AMP) stores token in the user config dir (path unverified)."
+log_paths: ["$XDG_DATA_HOME/CrewAI/<project>/flow_states.db"]
+memory_paths: ["$XDG_DATA_HOME/CrewAI/<project>/memory", "$XDG_DATA_HOME/CrewAI/<project>/qdrant"]
+config_files:
+  - {path: ".env", scope: project, format: env, kind: settings}
+  - {path: "pyproject.toml", scope: project, format: toml, kind: settings}
+  - {path: "src/<project>/config/agents.yaml", scope: project, format: yaml, kind: settings}
+  - {path: "src/<project>/config/tasks.yaml", scope: project, format: yaml, kind: settings}
+instruction_files: []
+skills_paths: ["skills/*/SKILL.md"]   # lib/crewai/skills (unverified exact discovery path)
+mcp:
+  files: []   # no MCP config file: servers declared in Python `Agent(mcps=[...])`
+  servers_key: null
+  server_fields: {command: command, args: args, env: env, url: url, headers: headers}
+  project_servers_require_approval: false
+  notes: "Python classes MCPServerStdio / MCPServerHTTP / MCPServerSSE (crewai.mcp.config) with tool_filter and cache_tools_list. Docs: 'only connect to servers you fully trust'; no approval step or description-change detection."
+permissions:
+  config_keys: {}
+  default_mode: "Tools execute without approval. Task(human_input=True) asks the human to review the task OUTPUT, not individual tool calls. Task guardrails available."
+  auto_approve_values: []
+  cli_flags_auto_approve: []
+  allow_rule_syntax: null
+  overbroad_patterns: ["Agent(allow_delegation=True)", "Agent(allow_code_execution=True)  # deprecated; CodeInterpreterTool removed", "CrewAI Docker image: run as root"]
+hooks: {supported: true, config_key: "crewai.hooks (code decorators @before_llm_call etc.)", repo_scoped_allowed: false, command_field: null}
+sandbox: {available: false, default_on: false, mechanism: "none built in. CodeInterpreterTool (Docker with unsafe-mode fallback) was removed; Agent.allow_code_execution/code_execution_mode are deprecated no-ops that warn 'Use dedicated sandbox services like E2B or Modal'", config: null, source: "lib/crewai/src/crewai/agent/core.py"}
+network: {domain_allowlist: false, config: null, default: "unrestricted", source: null}
+workspace_trust: {prompt_on_new_folder: false, notes: "No trust model; crewai run executes the project's Python.", source: null}
+memory: {persistent: true, cross_project: false, agent_writable: true, notes: "Unified Memory (LanceDB under platform data dir); Memory can be enabled via Crew(memory=True). Per-project dir named after cwd unless CREWAI_STORAGE_DIR set.", source: "lib/crewai/src/crewai/memory/storage/lancedb_storage.py"}
+subagents: {supported: true, inherits_permissions: "n/a", notes: "Agent(allow_delegation=...) lets agents delegate to coworkers; all in-process, share env/credentials.", source: null}
+telemetry:
+  default_on: true
+  opt_out: "CREWAI_DISABLE_TELEMETRY=true|1|yes|on  or  OTEL_SDK_DISABLED=true (CREWAI_DISABLE_TRACKING also read in source)"
+  training_default: null
+  endpoint: "https://telemetry.crewai.com:4319/v1/traces"
+  source: https://github.com/crewAIInc/crewAI/blob/main/docs/edge/en/telemetry.mdx
+headless:
+  command: "crewai run   # or python main.py (Crew.kickoff())"
+  flags: []
+  ci_integrations: []
+  model_override: "Agent(llm=LLM(model='ollama/llama3', base_url='http://localhost:11434')) ; MODEL / OPENAI_API_BASE env (unverified)"
+  local_model_support: "Ollama and OpenAI-compatible endpoints via LLM(base_url=...) (litellm/native providers)"
+security_policy: {security_md: null, bug_bounty: null, advisories: "https://kb.cert.org/vuls/id/221883 (no GitHub repo advisories published)"}
+sources:
+  - {url: "https://github.com/crewAIInc/crewAI (HEAD 3da2d4e)", accessed: "2026-10-15", note: "source read"}
+  - {url: "https://github.com/crewAIInc/crewAI/blob/main/docs/edge/en/telemetry.mdx", accessed: "2026-10-15", note: "telemetry table"}
+  - {url: "https://github.com/crewAIInc/crewAI/blob/main/docs/edge/en/mcp/security.mdx", accessed: "2026-10-15", note: "MCP security"}
+  - {url: "https://kb.cert.org/vuls/id/221883", accessed: "2026-10-15", note: "CERT/CC VU#221883"}

@@ -1,0 +1,5 @@
+# Cline hooks are executable scripts discovered by name, not a config format
+mcp_servers: [fs]
+auto_approve: true
+hooks: 0
+instruction_files: [.clinerules]

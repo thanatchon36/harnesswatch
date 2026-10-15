@@ -1,0 +1,4 @@
+expected: []
+origin: hand
+family: instr
+note: "injection text in README.md, which harnesses do not auto-load"

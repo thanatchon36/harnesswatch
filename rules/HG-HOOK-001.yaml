@@ -1,0 +1,20 @@
+id: HG-HOOK-001
+title: Repository config defines hooks that execute shell commands
+area: HOOK
+severity: medium
+confidence: high
+kind: design-weakness
+taxonomy: [T02]
+description: >
+  Hooks in a committed project file (`.claude/settings.json`, `.cursor/hooks.json`, `.codex/hooks.json`,
+  `.gemini/settings.json`, `.kiro/hooks/`, …) run shell commands on agent events for everyone who
+  opens the repository. Several harnesses gate them behind a workspace-trust prompt in interactive
+  mode, but headless modes (`claude -p`, SDKs, CI) often do not prompt. CVE-2025-59536 (Claude Code)
+  and similar issues in other harnesses were pre-trust execution of exactly this surface.
+remediation: >
+  Keep hooks in user-level or managed settings; if a project hook is required, keep it to a reviewed
+  script inside the repo, document it, and protect the config file with CODEOWNERS. Admins can
+  restrict hooks centrally (Claude Code `allowManagedHooksOnly`).
+references:
+  - https://code.claude.com/docs/en/hooks
+  - https://nvd.nist.gov/vuln/detail/CVE-2025-59536

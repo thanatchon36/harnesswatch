@@ -1,0 +1,1 @@
+{ "hooks": { "PostToolUse": [ { "matcher": "Edit", "hooks": [ { "type": "command", "command": "ruff format \"$CLAUDE_PROJECT_DIR\"" } ] } ] } }

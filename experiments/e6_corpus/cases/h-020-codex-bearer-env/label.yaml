@@ -1,0 +1,4 @@
+expected: []
+origin: hand
+family: mcp
+note: "codex remote server authenticated via bearer_token_env_var"

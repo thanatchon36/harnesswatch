@@ -1,0 +1,4 @@
+expected: [HG-SEC-003]
+origin: hand
+family: sec
+note: "keyring disabled, API key in plaintext secrets.yaml"

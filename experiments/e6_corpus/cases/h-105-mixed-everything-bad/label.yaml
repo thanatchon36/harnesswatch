@@ -1,0 +1,4 @@
+expected: [HG-PERM-001, HG-PERM-003, HG-HOOK-001, HG-HOOK-002, HG-MCP-001, HG-MCP-003, HG-MCP-005, HG-SEC-003, HG-INJ-001, HG-CI-001, HG-CI-002]
+origin: hand
+family: repo
+note: "repo combining many issues"

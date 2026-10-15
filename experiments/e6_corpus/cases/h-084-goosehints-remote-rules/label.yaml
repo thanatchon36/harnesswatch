@@ -1,0 +1,4 @@
+expected: [HG-INJ-003]
+origin: hand
+family: instr
+note: "hints file loads rules from a gist at runtime"

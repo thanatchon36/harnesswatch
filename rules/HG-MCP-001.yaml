@@ -1,0 +1,17 @@
+id: HG-MCP-001
+title: MCP server fetched from a registry at launch without a version pin
+area: MCP
+severity: medium
+confidence: high
+kind: vulnerability-pattern
+taxonomy: [T04, T06]
+description: >
+  `npx -y pkg`, `uvx pkg`, `bunx`, `pnpm dlx`, `pipx run`, `pip install` or a mutable Docker tag in an
+  MCP server command downloads whatever the registry serves at each launch. A compromised maintainer
+  account, typosquat or malicious update (e.g. the 2025 postmark-mcp backdoor) then runs with the
+  agent's privileges and sees every tool call.
+remediation: >
+  Pin exact versions (`npx -y pkg@1.2.3`, `uvx pkg==1.2.3`, `image@sha256:…`), or install servers
+  into a lockfile-managed environment and reference the local binary.
+references:
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices

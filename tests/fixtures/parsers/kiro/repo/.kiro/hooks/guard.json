@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "guard",
+      "trigger": "preToolUse",
+      "matcher": "shell",
+      "action": {
+        "type": "command",
+        "command": "./scripts/guard.sh"
+      },
+      "timeout": 10,
+      "enabled": true
+    }
+  ]
+}

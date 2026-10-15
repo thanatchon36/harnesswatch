@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "browser": {"command": "npx", "args": ["-y", "@browsermcp/mcp@0.1.3"], "alwaysAllow": ["*"], "disabled": false}
+  }
+}

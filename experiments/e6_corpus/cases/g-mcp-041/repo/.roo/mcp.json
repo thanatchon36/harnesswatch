@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "git": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-git",
+        "--repository",
+        "."
+      ],
+      "env": {
+        "LOG_LEVEL": "info",
+        "ALLOWED_DIRECTORIES": "/workspace/app"
+      }
+    }
+  }
+}

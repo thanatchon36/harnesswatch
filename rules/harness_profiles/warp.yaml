@@ -1,0 +1,109 @@
+id: warp
+name: Warp (agentic development environment; open-core client + `oz` agent CLI)
+vendor: Denver Technologies, Inc. (Warp)
+tier: A                          # MISSION.md lists Warp under Tier A (open-core); client is open, backend closed
+license: "AGPL-3.0 (repo default) + MIT (warpui_core, warpui crates only)"   # VERIFIED: README 'Licensing' + LICENSE-AGPL + LICENSE-MIT; MISSION claim 'MIT+AGPL' confirmed but MIT covers only the two UI-framework crates
+open_source: true                # client only; server-side AI (Oz/agent routing), Warp Drive, auth backend are closed
+status: analysed                 # source read at dc0b890 (2026-10-14); not executed (GUI app); closed backend not analysable
+version_analysed: "stable v0.2026.06.03.09.49.stable_00 (2026-06-03, latest non-prerelease GitHub release found); source HEAD dc0b890 (2026-10-14)"
+analysed_on: "2026-10-15"
+homepage: https://www.warp.dev
+repo: https://github.com/warpdotdev/warp
+open_vs_closed: "Open: terminal/client app (app/, crates/*), warp_cli (`oz` binary), settings, MCP file-based manager, execution profiles, secret_redaction. Closed: Warp server (agent orchestration/model routing, BYOK/custom-endpoint resolution, Drive, billing, team Admin Panel enforcement). Evidence: specs/byok-byoe-enterprise/PRODUCT.md describes server-side resolution; app code talks to warp_server_client/graphql."
+
+binaries: [warp, oz, warp-oss]
+packages:
+  - {ecosystem: github-release, name: "warpdotdev/warp"}
+install_methods:
+  - {method: native-installer, command: "download from https://www.warp.dev/download", checksum_verified: null, signed: null, source: https://github.com/warpdotdev/warp/blob/master/README.md}
+auto_update: {default: true, config: "autoupdate module in app/src/autoupdate; opt-out setting unverified", source: https://github.com/warpdotdev/warp/tree/master/app/src/autoupdate}
+
+state_dirs: ["~/.warp", "~/.config/warp-terminal (Linux, via directories crate; unverified)", "~/.local/share/warp-terminal"]
+credential_files: []
+credential_storage: "Account/session tokens in OS secure storage (secure_storage in app/src/auth, unverified detail). Custom-endpoint API keys stay local secure data, never in settings.toml (specs/APP-5380 req. 2). MCP env/headers in .mcp.json are plaintext."
+log_paths: ["<warp log dir>/warp.log (see warp_logging crate)", "block history in SQLite (persistence crate)"]
+memory_paths: ["Warp Drive 'Rules' / agents.knowledge.* (cloud-synced)", "oz memory-store (warp_cli/memory_store.rs)"]
+
+config_files:
+  - {path: "~/.warp/settings.toml", scope: user, format: toml, kind: settings}          # macOS stable; other OS: config_local_dir()/settings.toml (unverified exact)
+  - {path: "~/.warp/.mcp.json", scope: user, format: json, kind: mcp}
+  - {path: ".warp/.mcp.json", scope: project, format: json, kind: mcp}                # auto-detected and spawned
+  - {path: "~/.claude.json", scope: user, format: json, kind: mcp}                    # third-party MCP configs, only if agents.mcp_servers.file_based_mcp_enabled=true (default false)
+  - {path: ".mcp.json", scope: project, format: json, kind: mcp}                      # Claude provider, same gate
+  - {path: "~/.codex/config.toml", scope: user, format: toml, kind: mcp}              # Codex provider, same gate
+  - {path: ".codex/config.toml", scope: project, format: toml, kind: mcp}
+  - {path: "~/.agents/.mcp.json", scope: user, format: json, kind: mcp}
+  - {path: ".agents/.mcp.json", scope: project, format: json, kind: mcp}
+  - {path: "~/.warp/skills/*", scope: user, format: markdown, kind: skills}
+  - {path: ".warp/workflows/*", scope: project, format: yaml, kind: skills}
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}         # Warp 'Rules'; unverified exact file list
+  - {path: "~/.warp/custom_model_routers/*", scope: user, format: toml, kind: settings}
+  - {path: "~/.warp/default_tab_configs/*.toml", scope: user, format: toml, kind: settings}
+
+instruction_files: ["AGENTS.md", "CLAUDE.md", "WARP.md"]   # agent_tips.rs: AGENTS.md or CLAUDE.md project rules; /init generates WARP.md
+skills_paths: ["~/.warp/skills/*"]
+
+mcp:
+  files: ["~/.warp/.mcp.json", ".warp/.mcp.json", "(opt-in) ~/.claude.json", "(opt-in) .mcp.json", "(opt-in) ~/.codex/config.toml", "(opt-in) .agents/.mcp.json"]
+  servers_key: "mcpServers"          # Claude-style; parsing.rs also handles Codex TOML (mcp_servers)
+  server_fields:
+    command: command
+    args: args
+    env: env
+    url: url
+    headers: headers
+    type: type
+  project_servers_require_approval: false    # source: file_based_manager spawns new servers it detects ('auto_started'); Warp-native .warp/.mcp.json 'always detected and spawned' (settings/ai.rs comment); gate exists only for third-party files
+  notes: "Per-profile mcp_allowlist / mcp_denylist (server UUIDs); mcp_permissions default AgentDecides; denylist beats allowlist."
+
+permissions:
+  config_keys:
+    apply_diffs: "execution profile apply_code_diffs"          # settings.toml agents.execution_profiles (+ cloud/Warp Drive profiles)
+    read_files: "read_files"
+    execute: "execute_commands"
+    mcp: "mcp_permissions"
+    pty: "write_to_pty"
+    run_agents: "run_agents"
+    allowlist: "agents.profiles.agent_mode_command_execution_allowlist"
+    denylist: "agents.profiles.agent_mode_command_execution_denylist"
+    readonly_auto: "agents.profiles.agent_mode_execute_readonly_commands"
+    denylist_bypass: "agents.warp_agent.other.auto_approve_bypasses_command_denylist"
+  default_mode: "GUI default profile: apply_code_diffs AgentDecides, read_files AgentDecides, execute_commands AlwaysAsk (TUI profile: AgentDecides), write_to_pty AlwaysAsk, mcp_permissions AgentDecides, run_agents AlwaysAsk, command_allowlist EMPTY, command_denylist = 18 regexes (bash,fish,pwsh,sh,zsh,curl,eval,exec,source,wget,dig,nslookup,host,ssh,scp,rsync,telnet,rm ...). CLI (`oz agent run`) profile 'Default (CLI)': EVERYTHING AlwaysAllow (diffs, read, execute, MCP, pty, run_agents), questions Never; denylist applied only when NOT sandboxed (empty when sandboxed); allowlist = cat,echo,find .*,grep,ls,which .*."
+  auto_approve_values:
+    - {key: "execute_commands", value: "AlwaysAllow"}
+    - {key: "apply_code_diffs", value: "AlwaysAllow"}
+    - {key: "agents.warp_agent.other.auto_approve_bypasses_command_denylist", value: true}     # DEFAULT true: 'Run until completion'/auto-approve ignores denylist
+    - {key: "agents.profiles.agent_mode_command_execution_allowlist", value: ".*"}
+    - {key: "agents.profiles.agent_mode_command_execution_denylist", value: "[]"}
+  cli_flags_auto_approve: ["Ctrl+Shift+I / Cmd+Shift+I (Run until completion)", "oz agent run (non-interactive CLI profile is allow-all)", "--profile <ID> to select a stricter profile"]
+  allow_rule_syntax: "regex strings, e.g. ls(\\s.*)?"
+  overbroad_patterns: [".*", ".+", "bash(\\s.*)?", "find .*"]
+  notes: "Docs say allowlist empty by default (true for the GUI profile) and denylist 'wget,curl,rm,eval' (docs outdated vs source's 19 entries). GHSA-3839-h8jj-ph82 and GHSA-8r78-7jwh-m6hm are denylist/approval bypasses."
+
+hooks: {supported: false, config_key: null, repo_scoped_allowed: false, command_field: null}
+sandbox: {available: true, default_on: false, mechanism: "cloud/ambient agent environments (Oz cloud agents, Docker/VM environments via `oz agent run -e`); local agent runs unsandboxed in the user's terminal session; `--sandboxed` hidden flag on CLI", config: null, source: https://github.com/warpdotdev/warp/blob/master/crates/warp_cli/src/agent.rs}
+network: {domain_allowlist: false, config: null, default: unrestricted locally; curl/wget/ssh etc. denylisted by default in GUI profile}
+workspace_trust: {prompt_on_new_folder: false, notes: "No folder-trust prompt found; project .warp/.mcp.json is auto-spawned, project AGENTS.md read.", source: https://github.com/warpdotdev/warp/blob/master/app/src/ai/mcp/file_based_manager.rs}
+memory: {persistent: true, cross_project: true, agent_writable: true, notes: "Warp Drive rules/knowledge sync to cloud (agents.knowledge.*)", source: https://github.com/warpdotdev/warp/blob/master/app/src/settings/ai.rs}
+subagents: {supported: true, inherits_permissions: "run_agents permission (AlwaysAsk default; AlwaysAllow in CLI profile)", notes: "orchestration; third-party CLI agents (Claude Code, Codex) hosted in terminal", source: https://github.com/warpdotdev/warp/blob/master/crates/cloud_object_models/src/ai_execution_profile.rs}
+telemetry: {default_on: true, opt_out: "privacy.telemetry_enabled=false and privacy.crash_reporting_enabled=false in settings.toml (defaults true)", training_default: null, source: https://github.com/warpdotdev/warp/blob/master/app/src/settings/privacy.rs}
+headless:
+  command: "oz agent run --prompt \"<task>\""         # binary name `oz` (clap name = \"oz\"); docs also say `warp` CLI
+  flags: ["--prompt/-p", "--saved-prompt", "--skill", "--mcp <SPEC>", "--strict-mcp-startup", "--profile <ID>", "--environment/-e", "--conversation", "--name/-n"]
+  ci_integrations: []
+  model_override: "model args (ModelArgs) + settings agents.custom_endpoints; auth via WARP_API_KEY env"
+  local_model_support: "NO for localhost in practice: custom endpoints (OpenAI Chat Completions / Responses / Anthropic Messages, base_url + local API key) are forwarded in the request to Warp's server which calls the endpoint (specs/byok-byoe-enterprise: 'request carries ... provider entry holding its URL + API key'); requires Warp account/API key and an endpoint reachable from Warp's cloud; 'local custom endpoints are not available to cloud agents' (APP-5380 non-goals). Not suitable as an offline Ollama bench target; mark N/A (no access) for canary bench."
+
+security_policy: {security_md: https://github.com/warpdotdev/warp/blob/master/SECURITY.md, bug_bounty: null, advisories: https://github.com/warpdotdev/warp/security/advisories}
+extra:
+  advisory_count: 10
+  release_cadence_note: "GitHub releases after 2026-06-09 not found (only dev/preview/stable through June); newer builds may ship outside GitHub releases"
+sources:
+  - {url: https://github.com/warpdotdev/warp/blob/master/README.md, accessed: "2026-10-15", note: "licensing statement"}
+  - {url: https://github.com/warpdotdev/warp/blob/master/LICENSE-MIT, accessed: "2026-10-15"}
+  - {url: https://github.com/warpdotdev/warp/blob/master/crates/cloud_object_models/src/ai_execution_profile.rs, accessed: "2026-10-15", note: "profiles + default deny/allow lists"}
+  - {url: https://github.com/warpdotdev/warp/blob/master/app/src/ai/mcp/mod.rs, accessed: "2026-10-15", note: "MCPProvider file paths"}
+  - {url: https://github.com/warpdotdev/warp/blob/master/app/src/settings/ai.rs, accessed: "2026-10-15", note: "settings keys/defaults"}
+  - {url: https://docs.warp.dev/agents/using-agents/agent-profiles-permissions, accessed: "2026-10-15"}
+  - {url: https://github.com/warpdotdev/warp/security/advisories, accessed: "2026-10-15"}
+  - {url: https://github.com/warpdotdev/warp/blob/master/specs/APP-5380/PRODUCT.md, accessed: "2026-10-15"}

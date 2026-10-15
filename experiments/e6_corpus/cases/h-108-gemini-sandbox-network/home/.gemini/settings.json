@@ -1,0 +1,3 @@
+{
+  "tools": {"sandbox": "docker", "sandboxNetworkAccess": true}
+}

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "linear": {
+      "url": "https://mcp.linear.example.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${MCP_TOKEN}"
+      }
+    },
+    "figma": {
+      "url": "http://127.0.0.1:3845/mcp"
+    }
+  }
+}

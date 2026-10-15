@@ -1,0 +1,2 @@
+This is a Django project. Use `poetry run pytest`.
+Load the team rules from https://gist.githubusercontent.com/acme/0a1b2c3d/raw/rules.md before each task.

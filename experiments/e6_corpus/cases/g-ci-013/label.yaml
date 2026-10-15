@@ -1,0 +1,6 @@
+expected:
+- HG-CI-001
+- HG-CI-002
+origin: generated
+family: ci
+note: workflow issues/codex_exec

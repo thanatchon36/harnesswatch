@@ -1,0 +1,57 @@
+id: smolagents
+name: smolagents (code-executing agent library + smolagent CLI)
+vendor: Hugging Face
+tier: C
+license: Apache-2.0
+open_source: true
+status: analysed
+version_analysed: "1.27.0.dev0 (main @96f33fa); latest release 1.26.0"
+analysed_on: "2026-10-15"
+homepage: https://huggingface.co/docs/smolagents
+repo: https://github.com/huggingface/smolagents
+runtime_kind: python-library
+binaries: [smolagent, webagent]
+packages:
+  - {ecosystem: pip, name: smolagents}
+install_methods:
+  - {method: pip, command: "pip install 'smolagents[toolkit]'", checksum_verified: null, signed: null, source: https://huggingface.co/docs/smolagents/installation}
+auto_update: {default: false, config: null, source: "library"}
+state_dirs: ["~/.cache/huggingface"]   # Hub tool downloads (HF_HOME)
+credential_files: []
+credential_storage: "HF_TOKEN / provider keys from env; --api-key CLI flag exists (visible in process list)."
+log_paths: []
+memory_paths: []
+config_files: []
+instruction_files: []
+skills_paths: []
+mcp:
+  files: []
+  servers_key: null
+  server_fields: {command: command, args: args, env: env, url: url, transport: transport}
+  project_servers_require_approval: false
+  notes: "MCPClient(server_parameters) / ToolCollection.from_mcp(..., trust_remote_code=False default) in code. No config file. Tools returned by an MCP server are exposed to the CodeAgent as Python callables inside the executor."
+permissions:
+  config_keys: {}
+  default_mode: "CodeAgent executes LLM-written Python with NO approval step. Only LocalPythonExecutor AST checks (import allowlist via additional_authorized_imports, dangerous function/module denylist, op-count cap) gate it."
+  auto_approve_values: []
+  cli_flags_auto_approve: []
+  allow_rule_syntax: "CodeAgent(additional_authorized_imports=['numpy'])"
+  overbroad_patterns: ["additional_authorized_imports=['*']", "additional_authorized_imports=['os']", "additional_authorized_imports=['subprocess']", "additional_authorized_imports=['requests']  # SSRF / exfil (CVE-2026-2654)", "executor_type='local' with untrusted prompts", "RemotePythonExecutor(allow_pickle=True)"]
+hooks: {supported: true, config_key: "step_callbacks / final_answer_checks (code)", repo_scoped_allowed: false, command_field: null}
+sandbox: {available: true, default_on: false, mechanism: "executor_type in {local (default, in-process AST interpreter, 'not a security boundary'), docker, e2b, modal, blaxel}; no Wasm/Pyodide executor in main (grep: none in src/)", config: "CodeAgent(executor_type='docker'|'e2b'|'modal'|'blaxel', executor_kwargs={...})", source: "https://github.com/huggingface/smolagents/blob/main/docs/source/en/tutorials/secure_code_execution.md"}
+network: {domain_allowlist: false, config: null, default: "unrestricted; DockerExecutor binds gateway to 127.0.0.1:8888 on host but jupyter kernelgateway listens 0.0.0.0 inside container", source: "src/smolagents/remote_executors.py"}
+workspace_trust: {prompt_on_new_folder: false, notes: "No trust model.", source: null}
+memory: {persistent: false, cross_project: false, agent_writable: false, notes: "In-run AgentMemory only; no persistent store.", source: "docs/source/en/tutorials/memory.md"}
+subagents: {supported: true, inherits_permissions: "managed_agents are same-process; with remote executors, managed agents unsupported without running whole system in sandbox (no secrets transferred)", notes: null, source: "secure_code_execution.md"}
+telemetry: {default_on: false, opt_out: "none needed; OpenTelemetry/OpenInference (SmolagentsInstrumentor) is opt-in", training_default: null, source: "docs/source/en/tutorials/inspect_runs.md"}
+headless:
+  command: "smolagent 'prompt' --model-type OpenAIModel --model-id ... "
+  flags: ["--model-type", "--model-id", "--api-base", "--api-key", "--imports", "--tools", "--action-type", "--verbosity-level"]
+  ci_integrations: []
+  model_override: "--api-base / OpenAIServerModel(api_base=...), LiteLLMModel"
+  local_model_support: "Ollama via LiteLLMModel(model_id='ollama_chat/...', api_base='http://localhost:11434') or OpenAIServerModel; TransformersModel for in-process HF models"
+security_policy: {security_md: "https://github.com/huggingface/smolagents/blob/main/SECURITY.md", bug_bounty: null, advisories: "https://github.com/huggingface/smolagents/security/advisories"}
+sources:
+  - {url: "https://github.com/huggingface/smolagents (HEAD 96f33fa)", accessed: "2026-10-15", note: "source read"}
+  - {url: "https://github.com/huggingface/smolagents/blob/main/docs/source/en/tutorials/secure_code_execution.md", accessed: "2026-10-15", note: "official sandbox guidance"}
+  - {url: "https://api.github.com/advisories?affects=smolagents&ecosystem=pip", accessed: "2026-10-15", note: "5 GHSAs"}

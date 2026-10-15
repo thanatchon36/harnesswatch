@@ -1,0 +1,272 @@
+{
+  "harness": "deepseek-harness",
+  "version": "0.2.1-alpha.3",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Default sandbox mode is `workspace-write` (env DSH_PERMISSION_MODE, default 'workspace-write') and approval policy `ask`.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/bundle/base/cordis.patch.yml",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Presets shipped: read-only/ask, workspace-write/ask, danger-full-access/never.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/bundle/base/cordis.patch.yml",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Approval `ask` delegates to composed answerers; `never` rejects; missing/failed answerer => `unavailable` => action fails closed; approval applies only to that request.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/interaction/user-approval/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Named presets bundle a sandbox mode with an ask/never approval policy; default workspace-write+ask; approval is one-shot per request and fails closed. No per-command allow/deny rules, and danger-full-access is one env var away."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "sandbox-local confines commands on Linux (bwrap then Landlock), macOS (Seatbelt), Windows (ACL runner, partial) and fails with SANDBOX_UNAVAILABLE instead of running unconfined.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/sandbox/sandbox-local/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "SAFETY.md: sandboxing, approval prompts and permission controls reduce risk but do not guarantee isolation; project has not undergone a security audit.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/SAFETY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "OS sandbox (bwrap/Landlock/Seatbelt) is on by default in workspace-write mode and fails closed, but covers file effects only and the project is an unaudited dev preview."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "SandboxMode governs file effects only; network and process policy are outside its vocabulary.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/sandbox/sandbox-policy/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Tool catalog lists web_fetch and web_search tools (no allowlist config documented).",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/tool-catalog.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No egress control: sandbox policy governs file effects only; web_fetch/web_search tools have no documented domain allowlist."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Profiles live under $DSH_HOME/profiles/<name>; layers are bundle patches, profile cordis.patch.yml, home cordis.patch.yml, --patch overlays; no repo-level config layer.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Project instruction chain (AGENTS.md, CLAUDE.md, *.local.md) and project skills (.dsh/skills, .agents/skills) are loaded from the repo by default.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/context/agent-instructions/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No workspace-trust prompt found in docs/READMEs searched.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/user/guide/index.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Executable configuration (plugins, MCP, policies) is only read from $DSH_HOME, not from the repo, which avoids the repo-config-before-trust class; no folder-trust prompt exists though, and AGENTS.md/skills from the repo load silently."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "`No server is enabled by default`; each server is one dsh-mcp-client plugin row with transport stdio|streamable-http, command/args/env or url/headers; stdio env merged over scrubbed ambient env.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/mcp/mcp-client/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "No MCP servers by default; servers are defined only in user-owned profile files, so a cloned repo cannot add one; no allow/deny governance, tool-change detection not documented."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "`dsh plugin --profile <name> <pnpm args>` manages plugins by forwarding to pnpm; incompatible plugins need an explicit version exemption.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Community indexes claim thousands of dsh plugins (e.g. 11,000+ listed by a third-party marketplace repo).",
+          "source": "https://github.com/imsai-sh/awesome-deepseek-harness-plugins",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "SAFETY.md: project can load third-party plugins; review plugins before allowing them to run.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/SAFETY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Everything is a plugin run in-process from npm via pnpm with peer-range checks and build approval prompts, but no signing, vetting or marketplace review; large unvetted community ecosystem."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Credentials stored in $DSH_HOME/.credentials.yaml; precedence stored file > env > project .env > home .env; 'this store cannot isolate secrets from the agent'.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/credentials/credentials-local/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Web UI keys are write-only; page receives a redacted descriptor.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/user/guide/providers.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Keys in a private YAML file (write-only UI, env scrubbing for MCP) but plaintext on disk and the docs state the agent can read it; session logs may contain secrets."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "`dsh --profile headless \"job\"` runs one persisted session, prints final answer, exits 0 only for completed; mounts no HTTP server or browser.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/reference/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Approval `never` is the 'strict headless stance for CI and unattended runs'; with `ask` and no answerer requests fail closed.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/interaction/user-approval/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Headless profile mounts no listener, uses launch-time creds and, with default ask policy and no answerer, denies approval-gated actions; no official CI action found."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Memory systems are connected only through default-off reference MCP configurations.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/docs/user/guide/mcp-memory.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (no built-in persistent memory; only optional third-party memory MCP overlays)."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Subagent packages: spawn-in-process, fork-in-process, ACP, claude-code, codex, dsh-sdk.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/subagent",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Delegated children pin approval policy `never`.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/interaction/permission-presets/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "Sub-agent isolation not fully assessed: first-party packages delegate in-process or to external ACP agents (Claude Code, Codex); permission inheritance only partly documented."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Every approval request and outcome is recorded in the requesting session's audit log.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/interaction/user-approval/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Sessions persisted by dsh-session-persistence-jsonl under $DSH_HOME/sessions.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/packages/bundle/base/cordis.patch.yml",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Every approval request/outcome is appended to the session audit log; sessions persist as JSONL; OTel export exists. No tamper protection or central audit."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "DeepSeek session-log contributor sends complete unaccepted log suffixes with subsequent DeepSeek requests by default; opt-out via setting or `enabled: false`.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/reference/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "`DSH_TELEMETRY_MODE=DISABLED` disables OTel delivery; exports can include message text, tool args/results and workspace paths.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/reference/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Session-log contributor uploads unaccepted session events with requests to the official DeepSeek API by default (incl. via gateways); OTel opt-out via env var; retention/training terms not found."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "npm dist-tags: latest=0.2.0-rc.2, alpha=0.2.1-alpha.3; first publish 2026-08-10.",
+          "source": "https://registry.npmjs.org/@deepseek-ai/dsh",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No provenance/signature information found for npm package or installers.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/README.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "npm distribution with rc/alpha dist-tags; no signing/provenance/checksum info found; plugin ecosystem via npm; pnpm lockfile in repo."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Layering model has only bundle, profile, home and --patch layers; no admin-enforced layer documented.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/README.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "No managed/enterprise policy mechanism found (policy is user-owned $DSH_HOME patches); unverified."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "No SECURITY.md in repo root or .github; SAFETY.md only; 0 repository security advisories.",
+          "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/SAFETY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No SECURITY.md or disclosure channel; no GitHub advisories; only SAFETY.md disclaimer."
+    }
+  }
+}

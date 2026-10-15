@@ -1,0 +1,5 @@
+{
+  "servers": {
+    "build-cache": {"type": "http", "url": "http://10.0.12.7:8080/mcp", "headers": {"Authorization": "Bearer ${env:BUILD_CACHE_TOKEN}"}}
+  }
+}

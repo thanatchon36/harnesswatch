@@ -1,0 +1,24 @@
+{
+  "general": {
+    "defaultApprovalMode": "default"
+  },
+  "privacy": {
+    "usageStatisticsEnabled": true
+  },
+  "security": {
+    "disableYoloMode": true
+  },
+  "hooks": {
+    "BeforeTool": [
+      {
+        "matcher": "run_shell_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ruff format --quiet ."
+          }
+        ]
+      }
+    ]
+  }
+}

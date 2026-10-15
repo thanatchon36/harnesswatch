@@ -1,0 +1,6 @@
+expected:
+- HG-MEM-001
+- HG-PERM-002
+origin: generated
+family: claude
+note: Claude Code settings (repo)

@@ -1,0 +1,161 @@
+{
+  "harness": "jules",
+  "version": "unverified (service changelog newest 2026-03-09)",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Plan review before execution; auto-approved plans with 'Planning Critic' (2026-01-26)",
+          "source": "https://jules.google/docs/changelog/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (permission model for cloud agent not comparable; docs lack detail)"
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Each task runs in a short-lived cloud VM",
+          "source": "https://jules.google/docs/environment/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Isolation by ephemeral cloud VM, not user-configurable."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "VM has internet access; web search added 2025-08-08; no egress controls documented",
+          "source": "https://jules.google/docs/faq/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "Egress open, no control documented."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Repo AGENTS.md and setup script consumed; GitHub app repo scoping",
+          "source": "https://jules.google/docs/faq/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (cloud agent)"
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP launched 2026-02-02 as curated integrations configured with API keys in Settings",
+          "source": "https://jules.google/docs/changelog/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Curated, vendor-vetted servers only."
+    },
+    "D06": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (no plugin ecosystem found)"
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "FAQ advises not to commit credentials; secret handling in VM undocumented",
+          "source": "https://jules.google/docs/faq/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (unverified)"
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "REST API and Jules Tools CLI (jules remote new); outputs are PRs for review",
+          "source": "https://jules.google/docs/cli/reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Async PR-based workflow gives human review point."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Environment snapshot per repo",
+          "source": "https://jules.google/docs/environment/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (memory unverified)"
+    },
+    "D10": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A"
+    },
+    "D11": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not documented)"
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "Jules does not train on private repository content",
+          "source": "https://jules.google/docs/faq/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Explicit no-training statement for private repos; retention undocumented."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "npm @google/jules latest 0.1.42",
+          "source": "https://registry.npmjs.org/@google/jules",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (CLI minor; unverified provenance)"
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Workspace and enterprise accounts not supported on paid plans (as of docs page)",
+          "source": "https://jules.google/docs/usage-limits/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No enterprise policy."
+    },
+    "D15": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (Jules-specific channel unverified; Google VRP assumed)"
+    }
+  }
+}

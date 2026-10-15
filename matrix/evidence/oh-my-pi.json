@@ -1,0 +1,242 @@
+{
+  "harness": "oh-my-pi",
+  "version": "18.11.0",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "tools.approvalMode default is `yolo` (auto-approves read, write, exec); modes always-ask and write also exist.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/approval-mode.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Source falls back to approvalMode 'yolo' when setting is absent/invalid.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/packages/coding-agent/src/tools/approval.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Critical bash patterns force a prompt only outside yolo; `eval` tool bypasses bash.patterns deny.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/approval-mode.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Rich model (3 tiers, per-tool allow/deny/prompt, bash pattern rules, critical-command guard) but the default mode is yolo, i.e. everything auto-approved."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "'This pattern policy controls approval for the bash tool; it is not process or filesystem containment.'",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/approval-mode.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No built-in sandbox; approval patterns are expressly not containment."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "No network allowlist setting documented in approval/settings docs.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/approval-mode.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No egress control found."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Source comment: 'OMP performs no project-trust gating -- project-level settings and extensions load unconditionally'.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/packages/coding-agent/src/extensibility/extensions/types.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Project bases read: .omp, .claude, .codex, .gemini under cwd.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/config-usage.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "Explicitly no project-trust gating: project settings, hooks, extensions and imported foreign-tool configs load unconditionally."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP servers imported from .omp/mcp.json, .mcp.json, .claude, .cursor, .vscode, opencode.json, Codex, Gemini, Windsurf.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/mcp-config.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "User-level `disabledServers` (highest precedence) and `enabledServers` lists; MCP tools declare tier `write`.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/mcp-config.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Auto-discovers MCP servers from many tools' project files with no consent step; mitigations: per-server enabled flag, user deny/allow lists, per-tool approval policy keys."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Marketplace plugin system compatible with Claude Code registry; plugins can contain hooks, tools, MCP servers.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/marketplace.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "`--trusted-extension <abs-file>` exact allowlist disables ambient extension discovery.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/extension-loading.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Claude-compatible marketplace + extension packages + --trusted-extension allowlist exist; extensions run in-process; no signing/vetting documented."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Secret obfuscation (redact env/secrets.yml/known token regexes in provider-visible text) is disabled by default.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/secrets.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Stored OAuth credentials live in agent.db (docs reference).",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/environment-variables.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Credentials in SQLite agent.db and env; secret obfuscation exists but is off by default; file permission of DB not verified."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "-p/--print processes prompts non-interactively; a required prompt fails when no interactive UI is available.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/cli-reference.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "`omp -p` available; in yolo default no prompts; a call that still requires a prompt fails without UI; no official CI action."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "memory.backend off by default; local/hindsight/mnemopi/sharpshooter; summary injected as Memory Guidance block.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/memory.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Memory is off by default; opt-in backends incl. a remote one; agent-writable; visible via memory:// URLs; injected into system prompt (poisoning surface)."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Task subagents with model overrides exist.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/settings.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "Sub-agent permission inheritance not verified."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Sessions at ~/.omp/agent/sessions/<encoded-cwd>/<ts>_<id>.jsonl; logs at ~/.omp/logs.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/session.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "JSONL sessions, rotating process logs, history DB, optional OTLP; no tamper-evident audit log."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "install-id UUID persisted at ~/.omp/install-id (0600) and used in provider identity metadata and auth-broker attribution (with hostname).",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/install-id.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "OTLP export initialises only when an endpoint is set; telemetry.otlpExportEnabled=false skips it.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/environment-variables.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "OTLP only when endpoint configured; but a persistent install-id and hostname are sent to some provider/gateway endpoints for attribution."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Install scripts fetch prebuilt binary from build.stencil.so and check its SHA-256; --ref pins a release.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "macOS signing/notarization doc exists.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/macos-signing-notarization.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Installer verifies SHA-256 of prebuilt binary and supports version pinning; npm/Homebrew/Nix channels; no signature/provenance statement found."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Settings precedence: CLI/env, config overlays, project settings, global config; no admin layer.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/config-usage.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "No managed policy mechanism found (profiles and Home Manager module are user-level)."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md: report privately via email or GitHub advisory; only latest release supported.",
+          "source": "https://github.com/can1357/oh-my-pi/blob/main/.github/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "0 repository security advisories / 0 GitHub advisory DB entries for the npm package at access time.",
+          "source": "https://api.github.com/repos/can1357/oh-my-pi/security-advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "SECURITY.md (latest release only, best-effort); no advisories or CVEs published."
+    }
+  }
+}

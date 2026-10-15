@@ -1,0 +1,14 @@
+name: agent
+'on':
+  pull_request:
+    branches:
+    - main
+jobs:
+  agent:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v5
+    - name: Claude headless
+      run: claude -p "Review this change and suggest fixes." --dangerously-skip-permissions

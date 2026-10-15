@@ -1,0 +1,36 @@
+{
+  "numStartups": 41,
+  "installMethod": "native",
+  "autoUpdates": true,
+  "mcpServers": {
+    "gh-docker": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "ghcr.io/github/github-mcp-server"
+      ],
+      "env": {
+        "SENTRY_AUTH_TOKEN": "{{SYNTH:high-entropy}}"
+      }
+    },
+    "postgres": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "mcp/postgres:latest",
+        "postgresql://db:5432/app"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  }
+}

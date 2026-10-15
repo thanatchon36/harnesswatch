@@ -1,0 +1,215 @@
+{
+ "harness": "copilot-studio",
+ "version": null,
+ "analysed_on": "2026-10-15",
+ "status": "docs-only",
+ "dimensions": {
+  "D01": {
+   "facts": [
+    {
+     "claim": "Tools use end-user credentials by default; maker-provided credentials trigger a security-scan warning.",
+     "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/security-scan",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Data policies can block connectors/HTTP/knowledge/channels/triggers in real time.",
+     "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/admin-data-loss-prevention",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Per-action human approval for GitHub Copilot harness tool calls not found in docs read.",
+     "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview",
+     "label": "unverified",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Admin-enforced connector classification and least-privilege credential default, but no documented per-action approval for autonomous harness runs."
+  },
+  "D02": {
+   "facts": [
+    {
+     "claim": "Each GitHub Copilot harness task runs in a secure sandbox governed by Copilot Studio; mechanism undocumented.",
+     "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/harnesses-overview",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Sandbox on by default but isolation mechanism and boundaries are not documented."
+  },
+  "D03": {
+   "facts": [
+    {
+     "claim": "Connector endpoint filtering for HTTP, public-website and SharePoint knowledge; Entra network egress/ingress controls via Agent 365 (GA).",
+     "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/security-and-governance",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Admin-controllable egress allow/deny, but HTTP node allowed by default."
+  },
+  "D04": {
+   "facts": [],
+   "proposed_score": null,
+   "rationale": "N/A (SaaS, no local workspace or repo-level config)"
+  },
+  "D05": {
+   "facts": [
+    {
+     "claim": "Blocking Power Platform connectors also blocks tools of connected MCP servers.",
+     "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/admin-data-loss-prevention",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "MCP server tools/resources dynamically reflect server changes; customer responsible for third-party MCP.",
+     "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/agent-extend-action-mcp",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Makers can submit MCP servers for Microsoft certification.",
+     "source": "https://www.microsoft.com/microsoft-copilot/blog/copilot-studio/new-and-improved-github-copilot-harness-agent-skills-and-richer-context/",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Central policy can block MCP tools and certification exists, but no tool-description change detection documented."
+  },
+  "D06": {
+   "facts": [
+    {
+     "claim": "Skills uploadable as SKILL.md or .zip incl. scripts; shared across agents; no vetting/signing documented.",
+     "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/skills-overview",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Skill packages with scripts can be added by makers with no documented vetting."
+  },
+  "D07": {
+   "facts": [
+    {
+     "claim": "End-user credentials default; CMK supported; Customer Lockbox (excl. audit telemetry).",
+     "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/security-and-governance",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "CoPhish showed User.AccessToken can be forwarded by a maker-configured HTTP node in the sign-in topic.",
+     "source": "https://securitylabs.datadoghq.com/articles/cophish-using-microsoft-copilot-studio-as-a-wrapper/",
+     "label": "third-party-report",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Strong tenant-level controls; token handling abusable by malicious makers (admin-mitigated via HTTP data policy)."
+  },
+  "D08": {
+   "facts": [],
+   "proposed_score": null,
+   "rationale": "N/A (SaaS; no headless CLI. ALM/deploy-from-Git only)"
+  },
+  "D09": {
+   "facts": [
+    {
+     "claim": "Memory listed as preview on the GitHub Copilot harness.",
+     "source": "https://www.microsoft.com/microsoft-copilot/blog/copilot-studio/new-and-improved-github-copilot-harness-agent-skills-and-richer-context/",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": null,
+   "rationale": "N/A (memory scope and review controls not documented in pages read)"
+  },
+  "D10": {
+   "facts": [
+    {
+     "claim": "Connected agents are preview; Entra Agent ID created per agent.",
+     "source": "https://www.microsoft.com/microsoft-copilot/blog/copilot-studio/new-and-improved-github-copilot-harness-agent-skills-and-richer-context/",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": null,
+   "rationale": "N/A (isolation semantics of connected agents not documented in pages read)"
+  },
+  "D11": {
+   "facts": [
+    {
+     "claim": "Purview audit of admin and user events, Sentinel, Application Insights; cannot be disabled per service.",
+     "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/admin-logging-copilot-studio",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Four admin events were unlogged 2025-08-29..09-25; auth/App Insights events reported inconsistent after fix (Datadog).",
+     "source": "https://securitylabs.datadoghq.com/articles/copilot-studio-logging-gaps/",
+     "label": "third-party-report",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Rich default audit with documented gaps and a disputed regression."
+  },
+  "D12": {
+   "facts": [
+    {
+     "claim": "Retention policy of 0 days for Copilot experiences possible; geo data residency; DPA applies; generative-AI data movement across geos can be disabled.",
+     "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/security-and-governance",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Training-use default not stated on pages read.",
+     "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/security-and-governance",
+     "label": "unverified",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Documented residency/retention controls; training default not confirmed."
+  },
+  "D13": {
+   "facts": [],
+   "proposed_score": null,
+   "rationale": "N/A (SaaS; no distributable binary)"
+  },
+  "D14": {
+   "facts": [
+    {
+     "claim": "Power Platform data policies, environment routing, disable generative-AI publishing, Agent 365 control plane, CMK.",
+     "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/security-and-governance",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 3,
+   "rationale": "Admin-enforced tenant policy that makers cannot override, well documented."
+  },
+  "D15": {
+   "facts": [
+    {
+     "claim": "MSRC issues CVEs for the service: CVE-2024-38206 (SSRF), CVE-2026-21520 (info disclosure).",
+     "source": "https://cveawg.mitre.org/api/cve/CVE-2026-21520",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "MSRC bounty applicability to Copilot Studio not fetched.",
+     "source": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/security-and-governance",
+     "label": "unverified",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 3,
+   "rationale": "Established MSRC disclosure and CVE issuance for cloud services."
+  }
+ }
+}

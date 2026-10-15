@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(npm run test:*)",
+      "WebFetch(domain:docs.python.org)",
+      "Bash(*)",
+      "Bash(uv run pytest:*)",
+      "Bash(cargo test:*)"
+    ]
+  },
+  "apiKeyHelper": "~/.claude/bin/get-api-key.sh",
+  "autoMemoryEnabled": false,
+  "enableAllProjectMcpServers": true,
+  "sandbox": {
+    "enabled": true,
+    "network": {
+      "allowedDomains": [
+        "*"
+      ]
+    }
+  }
+}

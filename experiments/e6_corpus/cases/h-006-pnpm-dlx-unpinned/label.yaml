@@ -1,0 +1,4 @@
+expected: [HG-MCP-001, HG-MCP-005]
+origin: hand
+family: mcp
+note: "pnpm dlx without version in repo cursor config"

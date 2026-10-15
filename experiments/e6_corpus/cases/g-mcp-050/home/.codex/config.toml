@@ -1,0 +1,17 @@
+model = "gpt-5.1-codex"
+approval_policy = "on-request"
+
+[mcp_servers.context]
+url = "https://mcp.context.example.com/mcp"
+
+[mcp_servers.github]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-github"]
+
+[mcp_servers.filesystem]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-filesystem@2025.8.21", "./"]
+enabled = false
+
+[mcp_servers.filesystem.env]
+GITHUB_TOKEN = "${GITHUB_TOKEN}"

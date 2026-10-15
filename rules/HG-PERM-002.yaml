@@ -1,0 +1,21 @@
+id: HG-PERM-002
+title: Over-broad tool allowlist
+area: PERM
+severity: medium
+confidence: high
+kind: design-weakness
+taxonomy: [T03, T14]
+description: >
+  An allowlist entry that grants an entire tool or shell (`Bash`, `Bash(*)`, `*`, `Shell(*)`,
+  `run_shell_command`, `Exec(*)`, `mcp__*`, `WebFetch`, …) is equivalent to auto-approve for that tool:
+  any injected instruction that reaches the tool runs without a prompt. Wildcard-prefix rules such as
+  `Bash(git *)` are also included where the harness profile marks them over-broad, since many
+  subcommands (`git -c core.sshCommand=…`, `git config alias.x '!…'`) execute arbitrary programs.
+  High when set in a repository file.
+remediation: >
+  Allow specific commands with fixed arguments (`Bash(npm run test)`, `Bash(pytest:*)`); keep shell
+  interpreters, network tools, package managers and `git` with arbitrary arguments behind a prompt.
+references:
+  - https://code.claude.com/docs/en/permissions
+params:
+  generic_patterns: ["*", "Bash", "Bash(*)", "Shell(*)", "Exec(*)", "run_shell_command"]

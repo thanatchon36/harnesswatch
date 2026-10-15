@@ -1,0 +1,4 @@
+expected: [HG-CI-001, HG-CI-002]
+origin: hand
+family: ci
+note: "review-comment trigger, interpolated comment, allow-all-tools, no permissions block"

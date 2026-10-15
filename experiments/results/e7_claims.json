@@ -1,0 +1,315 @@
+{
+  "claims": 117,
+  "tested": 28,
+  "verdicts": {
+    "match": 22,
+    "untested": 89,
+    "not-observed": 2,
+    "partial": 3,
+    "mismatch": 1
+  },
+  "by_harness": {
+    "amp": {
+      "untested": 3
+    },
+    "antigravity": {
+      "untested": 25,
+      "match": 4,
+      "partial": 2,
+      "mismatch": 1
+    },
+    "augment": {
+      "untested": 2
+    },
+    "claude-code": {
+      "match": 13,
+      "untested": 12,
+      "not-observed": 1
+    },
+    "cursor": {
+      "untested": 6
+    },
+    "factory-droid": {
+      "untested": 3
+    },
+    "github-copilot": {
+      "untested": 3,
+      "match": 2,
+      "not-observed": 1
+    },
+    "grok-build": {
+      "match": 3,
+      "untested": 21,
+      "partial": 1
+    },
+    "jules": {
+      "untested": 1
+    },
+    "junie": {
+      "untested": 3
+    },
+    "kiro": {
+      "untested": 5
+    },
+    "qoder": {
+      "untested": 2
+    },
+    "trae": {
+      "untested": 1
+    },
+    "windsurf": {
+      "untested": 2
+    }
+  },
+  "probes": [
+    "agy-help-noauth",
+    "agy-prelogin",
+    "agy-prelogin-noupdate",
+    "cc-baseline",
+    "cc-claudemd-import-env",
+    "cc-nonessential",
+    "cc-repo-defaultmode",
+    "cc-repo-env",
+    "cc-repo-hook",
+    "cc-repo-hook-bare",
+    "cc-repo-mcp",
+    "cc-root-bypass",
+    "codex-baseline",
+    "copilot-offline",
+    "copilot-online-byok",
+    "copilot-repo-hook",
+    "copilot-repo-mcp",
+    "grok-baseline",
+    "grok-claude-compat-hook",
+    "grok-repo-hook-trusted",
+    "grok-repo-hook-untrusted",
+    "grok-repo-mcp-untrusted",
+    "opencode-baseline"
+  ],
+  "rows": [
+    {
+      "id": "CVO-B1-001",
+      "harness": "claude-code",
+      "dimension": "telemetry_hosts",
+      "documented_claim": "The standalone CLI's documented network destinations are api.anthropic.com (model API, WebFetch domain safety check, feature flags, telemetry event logging), claude.ai / claude.com / platform.claude.com (auth), mcp-proxy.anthropic.com (claude.ai connectors), downloads.claude.ai (installer, auto-updater, version checks), storage.googleapis.com (plugin metadata), registry.npmjs.org, github.com, raw.githubusercontent.com (changelog), code.claude.com (docs lookups), http-intake.logs.us5.datadoghq.com (telemetry) and browser-intake-us5-datadoghq.com (error reports). No Statsig or Sentry host is listed.",
+      "observed": "vendor hosts attempted: api.anthropic.com:443",
+      "verdict": "match"
+    },
+    {
+      "id": "CVO-B1-002",
+      "harness": "claude-code",
+      "dimension": "telemetry_hosts",
+      "documented_claim": "The two Datadog intake hosts carry only optional operational telemetry and are contacted only when the CLI uses the Anthropic API directly; error reports additionally require a Pro/Max sign-in on v2.1.198+.",
+      "observed": "with a gateway base URL, Datadog intake contacted: no",
+      "verdict": "match"
+    },
+    {
+      "id": "CVO-B1-003",
+      "harness": "claude-code",
+      "dimension": "telemetry_hosts",
+      "documented_claim": "Setting CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC (any non-empty value, including 0 or false) disables auto-updates, telemetry, error reporting, /feedback, release notes, feature-flag fetching, availability checks and (since 2.1.290) the startup connection warm-up.",
+      "observed": "vendor hosts attempted: none",
+      "verdict": "match"
+    },
+    {
+      "id": "CVO-B1-005",
+      "harness": "claude-code",
+      "dimension": "update_check",
+      "documented_claim": "Native installs update in the background and check downloads.claude.ai; npm installs check registry.npmjs.org; DISABLE_AUTOUPDATER=1 stops the background check (manual `claude update` still works) and DISABLE_UPDATES=1 blocks all update paths.",
+      "observed": "no update-check host contacted during a headless (-p) session",
+      "verdict": "not-observed"
+    },
+    {
+      "id": "CVO-B1-008",
+      "harness": "claude-code",
+      "dimension": "config_trust",
+      "documented_claim": "In a `claude -p` run in a never-trusted folder, the repository's .claude/settings.json `env` block is applied at startup; variables that choose where Claude Code writes its files (CLAUDE_CONFIG_DIR, HOME, TMPDIR, XDG_*) and OTel exporter variables are dropped, but ANTHROPIC_BASE_URL is not on the ignore list.",
+      "observed": "repo env ANTHROPIC_BASE_URL followed: yes; repo env CLAUDE_CONFIG_DIR applied: no",
+      "verdict": "match"
+    },
+    {
+      "id": "CVO-B1-010",
+      "harness": "claude-code",
+      "dimension": "hooks_trust",
+      "documented_claim": "Without --bare, a `claude -p` session runs the hooks in a project's .claude/settings.json even in a never-trusted folder; no trust dialog is shown.",
+      "observed": "repo SessionStart hook ran under -p, untrusted: yes (cc-repo-hook)",
+      "verdict": "match"
+    },
+    {
+      "id": "CVO-B1-012",
+      "harness": "claude-code",
+      "dimension": "mcp_trust",
+      "documented_claim": "Under `claude -p` in a never-trusted folder, servers in .mcp.json are connected without asking, approved or not, while `claude mcp list` in the same folder still reports them as pending.",
+      "observed": "repo .mcp.json stdio server started without prompt: yes; init status [{'name': 'hw', 'status': 'pending', 'source': 'project'}]",
+      "verdict": "match"
+    },
+    {
+      "id": "CVO-B1-015",
+      "harness": "claude-code",
+      "dimension": "config_trust",
+      "documented_claim": "`--bare` (CLAUDE_CODE_SIMPLE=1) skips hooks, skills, plugins, MCP servers, auto memory and CLAUDE.md, and never reads OAuth credentials or the keychain; `--setting-sources user` reads neither project settings nor .mcp.json.",
+      "observed": "repo hook ran with --bare: no (cc-repo-hook-bare)",
+      "verdict": "match"
+    },
+    {
+      "id": "CVO-B1-018",
+      "harness": "claude-code",
+      "dimension": "secret_storage",
+      "documented_claim": "On Linux, login credentials are stored in ~/.claude/.credentials.json with mode 0600 (under CLAUDE_CONFIG_DIR when set); a gateway credential from ANTHROPIC_AUTH_TOKEN is read from the environment.",
+      "observed": "credential files written with ANTHROPIC_AUTH_TOKEN: none",
+      "verdict": "match"
+    },
+    {
+      "id": "CVO-B1-020",
+      "harness": "claude-code",
+      "dimension": "permission_default",
+      "documented_claim": "Built-in starting permission mode for `claude -p`: `default` in sessions that fetch feature flags; in sessions that do not (third-party provider, telemetry off) `auto` on v2.1.285+; when auto is unavailable (e.g. unsupported model) the session starts in Manual (default) instead. Interactive terminal sessions start in `auto` on v2.1.283+.",
+      "observed": "init permissionMode with a third-party base URL: auto",
+      "verdict": "match"
+    },
+    {
+      "id": "CVO-B1-021",
+      "harness": "claude-code",
+      "dimension": "permission_default",
+      "documented_claim": "On Linux and macOS Claude Code refuses --dangerously-skip-permissions / bypassPermissions when running as root or under sudo ('cannot be used with root/sudo privileges for security reasons'); the check is skipped inside a 'recognized sandbox'.",
+      "observed": "--dangerously-skip-permissions as uid 0 refused: yes",
+      "verdict": "match"
+    },
+    {
+      "id": "CVO-B1-022",
+      "harness": "claude-code",
+      "dimension": "permission_default",
+      "documented_claim": "permissions.defaultMode bypassPermissions or auto in project or local settings does not take effect (bypass ignored from project/local since v2.1.257).",
+      "observed": "repo permissions.defaultMode=bypassPermissions -> init permissionMode default",
+      "verdict": "match"
+    },
+    {
+      "id": "CVO-B1-023",
+      "harness": "claude-code",
+      "dimension": "state_dir_perms",
+      "documented_claim": "Session transcripts are stored in plaintext under ~/.claude/projects/ for 30 days by default (cleanupPeriodDays); --no-session-persistence or CLAUDE_CODE_SKIP_PROMPT_HISTORY=1 skip writing them.",
+      "observed": "transcripts written: 1 (modes 0o600); other-user-readable files under ~/.claude: 2",
+      "verdict": "match"
+    },
+    {
+      "id": "CVO-B2-003",
+      "harness": "antigravity",
+      "dimension": "update_check",
+      "documented_claim": "The CLI self-updates in the background with a 15-minute debounce marker (last_check.timestamp) and advisory lock (update.lock) in ~/.gemini/antigravity-cli/updater/.",
+      "observed": "background updater contacted: antigravity-cli-auto-updater-974169037036.us-central1.run.app:443; last_check.timestamp: yes; updater lock files: yes",
+      "verdict": "match"
+    },
+    {
+      "id": "CVO-B2-004",
+      "harness": "antigravity",
+      "dimension": "update_check",
+      "documented_claim": "Setting AGY_CLI_DISABLE_AUTO_UPDATE=true opts out of auto-updates.",
+      "observed": "with AGY_CLI_DISABLE_AUTO_UPDATE=true, updater host contacted: none",
+      "verdict": "match"
+    },
+    {
+      "id": "CVO-B2-005",
+      "harness": "antigravity",
+      "dimension": "telemetry_hosts",
+      "documented_claim": "enableTelemetry (default true) permits metric collection and crash-log streaming; anonymous usage statistics and crash reports.",
+      "observed": "before any login, telemetry/logging hosts attempted: play.googleapis.com:443 (default enableTelemetry=true)",
+      "verdict": "match"
+    },
+    {
+      "id": "CVO-B2-013",
+      "harness": "antigravity",
+      "dimension": "state_dir_perms",
+      "documented_claim": "settings.json and history.jsonl are created 0600; mcp_oauth_tokens.json is created 0644 (third-party, agy 1.1.14 macOS).",
+      "observed": "pre-login files under ~/.gemini: 35; other-user-readable: 32",
+      "verdict": "partial"
+    },
+    {
+      "id": "CVO-B2-015",
+      "harness": "antigravity",
+      "dimension": "permission_default",
+      "documented_claim": "In a non-interactive environment, an unauthenticated headless run exits with an 'authentication required' error instead of hanging.",
+      "observed": "unauthenticated headless run: exit 1, auth-required message: yes, duration 62.6 s",
+      "verdict": "match"
+    },
+    {
+      "id": "CVO-B2-016",
+      "harness": "antigravity",
+      "dimension": "permission_default",
+      "documented_claim": "Read-only print-mode answers (-p \"/help\", \"/config\", \"/permissions\", \"/hooks\", \"/changelog\") run without an agent turn or quota.",
+      "observed": "`agy -p /help` without credentials: exit 1, auth required: yes",
+      "verdict": "mismatch"
+    },
+    {
+      "id": "CVO-B2-023",
+      "harness": "antigravity",
+      "dimension": "mcp_trust",
+      "documented_claim": "Docs do not say whether stdio servers in .agents/mcp_config.json start before workspace trust; unconfigured MCP tool calls default to Ask.",
+      "observed": "before login/trust: repo .agents MCP server started: no; repo hook ran: no",
+      "verdict": "partial"
+    },
+    {
+      "id": "B3-C001",
+      "harness": "grok-build",
+      "dimension": "telemetry_hosts",
+      "documented_claim": "Required hosts are only cli-chat-proxy.grok.com (inference proxy, settings) and auth.x.ai (OAuth/OIDC); api.x.ai, code.grok.com, assets.grok.com, x.ai and storage.googleapis.com are optional and can be blocked without affecting core inference.",
+      "observed": "vendor hosts attempted with a custom local model and no login: none",
+      "verdict": "match"
+    },
+    {
+      "id": "B3-C009",
+      "harness": "grok-build",
+      "dimension": "hooks_trust",
+      "documented_claim": "Project hooks (.grok/hooks/*.json, .claude/settings.json, .cursor/hooks.json) require trust before they run (/hooks-trust or --trust); decision stored in ~/.grok/trusted_folders.toml and covers project MCP and LSP servers.",
+      "observed": "repo hook ran untrusted: no; with --trust: yes; .claude/settings.json compat hook untrusted: no",
+      "verdict": "match"
+    },
+    {
+      "id": "B3-C011",
+      "harness": "grok-build",
+      "dimension": "mcp_trust",
+      "documented_claim": "Grok also loads MCP servers from ~/.claude.json, .cursor/mcp.json and project .mcp.json, merged below config.toml; disable with [compat.claude]/[compat.cursor] mcps = false. Compat scanners default on.",
+      "observed": "project .mcp.json (compat import) server started in an untrusted folder: no",
+      "verdict": "partial"
+    },
+    {
+      "id": "B3-C016",
+      "harness": "grok-build",
+      "dimension": "secret_storage",
+      "documented_claim": "GROK_HOME (default ~/.grok) holds config, auth, sessions, skills, plugins and logs.",
+      "observed": "files written under ~/.grok: 53; other-user-readable: 35 (session files among them: 0)",
+      "verdict": "match"
+    },
+    {
+      "id": "B4-C008",
+      "harness": "github-copilot",
+      "dimension": "telemetry_hosts",
+      "documented_claim": "COPILOT_OFFLINE=true: CLI does not contact GitHub servers and all telemetry is disabled; traffic only to BYOK provider",
+      "observed": "COPILOT_OFFLINE=true vendor hosts: none; without it (BYOK): api.github.com:443",
+      "verdict": "match"
+    },
+    {
+      "id": "B4-C009",
+      "harness": "github-copilot",
+      "dimension": "config_trust",
+      "documented_claim": "CLI asks to trust launch directory (trustedFolders); project .mcp.json skipped in untrusted dirs",
+      "observed": "repo .mcp.json server started in an untrusted folder (-p): no",
+      "verdict": "match"
+    },
+    {
+      "id": "B4-C010",
+      "harness": "github-copilot",
+      "dimension": "hooks_trust",
+      "documented_claim": "Repo hooks in .github/hooks/*.json supported; disableAllHooks turns off user+repo hooks",
+      "observed": "repo .github/hooks sessionStart hook ran in -p: no",
+      "verdict": "not-observed"
+    },
+    {
+      "id": "CVO-HW-001",
+      "harness": "claude-code",
+      "dimension": "config_trust",
+      "documented_claim": "Project memory files (CLAUDE.md) can import other files with @path syntax; only external imports (outside the project) trigger an approval dialog the first time.",
+      "observed": "@.env inside a CLAUDE.md command line imported the gitignored .env into the session transcript without a model call or prompt: yes",
+      "verdict": "match"
+    }
+  ]
+}

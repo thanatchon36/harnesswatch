@@ -1,0 +1,7 @@
+{
+  "defaultProjectTrust": "always",
+  "defaultTools": [
+    "read",
+    "bash"
+  ]
+}

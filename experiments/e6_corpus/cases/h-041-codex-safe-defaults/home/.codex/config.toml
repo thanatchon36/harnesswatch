@@ -1,0 +1,10 @@
+model = "gpt-5.1-codex"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[sandbox_workspace_write]
+network_access = false
+writable_roots = ["/home/dev/.cache/pip"]
+
+[projects."/home/dev/src/app"]
+trust_level = "trusted"

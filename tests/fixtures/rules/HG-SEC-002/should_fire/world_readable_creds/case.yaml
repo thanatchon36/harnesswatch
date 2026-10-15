@@ -1,0 +1,3 @@
+audits: [secrets]
+severity: high
+chmod: {home/.claude/.credentials.json: "0644", home/.claude: "0700"}

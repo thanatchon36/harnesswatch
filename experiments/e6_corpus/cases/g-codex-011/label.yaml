@@ -1,0 +1,8 @@
+expected:
+- HG-MEM-001
+- HG-NET-001
+- HG-PERM-001
+- HG-PERM-003
+origin: generated
+family: codex
+note: Codex config.toml

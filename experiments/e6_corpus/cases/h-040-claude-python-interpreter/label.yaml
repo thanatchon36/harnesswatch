@@ -1,0 +1,4 @@
+expected: [HG-PERM-002, HG-PERM-003]
+origin: hand
+family: perm
+note: "allowlisting a whole interpreter (python -c anything)"

@@ -1,0 +1,1 @@
+{ "permission": { "bash": "ask" }, "agent": { "runner": { "mode": "subagent", "permission": { "bash": "ask" } } } }

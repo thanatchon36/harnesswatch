@@ -1,0 +1,126 @@
+{
+ "bomFormat": "CycloneDX",
+ "specVersion": "1.5",
+ "version": 1,
+ "metadata": {
+  "timestamp": "2026-10-15T00:00:00Z",
+  "tools": [
+   {
+    "name": "harnesswatch experiments/e4_supply.py"
+   }
+  ],
+  "component": {
+   "type": "application",
+   "name": "@openai/codex",
+   "version": "0.162.1",
+   "purl": "pkg:npm/%40openai/codex@0.162.1",
+   "bom-ref": "root:codex-cli"
+  },
+  "properties": [
+   {
+    "name": "harnesswatch:note",
+    "value": "resolved from lockfile/compile output; not installed"
+   }
+  ]
+ },
+ "components": [
+  {
+   "type": "library",
+   "name": "@openai/codex",
+   "version": "0.162.1",
+   "purl": "pkg:npm/%40openai/codex@0.162.1",
+   "bom-ref": "pkg:npm/%40openai/codex@0.162.1",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@openai/codex",
+   "version": "0.162.1-darwin-arm64",
+   "purl": "pkg:npm/%40openai/codex@0.162.1-darwin-arm64",
+   "bom-ref": "pkg:npm/%40openai/codex@0.162.1-darwin-arm64",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@openai/codex",
+   "version": "0.162.1-darwin-x64",
+   "purl": "pkg:npm/%40openai/codex@0.162.1-darwin-x64",
+   "bom-ref": "pkg:npm/%40openai/codex@0.162.1-darwin-x64",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@openai/codex",
+   "version": "0.162.1-linux-arm64",
+   "purl": "pkg:npm/%40openai/codex@0.162.1-linux-arm64",
+   "bom-ref": "pkg:npm/%40openai/codex@0.162.1-linux-arm64",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@openai/codex",
+   "version": "0.162.1-linux-x64",
+   "purl": "pkg:npm/%40openai/codex@0.162.1-linux-x64",
+   "bom-ref": "pkg:npm/%40openai/codex@0.162.1-linux-x64",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@openai/codex",
+   "version": "0.162.1-win32-arm64",
+   "purl": "pkg:npm/%40openai/codex@0.162.1-win32-arm64",
+   "bom-ref": "pkg:npm/%40openai/codex@0.162.1-win32-arm64",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@openai/codex",
+   "version": "0.162.1-win32-x64",
+   "purl": "pkg:npm/%40openai/codex@0.162.1-win32-x64",
+   "bom-ref": "pkg:npm/%40openai/codex@0.162.1-win32-x64",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  }
+ ]
+}

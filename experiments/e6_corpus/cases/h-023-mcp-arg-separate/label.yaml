@@ -1,0 +1,4 @@
+expected: [HG-MCP-003, HG-SEC-003]
+origin: hand
+family: mcp
+note: "literal GitHub token as a separate argument (amp)"

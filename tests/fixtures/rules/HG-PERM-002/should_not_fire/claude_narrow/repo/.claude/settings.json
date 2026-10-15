@@ -1,0 +1,1 @@
+{ "permissions": { "allow": ["Bash(npm run test:*)", "Read(./src/**)", "WebFetch(domain:docs.python.org)"] } }

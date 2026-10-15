@@ -1,0 +1,111 @@
+id: openhands
+name: OpenHands (Agent Canvas + Software Agent SDK / agent-server + OpenHands-CLI)
+vendor: OpenHands (formerly All Hands AI)
+tier: A
+license: MIT                     # verified LICENSE in OpenHands/OpenHands, software-agent-sdk, OpenHands-CLI (GitHub API: MIT)
+open_source: true
+status: analysed                 # source read: OpenHands 1c75a05, SDK 8efff8d, CLI HEAD; not executed
+version_analysed: "Agent Canvas v1.27.1 (2026-10-12); Software Agent SDK / agent-server v1.54.0 (2026-10-09); OpenHands-CLI 1.16.0 (2026-05-08, no longer maintained)"
+analysed_on: "2026-10-15"
+homepage: https://openhands.dev
+repo: https://github.com/OpenHands/OpenHands     # org renamed from All-Hands-AI; old URL redirects
+lineage: "MISSION.md seed (config.toml, microagents, sandbox runtime image, confirmation mode) describes OpenHands v0 / 0.x. As of v1.x the repo OpenHands/OpenHands is 'Agent Canvas' (TypeScript UI + local stack); the Python agent engine is OpenHands/software-agent-sdk; OpenHands-CLI README: 'no longer actively maintained', replaced by Agent Canvas."
+
+binaries: [openhands, agent-canvas, openhands-agent-server]
+packages:
+  - {ecosystem: npm, name: "@openhands/agent-canvas"}
+  - {ecosystem: pypi, name: "openhands"}               # CLI (1.16.0)
+  - {ecosystem: pypi, name: "openhands-ai"}            # legacy v0 app package (1.11.0)
+  - {ecosystem: pypi, name: "openhands-sdk"}
+  - {ecosystem: pypi, name: "openhands-tools"}
+  - {ecosystem: pypi, name: "openhands-agent-server"}
+  - {ecosystem: container, name: "ghcr.io/openhands/agent-canvas"}
+install_methods:
+  - {method: npm, command: "npm install -g @openhands/agent-canvas && agent-canvas", checksum_verified: null, signed: null, source: https://github.com/OpenHands/OpenHands/blob/main/README.md}
+  - {method: docker, command: "docker run ... ghcr.io/openhands/agent-canvas:1.27.1", checksum_verified: null, signed: null, source: https://github.com/OpenHands/OpenHands/blob/main/README.md}
+  - {method: uv-tool, command: "uv tool install openhands --python 3.12", checksum_verified: null, signed: null, source: https://github.com/OpenHands/OpenHands-CLI/blob/main/README.md}
+  - {method: curl-installer, command: "curl -fsSL https://install.openhands.dev/install.sh | sh", checksum_verified: null, signed: null, source: https://github.com/OpenHands/OpenHands-CLI/blob/main/README.md}
+auto_update: {default: null, config: "unverified", source: null}
+
+state_dirs: ["~/.openhands"]       # OPENHANDS_PERSISTENCE_DIR / OH_PERSISTENCE_DIR override
+credential_files: ["~/.openhands/agent_settings.json", "~/.openhands/mcp.json", "~/.openhands/provider-connections/*"]
+credential_storage: "CLI saves agent settings with model_dump_json(expose_secrets=True) to ~/.openhands/agent_settings.json (LLM api_key in plaintext JSON; file mode unverified). SDK Cipher (Fernet, key from OH_SECRET_KEY or first session API key) can encrypt secrets in serialized conversation state. Env LLM_API_KEY/LLM_BASE_URL/LLM_MODEL ignored unless --override-with-envs."
+log_paths: ["~/.openhands/conversations/**", "~/.openhands/projects/<sha256(workdir)>/prompt_history.json", "workspace/conversations (agent-server default conversations_path)"]
+memory_paths: [".openhands/memory/MEMORY.md", "~/.openhands/memory/MEMORY.md"]
+
+config_files:
+  - {path: "~/.openhands/agent_settings.json", scope: user, format: json, kind: settings}
+  - {path: "~/.openhands/cli_config.json", scope: user, format: json, kind: settings}
+  - {path: "~/.openhands/mcp.json", scope: user, format: json, kind: mcp}
+  - {path: ".openhands/hooks.json", scope: project, format: json, kind: hooks}
+  - {path: "~/.openhands/hooks.json", scope: user, format: json, kind: hooks}
+  - {path: ".agents/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+  - {path: ".openhands/skills/*", scope: project, format: markdown, kind: skills}
+  - {path: ".openhands/microagents/*.md", scope: project, format: markdown, kind: skills}      # legacy, still read
+  - {path: "~/.openhands/microagents/", scope: user, format: markdown, kind: skills}
+  - {path: "~/.agents/skills/*/SKILL.md", scope: user, format: markdown, kind: skills}
+  - {path: ".agents/plugins/", scope: project, format: json, kind: skills}                    # plugin.json; code executes
+  - {path: ".openhands/plugins/", scope: project, format: json, kind: skills}
+  - {path: ".claude-plugin/ , .plugin/ (marketplace manifest dirs)", scope: project, format: json, kind: skills}
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: "config.toml (OpenHands v0 / <=0.62 only)", scope: project, format: toml, kind: settings}
+
+instruction_files: ["AGENTS.md", ".openhands/microagents/repo.md", ".openhands/memory/MEMORY.md"]
+skills_paths: [".agents/skills/*/SKILL.md", ".openhands/skills/*", ".openhands/microagents/*.md", "~/.agents/skills/*/SKILL.md", "~/.openhands/skills/*"]
+
+mcp:
+  files: ["~/.openhands/mcp.json"]
+  servers_key: "mcpServers"
+  server_fields:
+    command: command
+    args: args
+    env: env
+    url: url
+    headers: headers
+    type: transport           # `openhands mcp add NAME --transport stdio|http|sse`; JSON field name unverified (fastmcp MCPConfig)
+  project_servers_require_approval: null     # no project MCP file in CLI; skills/plugins may carry .mcp.json (skills/utils.py) - approval unverified
+  notes: "`openhands mcp add|list|enable|disable|remove`. Skill/plugin dirs may bundle .mcp.json."
+
+permissions:
+  config_keys:
+    confirmation_policy: "ConversationState confirmation_policy: AlwaysConfirm | NeverConfirm | ConfirmRisky(threshold)"
+    security_analyzer: "LLMSecurityAnalyzer / defense_in_depth (SecurityRisk UNKNOWN|LOW|MEDIUM|HIGH)"
+  default_mode: "CLI/TUI: AlwaysConfirm (textual_app.py initial_confirmation_policy default). Headless: NeverConfirm. Agent-server/SDK: caller-defined; SDK default policy not determined."
+  auto_approve_values:
+    - {key: "confirmation_policy", value: "NeverConfirm"}
+    - {key: "confirmation_policy", value: "ConfirmRisky with threshold HIGH (only HIGH asks)"}
+  cli_flags_auto_approve: ["--always-approve", "--yolo", "--headless (implies NeverConfirm, requires -t/-f)"]
+  allow_rule_syntax: null
+  overbroad_patterns: []
+  notes: "--llm-approve = LLM-based risk analyzer + ConfirmRisky."
+
+hooks:
+  supported: true
+  config_key: "hooks.json: events pre_tool_use, post_tool_use, user_prompt_submit, session_start, session_end, stop; handler type command|prompt|agent"
+  repo_scoped_allowed: true       # .openhands/hooks.json in working dir loaded by HookConfig.load (CLI setup.py, acp, agent-server); no trust prompt found
+  command_field: "command"
+
+sandbox: {available: true, default_on: false, mechanism: "Docker container(s) for agent-server (README option 2/3; OH_CONVERSATION_RUNTIME=docker); 'Option 1: Without a Sandbox' runs agent-server directly on host with full filesystem access (README warning); Kubernetes workspace in SDK", config: "OH_CONVERSATION_RUNTIME=docker; PROJECTS_PATH mount", source: https://github.com/OpenHands/OpenHands/blob/main/README.md}
+network: {domain_allowlist: false, config: null, default: "container default network; agent-server binds per --host; AGENT_CANVAS_ALLOW_LAN_SESSION_KEY exists", source: https://github.com/OpenHands/OpenHands/blob/main/docs/SELF_HOSTING.md}
+workspace_trust: {prompt_on_new_folder: false, notes: "No folder trust prompt found; .openhands/hooks.json, skills, plugins read from working dir.", source: https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/hooks/config.py}
+memory: {persistent: true, cross_project: true, agent_writable: true, notes: ".openhands/memory/MEMORY.md (project) and ~/.openhands/memory/MEMORY.md (user) injected into system prompt (context/memory.py)", source: https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/context/memory.py}
+subagents: {supported: true, inherits_permissions: "unverified (delegate tool, sdk/subagent)", notes: "", source: https://github.com/OpenHands/software-agent-sdk}
+telemetry: {default_on: false, opt_out: "agent-server telemetry policy: consent UNSET is 'not consent' (telemetry/policy.py); CLI telemetry unverified", training_default: null, source: https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-agent-server/openhands/agent_server/telemetry/policy.py}
+headless:
+  command: "openhands --headless -t \"<task>\"   # CLI;  SDK: Conversation(...).run()"
+  flags: ["--headless", "-t/--task", "-f/--file", "--json", "--override-with-envs", "--always-approve", "--llm-approve", "--resume"]
+  ci_integrations: ["OpenHands resolver GitHub Action (legacy v0, send_pull_request.py; CVE-2026-19022 path removed in 1.7.0)"]
+  model_override: "settings saved in ~/.openhands/agent_settings.json (llm.model, llm.base_url, llm.api_key); or `--override-with-envs` with LLM_MODEL, LLM_BASE_URL, LLM_API_KEY"
+  local_model_support: "yes via LiteLLM: LLM_MODEL=ollama/<m> or openai/<m> with LLM_BASE_URL=http://127.0.0.1:11434 (or /v1) and `--override-with-envs`; SDK LLM(model=..., base_url=...). Not run."
+
+security_policy: {security_md: null, bug_bounty: null, advisories: "https://github.com/OpenHands/OpenHands/security/advisories (GHSA-7h8w-hj9j-8rjw)"}
+extra:
+  agent_server_auth: "Config.session_api_keys; EMPTY LIST => server unsecured (config.py docstring). env SESSION_API_KEY (v0) / OH_SESSION_API_KEYS_0 (v1). Agent Canvas public mode uses LOCAL_BACKEND_API_KEY. CORS: localhost always allowed."
+  self_hosting_warning: "docs/SELF_HOSTING.md: treat host as machine holding production credentials; bind 127.0.0.1; firewall"
+sources:
+  - {url: https://github.com/OpenHands/OpenHands/blob/main/README.md, accessed: "2026-10-15"}
+  - {url: https://github.com/OpenHands/OpenHands-CLI/blob/main/README.md, accessed: "2026-10-15", note: "no longer maintained; config dir"}
+  - {url: https://github.com/OpenHands/OpenHands-CLI/blob/main/openhands_cli/tui/textual_app.py, accessed: "2026-10-15", note: "headless or always_approve => NeverConfirm"}
+  - {url: https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/hooks/config.py, accessed: "2026-10-15"}
+  - {url: https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-agent-server/openhands/agent_server/config.py, accessed: "2026-10-15"}
+  - {url: https://github.com/OpenHands/OpenHands/security/advisories, accessed: "2026-10-15"}

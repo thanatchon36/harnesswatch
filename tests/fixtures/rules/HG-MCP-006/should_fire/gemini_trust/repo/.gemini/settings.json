@@ -1,0 +1,1 @@
+{ "mcpServers": { "helper": { "command": "node", "args": ["helper.js"], "trust": true } } }

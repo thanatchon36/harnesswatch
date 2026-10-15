@@ -1,0 +1,314 @@
+{
+  "harness": "amp",
+  "version": "0.0.1792036844-g99022c",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "By default Amp does not ask for approval before running tools; the docs recommend a custom policy plugin or an isolated environment for untrusted sources.",
+          "source": "https://ampcode.com/docs/markdown/tools",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Permissions are implemented as a plugin: the tool.call plugin event can approve or reject a tool call; workspace admins can distribute such a plugin as a global workspace plugin.",
+          "source": "https://ampcode.com/docs/markdown/customize/plugins",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "The current CLI settings reference documents no amp.permissions or amp.dangerouslyAllowAll key (legacy 2025 spellings amp.commands.allowlist/amp.permissions/amp.dangerouslyAllowAll are not in the current reference; treat as legacy, unverified whether still honoured).",
+          "source": "https://ampcode.com/docs/markdown/cli/settings",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Amp ships with no approval prompts at all by default; control is only via a user-written policy plugin (tool.call event) or workspace-distributed plugin. Control exists but is opt-in and requires code."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Orbs are remote per-thread machines (e2b ephemeral compute) that Amp creates; the CLI can run a thread in an orb with --executor orb or -ox.",
+          "source": "https://ampcode.com/docs/markdown/cli",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No local sandbox (bubblewrap/Seatbelt/Landlock) setting appears in the CLI settings reference.",
+          "source": "https://ampcode.com/docs/markdown/cli/settings",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "No local OS sandbox is documented for the CLI; isolation exists only by running threads in remote 'orbs' (e2b VMs) with -ox / --executor orb."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "The security reference lists the domains an egress-restricted org must allow for Amp to run (ampcode.com, auth.ampcode.com, production.ampworkers.com, static.ampcode.com); no agent-egress allowlist feature is documented.",
+          "source": "https://ampcode.com/security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No domain allowlist / egress control for shell or fetch is documented for the local CLI; only the client's own required domains are listed for corporate firewalls."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "MCP servers declared in workspace settings (.amp/settings.json) require explicit approval before running (amp mcp approve; 'awaiting approval' in amp mcp doctor); servers in ~/.config/amp/settings.json or --mcp-config do not.",
+          "source": "https://ampcode.com/docs/markdown/customize/mcp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Project plugins in .amp/plugins/ apply when Amp is run in that project; plugins 'run code in your environment, so only load plugins you trust'. No folder-trust prompt is documented.",
+          "source": "https://ampcode.com/docs/markdown/customize/plugins",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "AGENTS.md files in cwd, parent directories (up to $HOME) and subtrees are included automatically; AMP_IGNORE_GUIDANCE_FILES can skip them.",
+          "source": "https://ampcode.com/docs/markdown/customize/agents-md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Workspace (.amp/settings.json) MCP servers need explicit approval, but project plugins in .amp/plugins/ and AGENTS.md load without a documented trust prompt."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "amp.mcpPermissions: ordered rules with action allow|reject matching url or command/args; if no rule matches the server is allowed.",
+          "source": "https://ampcode.com/docs/markdown/cli/settings",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Enterprise MCP Registry Allowlist: only registry-approved npm/PyPI packages run; if the registry is unreachable all MCP servers are blocked.",
+          "source": "https://ampcode.com/docs/markdown/enterprise/mcp-registry-allowlist",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Remote MCP supports OAuth, bearer tokens via file/stdin (not argv), and ${amp:id-token} workload identity in orbs.",
+          "source": "https://ampcode.com/docs/markdown/customize/mcp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Per-server approval for workspace MCP, first-match allow/reject patterns (amp.mcpPermissions, default allow), and an enterprise MCP-registry allowlist that blocks everything if unreachable; no tool-description change detection documented."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Plugins are TypeScript/JavaScript modules that run code in the user's environment; locations: personal, workspace (admin), project .amp/plugins/, system ~/.config/amp/plugins/.",
+          "source": "https://ampcode.com/docs/markdown/customize/plugins",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Skills are also loaded from .claude/skills, ~/.claude/skills, .agents/skills, ~/.config/amp/skills; amp.skills.disableClaudeCodeSkills disables the Claude locations.",
+          "source": "https://ampcode.com/docs/markdown/cli/settings",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Plugins are arbitrary TS/JS executed in the user's environment; skills/plugins can be shared via URLs and global repositories; no signing or vetting documented."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "The Amp CLI stores credentials in ~/.local/share/amp/secrets.json (Linux/macOS) or %USERPROFILE%\\.local\\share\\amp\\secrets.json; the client makes a best effort to avoid reading .env and credential files.",
+          "source": "https://ampcode.com/security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Automatic secret detection/redaction replaces secrets with [REDACTED:amp] before they enter threads or are sent to providers; documented as best effort.",
+          "source": "https://ampcode.com/security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "AMP_API_KEY (token starting sgamp_) is the credential for non-interactive use; the session token from amp login is rejected there.",
+          "source": "https://ampcode.com/docs/markdown/cli/execute-mode",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "CLI credentials sit in a plaintext JSON file; mitigated by automatic best-effort secret redaction before secrets reach threads/providers."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "amp -x sends one message, waits for the turn to end, prints the final message and exits; execution mode is also enabled automatically when stdout is redirected.",
+          "source": "https://ampcode.com/docs/markdown/cli/execute-mode",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Non-interactive environments authenticate via AMP_API_KEY.",
+          "source": "https://ampcode.com/docs/markdown/cli/execute-mode",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Execute mode (-x) inherits the no-approval default, so CI runs execute tools unprompted; no official CI-action hardening guidance found."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Guidance files: AGENTS.md (cwd/parents/subtrees), ~/.config/amp/AGENTS.md, ~/.config/AGENTS.md, and system paths (/etc/ampcode/AGENTS.md); falls back to AGENT.md or CLAUDE.md.",
+          "source": "https://ampcode.com/docs/markdown/customize/agents-md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "AGENTS.md (project, user, system) is the durable guidance mechanism; threads are stored server-side and reference-able; agent can edit AGENTS.md on request."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Amp has subagents (Oracle, Librarian) and orbs; delegation between agents is documented under 'Agent to Agent'.",
+          "source": "https://ampcode.com/docs/markdown/tools",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Subagents (oracle, librarian, custom agents) are documented but no permission/env isolation is described; remote orbs provide VM isolation per thread."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Thread storage preserves prompts, model responses, tool calls, tool results, and attachments; a data management API exposes workspace analytics and thread data.",
+          "source": "https://ampcode.com/security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Audit logs for authentication events are available to Enterprise workspace admins; comprehensive application audit logs are internal and provided on request, retained at least 30 days.",
+          "source": "https://ampcode.com/security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "All threads (prompts, responses, tool calls/results) are stored server-side as an audit trail with an analytics/thread API; auth-event audit logs for Enterprise admins; full app audit logs only on request."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "Neither Amp nor subprocessors train on user data unless the user opts in; on Enterprise workspaces training can never be enabled.",
+          "source": "https://ampcode.com/security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Amp Server (GCP, US) stores thread data; the server proxies inference to Anthropic, OpenAI, SpaceXAI, Meta, Gemini/Vertex, Bedrock, Baseten, Fireworks; no self-hosted deployment.",
+          "source": "https://ampcode.com/security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Minimal Data Retention limits third-party model-provider retention for requests through Amp-managed connections, with abuse/legal exceptions (up to 30 days for some models).",
+          "source": "https://ampcode.com/docs/markdown/enterprise/minimal-data-retention",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Deleted threads are removed within 30 days.",
+          "source": "https://ampcode.com/security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Threads (incl. code snippets) always sync to Amp servers (no self-hosting); training off unless opted in and impossible on Enterprise; Minimal Data Retention limits provider retention."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Amp auto-installs updates in the background by default (amp.updates.mode auto; AMP_SKIP_UPDATE_CHECK=1 disables).",
+          "source": "https://ampcode.com/docs/markdown/cli/settings",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "static.ampcode.com serves binary installers, amp update downloads, Bun archives, and checksum files.",
+          "source": "https://ampcode.com/security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "npm package @sourcegraph/amp latest is 0.0.1792036844-g99022c, published 2026-10-15; license 'SEE LICENSE IN LICENSE.md' (proprietary).",
+          "source": "https://registry.npmjs.org/@sourcegraph/amp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Installer script and binaries served from static.ampcode.com with checksum files; auto-update on by default; npm package is a second channel. Signing/provenance not verified."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Managed settings via workspace admin JSON document (revisioned, refreshed within ~10 min) or local managed-settings.json; workspace values win for scalars, lists are combined, local managed file takes precedence over the workspace document.",
+          "source": "https://ampcode.com/docs/markdown/cli/settings",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Enterprise controls: MCP registry allowlist, allowed models, thread visibility, entitlements, SSO/SCIM, passkey enforcement.",
+          "source": "https://ampcode.com/docs/markdown/enterprise/mcp-registry-allowlist",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "managed-settings.json (/etc/ampcode, /Library/Application Support/ampcode, %ProgramData%\\ampcode) and workspace-served managed settings with revision history; managed file wins over workspace doc; but there is no permission model to lock."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "Bug bounty program: report to disclosure@ampcode.com; cash bounties for higher severity; prompt injection / LLM security reports welcome but typically ineligible for rewards.",
+          "source": "https://ampcode.com/security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "SOC 2 Type II certified; annual pentest; trust portal at trust.ampcode.com.",
+          "source": "https://ampcode.com/security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Sourcegraph spun Amp out as an independent company in December 2025 (Amp Inc.).",
+          "source": "https://ampcode.com/news/amp-inc",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Aug 2025: researcher reported Amp could write settings.json (amp.commands.allowlist, amp.mcpServers) via its edit tool outside the workspace, enabling prompt-injection RCE; fixed by Sourcegraph within days; no CVE.",
+          "source": "https://embracethered.com/blog/posts/2025/amp-agents-that-modify-system-configuration-and-escape/",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "security@ and disclosure@ contacts, open cash bug bounty (prompt-injection/LLM findings typically not rewarded), SOC 2 Type II; no public GHSA/CVE feed found."
+    }
+  }
+}

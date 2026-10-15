@@ -1,0 +1,14 @@
+approvals:
+  mode: 'off'
+hooks:
+  pre_tool_call:
+  - command: ~/.hermes/agent-hooks/guard.sh
+    matcher: terminal
+    timeout: 30
+mcp_servers:
+  fs:
+    args:
+    - -y
+    - '@modelcontextprotocol/server-filesystem'
+    - .
+    command: npx

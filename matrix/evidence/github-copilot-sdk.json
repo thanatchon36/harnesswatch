@@ -1,0 +1,188 @@
+{
+  "harness": "github-copilot-sdk",
+  "version": "1.0.22",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "onPermissionRequest handler called before each tool execution (kinds shell, write, read, mcp, custom-tool, url, memory, hook); if omitted requests stay pending; approveAll helper throws when enableManagedSettings is true; tool skipPermission:true bypasses.",
+          "source": "https://github.com/github/copilot-sdk/blob/main/nodejs/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Deny-by-default pending state with managed-policy guard; approveAll/skipPermission are easy footguns."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "SDK has no OS sandbox; recommends running CLI server in a container; file-hook sandbox rules mentioned.",
+          "source": "https://github.com/github/copilot-sdk/blob/main/docs/setup/backend-services.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Isolation left to the host app."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Managed network policy via client.rpc.managedSettings.resolve for client-owned browsers.",
+          "source": "https://github.com/github/copilot-sdk/blob/main/nodejs/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Policy hook exists."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Repository customization directories (.github/copilot/settings.json) require folder trust covering the checkout root; SDK inputs may be outside checkout.",
+          "source": "https://github.com/github/copilot-sdk/blob/main/docs/features/customization-locations.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Trust-gated repo config."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "mcpServers per-session with tools allowlist ('*' / [] / names); MCP calls are permission kind 'mcp'.",
+          "source": "https://github.com/github/copilot-sdk/blob/main/docs/features/mcp.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Tool allowlist plus permission gate."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Skill install reviews: runtimes granting skill-confirmed-installation expose planInstall/applyInstall flow with full AGENTS.md/skill review.",
+          "source": "https://github.com/github/copilot-sdk/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Confirmed install flow."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "CLI login credentials stored in system keychain; env COPILOT_GITHUB_TOKEN/GH_TOKEN/GITHUB_TOKEN alternative; BYOK apiKey in code.",
+          "source": "https://github.com/github/copilot-sdk/blob/main/docs/setup/local-cli.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Keychain default."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "Headless CLI server listens on 127.0.0.1 by default; requireConnectionToken defaults true (random token); --host 0.0.0.0 and requireConnectionToken:false are explicit opt-outs.",
+          "source": "https://github.com/github/copilot-sdk/blob/main/nodejs/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Loopback + token by default."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Permission kind 'memory'; session state persisted in ~/.copilot/session-state/.",
+          "source": "https://github.com/github/copilot-sdk/blob/main/docs/features/session-persistence.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Not detailed."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Custom agents and fleet mode exist; permission inheritance not documented here.",
+          "source": "https://github.com/github/copilot-sdk/blob/main/docs/features/custom-agents.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (Unverified)"
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "OTel via TelemetryConfig (otlpEndpoint or file JSONL, captureContent opt-in).",
+          "source": "https://github.com/github/copilot-sdk/blob/main/docs/observability/opentelemetry.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Structured opt-in OTel; content capture separate."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "SDK sends nothing itself; bundled CLI product telemetry not documented in repo.",
+          "source": "https://github.com/github/copilot-sdk/blob/main/docs/observability/opentelemetry.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (Unverified)"
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Published to npm/PyPI/NuGet/crates/Go/Maven; bundled CLI downloaded per release; provenance not checked.",
+          "source": "https://registry.npmjs.org/@github%2fcopilot-sdk",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (Not verified)"
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "enableManagedSettings with account/device policy resolution; managedApprovalRequired per request.",
+          "source": "https://github.com/github/copilot-sdk/blob/main/nodejs/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Admin policy hooks documented."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md: email opensource-security@github.com; OSS repos not in bounty scope; no repo advisories.",
+          "source": "https://github.com/github/copilot-sdk/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Standard GitHub process."
+    }
+  }
+}

@@ -1,0 +1,5 @@
+[[hooks]]
+name = "guard"
+type = "pre_tool"
+match = "bash"
+command = "./scripts/guard.sh"

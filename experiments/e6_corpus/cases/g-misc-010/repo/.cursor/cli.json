@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "permissions": {
+    "allow": [
+      "Shell(git status)",
+      "Write(src/**)",
+      "Read(src/**)",
+      "WebFetch(*)"
+    ],
+    "deny": [
+      "Shell(rm)",
+      "Shell(git push --force)",
+      "Read(.env*)",
+      "Read(~/.ssh/**)"
+    ]
+  }
+}

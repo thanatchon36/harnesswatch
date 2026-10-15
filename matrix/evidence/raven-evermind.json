@@ -1,0 +1,200 @@
+{
+  "harness": "raven-evermind",
+  "version": "0.2.4",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "permissions.mode ask|smart|full (default smart: model reviewer, escalates on failure); permissions.tools per-tool allow/ask/deny and exec prefix patterns, strictest wins; builtin deny list for catastrophic commands holds in every mode.",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/docs-site/docs/permissions.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Headless: raven agent -m has no approver, refuses ask-tier calls and exits status 3; --permission-mode full to mutate.",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/docs-site/docs/permissions.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Layered default-on gate; smart reviewer is an LLM."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "tools.sandbox.backend defaults to none (DirectExecutor on host); boxlite microVM opt-in, no silent fallback; allow_net default true; workspace mount rw.",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/docs-site/docs/sandbox.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "tools.restrictToWorkspace defaults false.",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/raven/config/schema.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Strong option, off by default."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Sandbox allowNet true|false|[domains]; SSRF guard with redirect re-validation and DNS-pinned connect for fetches.",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/raven/security/network.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Fetch SSRF guard on; sandbox egress open by default."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Config is user-global (~/.raven/config.json); no repo-scoped config found; untrusted tool/web/MCP content wrapped in nonce-tagged UNTRUSTED fences.",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/raven/security/trust.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "No repo config executed; project instruction discovery unverified."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP servers in tools.mcpServers (stdio|sse|streamableHttp, auth none|apikey|oauth); unknown MCP tools default to ask tier; stdio MCP runs in the microVM only if sandbox enabled.",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/raven/config/schema.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Ask by default; no description-change detection found."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Skills from SkillHub (114,190 listed), plugin market, Curator self-evolution of tools/skills; vetting not documented.",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Large unvetted skill supply plus self-modification."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Provider api_key stored in ~/.raven/config.json (source calls it world-readable); MCP OAuth tokens in ~/.raven/credentials/mcp/; redaction in ACP and bug reports; docker auto-login cookie is HttpOnly SameSite=Strict.",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/raven/config/schema.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Plaintext config keys; file mode unverified."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "Unattended runs fail closed on approvals; DAG confirm:true fails open without ask channel (documented); A2A server off by default with shared bearer token.",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/docs-site/docs/permissions.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Mostly fail-closed."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "EverOS memory + workspace agent_memory, cross-session; Evolver/Curator adopt self-improvements that pass validation.",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Agent-writable cross-session memory and self-modification."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Rendered deny rules reach Raven agents; ask tier and mode not carried to third-party backends; outbound ACP client auto-prefers allow_always/allow_once.",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/docs-site/docs/permissions.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Weak inheritance, documented."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Tracing spans carry permission.decision/source; trajectory store; local logs.",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/docs-site/docs/permissions.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Structured local tracing."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "No telemetry code found; bug-report upload only when RAVEN_BUGREPORT_URL set (empty default).",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/docs-site/docs/trajectory-debugging.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Off by default."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "install.sh verifies the Node tarball sha256 but is itself curl|bash; no signature/provenance for Raven wheel documented.",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/install.sh",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Partial integrity checks."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "No admin-enforced policy file; docker deployment env seeds config.",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/docker/README.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md: private GitHub vulnerability reporting; pre-alpha; no published advisories.",
+          "source": "https://github.com/EverMind-AI/Raven/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Basic."
+    }
+  }
+}

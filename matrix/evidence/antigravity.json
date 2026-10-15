@@ -1,0 +1,519 @@
+{
+  "harness": "antigravity",
+  "version": "CLI 1.3.5 / app 2.23.1 / IDE 2.5.5",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "CLI toolPermission values request-review (default), proceed-in-sandbox, always-proceed, strict; allow/deny/ask lists with precedence deny>ask>allow",
+          "source": "https://antigravity.google/docs/cli/reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "App presets Default/Request Review/Turbo; Turbo = no sandbox, unrestricted commands, full filesystem, MCP & web allowed",
+          "source": "https://antigravity.google/docs/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "--dangerously-skip-permissions auto-approves all tool calls in headless/CLI",
+          "source": "https://antigravity.google/docs/cli/headless",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "PromptArmor (Nov 2025) observed defaults Terminal Auto Execution=Auto, Artifact Review=Agent Decides at launch of the original IDE",
+          "source": "https://www.promptarmor.com/resources/google-antigravity-exfiltrates-data",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CLI execution modes default | accept-edits | plan | auto (--mode, agentMode); auto (1.3.5) approves edits and 'safe' commands, out-of-sandbox commands reviewed by a separate agent",
+          "source": "https://github.com/google-antigravity/antigravity-cli/blob/main/CHANGELOG.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Current IDE terminal policy values are Request Review / Always Proceed (allowlist / denylist); strict mode forces Request Review",
+          "source": "https://antigravity.google/docs/settings",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "--dangerously-skip-permissions also auto-approves sandbox-bypass requests; vendor collaborator reply (2026-09-03) says this is by design and recommends toolPermission=proceed-in-sandbox",
+          "source": "https://github.com/google-antigravity/antigravity-cli/issues/36",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Rich allow/deny/ask model, safe CLI default (request-review), but unrestricted presets exist and the original IDE shipped with permissive auto-execution; no central enforcement documented."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Sandbox: Linux namespaces, macOS Seatbelt; no VM/Docker",
+          "source": "https://antigravity.google/docs/sandbox",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "On by default only under app 'Default' preset (macOS/Linux); CLI enableTerminalSandbox default false",
+          "source": "https://antigravity.google/docs/sandbox",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Pillar: native find_by_name tool ran before Secure Mode evaluated commands; fixed 2026-02-28",
+          "source": "https://www.pillar.security/blog/prompt-injection-leads-to-rce-and-sandbox-escape-in-antigravity",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "IDE: sandbox uses nsjail on Linux and Seatbelt on macOS, disabled by default; strict mode enables it with network denied",
+          "source": "https://antigravity.google/docs/settings",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CLI 1.3.3 (2026-10-10) stopped sandboxed commands reading ~/Library/Application Support on macOS (was readable)",
+          "source": "https://github.com/google-antigravity/antigravity-cli/blob/main/CHANGELOG.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "OS-level sandbox exists and is default in the app, opt-in in CLI; native tools bypassed it historically."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Sandboxed commands have no network by default; read_url rules extend the allowlist; unsandboxed commands have full network",
+          "source": "https://antigravity.google/docs/sandbox",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "IDE browser: server-side denylist plus local allowlist (default localhost)",
+          "source": "https://antigravity.google/docs/ide/allowlist-denylist",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "PromptArmor reported webhook.site on the default browser allowlist enabling exfiltration (Nov 2025)",
+          "source": "https://www.promptarmor.com/resources/google-antigravity-exfiltrates-data",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CLI 1.1.28 (2026-09-09) changed URL-fetch default from always allowed to ask",
+          "source": "https://github.com/google-antigravity/antigravity-cli/blob/main/CHANGELOG.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "IDE browser denylist is a server-side Google check that fails closed; local allowlist initialised with localhost only",
+          "source": "https://antigravity.google/docs/ide/allowlist-denylist",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Domain controls exist inside the sandbox and for the browser; unsandboxed path unrestricted."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "CLI first-run asks to trust the workspace",
+          "source": "https://antigravity.google/docs/getting-started",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Hooks page documents project .agents/hooks.json with no trust requirement",
+          "source": "https://antigravity.google/docs/hooks",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Changelog 2.18.1 (2026-09-28): files in .git, .env, .vscode were modifiable without prompt under Default/Request Review presets (fixed)",
+          "source": "https://antigravity.google/docs/changelog",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CLI 1.1.1 changelog: workspace hooks in .agents/hooks.json load after the folder is trusted (implies a trust gate for hooks)",
+          "source": "https://github.com/google-antigravity/antigravity-cli/blob/main/CHANGELOG.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "PreToolUse hooks can return decision auto_approve, so a repo-level .agents/hooks.json can pre-approve tool calls",
+          "source": "https://antigravity.google/docs/hooks",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Workspace custom agents (.agents/agents/*.md) and plugins (.agents/plugins/) are read from the repo; agents can declare mcpServers and commandExecutionPolicy",
+          "source": "https://antigravity.google/docs/subagents",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Mindgard (2025-11-25): a rule in a trusted workspace made the agent overwrite ~/.gemini/antigravity/mcp_config.json, giving code execution on every launch that survived reinstall; Google first closed as intended behaviour then reopened",
+          "source": "https://mindgard.ai/blog/google-antigravity-persistent-code-execution-vulnerability",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Trust prompt exists but docs do not state what repo config is withheld before trust; repo hooks/MCP documented without gate."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP config ~/.gemini/config/mcp_config.json and .agents/mcp_config.json; unconfigured MCP tools default to Ask",
+          "source": "https://antigravity.google/docs/mcp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Permission patterns mcp(server/tool), mcp(server/*), mcp(*)",
+          "source": "https://antigravity.google/docs/mcp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Changelog 2.6.0 fixed admin policies for tool servers skipped at startup",
+          "source": "https://antigravity.google/docs/changelog",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No MCP-specific enterprise controls described",
+          "source": "https://antigravity.google/docs/mcp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Embrace The Red (2025-11-25): no human-in-the-loop for MCP tool calls in the launch IDE",
+          "source": "https://embracethered.com/blog/posts/2025/security-keeps-google-antigravity-grounded/",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "mcp_config.json accepts url as well as serverUrl since CLI 1.0.5 / app 2.1.4 (docs/mcp still says url unsupported)",
+          "source": "https://github.com/google-antigravity/antigravity-cli/blob/main/CHANGELOG.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Per-tool approval and policy patterns, but no documented project-server approval or central MCP allowlist."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Plugins and marketplace pages exist (/docs/plugins, /docs/marketplace); `agy plugin import gemini`",
+          "source": "https://antigravity.google/docs/cli/gcli-migration",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Vetting/signing not read",
+          "source": "https://antigravity.google/docs/getting-started",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Plugins bundle skills, MCP servers, subagents, rules, hooks and bin/ tools; workspace plugins in .agents/plugins/ activate for that project; official marketplace antigravity-plugins-official",
+          "source": "https://antigravity.google/docs/plugins",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No plugin signing or vetting process documented on the plugins or marketplace pages",
+          "source": "https://antigravity.google/docs/marketplace",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Plugins (incl. repo-level .agents/plugins/) can bundle MCP servers, hooks and binaries; no signing or vetting documented."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "CLI session tokens in OS keyring; /logout clears keyring",
+          "source": "https://antigravity.google/docs/cli/gcli-migration",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "MCP OAuth tokens in ~/.gemini/antigravity/mcp_oauth_tokens.json",
+          "source": "https://antigravity.google/docs/mcp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Agent Gitignore Access (blocks .env reads) was bypassed with cat in terminal (PromptArmor)",
+          "source": "https://www.promptarmor.com/resources/google-antigravity-exfiltrates-data",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CLI bypasses the OS keyring when no D-Bus session bus is present (headless hosts, containers) and uses file storage",
+          "source": "https://github.com/google-antigravity/antigravity-cli/blob/main/CHANGELOG.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Container run selects file-based token storage at ~/.gemini/antigravity-cli/antigravity-oauth-token",
+          "source": "https://github.com/google-antigravity/antigravity-cli/issues/479",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "MCP OAuth tokens (incl. refresh tokens) stored plaintext, mode 0644, in four dirs (antigravity, antigravity-cli, antigravity-ide, antigravity-backup); agy 1.1.14 / IDE 2.8.1 macOS",
+          "source": "https://github.com/google-antigravity/antigravity-cli/issues/815",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Keyring for primary auth but plaintext MCP tokens file and weak .env read protection."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "agy -p with text/json/stream-json; approvals soft-denied (exit 0) in CI; scoped allow rules recommended",
+          "source": "https://antigravity.google/docs/cli/headless",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No token env var for CI auth documented; cached credentials only",
+          "source": "https://antigravity.google/docs/cli/headless",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No official GitHub Action found",
+          "source": "https://antigravity.google/docs/getting-started",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Headless can run without Google sign-in using modelProvider=gemini + GEMINI_API_KEY (no stored session)",
+          "source": "https://antigravity.google/docs/cli/install",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Headless exit codes: 3 with AGY_ERROR JSON line on model/agent API failure (1.2.6, 1.2.10)",
+          "source": "https://github.com/google-antigravity/antigravity-cli/blob/main/CHANGELOG.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Sensible headless default (deny unapproved), explicit skip-permissions flag; no hardened CI integration."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Global AGENTS.md/GEMINI.md and rules files",
+          "source": "https://antigravity.google/docs/rules",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Agent-written memory not documented",
+          "source": "https://antigravity.google/docs/rules",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "App/IDE app-data dirs (~/.gemini/antigravity, ~/.gemini/antigravity-ide) hold artifacts and 'knowledge items'",
+          "source": "https://antigravity.google/docs/agent-settings",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (no verifiable memory feature facts)"
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Subagents and a browser subagent exist; SDK has subagents",
+          "source": "https://antigravity.google/docs/getting-started",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Permission inheritance not documented in pages read",
+          "source": "https://antigravity.google/docs/getting-started",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Custom subagents set commandExecutionPolicy (off|auto|eager|sandbox, default sandbox), tools and mcpServers in front matter",
+          "source": "https://antigravity.google/docs/subagents",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Subagents inherit accept-edits mode",
+          "source": "https://antigravity.google/docs/cli/modes",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CLI 1.2.15: agent no longer works around denied permission requests (e.g. raised by subagents) with other commands or tools",
+          "source": "https://github.com/google-antigravity/antigravity-cli/blob/main/CHANGELOG.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Per-subagent execution policy exists, but accept-edits is inherited and agents could route around denials until CLI 1.2.15; isolation (worktree) optional."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Diagnostic logs ~/.gemini/antigravity-cli/cli.log; enterprise request/response logging to customer GCP project",
+          "source": "https://antigravity.google/docs/enterprise",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CLI conversation/events formats not read",
+          "source": "https://antigravity.google/docs/cli/headless",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Enterprise audit logging via Google Cloud; local logs exist."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "CLI enableTelemetry default true; app 'Enable Telemetry' toggle",
+          "source": "https://antigravity.google/docs/cli/reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Enterprise page makes no statement on retention or training",
+          "source": "https://antigravity.google/docs/enterprise",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Terms: Interactions are recorded and used to improve Google/Alphabet products and ML; employees and contractors may review them; opt-out in settings; deletion via email",
+          "source": "https://antigravity.google/terms",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Telemetry on by default with opt-out; training/retention statements absent from docs read."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Installer verifies SHA-512 against manifest from the same updater origin; CLI self-updates in background; no signature statement",
+          "source": "https://antigravity.google/docs/cli/install",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "install.sh read and SHA-512 verification confirmed",
+          "source": "https://antigravity.google/cli/install.sh",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Auto-update off-switch: AGY_CLI_DISABLE_AUTO_UPDATE=true; updater checks every 15 min",
+          "source": "https://antigravity.google/docs/cli/troubleshooting",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No signature/attestation files next to payload (.sig/.asc/.sha512/.intoto.jsonl/.sigstore.json HEAD 404); GitHub release assets carry no checksums; installer strips macOS quarantine xattr and has no version pinning",
+          "source": "https://antigravity.google/cli/install.sh",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Open feature request for version pinning and signature verification in install.sh (2026-09-24)",
+          "source": "https://github.com/google-antigravity/antigravity-cli/issues/1097",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "SHA-512 integrity check against a same-origin manifest, no signatures or pinning; auto-update on by default with an env off-switch."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Enterprise page documents SSO/WIF/ADC, license and VPC-SC but no managed settings file or policy mechanism",
+          "source": "https://antigravity.google/docs/enterprise",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "IDE not supported for enterprise customers",
+          "source": "https://antigravity.google/docs/ide/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "SDK policies are set in code, no central enforcement documented",
+          "source": "https://antigravity.google/docs/sdk/policies",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Identity/licensing governance exists; no admin-enforced permission policy documented."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "No SECURITY.md or security.txt found (404)",
+          "source": "https://antigravity.google/.well-known/security.txt",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Google Bug Hunters has an Antigravity page; Pillar received an AI VRP bounty (2026-03-26)",
+          "source": "https://www.pillar.security/blog/prompt-injection-leads-to-rce-and-sandbox-escape-in-antigravity",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Google classed some prompt-injection exfil behaviours as known issues (Willison/PromptArmor)",
+          "source": "https://www.promptarmor.com/resources/google-antigravity-exfiltrates-data",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GitHub security advisories for google-antigravity/antigravity-cli: none; NVD keyword 'antigravity': 0 CVEs (2026-10-15); security bugs filed as public issues labelled 'security'",
+          "source": "https://github.com/google-antigravity/antigravity-cli/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "VRP with bounties exists via Google; no CVEs/advisories for Antigravity found; some classes declared known issues."
+    }
+  }
+}

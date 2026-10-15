@@ -1,0 +1,199 @@
+{
+  "harness": "openhands",
+  "version": "Agent Canvas 1.27.1 / SDK 1.54.0 / CLI 1.16.0",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "TUI initial_confirmation_policy defaults to AlwaysConfirm; headless or always_approve -> NeverConfirm",
+          "source": "https://github.com/OpenHands/OpenHands-CLI/blob/main/openhands_cli/tui/textual_app.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "SecurityRisk enum UNKNOWN/LOW/MEDIUM/HIGH and ConfirmRisky policy",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/security/confirmation_policy.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "SDK confirmation policies (AlwaysConfirm/NeverConfirm/ConfirmRisky) with LLM risk analyzer; TUI default AlwaysConfirm; headless and --yolo disable confirmation."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "README Option 1 warning: agent will have full access to your filesystem; Options 2/3 use Docker",
+          "source": "https://github.com/OpenHands/OpenHands/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Docker runtime available (opt-in OH_CONVERSATION_RUNTIME=docker or docker image); npm quickstart 'Option 1: Without a Sandbox' runs agent-server on the host with full filesystem access."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "SELF_HOSTING.md: bind 127.0.0.1 and firewall inbound; no outbound policy",
+          "source": "https://github.com/OpenHands/OpenHands/blob/main/docs/SELF_HOSTING.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No egress allowlist documented; relies on container/network firewall guidance."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "HookConfig.load searches <work_dir>/.openhands/hooks.json then ~/.openhands/hooks.json; CLI setup.py calls it on start",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/hooks/config.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "Project .openhands/hooks.json, skills and plugins are loaded from the working dir with no trust prompt found."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "openhands mcp add/list/enable/disable; mcp.json under persistence dir",
+          "source": "https://github.com/OpenHands/OpenHands-CLI/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "~/.openhands/mcp.json with enable/disable CLI; skills/plugins can bundle .mcp.json; no allowlist."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Plugin discovery paths ~/.agents/plugins, .agents/plugins, .openhands/plugins",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/plugin/discovery.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Plugins and skills from .agents/ .openhands/ and marketplace manifests (.claude-plugin); executes plugin code."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "AgentStore.save writes agent JSON with expose_secrets True",
+          "source": "https://github.com/OpenHands/OpenHands-CLI/blob/main/openhands_cli/stores/agent_store.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Cipher utility (Fernet) 'for preventing accidental secret disclosure in serialized data'",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/utils/cipher.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "CLI persists LLM api_key via model_dump_json(expose_secrets=True) to agent_settings.json; agent-server has optional Fernet Cipher and secret-redaction modules; envs ignored unless --override-with-envs."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "Config.session_api_keys: 'Empty list implies the server will be unsecured'",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-agent-server/openhands/agent_server/config.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "--headless auto-approves everything and requires --task/--file; agent-server unauthenticated when no session API key set."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "MEMORY_INDEX_RELPATH .openhands/memory/MEMORY.md",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/context/memory.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Project and user MEMORY.md injected into the system prompt; user-visible files."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "openhands-tools has delegate tool; sdk has subagent module",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-tools/openhands/tools/delegate",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Delegate/sub-agent tools exist; inheritance unverified."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "conversation_dir persistence ~/.openhands/conversations",
+          "source": "https://github.com/OpenHands/OpenHands-CLI/blob/main/openhands_cli/locations.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Persisted conversation event logs, observability module, telemetry subsystem with consent model."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "telemetry/policy.py: UNSET default is not consent",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-agent-server/openhands/agent_server/telemetry/policy.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Agent-server telemetry policy requires recorded consent (UNSET is not consent); CLI behaviour unverified."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "install.openhands.dev curl installer",
+          "source": "https://github.com/OpenHands/OpenHands-CLI/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "PyPI/npm/GHCR/uv + curl installer; no verified signing/provenance."
+    },
+    "D14": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "unverified for open-source distribution (SELF_HOSTING hardening guidance only)."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "GHSA-7h8w-hj9j-8rjw / CVE-2026-33718: command injection in git diff handler (<=1.4.0, fixed 1.5.0), published 2026-03-23",
+          "source": "https://github.com/OpenHands/OpenHands/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CVE-2026-19022: command injection in resolver initialize_repo (<=0.62.0), NVD published 2026-08-06, vendor deleted original issue",
+          "source": "https://nvd.nist.gov/vuln/detail/CVE-2026-19022",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "GHSA published for CVE-2026-33718; no SECURITY.md found in the three repos read; CVE-2026-19022 reported by third party (VulDB) against legacy resolver."
+    }
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "harness": "trueforge",
+  "version": "0.179.1",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Tool approval pauses before MCP tools labelled write/destructive (require_approval_for_tools default [\"@write\",\"@destructive\"]); unlabeled tools run without asking unless named or @all.",
+          "source": "https://github.com/truefoundry/trueforge/blob/main/docs/create-agent/overview.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Default gating but depends on server annotations."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Sandbox-as-tool: Daytona provider or local srt (@anthropic-ai/sandbox-runtime 0.0.77); agent loop and credentials stay outside the sandbox; sandbox only provisioned when needed.",
+          "source": "https://github.com/truefoundry/trueforge/blob/main/docs/sandbox.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Isolation by architecture; egress open by default."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Sandbox egress is UNRESTRICTED by default; per-environment Domain Allow List and Block All Network; server OUTBOUND_URL_ALLOWED/BLOCKED_HOSTS.",
+          "source": "https://github.com/truefoundry/trueforge/blob/main/docs/sandbox.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Controls exist, default open."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Server product; repo config not applicable.",
+          "source": "https://github.com/truefoundry/trueforge/blob/main/README.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "Remote MCP only (header auth/OAuth); per-tool approval switches; shipped MCP catalog.",
+          "source": "https://github.com/truefoundry/trueforge/blob/main/docs/mcp-servers.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "No stdio, but no description-change detection."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Skills are git-backed SKILL.md packs registered in Settings and run in the sandbox.",
+          "source": "https://github.com/truefoundry/trueforge/blob/main/docs/skills.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Admin-registered, not vetted."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Provider keys/MCP headers stored in DB, API/UI return redacted stand-ins; model & MCP credentials never enter the sandbox; sandbox secrets are network-scoped and synced to Daytona. No at-rest encryption found in source.",
+          "source": "https://github.com/truefoundry/trueforge/blob/main/docs/sandbox.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Good separation; DB at-rest encryption unverified."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "Local/standalone mode: no login, one shared admin, fixed service key 'trueforge-standalone', binds localhost; Helm default no OIDC with placeholder API key, bundled Postgres well-known password, Redis without auth.",
+          "source": "https://github.com/truefoundry/trueforge/blob/main/docs/authentication/overview.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Insecure-by-default beyond localhost, loudly warned."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "No agent memory feature documented.",
+          "source": "https://github.com/truefoundry/trueforge/blob/main/docs/key-features/overview.mdx",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Dynamic subagents toggle; inheritance not documented.",
+          "source": "https://github.com/truefoundry/trueforge/blob/main/docs/key-features/subagents.mdx",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (Unverified)"
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Sessions page records turns, tool calls, subagents, tokens, timing in SQLite/Postgres.",
+          "source": "https://github.com/truefoundry/trueforge/blob/main/docs/sessions.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Built-in session audit."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "SENTRY_ENABLED defaults false; init skipped for development/test/local NODE_ENV.",
+          "source": "https://github.com/truefoundry/trueforge/blob/main/packages/trueforge/src/config.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Off by default."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "npm publish with provenance (SLSA v1 attestation) on 0.179.1; MIT.",
+          "source": "https://registry.npmjs.org/-/npm/v1/attestations/@truefoundry%2ftrueforge@0.179.1",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Provenance; npx @latest unpinned."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "OIDC login with admin/user roles via groups claim, OIDC_ALLOWED_EMAILS allowlist; Settings admin-only.",
+          "source": "https://github.com/truefoundry/trueforge/blob/main/docs/authentication/overview.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Role-based admin only in hosted mode."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md: email security@truefoundry.com, 3-business-day ack, fixes on latest only; no advisories published.",
+          "source": "https://github.com/truefoundry/trueforge/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Clear process, young project."
+    }
+  }
+}

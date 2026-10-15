@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "linear": {"url": "https://mcp.linear.app/sse", "headers": {"Authorization": "Bearer ${env:LINEAR_TOKEN}"}}
+  }
+}

@@ -1,0 +1,15 @@
+id: HG-SEC-002
+title: Harness state or credential file readable by other users
+area: SEC
+severity: medium
+confidence: high
+kind: design-weakness
+taxonomy: [T07]
+description: >
+  Credential files must be owner-only (0600). State directories, transcripts and memory files that are
+  world-readable expose prompts, code and any secret residue to every local account and to processes
+  running as other users (shared CI runners, multi-user hosts, dev containers with mounted homes).
+  Credential files that are group/world accessible are raised to high.
+remediation: "`chmod 700 <state dir>` and `chmod 600` for credential, transcript and memory files; set `umask 077` for agent sessions."
+references:
+  - https://cwe.mitre.org/data/definitions/732.html

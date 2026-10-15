@@ -1,0 +1,34 @@
+\begin{tabular}{p{1.9cm}p{2.3cm}p{10.4cm}p{1.6cm}}
+\toprule
+Harness & Dimension & Observed & Verdict \\
+\midrule
+antigravity & update\_check & background updater contacted: antigravity-cli-auto-updater-974169037036.us-central1.run.app:443; last\_check.timestamp: yes; updater lock files: yes & match \\
+antigravity & update\_check & with AGY\_CLI\_DISABLE\_AUTO\_UPDATE=true, updater host contacted: none & match \\
+antigravity & telemetry\_hosts & before any login, telemetry/logging hosts attempted: play.googleapis.com:443 (default enableTelemetry=true) & match \\
+antigravity & state\_dir\_perms & pre-login files under \textasciitilde{}/.gemini: 35; other-user-readable: 32 & partial \\
+antigravity & permission\_default & unauthenticated headless run: exit 1, auth-required message: yes, duration 62.6 s & match \\
+antigravity & permission\_default & `agy -p /help` without credentials: exit 1, auth required: yes & mismatch \\
+antigravity & mcp\_trust & before login/trust: repo .agents MCP server started: no; repo hook ran: no & partial \\
+claude-code & telemetry\_hosts & vendor hosts attempted: api.anthropic.com:443 & match \\
+claude-code & telemetry\_hosts & with a gateway base URL, Datadog intake contacted: no & match \\
+claude-code & telemetry\_hosts & vendor hosts attempted: none & match \\
+claude-code & update\_check & no update-check host contacted during a headless (-p) session & not-observed \\
+claude-code & config\_trust & repo env ANTHROPIC\_BASE\_URL followed: yes; repo env CLAUDE\_CONFIG\_DIR applied: no & match \\
+claude-code & hooks\_trust & repo SessionStart hook ran under -p, untrusted: yes (cc-repo-hook) & match \\
+claude-code & mcp\_trust & repo .mcp.json stdio server started without prompt: yes; init status [('name': 'hw', 'status': 'pending', 'source': 'project')] & match \\
+claude-code & config\_trust & repo hook ran with --bare: no (cc-repo-hook-bare) & match \\
+claude-code & secret\_storage & credential files written with ANTHROPIC\_AUTH\_TOKEN: none & match \\
+claude-code & permission\_default & init permissionMode with a third-party base URL: auto & match \\
+claude-code & permission\_default & --dangerously-skip-permissions as uid 0 refused: yes & match \\
+claude-code & permission\_default & repo permissions.defaultMode=bypassPermissions -> init permissionMode default & match \\
+claude-code & state\_dir\_perms & transcripts written: 1 (modes 0o600); other-user-readable files under \textasciitilde{}/.claude: 2 & match \\
+claude-code & config\_trust & @.env inside a CLAUDE.md command line imported the gitignored .env into the session transcript without a model call or prompt: yes & match \\
+github-copilot & telemetry\_hosts & COPILOT\_OFFLINE=true vendor hosts: none; without it (BYOK): api.github.com:443 & match \\
+github-copilot & config\_trust & repo .mcp.json server started in an untrusted folder (-p): no & match \\
+github-copilot & hooks\_trust & repo .github/hooks sessionStart hook ran in -p: no & not-observed \\
+grok-build & telemetry\_hosts & vendor hosts attempted with a custom local model and no login: none & match \\
+grok-build & hooks\_trust & repo hook ran untrusted: no; with --trust: yes; .claude/settings.json compat hook untrusted: no & match \\
+grok-build & mcp\_trust & project .mcp.json (compat import) server started in an untrusted folder: no & partial \\
+grok-build & secret\_storage & files written under \textasciitilde{}/.grok: 53; other-user-readable: 35 (session files among them: 0) & match \\
+\bottomrule
+\end{tabular}

@@ -1,0 +1,4 @@
+expected: [HG-MEM-001]
+origin: hand
+family: mem
+note: "memories on; OTel export without prompt logging"

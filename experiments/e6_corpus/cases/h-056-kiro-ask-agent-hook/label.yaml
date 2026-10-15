@@ -1,0 +1,4 @@
+expected: []
+origin: hand
+family: hook
+note: "Kiro hook that prompts the agent, no shell command"

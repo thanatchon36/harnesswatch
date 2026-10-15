@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allowed_tools": [
+      "bash"
+    ]
+  },
+  "mcp": {
+    "fs": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "."
+      ]
+    }
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^bash$",
+        "command": "./scripts/guard.sh",
+        "timeout": 5
+      }
+    ]
+  }
+}

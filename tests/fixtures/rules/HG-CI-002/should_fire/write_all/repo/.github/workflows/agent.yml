@@ -1,0 +1,7 @@
+on: push
+permissions: write-all
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - run: codex exec "fix lint"

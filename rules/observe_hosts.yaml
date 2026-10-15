@@ -1,0 +1,80 @@
+# Host classification for `harnesswatch observe` (RQ7). Patterns are fnmatch-style, matched
+# against the lower-cased hostname; the first matching category wins, in file order.
+# Categories: model-api, telemetry, update, auth, local, unknown (the fallback).
+# Each pattern should be backed by vendor docs or a public network-access page; the source
+# column below cites where the host is named. Unknown hosts are reported as-is, never guessed.
+
+local:
+  - "localhost"
+  - "127.*"
+  - "ollama"
+  - "hw-obs-*"            # observe sidecars
+  - "hw-ollama"
+  - "host.docker.internal"
+
+model-api:
+  - "api.anthropic.com"            # Anthropic API (code.claude.com/docs network config)
+  - "api.openai.com"
+  - "chatgpt.com"
+  - "generativelanguage.googleapis.com"
+  - "*-aiplatform.googleapis.com"
+  - "cloudcode-pa.googleapis.com"  # Gemini Code Assist / Antigravity backend (docs)
+  - "api.x.ai"
+  - "api.githubcopilot.com"
+  - "*.githubcopilot.com"
+  - "api2.cursor.sh"
+  - "*.cursor.sh"
+  - "api.deepseek.com"
+  - "api.mistral.ai"
+  - "dashscope*.aliyuncs.com"
+  - "api.moonshot.ai"
+  - "openrouter.ai"
+  - "q.*.amazonaws.com"
+  - "bedrock-runtime.*.amazonaws.com"
+
+telemetry:
+  - "statsig.anthropic.com"        # Claude Code docs: Statsig operational metrics
+  - "*.statsig.com"
+  - "statsig.com"
+  - "*.datadoghq.com"
+  - "*.datadoghq.eu"
+  - "*.sentry.io"
+  - "sentry.io"
+  - "*.posthog.com"
+  - "*.segment.io"
+  - "*.segment.com"
+  - "*.amplitude.com"
+  - "*.mixpanel.com"
+  - "*.google-analytics.com"
+  - "play.googleapis.com"          # Clearcut logging (Gemini CLI usage statistics)
+  - "*.honeycomb.io"
+  - "*.opentelemetry.io"
+  - "*.launchdarkly.com"
+
+update:
+  - "registry.npmjs.org"
+  - "*.npmjs.org"
+  - "pypi.org"
+  - "files.pythonhosted.org"
+  - "github.com"
+  - "api.github.com"
+  - "objects.githubusercontent.com"
+  - "*.githubusercontent.com"
+  - "storage.googleapis.com"       # Claude Code native-installer release bucket (docs)
+  - "downloads.claude.ai"
+  - "antigravity.google"
+  - "*.run.app"                    # Antigravity CLI updater manifest is served from Cloud Run (install.sh)
+  - "x.ai"
+  - "cursor.com"
+  - "downloads.cursor.com"
+  - "*.kiro.dev"
+
+auth:
+  - "claude.ai"
+  - "console.anthropic.com"
+  - "platform.claude.com"
+  - "accounts.google.com"
+  - "oauth2.googleapis.com"
+  - "auth.x.ai"
+  - "accounts.x.ai"
+  - "auth.openai.com"

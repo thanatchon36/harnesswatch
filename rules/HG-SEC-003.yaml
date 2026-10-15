@@ -1,0 +1,14 @@
+id: HG-SEC-003
+title: Credential stored in plaintext in a harness config file
+area: SEC
+severity: high
+confidence: medium
+kind: design-weakness
+taxonomy: [T07]
+description: >
+  A provider API key or token written as a literal value in a settings file (`env` blocks, `apiKey`,
+  `api_key`, provider sections) instead of the OS keychain, an environment variable or a helper
+  command. In a repository file the secret is committed (critical).
+remediation: Move the secret to the OS keychain / a secret manager or an environment variable (e.g. Claude Code `apiKeyHelper`), rotate it, and scan history.
+references:
+  - https://cwe.mitre.org/data/definitions/256.html

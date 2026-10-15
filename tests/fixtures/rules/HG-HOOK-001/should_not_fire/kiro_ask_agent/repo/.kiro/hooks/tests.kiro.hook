@@ -1,0 +1,1 @@
+{"enabled": true, "name": "Test reminder", "version": "1", "when": {"type": "fileEdited", "patterns": ["src/**/*.ts"]}, "then": {"type": "askAgent", "prompt": "Update the unit tests for the edited file."}}

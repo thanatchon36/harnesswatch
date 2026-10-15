@@ -1,0 +1,9 @@
+stages: [maintenance]
+deps-refresh:
+  stage: maintenance
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  variables:
+    ANTHROPIC_API_KEY: $ANTHROPIC_API_KEY
+  script:
+    - claude -p "Update outdated dependencies and open a branch" --allowedTools "Bash(npm outdated),Edit"

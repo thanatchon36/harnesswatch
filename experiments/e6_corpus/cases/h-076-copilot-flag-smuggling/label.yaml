@@ -1,0 +1,4 @@
+expected: [HG-INJ-001]
+origin: hand
+family: instr
+note: "Unicode tag text smuggled after a flag emoji"

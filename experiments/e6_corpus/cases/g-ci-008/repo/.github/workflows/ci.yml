@@ -1,0 +1,14 @@
+name: agent
+'on':
+  workflow_dispatch: {}
+jobs:
+  agent:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v5
+    - name: Codex review
+      run: 'npm i -g @openai/codex@0.58.0
+
+        codex exec "Review this change and suggest fixes."'
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

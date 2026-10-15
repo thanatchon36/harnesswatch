@@ -1,0 +1,4 @@
+expected: []
+origin: hand
+family: sec
+note: "log with session UUIDs, npm integrity hash and git SHA"

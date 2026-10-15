@@ -1,0 +1,4 @@
+expected: []
+origin: hand
+family: mcp
+note: "repo declares only a remote https server with env-referenced token"

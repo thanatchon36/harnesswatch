@@ -1,0 +1,4 @@
+{
+  // comments are allowed in Gemini settings
+  "general": { "defaultApprovalMode": "yolo" },
+}

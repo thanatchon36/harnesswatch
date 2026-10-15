@@ -1,0 +1,4 @@
+expected: [HG-INJ-003]
+origin: hand
+family: instr
+note: "@https import of remote instructions"

@@ -1,0 +1,115 @@
+id: kilo-code
+name: Kilo Code (VS Code / JetBrains / Kilo CLI `kilo`)
+vendor: Kilo Code (Kilo-Org)
+tier: A
+license: MIT                    # verified LICENSE + npm; MISSION.md said Apache-2.0 (wrong)
+open_source: true
+status: analysed                # source read at a72ad30 (2026-10-14); not executed
+version_analysed: "v7.8.10 (CLI/VS Code, 2026-10-14); JetBrains v7.1.10-rc.4"
+analysed_on: "2026-10-15"
+homepage: https://kilo.ai
+repo: https://github.com/Kilo-Org/kilocode
+lineage: "v7.x is a rewrite on the OpenCode codebase (packages/opencode, kilocode_change markers); pre-v5 versions were a Roo Code/Cline fork. SECURITY.md threat model is inherited from OpenCode."
+
+binaries: [kilo]
+packages:
+  - {ecosystem: npm, name: "@kilocode/cli"}
+  - {ecosystem: vscode-marketplace, name: "kilocode.Kilo-Code"}
+install_methods:
+  - {method: npm, command: "npm install -g @kilocode/cli", checksum_verified: null, signed: null, source: https://github.com/Kilo-Org/kilocode/blob/main/README.md}
+  - {method: curl-installer, command: "curl -fsSL https://kilo.ai/cli/install | bash", checksum_verified: null, signed: null, source: https://github.com/Kilo-Org/kilocode/blob/main/README.md}
+  - {method: homebrew, command: "brew install Kilo-Org/tap/kilo"}
+auto_update: {default: true, config: "KILO_DISABLE_AUTOUPDATE=1 (env flag exists in source)", source: https://github.com/Kilo-Org/kilocode/blob/main/packages/opencode/src/flag}
+
+state_dirs: ["~/.config/kilo", "~/.local/share/kilo", "~/.local/state/kilo", "~/.cache/kilo", "~/.kilo", "~/.kilocode"]
+credential_files: ["~/.local/share/kilo/auth.json"]       # writeJson(file, data, 0o600) in auth/index.ts
+credential_storage: "CLI: plaintext JSON ~/.local/share/kilo/auth.json mode 0600 (XDG data dir). MCP headers/env and provider options.apiKey in kilo.json are plaintext unless {env:VAR}/{file:...} substitution is used."
+log_paths: ["~/.local/share/kilo/log/*", "~/.local/share/kilo/kilo.db (sessions)"]
+memory_paths: []   # kilo-memory package (tools kilo_memory_save / kilo_memory_recall, default permission ask); on-disk location not determined (unverified)
+
+config_files:
+  - {path: "~/.config/kilo/kilo.jsonc", scope: user, format: jsonc, kind: settings}   # also kilo.json, config.json, opencode.json[c]
+  - {path: "kilo.jsonc", scope: project, format: jsonc, kind: settings}               # also kilo.json, opencode.json[c]; walks up to worktree root
+  - {path: ".kilo/kilo.jsonc", scope: project, format: jsonc, kind: settings}
+  - {path: ".kilocode/", scope: project, format: markdown, kind: rules}               # legacy dir still scanned (agents, skills, rules)
+  - {path: "~/.kilo/", scope: user, format: markdown, kind: rules}
+  - {path: "~/.kilocode/", scope: user, format: markdown, kind: rules}
+  - {path: ".kilo/rules/*.md", scope: project, format: markdown, kind: rules}
+  - {path: ".kilo/agents/*.md", scope: project, format: markdown, kind: agents}       # YAML frontmatter permission:
+  - {path: ".kilo/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+  - {path: ".kilo/plugins/", scope: project, format: markdown, kind: hooks}           # JS/TS plugins (also npm "plugin" array); executes code
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: "/etc/kilo/", scope: managed, format: jsonc, kind: settings}               # Linux; macOS "/Library/Application Support/kilo"; Windows %ProgramData%\kilo
+  - {path: "/Library/Managed Preferences/ai.opencode.managed.plist", scope: managed, format: ini, kind: settings}
+  - {path: "KILO_CONFIG, KILO_CONFIG_DIR, KILO_CONFIG_CONTENT (env)", scope: env, format: json, kind: settings}
+
+instruction_files: ["AGENTS.md", ".kilo/rules/*.md", ".kilocode/rules/*.md", "kilo.jsonc#instructions[]"]
+skills_paths: [".kilo/skills/*/SKILL.md", ".kilocode/skills/*/SKILL.md", "~/.kilo/skills/*/SKILL.md", "~/.kilocode/skills/*/SKILL.md", ".claude/skills/*/SKILL.md (external skills; KILO_DISABLE_EXTERNAL_SKILLS/KILO_DISABLE_CLAUDE_CODE_SKILLS)"]
+
+mcp:
+  files: ["~/.config/kilo/kilo.jsonc", "kilo.jsonc", ".kilo/kilo.jsonc"]
+  servers_key: "mcp"
+  server_fields:
+    command: command        # ARRAY: ["npx","-y","pkg"]  (not string+args)
+    args: null
+    env: environment
+    url: url
+    headers: headers
+    type: type              # "local" | "remote"
+    enabled: enabled
+    timeout: timeout
+  project_servers_require_approval: false     # project kilo.json mcp entries merged (project config treated 'untrusted' only for {env:}/{file:} substitution and header sanitising); no approval gate found; KILO_DISABLE_PROJECT_CONFIG=1 disables all project config
+  notes: "MCP tool permission key is {server}_{tool}; globs like github_* usable under `permission`. Org-managed MCP allowlist is a proposal only (docs/contributing/features/enterprise-mcp-controls.md: 'no matching implementation exists yet')."
+
+permissions:
+  config_keys:
+    rules: "permission"                      # map tool -> allow|ask|deny or tool -> {glob: action}
+    bash: "permission.bash"
+    edit: "permission.edit"
+    read: "permission.read"
+    external_dir: "permission.external_directory"
+    subagents: "permission.task"
+    webfetch: "permission.webfetch"
+  default_mode: "base ruleset '*': allow (all tools) with: doom_loop ask, external_directory ask, read of *.env / *.env.* ask, bash default 'ask' with a read-only/benign allowlist (cat/ls/grep/jq/printenv/touch/mkdir/cp/mv/tar/...), kilo_memory_* ask, JetBrains edit ask, VS Code browser_open ask. Last matching rule wins."
+  auto_approve_values:
+    - {key: "permission", value: "allow"}
+    - {key: "permission.bash", value: "allow"}
+    - {key: "permission.bash.*", value: "allow"}
+    - {key: "permission.edit", value: "allow"}
+    - {key: "permission.external_directory", value: "allow"}
+  cli_flags_auto_approve: ["kilo run --auto", "--yolo (hidden)", "--dangerously-skip-permissions (hidden)"]
+  allow_rule_syntax: "\"permission\": {\"bash\": {\"*\": \"ask\", \"git status *\": \"allow\"}}"
+  overbroad_patterns: ["bash: allow", "bash: {\"*\": \"allow\"}", "\"*\": \"allow\" after specific denies (last match wins)"]
+  notes: "Non-interactive `kilo run` WITHOUT --auto auto-rejects any permission request and exits 1 (docs cli.md)."
+
+hooks:
+  supported: true
+  config_key: "plugin"                      # array of npm/file plugins; plus .kilo/plugins/ directory
+  repo_scoped_allowed: true
+  command_field: null
+
+sandbox: {available: true, default_on: false, mechanism: "bubblewrap (Linux) / Seatbelt (macOS); no Windows backend; fails closed if enabled policy cannot be enforced", config: "sandbox.enabled (bool, default false), sandbox.network deny|allow (default deny), sandbox.allowed_hosts[], sandbox.writable_paths[] (global config only; project config may only tighten)", source: https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/getting-started/settings/sandboxing.md}
+network: {domain_allowlist: true, config: "sandbox.allowed_hosts (host:port, global config only)", default: "unrestricted unless sandbox enabled; then network deny for model-originated commands; MCP calls unavailable while restriction active", source: https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/getting-started/settings/sandboxing.md}
+workspace_trust: {prompt_on_new_folder: false, notes: "No folder-trust prompt found. Project config is parsed as 'untrusted' (no {env:} substitution, {file:} confined to project root, MCP header-with-variable entries dropped) but its permission/mcp/plugin entries are still honoured. KILO_DISABLE_PROJECT_CONFIG disables project config.", source: https://github.com/Kilo-Org/kilocode/blob/main/packages/opencode/src/config/config.ts}
+memory: {persistent: true, cross_project: null, agent_writable: true, notes: "kilo-memory package; save/recall tools default 'ask'", source: https://github.com/Kilo-Org/kilocode/blob/main/packages/opencode/src/kilocode/agent/index.ts}
+subagents: {supported: true, inherits_permissions: "task permission controls which subagents; read-only built-in agents get bash allowlist ceiling", notes: "", source: https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/customize/agent-permissions.md}
+telemetry: {default_on: true, opt_out: "experimental.openTelemetry=false in kilo.jsonc; KILO_TELEMETRY_LEVEL env (value 'all' enables)", training_default: null, source: https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/code-with-ai/platforms/cli.md}
+headless:
+  command: "kilo run --auto \"<prompt>\""
+  flags: ["--auto", "--format json", "--model provider/model", "-f/--file"]
+  ci_integrations: ["Kilo code review (GitHub/GitLab) docs: automate/code-reviews"]
+  model_override: "kilo.jsonc: \"model\": \"provider-id/model-id\"; env KILO_CONFIG_CONTENT inline JSON"
+  local_model_support: "yes: provider.ollama.options/baseURL http://localhost:11434/v1 with model ollama/<name>; or custom provider npm @ai-sdk/openai-compatible with options.baseURL + options.apiKey (ollama.md, openai-compatible.md)."
+
+security_policy: {security_md: https://github.com/Kilo-Org/kilocode/blob/main/SECURITY.md, bug_bounty: null, advisories: "none published as GHSA (security-advisories API empty); CVEs exist via VulDB: CVE-2025-11445, CVE-2026-8765"}
+extra:
+  server_mode: "kilo serve: unauthenticated unless KILO_SERVER_PASSWORD set (SECURITY.md: user responsibility)"
+  security_md_stance: "'Kilo CLI does not sandbox the agent. The permission system exists as a UX feature...'"
+sources:
+  - {url: https://github.com/Kilo-Org/kilocode/blob/main/SECURITY.md, accessed: "2026-10-15", note: "threat model"}
+  - {url: https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/getting-started/settings/auto-approving-actions.md, accessed: "2026-10-15"}
+  - {url: https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/automate/mcp/using-in-cli.md, accessed: "2026-10-15"}
+  - {url: https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/getting-started/settings/sandboxing.md, accessed: "2026-10-15"}
+  - {url: https://github.com/Kilo-Org/kilocode/blob/main/packages/opencode/src/agent/agent.ts, accessed: "2026-10-15", note: "base permission defaults"}
+  - {url: https://github.com/Kilo-Org/kilocode/blob/main/packages/opencode/src/kilocode/agent/index.ts, accessed: "2026-10-15", note: "bash default allowlist"}
+  - {url: https://nvd.nist.gov/vuln/detail/CVE-2026-8765, accessed: "2026-10-15"}

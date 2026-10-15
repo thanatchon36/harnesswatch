@@ -1,0 +1,18 @@
+name: agent
+'on':
+  issues:
+    types:
+    - opened
+jobs:
+  agent:
+    runs-on: ubuntu-latest
+    if: contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association || github.event.issue.author_association)
+    permissions: write-all
+    steps:
+    - uses: actions/checkout@v5
+    - name: Codex review
+      run: 'npm i -g @openai/codex@0.58.0
+
+        codex exec "Triage this issue: ${{ github.event.issue.title }} ${{ github.event.issue.body }}"'
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

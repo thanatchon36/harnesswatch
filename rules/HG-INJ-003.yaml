@@ -1,0 +1,15 @@
+id: HG-INJ-003
+title: Instruction file pulls remote content at load time
+area: INJ
+severity: medium
+confidence: medium
+kind: design-weakness
+taxonomy: [T01, T06]
+description: >
+  An instruction file that imports or tells the agent to fetch instructions from a URL makes the
+  agent's behaviour depend on content that can change after review (a remote "rug pull").
+remediation: >
+  Vendor the referenced content into the repository and review it like code; pin by commit hash if a
+  remote reference is unavoidable.
+references:
+  - https://genai.owasp.org/llmrisk/llm01-prompt-injection/

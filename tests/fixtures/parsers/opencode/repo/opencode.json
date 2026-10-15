@@ -1,0 +1,9 @@
+{
+  // project config (JSONC)
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {"bash": "allow", "edit": "allow"},
+  "mcp": {
+    "fs": {"type": "local", "command": ["npx", "-y", "@modelcontextprotocol/server-filesystem", "."], "enabled": true},
+  },
+  "plugin": ["./.opencode/plugins/guard.js"],
+}

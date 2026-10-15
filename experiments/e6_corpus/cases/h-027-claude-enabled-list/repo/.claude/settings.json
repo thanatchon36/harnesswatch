@@ -1,0 +1,4 @@
+{
+  "enabledMcpjsonServers": ["docs"],
+  "permissions": {"allow": ["mcp__docs__search"]}
+}

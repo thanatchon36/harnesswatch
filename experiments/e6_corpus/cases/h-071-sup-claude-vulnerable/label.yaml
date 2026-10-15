@@ -1,0 +1,4 @@
+expected: [HG-SUP-002]
+origin: hand
+family: sup
+note: "old native-installed claude with OSV advisories (signed installer)"

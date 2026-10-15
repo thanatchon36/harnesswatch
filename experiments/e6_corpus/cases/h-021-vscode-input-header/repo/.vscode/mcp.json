@@ -1,0 +1,6 @@
+{
+  "inputs": [{"type": "promptString", "id": "gh-pat", "description": "GitHub PAT", "password": true}],
+  "servers": {
+    "github": {"type": "http", "url": "https://api.githubcopilot.com/mcp/", "headers": {"Authorization": "Bearer ${input:gh-pat}"}}
+  }
+}

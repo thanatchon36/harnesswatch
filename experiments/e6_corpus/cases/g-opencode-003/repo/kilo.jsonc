@@ -1,0 +1,23 @@
+// Kilo Code configuration
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "anthropic/claude-sonnet-4-5",
+  "permission": {
+    "webfetch": "allow",
+    "bash": "ask",
+    "mcp": "allow"
+  },
+  "agent": {
+    "reviewer": {
+      "description": "Reviews diffs",
+      "mode": "subagent",
+      "permission": {
+        "edit": "deny",
+        "bash": "ask"
+      }
+    }
+  },
+  "instructions": [
+    "docs/agent-guidelines.md"
+  ]
+}

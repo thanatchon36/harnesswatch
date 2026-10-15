@@ -1,0 +1,17 @@
+name: Team MCP servers
+version: 0.0.1
+schema: v1
+mcpServers:
+- name: time
+  command: uvx
+  args:
+  - --from
+  - mcp-server-time==0.6.2
+  - mcp-server-time
+- name: search
+  command: docker
+  args:
+  - run
+  - -i
+  - --rm
+  - mcp/brave-search@sha256:3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a

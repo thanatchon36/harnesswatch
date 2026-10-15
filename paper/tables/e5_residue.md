@@ -1,0 +1,9 @@
+| Harness | Files w/ secret | Kind | Mode | Reach. | Cred. | o+r state |
+|---|---|---|---|---|---|---|
+| aider | 1 | workspace | 644 | 1 | n/a | 3/3 |
+| claude-code | 1 | log | 600 | 0 | 0 | 2/5 |
+| codex-cli | 2 | log | 644 | 2 | 0 | 67/69 |
+| github-copilot | 2 | log/state | 600/644 | 0 | n/a | 236/248 |
+| grok-build | 2 | log | 644 | 0 | 0 | 35/54 |
+| opencode | 0 | -- | -- | 0 | n/a | 26/26 |
+| qwen-code | 1 | log | 644 | 1 | 0 | 10/13 |

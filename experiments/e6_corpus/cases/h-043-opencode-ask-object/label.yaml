@@ -1,0 +1,4 @@
+expected: []
+origin: hand
+family: perm
+note: "ask by default, two read-only git commands allowed"

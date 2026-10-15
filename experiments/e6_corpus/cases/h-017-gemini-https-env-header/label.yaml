@@ -1,0 +1,4 @@
+expected: []
+origin: hand
+family: mcp
+note: "https server with API key header from environment variable"

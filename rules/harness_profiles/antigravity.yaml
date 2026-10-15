@@ -1,0 +1,220 @@
+id: antigravity
+name: Google Antigravity (desktop app + CLI `agy` + IDE)
+vendor: Google
+tier: B
+license: Proprietary (closed; public GitHub repo google-antigravity/antigravity-cli holds docs/issues/release binaries only, no LICENSE file)
+open_source: false
+status: docs-only   # agy not installed here; no Google login (ACCESS.md). Pre-login observe planned: evidence/research/B2_observe_plan.md
+version_analysed: "CLI 1.3.5 (GitHub release + updater manifest 2026-10-14; docs changelog still lists 1.3.1) / app 2.23.1 (2026-10-13) / IDE 2.5.5 (2026-08-13)"
+analysed_on: "2026-10-15"
+homepage: https://antigravity.google
+repo: https://github.com/google-antigravity/antigravity-cli   # docs, CHANGELOG.md, issue tracker, release binaries; no source code
+
+# Product shape (docs 2026-10-15): Antigravity 2.0 (2026-05-19) = desktop "app" (agent manager), CLI `agy` (replaced Gemini CLI,
+# whose consumer service stopped 2026-06-18), Python SDK (google.antigravity), the standalone "Antigravity IDE" (VS Code-based,
+# not supported for enterprise, latest 2.5.5) and IDE extensions (VS Code, Visual Studio, JetBrains, Zed, Xcode).
+# Paths are shared across surfaces under ~/.gemini/ and <repo>/.agents/ unless noted. [B2 2026-10-15]
+binaries: [agy]   # installer runs `agy install`, which manages legacy `agy`/`antigravity` shell aliases (docs: --skip-aliases); docs sandbox page also shows `antigravity --sandbox`
+packages:
+  - {ecosystem: github-release, name: "google-antigravity/antigravity-cli", note: "assets agy_cli_{linux_x64,linux_x64_musl,linux_arm64,linux_arm64_musl,mac_arm64,mac_x64}.tar.gz, windows zips; no checksum/signature assets"}
+  - {ecosystem: gcs, name: "storage.googleapis.com/antigravity-public/antigravity-cli/<version>-<build>/<platform>/cli_*.tar.gz", note: "payload URL from updater manifest"}
+install_methods:
+  - {method: curl-installer, command: "curl -fsSL https://antigravity.google/cli/install.sh | bash", checksum_verified: true, signed: false, source: "https://antigravity.google/cli/install.sh (read as text 2026-10-15, 242 lines, sha256 62966c07…5e042). Fetches https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/<platform>.json {version,url,sha512}, downloads the GCS payload into ~/.cache/antigravity/staging, verifies SHA-512 against the manifest (integrity only: hash and payload come from the same publisher chain; no signature), copies to ~/.local/bin/agy, on macOS strips com.apple.quarantine, then runs `agy install`. No version pinning; script flags only -d/--dir. HEAD of payload.{sig,asc,sha512,intoto.jsonl,sigstore.json} = 404."}
+  - {method: powershell, command: "irm https://antigravity.google/cli/install.ps1 | iex", checksum_verified: null, signed: null, source: https://antigravity.google/docs/cli/install}
+  - {method: cmd, command: "curl -fsSL https://antigravity.google/cli/install.cmd -o install.cmd && install.cmd && del install.cmd", checksum_verified: null, signed: null, source: https://antigravity.google/docs/cli/install}
+  - {method: github-release, command: "download agy_cli_<platform>.tar.gz from GitHub releases", checksum_verified: false, signed: null, source: https://github.com/google-antigravity/antigravity-cli/releases}
+auto_update: {default: true, config: "CLI: background self-updater, 15-minute debounce (~/.gemini/antigravity-cli/updater/last_check.timestamp, update.lock); opt out with env AGY_CLI_DISABLE_AUTO_UPDATE=true; manual `agy update`. Updater host presumed = installer manifest host (unverified until observe).", source: "https://antigravity.google/docs/cli/troubleshooting ; https://antigravity.google/cli/install.sh"}
+
+state_dirs:
+  - "~/.gemini/antigravity-cli"      # CLI settings, updater/, plugins/, history.jsonl, keybindings.json
+  - "~/.gemini/config"               # shared across app/CLI/IDE: mcp_config.json, hooks.json, config.json, rules/, skills/, agents/, plugins/
+  - "~/.gemini/antigravity"          # app data: brain/<conversation>/ transcripts, artifacts, knowledge items, skills/
+  - "~/.gemini/antigravity-ide"      # IDE app data: artifacts, knowledge items, config
+  - "~/.gemini/antigravity-backup"   # third-party report (#815): holds a copy of mcp_oauth_tokens.json; purpose undocumented
+  - "~/.cache/antigravity"           # installer staging/ and extracted embedded ripgrep bin/ (issue #1029)
+  - "~/Library/Logs/Antigravity"     # macOS app logs (earlier pass; unverified this pass)
+credential_files:
+  - "~/.gemini/antigravity-cli/antigravity-oauth-token"   # CLI file-based token store selected when no D-Bus/keyring (containers, headless Linux): changelog 1.1.3 + issue #479 (third-party)
+  - "~/.gemini/antigravity/mcp_oauth_tokens.json"         # documented (docs/mcp)
+  - "~/.gemini/antigravity-cli/mcp_oauth_tokens.json"     # third-party (#815): plaintext, mode 0644
+  - "~/.gemini/antigravity-ide/mcp_oauth_tokens.json"     # third-party (#815)
+  - "~/.gemini/antigravity-backup/mcp_oauth_tokens.json"  # third-party (#815)
+credential_storage: "CLI session tokens: OS keyring (Apple Keychain / Linux Secret Service over D-Bus / Windows Credential Manager) per docs/cli/install and docs/cli/troubleshooting. Undocumented in docs but stated in the CLI changelog (1.1.3, 1.1.26): with no D-Bus session bus (headless hosts, containers) the CLI bypasses the keyring and uses file storage, ~/.gemini/antigravity-cli/antigravity-oauth-token per issue #479 (file mode unverified). MCP OAuth tokens: plaintext JSON (docs/mcp names ~/.gemini/antigravity/mcp_oauth_tokens.json; issue #815 reports 0644 copies in four dirs, agy 1.1.14 / IDE 2.8.1, macOS). API-key mode: GEMINI_API_KEY env only, nothing stored."
+log_paths:
+  - "~/.gemini/antigravity/brain/*/.system_generated/logs/transcript.jsonl"   # docs/hooks payload example
+  - "~/.gemini/antigravity-cli/history.jsonl"                                  # third-party (#815), mode 0600
+  - "~/.gemini/antigravity-cli/cli.log"                                        # earlier pass; unverified this pass
+  - "~/Library/Logs/Antigravity/language_server.log"                           # earlier pass; unverified this pass
+memory_paths: ["~/.gemini/AGENTS.md", "~/.gemini/GEMINI.md", "~/.gemini/config/AGENTS.md", "~/.gemini/config/GEMINI.md", "~/.gemini/antigravity/knowledge/**", "~/.gemini/antigravity-ide/knowledge/**"]   # knowledge-item dir names unverified (docs say app-data dirs "contain artifacts, knowledge items")
+
+config_files:
+  # --- user scope (shared ~/.gemini/config is read by app, CLI and IDE) ---
+  - {path: "~/.gemini/antigravity-cli/settings.json", scope: user, format: jsonc, kind: settings}   # docs/cli/install, docs/settings
+  - {path: "~/.gemini/config/config.json", scope: user, format: json, kind: settings}               # shared settings: "Always allow" rules from Remote Control, plugin enablement (CLI CHANGELOG 1.3.4, 1.1.11); docs/enterprise userSettings.enableAdc
+  - {path: "~/.gemini/config/mcp_config.json", scope: user, format: jsonc, kind: mcp}               # docs/mcp; JSONC accepted since CLI 1.1.24
+  - {path: "~/.gemini/antigravity/mcp_config.json", scope: user, format: jsonc, kind: mcp}          # legacy path (Mindgard 2025-11-25; CLI changelog 1.0.3 "legacy mcp_config.json path")
+  - {path: "~/.gemini/config/hooks.json", scope: user, format: json, kind: hooks}                   # docs/hooks
+  - {path: "~/.gemini/config/rules/*.md", scope: user, format: markdown, kind: rules}               # docs/rules
+  - {path: "~/.gemini/antigravity-cli/rules/*.md", scope: user, format: markdown, kind: rules}      # docs/rules (CLI only)
+  - {path: "~/.gemini/config/skills/*/SKILL.md", scope: user, format: markdown, kind: skills}       # docs/skills
+  - {path: "~/.gemini/antigravity-cli/skills/*/SKILL.md", scope: user, format: markdown, kind: skills}   # docs/cli/gcli-migration, docs/skills
+  - {path: "~/.gemini/config/agents/*.md", scope: user, format: markdown, kind: agents}             # docs/subagents
+  - {path: "~/.gemini/config/plugins/*/mcp_config.json", scope: user, format: jsonc, kind: mcp}     # docs/plugins (plugin layout per docs/cli/features)
+  - {path: "~/.gemini/config/plugins/*/hooks.json", scope: user, format: json, kind: hooks}
+  - {path: "~/.gemini/antigravity-cli/plugins/*/mcp_config.json", scope: user, format: jsonc, kind: mcp}   # docs/cli/features
+  - {path: "~/.gemini/antigravity-cli/plugins/*/hooks.json", scope: user, format: json, kind: hooks}
+  - {path: "~/.gemini/config/workflows/*.md", scope: user, format: markdown, kind: skills}          # legacy workflows; IDE workflows stop working 2026-10-19 (docs/ide/workflows)
+  # --- project scope (repo-relative; every path below is read from a cloned repo) ---
+  - {path: ".agents/mcp_config.json", scope: project, format: jsonc, kind: mcp}        # docs/mcp
+  - {path: ".agents/hooks.json", scope: project, format: json, kind: hooks}            # docs/hooks; CLI loads it after folder trust (CLI CHANGELOG 1.1.1)
+  - {path: ".agents/plugins/*/mcp_config.json", scope: project, format: jsonc, kind: mcp}   # docs/plugins: workspace plugins in .agents/plugins/
+  - {path: ".agents/plugins/*/hooks.json", scope: project, format: json, kind: hooks}
+  - {path: ".agents/agents/*.md", scope: project, format: markdown, kind: agents}       # docs/subagents; front matter may declare mcpServers, commandExecutionPolicy, tools, hooks
+  - {path: ".agents/agents/*/agent.md", scope: project, format: markdown, kind: agents}
+  - {path: ".agents/rules/*.md", scope: project, format: markdown, kind: rules}         # docs/rules; YAML front matter `trigger` required else silently dropped
+  - {path: ".agent/rules/*.md", scope: project, format: markdown, kind: rules}          # legacy, still read (docs/rules)
+  - {path: ".agents/rules.json", scope: project, format: json, kind: rules}            # registers nested/external rule files incl. `inherits` paths outside the repo (docs/rules)
+  - {path: ".agents/skills/*/SKILL.md", scope: project, format: markdown, kind: skills} # docs/skills
+  - {path: ".agent/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}  # legacy, still read (docs/skills)
+  - {path: ".agents/workflows/*.md", scope: project, format: markdown, kind: skills}    # legacy workflows (docs/migration/workflows-to-skills)
+  - {path: ".agent/workflows/*.md", scope: project, format: markdown, kind: skills}     # MISSION seed path; UNVERIFIED in current docs (Nov-2025 IDE layout)
+  - {path: ".gemini/config.json", scope: project, format: json, kind: settings}         # app 2.17.0 changelog: per-project customization settings (personal_customization_dir); replaces .agents/settings.json
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: "GEMINI.md", scope: project, format: markdown, kind: instructions}
+  - {path: ".agents/AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: ".agents/GEMINI.md", scope: project, format: markdown, kind: instructions}
+
+# docs/rules: AGENTS.md / GEMINI.md are loaded per directory, walking up from the file being read/edited to the workspace root.
+instruction_files: ["AGENTS.md", "GEMINI.md", ".agents/AGENTS.md", ".agents/GEMINI.md", "**/AGENTS.md", "**/GEMINI.md", ".agents/rules/*.md", ".agent/rules/*.md", "~/.gemini/AGENTS.md", "~/.gemini/GEMINI.md", "~/.gemini/config/AGENTS.md", "~/.gemini/config/GEMINI.md"]
+skills_paths: [".agents/skills/*/SKILL.md", ".agent/skills/*/SKILL.md", "~/.gemini/config/skills/*/SKILL.md", "~/.gemini/antigravity-cli/skills/*/SKILL.md"]
+
+mcp:
+  files: ["~/.gemini/config/mcp_config.json", "~/.gemini/antigravity/mcp_config.json", ".agents/mcp_config.json", ".agents/agents/*.md", ".agents/agents/*/agent.md"]
+  servers_key: "mcpServers"   # object map in mcp_config.json; list of objects in subagent front matter (docs/subagents; entry schema unverified)
+  server_fields:
+    command: command
+    args: args
+    env: env
+    url: serverUrl        # docs/mcp says url/httpUrl unsupported, but CLI 1.0.5 and app 2.1.4 changelogs say `url` is accepted; parser reads all three
+    headers: headers
+    type: type            # CLI `agy mcp add --type`; field name in file unverified
+    cwd: cwd
+    disabled: disabled
+    disabledTools: disabledTools
+    oauth: oauth
+    authProviderType: authProviderType
+  project_servers_require_approval: null   # docs silent on whether .agents/mcp_config.json servers start before consent; unconfigured MCP *tool calls* default to Ask (CLI/app). Test pre-trust spawn in observe (B2 plan P5).
+  notes: "Policy patterns mcp(server/tool), mcp(server/*), mcp(*); mcp(*) in allow approves every MCP tool. ADC auth via authProviderType google_credentials. CLI `agy mcp add|remove|list|enable|disable` edits the user file. Plugin MCP servers are namespaced <plugin>_<server> (CLI 1.2.2). Source: https://antigravity.google/docs/mcp"
+
+permissions:
+  config_keys:
+    mode: "toolPermission"                       # ~/.gemini/antigravity-cli/settings.json
+    allow: "permissions.allow"
+    deny: "permissions.deny"
+    ask: "permissions.ask"
+    agent_mode: "agentMode"                      # default | accept-edits | plan | auto (auto added CLI 1.3.5)
+    sandbox: "enableTerminalSandbox"
+    non_workspace: "allowNonWorkspaceAccess"
+    artifact_review: "artifactReviewPolicy"
+    model_provider: "modelProvider"              # "gemini" = GEMINI_API_KEY auth, no account session
+  default_mode: "request-review"   # CLI toolPermission default; workspace reads/writes auto-allowed; command/read_url/execute_url/mcp/non-workspace = Ask (docs/permissions). App macOS/Linux default preset 'Default' (sandbox on, commands auto-run inside it). IDE default terminal policy not stated in current docs (Nov-2025 IDE onboarding defaulted to 'Auto' per PromptArmor).
+  auto_approve_values:
+    - {key: "toolPermission", value: "always-proceed"}          # also auto-approves MCP calls and page reads since CLI 1.1.21
+    - {key: "artifactReviewPolicy", value: "always-proceed"}
+    - {key: "allowNonWorkspaceAccess", value: true}
+    - {key: "permissions.allow", value: "mcp(*)"}
+    - {key: "permissions.allow", value: "command(*)"}
+    - {key: "permissions.allow", value: "unsandboxed(*)"}
+    - {key: "app: Settings>General>Permission Settings preset", value: "Turbo"}
+    - {key: "IDE: Terminal command auto execution", value: "Always Proceed"}
+  cli_flags_auto_approve: ["--dangerously-skip-permissions"]   # also auto-approves sandbox-bypass requests (issue #36, vendor reply 2026-09-03: by design)
+  cli_flags_other: ["--sandbox", "--mode default|accept-edits|plan|auto", "--project", "--agent"]
+  allow_rule_syntax: 'permissions.allow: ["command(git)", "command(regex:npm run (build|lint|test))", "write_file(src/)", "read_url(docs.example.com)", "unsandboxed(git push)", "mcp(server/tool)"]; actions read_file, write_file, read_url, execute_url, command, mcp, unsandboxed'
+  overbroad_patterns: ["command(*)", "mcp(*)", "unsandboxed(*)", "write_file(*)", "write_file(/)", "read_url(*)", "execute_url(*)"]   # exact wildcard grammar for command() unverified
+  precedence: "deny > ask > allow; rules layered on top of presets and always take precedence (docs/permissions, docs/agent-settings)"
+  scopes: "CLI /permissions edits Project, Shared (all Antigravity products) and Global scopes; on-disk location of Project-scope rules undocumented (docs/cli/commands/permissions)"
+
+hooks:
+  supported: true
+  config_key: null               # hooks.json root maps hook names -> {enabled, <Event>: [...]}; key inside CLI settings.json undocumented
+  repo_scoped_allowed: true      # .agents/hooks.json (and .agents/plugins/*/hooks.json); CLI changelog 1.1.1 implies load after folder trust
+  command_field: "command"
+  notes: "Events SessionStart, PreToolUse, PostToolUse, PreInvocation, PostInvocation, Stop; handler {type: command, command, timeout (default 30s)}. A PreToolUse hook can return decision auto_approve | allow | deny | ask | force_ask | deny_unless_prior_grant, so a repo hook can pre-approve tool calls. Custom agents can list hook files in front matter (app 2.17.0). Parser reports the hook *name* as event for this layout. Source https://antigravity.google/docs/hooks"
+
+sandbox: {available: true, default_on: false, mechanism: "app/CLI Linux: kernel namespaces (fs isolate, hide host procs, no network); macOS: sandbox-exec/Seatbelt SBPL; IDE Linux: nsjail (docs/settings); Windows: AppContainer-based sandbox (app). No VM/Docker.", config: "CLI: enableTerminalSandbox / --sandbox / toolPermission=proceed-in-sandbox (default off). App macOS/Linux: preset 'Default' = sandbox ON; 'Request Review' and 'Turbo' = OFF. IDE: 'Enable Terminal Sandboxing' (default off) + 'Sandbox Allow Network'; strict mode forces sandbox with network denied.", source: "https://antigravity.google/docs/sandbox ; https://antigravity.google/docs/settings"}
+network: {domain_allowlist: true, config: "sandboxed commands: no network unless the domain is allowed via read_url rules; unsandboxed commands: full network. CLI URL fetch default changed from allow to ask in 1.1.28 (2026-09-09). IDE browser: server-side denylist (Google Superroots BadUrlsChecker; fail-closed) + local allowlist file initialised with localhost only (docs); PromptArmor (Nov 2025) observed webhook.site on the default allowlist.", default: "sandbox: none; unsandboxed: unrestricted", source: "https://antigravity.google/docs/sandbox ; https://antigravity.google/docs/ide/allowlist-denylist"}
+workspace_trust: {prompt_on_new_folder: true, notes: "CLI first-run setup asks to trust the repository directory (docs/getting-started). Docs do not list what is withheld before trust; CLI changelog 1.1.1 ('workspace-local hooks ... not loading after trusting a folder') implies .agents/hooks.json is gated on trust. IDE: Mindgard (2025-11-25) describes workspace trust as effectively required to use the product. App 2.18.1 (2026-09-28) fixed .git/.env/.vscode files modifiable without prompt under Default/Request Review; app 2.1.4 / IDE 2.1.1 added .vscode and .cache to sensitive paths.", source: "https://antigravity.google/docs/getting-started ; https://github.com/google-antigravity/antigravity-cli/blob/main/CHANGELOG.md"}
+memory: {persistent: true, cross_project: null, agent_writable: null, notes: "Global AGENTS.md/GEMINI.md and rules are user-authored; app/IDE keep 'knowledge items' in ~/.gemini/antigravity{,-ide}/ (docs/agent-settings, docs/settings). Whether the agent writes knowledge items autonomously and whether they cross projects is not documented on fetched pages.", source: "https://antigravity.google/docs/agent-settings"}
+subagents: {supported: true, inherits_permissions: "partial: accept-edits mode is inherited by subagents (docs/cli/modes); custom agents set their own commandExecutionPolicy (off|auto|eager|sandbox, default sandbox), tools and mcpServers in front matter (docs/subagents). CLI 1.2.15 fixed the agent working around denied permission requests raised by subagents.", notes: "Workspace custom agents in .agents/agents/ are repo-controlled. Browser subagent drives a separate Chrome profile (IDE).", source: "https://antigravity.google/docs/subagents"}
+telemetry: {default_on: true, opt_out: "CLI: settings.json enableTelemetry=false (default true; 'metrics and crash log collection'). App/IDE: Settings > Account > 'Enable Telemetry' (interaction logs used to improve models). Enterprise: telemetry and model interactions logged to the customer's Google Cloud project.", training_default: "Terms: 'We use Interactions to evaluate, develop, and improve Google and Alphabet research, products, services and machine learning technologies ... Google employees and contractors may access, view, review and use Interactions'; opt-out via settings; deletion by email to antigravity-support@google.com.", source: "https://antigravity.google/docs/cli/reference ; https://antigravity.google/docs/settings ; https://antigravity.google/terms ; https://antigravity.google/docs/enterprise"}
+headless:
+  command: "agy -p \"<prompt>\""
+  flags: ["-p/--print/--prompt", "--output-format text|json|stream-json", "--input-format text|stream-json", "--json-schema", "--model", "--effort low|medium|high", "--agent", "--mode", "--continue/-c", "--conversation", "--dangerously-skip-permissions", "--print-timeout (5m)", "--sandbox"]
+  ci_integrations: []   # no official GitHub Action found
+  model_override: "--model <slug> (see `agy models`); custom models in settings.json exist (CLI 1.2.8 changelog: 'custom models configured in settings.json', modelFeatures flags) but the schema is undocumented; GOOGLE_GEMINI_BASE_URL points model requests at a Gemini-compatible endpoint when modelProvider=gemini + GEMINI_API_KEY"
+  local_model_support: "CLI: no documented OpenAI-compatible or Ollama path; only a Gemini-API-compatible base URL (GOOGLE_GEMINI_BASE_URL) in API-key mode. SDK (not CLI): LocalOpenAIAgentConfig(base_url='http://localhost:11434/v1') and LiteRTAgentConfig. Auth: headless uses cached sign-in; a non-TTY run without credentials exits 'authentication required'; GEMINI_API_KEY + modelProvider=gemini runs 'without signing in' (docs/cli/install) but still needs a Google API key. Read-only print answers (-p '/help', '/config', '/permissions', '/hooks', '/changelog') run without an agent turn or quota (CLI 1.1.12). Exit codes: 0 ok, 1 usage/model error, 2 print-mode usage errors, 3 model/agent API failure with AGY_ERROR line (CLI 1.2.6, 1.2.10)."
+
+security_policy: {security_md: null, bug_bounty: "Google AI VRP / Google Bug Hunters (Antigravity 'Known Issues' page; body not retrievable via fetch)", advisories: "none: GitHub security-advisories API for google-antigravity/antigravity-cli returns [] (2026-10-15); NVD keyword 'antigravity' = 0 results (2026-10-15). Security bugs are filed as public issues with label 'security'."}
+sources:
+  - {url: https://antigravity.google/docs/getting-started, accessed: "2026-10-15", note: "product surfaces; CLI workspace-trust step"}
+  - {url: https://antigravity.google/docs/permissions, accessed: "2026-10-15", note: "presets, allow/deny/ask, defaults"}
+  - {url: https://antigravity.google/docs/agent-settings, accessed: "2026-10-15", note: "app presets; Windows terminal policies; ~/.gemini/antigravity/"}
+  - {url: https://antigravity.google/docs/cli/reference, accessed: "2026-10-15", note: "settings.json keys and defaults"}
+  - {url: https://antigravity.google/docs/cli/headless, accessed: "2026-10-15", note: "agy -p, flags, auth required in CI"}
+  - {url: https://antigravity.google/docs/cli/modes, accessed: "2026-10-15", note: "--mode, agentMode, subagents inherit accept-edits"}
+  - {url: https://antigravity.google/docs/cli/install, accessed: "2026-10-15", note: "install, keyring, GEMINI_API_KEY, GOOGLE_GEMINI_BASE_URL"}
+  - {url: https://antigravity.google/docs/cli/troubleshooting, accessed: "2026-10-15", note: "keyring on Linux via D-Bus; updater lock; AGY_CLI_DISABLE_AUTO_UPDATE"}
+  - {url: https://antigravity.google/docs/cli/commands/permissions, accessed: "2026-10-15", note: "Project/Shared/Global scopes"}
+  - {url: https://antigravity.google/docs/sandbox, accessed: "2026-10-15", note: "sandbox"}
+  - {url: https://antigravity.google/docs/settings, accessed: "2026-10-15", note: "IDE terminal policy, strict mode, nsjail, telemetry"}
+  - {url: https://antigravity.google/docs/rules, accessed: "2026-10-15", note: "rules paths, AGENTS.md/GEMINI.md"}
+  - {url: https://antigravity.google/docs/skills, accessed: "2026-10-15", note: ".agents/skills (legacy .agent/skills)"}
+  - {url: https://antigravity.google/docs/subagents, accessed: "2026-10-15", note: ".agents/agents, front matter mcpServers/commandExecutionPolicy"}
+  - {url: https://antigravity.google/docs/plugins, accessed: "2026-10-15", note: ".agents/plugins, ~/.gemini/config/plugins"}
+  - {url: https://antigravity.google/docs/cli/features, accessed: "2026-10-15", note: "plugin dir layout"}
+  - {url: https://antigravity.google/docs/mcp, accessed: "2026-10-15", note: "MCP"}
+  - {url: https://antigravity.google/docs/hooks, accessed: "2026-10-15", note: "hooks, decisions"}
+  - {url: https://antigravity.google/docs/ide/workflows, accessed: "2026-10-15", note: "workflows end 2026-10-19"}
+  - {url: https://antigravity.google/docs/migration/workflows-to-skills, accessed: "2026-10-15", note: ".agents/workflows paths"}
+  - {url: https://antigravity.google/docs/ide/overview, accessed: "2026-10-15", note: "IDE not supported for enterprise"}
+  - {url: https://antigravity.google/docs/ide/allowlist-denylist, accessed: "2026-10-15", note: "browser lists"}
+  - {url: https://antigravity.google/docs/ide/browser, accessed: "2026-10-15", note: "browser subagent, Browser Tools toggle"}
+  - {url: https://antigravity.google/docs/artifact-review, accessed: "2026-10-15", note: "artifact review policy"}
+  - {url: https://antigravity.google/docs/enterprise, accessed: "2026-10-15", note: "enterprise logging"}
+  - {url: https://antigravity.google/docs/faq, accessed: "2026-10-15", note: "data collection opt-out; third-party use of login forbidden"}
+  - {url: https://antigravity.google/terms, accessed: "2026-10-15", note: "Interactions collection and use"}
+  - {url: https://antigravity.google/docs/changelog, accessed: "2026-10-15", note: "app 2.23.1, CLI 1.3.1, IDE 2.5.5, SDK 0.1.21 (full page read)"}
+  - {url: https://antigravity.google/download/linux, accessed: "2026-10-15", note: "Linux app: glibc >= 2.28, glibcxx >= 3.4.25"}
+  - {url: https://antigravity.google/cli/install.sh, accessed: "2026-10-15", note: "installer read as text"}
+  - {url: https://antigravity-cli-auto-updater-974169037036.us-central1.run.app/manifests/linux_amd64.json, accessed: "2026-10-15", note: "manifest metadata: 1.3.5, GCS URL, sha512"}
+  - {url: https://github.com/google-antigravity/antigravity-cli/blob/main/CHANGELOG.md, accessed: "2026-10-15", note: "CLI changelog incl. 1.3.5"}
+  - {url: https://github.com/google-antigravity/antigravity-cli/issues/479, accessed: "2026-10-15", note: "file-based token storage in containers"}
+  - {url: https://github.com/google-antigravity/antigravity-cli/issues/815, accessed: "2026-10-15", note: "MCP OAuth tokens plaintext 0644"}
+  - {url: https://github.com/google-antigravity/antigravity-cli/issues/36, accessed: "2026-10-15", note: "--dangerously-skip-permissions approves sandbox bypass"}
+  - {url: https://antigravity.google/docs/sdk/local-models, accessed: "2026-10-15", note: "SDK local models"}
+  - {url: https://www.promptarmor.com/resources/google-antigravity-exfiltrates-data, accessed: "2026-10-15", note: "Nov 2025 exfil chain; default settings observed"}
+  - {url: https://mindgard.ai/blog/google-antigravity-persistent-code-execution-vulnerability, accessed: "2026-10-15", note: "persistent code execution via global mcp_config.json"}
+  - {url: https://embracethered.com/blog/posts/2025/security-keeps-google-antigravity-grounded/, accessed: "2026-10-15", note: "5 issues Nov 2025"}
+  - {url: https://www.pillar.security/blog/prompt-injection-leads-to-rce-and-sandbox-escape-in-antigravity, accessed: "2026-10-15", note: "find_by_name RCE; fixed 2026-02-28"}
+  - {url: https://www.pillar.security/blog/the-week-of-sandbox-escapes, accessed: "2026-10-15", note: "Seatbelt escape, .vscode tasks bypass"}
+extra:
+  mission_corrections: "MISSION seed `.agent/` is legacy: current repo dir is `.agents/` (rules, skills, hooks.json, mcp_config.json, agents/, plugins/, rules.json); `.agent/rules/` and `.agent/skills/` are still read. `.agent/workflows` is not in current docs; workflows (.agents/workflows) stop working 2026-10-19 and migrate to skills. MISSION terms 'Auto'/'Turbo': 'Auto' was the Nov-2025 IDE terminal policy (PromptArmor, Embrace The Red) and is now a CLI --mode (1.3.5); 'Turbo' is an app preset; the current IDE uses Request Review / Always Proceed. 'Secure Mode' (IDE 1.11.17, 2025-12-08) was renamed 'strict mode' in IDE 1.16.5 (2026-02-03). There is no --yolo flag; the equivalent is --dangerously-skip-permissions."
+  conditional_auto_approve:
+    - {key: "toolPermission", value: "proceed-in-sandbox", note: "auto-runs sandboxed commands only; vendor-recommended unattended mode (issue #36 reply). Flag only together with enableTerminalSandbox=false (behaviour then undocumented)."}
+    - {key: "agentMode", value: "accept-edits", note: "auto-approves file edits only; commands still governed by toolPermission"}
+    - {key: "agentMode", value: "auto", note: "CLI 1.3.5: approves edits and 'safe' commands; out-of-sandbox commands reviewed by a separate agent"}
+  hosts_documented_or_seen:
+    - {host: antigravity.google, role: "installer script", source: install.sh}
+    - {host: antigravity-cli-auto-updater-974169037036.us-central1.run.app, role: "update manifest", source: install.sh}
+    - {host: storage.googleapis.com, role: "binary payload (bucket antigravity-public)", source: "updater manifest"}
+    - {host: generativelanguage.googleapis.com, role: "model API in GEMINI_API_KEY mode (inferred from 'requests go directly to the Gemini API'; unverified)", source: https://antigravity.google/docs/cli/install}
+  linter_risky_snippets:
+    - '{"toolPermission": "always-proceed"}   # ~/.gemini/antigravity-cli/settings.json'
+    - '{"toolPermission": "proceed-in-sandbox", "enableTerminalSandbox": false}   # misleading: auto-run without sandbox?'
+    - '{"allowNonWorkspaceAccess": true}'
+    - '{"permissions": {"allow": ["mcp(*)", "command(*)", "unsandboxed(*)"]}}'
+    - '{"enableTelemetry": false} is the privacy-positive spelling'
+    - '.agents/hooks.json with PreToolUse handlers that print {"decision": "auto_approve"} (repo-controlled pre-approval)'
+    - '.agents/mcp_config.json with {"mcpServers": {"x": {"command": "...", "serverUrl": "http://..."}}} in a repo'
+    - '.agents/agents/<name>.md front matter with mcpServers / commandExecutionPolicy: eager'
+    - 'agy --sandbox --dangerously-skip-permissions   # sandbox bypass requests are auto-approved too'

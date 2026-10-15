@@ -1,0 +1,242 @@
+{
+  "harness": "pi",
+  "version": "1.2.0",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Pi 'does not ask for approval before every tool call'; default enabled tools read, bash, edit, write.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/security.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "--tools / --no-tools / --exclude-tools restrict declared tools; no allow/deny command rules.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/cli.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "By design there is no permission/approval system: bash/edit/write run unprompted; only tool selection flags exist."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Docs: safety comes from limiting what Pi can access; watching transcripts or project trust is not a security boundary; see containerization.md.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/security.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No built-in sandbox; docs direct users to containers/VMs."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "PI_OFFLINE disables automatic network activity (model catalog refresh, version check) only.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/environment-variables.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No egress control in Pi; PI_OFFLINE only affects Pi's own requests."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Protected resources: .pi/settings.json, .pi/mcp.json, .pi/extensions|skills|prompts|themes, .pi/SYSTEM.md|APPEND_SYSTEM.md, .agents/skills; defaultProjectTrust default is 'ask'.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/security.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "AGENTS.md / CLAUDE.md context files load regardless of project trust.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/security.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CVE-2026-54325 'Pi loads project-local extensions without approval' fixed in 0.79.0.",
+          "source": "https://github.com/earendil-works/pi/security/advisories/GHSA-mqxh-6gq7-558m",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Explicit project-trust gate (ask by default) covering settings, MCP, extensions, skills, prompts, system-prompt files; saved decisions; extension-handled; non-interactive modes skip unless configured; caveats: sessionDir pre-read, context files not gated."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "Project servers from .pi/mcp.json are read only after project trust; project entry replaces same-named user entry; enabled/exposure/toolExposure controls.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/mcp.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Project MCP servers need project trust; user MCP is explicit; per-server enabled/exposure controls; no central allowlist or tool-change detection documented."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Packages install from npm/git/local; versioned npm specs and git tags/commits are pinned; project packages load only after trust; 'Extensions execute inside the Pi process'.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/packages.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CVE-2026-54328 (high): predictable temporary extension install paths allow local privilege escalation on shared Linux hosts; fixed 0.78.1.",
+          "source": "https://github.com/earendil-works/pi/security/advisories/GHSA-jfgx-wxx8-mp94",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Extensions/packages (npm, git) run in-process with full privileges; versions pinnable; project packages gated by trust; no signing or vetting."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "auth.json written with mode 0o600 in 0o700 dir (source: auth-storage.ts).",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/src/core/auth-storage.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CVE-2026-54327: race condition in auth.json writes could expose stored credentials; fixed 0.78.1.",
+          "source": "https://github.com/earendil-works/pi/security/advisories/GHSA-r95r-rj6r-c39x",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Docs warn sessions can contain prompts, tool arguments, command output, file contents and credentials.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/security.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Plaintext auth.json (0600/0700) with a prior write-race CVE; no keychain; models.json can run `!command` for keys; no documented transcript redaction."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "Print, JSON and RPC modes cannot show the trust prompt; 'ask'/'never' skip protected project resources, 'always' loads them.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/security.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Print/JSON/RPC modes run with the same unprompted tools; project resources skipped unless defaultProjectTrust=always; --approve/--no-approve explicit; no official CI action."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "No memory feature in docs index; AGENTS.md is user-authored context.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/index.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (no built-in persistent memory)."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Minimal harness; no subagent docs in docs directory listing.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/index.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (no built-in sub-agents)."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Sessions are saved automatically unless --no-session; stored under ~/.pi/agent/sessions/ grouped by cwd.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/sessions.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CVE-2026-54326: XSS in HTML session exports via Markdown URL sanitization bypass; fixed 0.78.1.",
+          "source": "https://github.com/earendil-works/pi/security/advisories/GHSA-7v5m-pr3q-6453",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Sessions saved by default as JSONL under ~/.pi/agent/sessions; export/share features; no structured audit log or OTel."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "enableInstallTelemetry default true: anonymous install/update reporting and provider attribution headers; PI_TELEMETRY / PI_SKIP_VERSION_CHECK / PI_OFFLINE.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/settings.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Only anonymous install/update telemetry + version check, both documented with env opt-outs; prompts go only to the configured provider."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "curl installer pins all dependencies; npm route uses --ignore-scripts and does not need lifecycle scripts.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/quickstart.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No signature/checksum/provenance statement found for pi.dev/install.sh.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/quickstart.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Installer pins dependencies; npm install documented with --ignore-scripts; Nix build from source; no signing/provenance information found."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Config layers: user agent dir and project .pi only.",
+          "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/configuration.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No managed/enterprise policy layer found in configuration docs."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md: report to security@earendil.com or GitHub Security Advisories.",
+          "source": "https://github.com/earendil-works/pi/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "4 published GHSAs / CVEs (CVE-2026-54325..54328) on 2026-06-08.",
+          "source": "https://api.github.com/repos/earendil-works/pi/security-advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "SECURITY.md with private email + GHSA channel; four advisories with CVE IDs issued (June 2026) and fixes shipped; clear boundary statement."
+    }
+  }
+}

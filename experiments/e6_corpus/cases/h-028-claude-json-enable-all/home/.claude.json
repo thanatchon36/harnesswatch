@@ -1,0 +1,6 @@
+{
+  "numStartups": 7,
+  "projects": {
+    "/home/dev/src/shop": {"allowedTools": [], "enableAllProjectMcpServers": true, "hasTrustDialogAccepted": true}
+  }
+}

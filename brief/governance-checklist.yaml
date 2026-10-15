@@ -1,0 +1,2819 @@
+# RQ6 governance checklist (machine-readable). brief/governance-checklist.md is rendered from this
+# file by scripts/gen_checklist_check.py --write. Mappings are inherited from the cited threat
+# classes in taxonomy/mappings.yaml and taxonomy/harness-threats.yaml.
+schema_version: 1
+id: harnesswatch-governance-checklist
+title: Governance checklist for AI coding-agent harnesses
+research_question: RQ6
+version: '1.0'
+date: '2026-10-15'
+status: Interpretive synthesis by the harnesswatch authors. Framework mappings are the authors' crosswalk,
+  not an endorsement by any framework owner, and not legal or regulatory advice.
+sources:
+  threat_classes: taxonomy/harness-threats.yaml
+  root_causes: taxonomy/root-causes.yaml
+  framework_crosswalk: taxonomy/mappings.yaml
+  rubric: matrix/rubric.md
+  rules: rules/HG-*.yaml
+  incident_figures: experiments/results/rq3_incidents.json
+lifecycle_stages:
+  before-adoption: Before adoption (procurement and evaluation)
+  configuration-baseline: Configuration baseline
+  runtime-and-ci: Runtime and CI
+  monitoring-and-incident-response: Monitoring and incident response
+  supplier-management: Supplier management
+addresses_kinds:
+  vulnerability: A defect the vendor fixes in code, usually with a CVE or GHSA. Managed by patching (GC-29).
+  design-weakness: Behaviour that works as specified or by default but is unsafe (permissive default,
+    missing safeguard). Managed by configuration, compensating controls or choosing another product.
+  policy-choice: A decision with no right answer independent of the organisation (telemetry, retention,
+    residency, acceptable autonomy). Managed by deciding explicitly and checking configuration matches.
+framework_status:
+  nist_ai_rmf:
+    label: NIST AI RMF 1.0 (AI 100-1) subcategories
+    status: Subcategory statements read on the NIST AIRC Playbook; MEASURE 3.x and MAP 5.x not used (pages
+      not read).
+  nist_ai_600_1:
+    label: NIST AI 600-1 (Generative AI Profile) risks
+    status: Referenced by risk name. Section numbers are UNVERIFIED (PDF text not re-read; 2.2, 2.5, 2.6
+      and 2.9 corroborated only through the airmkit crosswalk).
+  iso_iec_42001:
+    label: ISO/IEC 42001:2023 Annex A controls and clauses
+    status: 'THIRD-PARTY: Annex A ids and titles cross-read from two public listings; the standard text
+      is paywalled and was not read. Confirm in a licensed copy before relying on them. Clause numbers
+      are management-system clauses.'
+  owasp_llm_2025:
+    label: OWASP Top 10 for LLM Applications 2025
+    status: 2025 ids. A 2026 edition exists and reportedly renumbers entries; remap once its text is read.
+  owasp_agentic:
+    label: OWASP Top 10 for Agentic Applications 2026 (ASI)
+    status: Names read from the OWASP GenAI Security Project repository; the PDF was not retrieved as
+      text.
+  owasp_mcp:
+    label: OWASP MCP Top 10
+    status: UNSTABLE (beta, unversioned project); re-check before publication.
+  mitre_atlas:
+    label: MITRE ATLAS techniques (release 2026.09)
+    status: Every id machine-checked against ATLAS-latest.yaml.
+  mas_airm:
+    label: MAS Guidelines on AI Risk Management (issued 2026-10-07) and airmkit control ids
+    status: Paragraph numbers follow the MAS PDF (hash-matched); only the contents page and paragraph
+      5.16 were re-read, other paragraph references are as indexed in airmkit. AIRM-* ids exist in airmkit
+      controls.yaml.
+preamble: "## 1. Purpose\n\nThis checklist sets the minimum controls an organisation shall have in place\
+  \ before and while it uses\nAI coding-agent harnesses: the runtime (CLI, IDE agent, CI action or agent\
+  \ SDK) that holds credentials,\nruns shell commands, mounts MCP servers and reads repository configuration\
+  \ on the model's behalf. It is\nwritten so that sections 3 to 7 can be adopted as policy text. \"Shall\"\
+  \ marks a requirement; a control\nthat a harness cannot technically meet requires a documented risk\
+  \ acceptance by the accountable owner.\n\n## 2. Scope and how to read it\n\n- **In scope:** coding-agent\
+  \ harnesses on developer endpoints, in dev containers and in CI; agent SDKs and\n  runtimes used to\
+  \ build internal agents; MCP servers, skills, plugins and instruction files used with\n  them; the suppliers\
+  \ of all of these.\n- **Out of scope:** model selection and model-level evaluation, except where a harness\
+  \ control depends on it.\n- **Regulated financial institutions.** Each control maps to the MAS Guidelines\
+  \ on AI Risk Management\n  through the airmkit control vocabulary (AIRM-* ids). Per paragraph 1.8 as\
+  \ indexed in airmkit, MAS expects\n  Sections 3-4 from 2027-10-07 and Sections 5-6 by 2028-10-07. The\
+  \ guidelines apply to AI agents.\n  Mappings to NIST AI RMF, ISO/IEC 42001, OWASP and MITRE ATLAS support\
+  \ institutions under other regimes.\n- **What a control addresses.** Each control says whether it manages\
+  \ a *vulnerability* (a defect the vendor\n  fixes), a *design weakness* (an unsafe default or missing\
+  \ safeguard) or a *policy choice* (for example\n  telemetry). These are managed differently and are\
+  \ not conflated.\n- **Verification.** Where a `harnesswatch` command and HG rule exist they are given;\
+  \ otherwise the check is\n  manual. A passing `harnesswatch` audit shows that the listed rules did not\
+  \ fire. It is not evidence that the\n  control is met.\n- **Mappings** are inherited from the threat\
+  \ classes each control cites, using `taxonomy/mappings.yaml`\n  and `taxonomy/harness-threats.yaml`.\
+  \ Flags such as UNVERIFIED and THIRD-PARTY are carried over (see\n  section 8). No framework identifier\
+  \ appears here that is not in those files.\n\n### Context from the incident survey\n\n`experiments/results/rq3_incidents.json`\
+  \ counts {{rq3:counted}} harness incidents disclosed in 2025-2026\n(verified primary source and an independent\
+  \ ID check). By kind: {{rq3:by_kind.vulnerability}}\nvulnerabilities, {{rq3:by_kind.design-weakness}}\
+  \ design weaknesses, {{rq3:by_kind.supply-chain}} supply-chain\ncompromises, {{rq3:by_kind.misuse}}\
+  \ cases of misuse and {{rq3:by_kind.incident}} operational incidents. Of\n{{rq3:patch_latency_days.n}}\
+  \ incidents with both dates known, {{rq3:patch_latency_days.fixed_before_disclosure}}\nwere fixed on\
+  \ or before public disclosure. Per-control incident counts below come from\nthe same file (`by_taxonomy_class`).\
+  \ Incident counts reflect what researchers examined, not residual\nrisk, and are not used to weight\
+  \ controls.\n"
+closing: '## 9. Maintenance
+
+
+  Review this checklist when the taxonomy, rule pack or a referenced framework changes, and at least
+
+  annually. `scripts/gen_checklist_check.py` checks that every HG rule, threat class, root cause, rubric
+
+  dimension and framework id referenced in `brief/governance-checklist.yaml` exists in `rules/` or
+
+  `taxonomy/`, that each framework id is supported by a threat class the control cites, and that this
+  page
+
+  matches the YAML. Run `uv run python scripts/gen_checklist_check.py --write` to re-render it after
+
+  editing the YAML.
+
+  '
+controls:
+- id: GC-01
+  lifecycle: before-adoption
+  title: Harness inventory and approval register
+  statement: The organisation shall maintain a register of every agent harness, IDE agent, agent SDK,
+    MCP server, skill and plugin approved for use, recording for each the owner, version, permission mode,
+    tools and MCP servers it can reach, sub-agents it can start, and the data classes it may process.
+    Harnesses not on the register shall not be used with organisational code, data or credentials.
+  addresses:
+  - policy-choice
+  - design-weakness
+  rationale: 'Unregistered harnesses and extensions are a shadow-AI surface: they hold developer credentials
+    and run shell commands outside any review. The register is also where the per-agent attributes (tools,
+    guardrails, delegation) that later controls depend on are recorded.'
+  threats:
+  - T05
+  - T11
+  - T16
+  root_causes:
+  - RC5
+  - RC12
+  dimensions:
+  - D14
+  - D06
+  - D10
+  verify:
+    commands:
+    - harnesswatch inventory --json .
+    - harnesswatch audit supply --sbom harness-sbom.cdx.json -f json -o supply.json
+    rules: []
+    manual: Run the inventory on a sample of developer endpoints, build agents and dev containers and
+      reconcile the detected harnesses, state directories and repository harness files with the register.
+      Any detected harness or MCP server absent from the register is a finding.
+  mappings:
+    nist_ai_rmf:
+    - MAP 4.1
+    - MAP 4.2
+    - MANAGE 3.1
+    - GOVERN 6.1
+    - GOVERN 3.2
+    - MAP 3.5
+    - MANAGE 2.4
+    - MANAGE 4.3
+    - MANAGE 2.3
+    - GOVERN 4.3
+    nist_ai_600_1:
+      risks:
+      - Value Chain and Component Integration
+      - Human-AI Configuration
+      - Information Security
+      section_numbers_unverified:
+      - '2.12'
+      - '2.7'
+      - '2.9'
+    iso_iec_42001:
+      annex_a:
+      - A.10.3
+      - A.4.4
+      - A.10.2
+      - A.6.1.3
+      - A.6.2.6
+      - A.8.4
+      - A.9.2
+      - A.3.3
+      clauses:
+      - '8.3'
+      - '10.2'
+    owasp_llm_2025:
+    - LLM03
+    - LLM06
+    owasp_agentic:
+    - ASI04
+    - ASI03
+    - ASI07
+    - ASI08
+    - ASI10
+    owasp_mcp:
+    - MCP04
+    mitre_atlas:
+    - AML.T0010.005
+    - AML.T0115.002
+    - AML.T0011.001
+    - AML.T0111
+    - AML.T0118
+    - AML.T0118.001
+    - AML.T0053
+    - AML.T0124
+    - AML.T0116
+    - AML.T0117
+    mas_airm:
+      paragraphs:
+      - '5.11'
+      - '5.16'
+      - '4.8'
+      - '5.23'
+      - '4.4'
+      airmkit_controls:
+      - AIRM-5.16-THIRD-PARTY-COMPONENTS
+      - AIRM-5.11-SUPPLY-CHAIN
+      - AIRM-4.4-FN22-SHADOW-AI
+      - AIRM-4.8-FN25-AGENT-ATTRIBUTES
+      - AIRM-5.16-AGENT-PERMISSIONS
+      - AIRM-5.23-AGENT-TRACE-MONITORING
+      - AIRM-5.23-INCIDENT-MANAGEMENT
+    notes:
+    - 'T16: ASI10 (Rogue Agents) concerns agents deviating from intended behaviour; the fit with attacker-operated
+      agents is loose, so treat as indicative.'
+  gaps:
+  - No HG rule compares a machine's inventory with an approval register; reconciliation is manual.
+- id: GC-02
+  lifecycle: before-adoption
+  title: Security evaluation before approval
+  statement: Before a harness is approved, the organisation shall assess it against the control dimensions
+    D01-D16 of the harnesswatch rubric (permission model, sandbox, egress, config trust, MCP governance,
+    extensions, secrets, headless/CI, memory, delegation, audit logging, telemetry, distribution, managed
+    policy, vulnerability disclosure, local service exposure), record the evidence and its label for each
+    score, and document accepted residual risk. A harness without administrator-enforceable settings (D14)
+    or without a published security policy and advisories (D15) shall require a documented risk acceptance.
+  addresses:
+  - design-weakness
+  - vulnerability
+  rationale: Harnesses differ in which controls exist, which are on by default and which an administrator
+    can enforce. A missing safeguard or permissive default (RC6) is a design weakness that will not be
+    fixed by patching; it has to be found at procurement. For runtimes and SDKs (tier C) approvals, sandboxing
+    and logging are often the application's responsibility and must be built by the adopter.
+  threats:
+  - T03
+  - T17
+  - T19
+  root_causes:
+  - RC6
+  - RC8
+  - RC10
+  dimensions:
+  - D01
+  - D02
+  - D14
+  - D15
+  - D16
+  verify:
+    commands:
+    - harnesswatch audit supply --online -f json -o supply.json
+    rules:
+    - HG-SUP-002
+    manual: Score the harness with matrix/rubric.md using only facts labelled from-official-docs or verified-by-test;
+      record N/A where there is no access. Confirm the vendor publishes a security contact and advisories.
+      Keep the scored evidence with the approval record.
+  mappings:
+    nist_ai_rmf:
+    - GOVERN 3.2
+    - MAP 3.5
+    - MEASURE 2.6
+    - MANAGE 2.4
+    - MEASURE 2.7
+    - MANAGE 1.3
+    - MANAGE 4.1
+    nist_ai_600_1:
+      risks:
+      - Human-AI Configuration
+      - Information Security
+      section_numbers_unverified:
+      - '2.7'
+      - '2.9'
+    iso_iec_42001:
+      annex_a:
+      - A.6.2.5
+      - A.9.2
+      - A.9.3
+      - A.9.4
+      - A.6.1.3
+      - A.4.5
+      - A.6.2.4
+      - A.6.2.7
+      clauses:
+      - '8.3'
+    owasp_llm_2025:
+    - LLM06
+    - LLM05
+    - LLM10
+    owasp_agentic:
+    - ASI02
+    - ASI03
+    - ASI05
+    owasp_mcp:
+    - MCP02
+    - MCP05
+    mitre_atlas:
+    - AML.T0053
+    - AML.T0050
+    - AML.T0102
+    - AML.T0105
+    - AML.T0097
+    - AML.T0049
+    - AML.T0029
+    mas_airm:
+      paragraphs:
+      - '5.9'
+      - '5.16'
+      - '5.22'
+      - '6.3'
+      - '5.14'
+      - '5.25'
+      airmkit_controls:
+      - AIRM-5.16-AGENT-PERMISSIONS
+      - AIRM-5.16-ACCESS-CONTROL
+      - AIRM-5.9-HUMAN-OVERSIGHT
+      - AIRM-5.9-DESIGN-FOR-OVERSIGHT
+      - AIRM-5.16-SECURITY-CONTROLS
+      - AIRM-5.22-SECURITY-REVIEW
+      - AIRM-6.3-INFRASTRUCTURE
+      - AIRM-5.14-TESTING-APPROACHES
+      - AIRM-5.25-CHANGE-CONTROL
+    notes: []
+  gaps:
+  - Rubric dimension D16 is proposed and is not yet scored in matrix/.
+- id: GC-03
+  lifecycle: before-adoption
+  title: Verify vendor claims against observed behaviour (closed-source harnesses)
+  statement: For any closed-source harness, the organisation shall verify, before approval and after each
+    major version, that the vendor's documented network destinations, configuration-trust behaviour, sandboxing
+    and credential storage match what the client does when run in an isolated environment with synthetic
+    data. Undocumented destinations or behaviours shall be raised with the supplier and resolved or risk-accepted
+    before production use.
+  addresses:
+  - policy-choice
+  - design-weakness
+  rationale: Without source access, documentation is the only basis for the control assessment. A black-box
+    observation (hosts contacted, files written and their modes, whether repository configuration executes
+    before trust is granted) checks the documentation. Differences are usually documentation gaps or policy
+    choices, not vulnerabilities, and should be labelled as such.
+  threats:
+  - T15
+  - T02
+  - T17
+  root_causes:
+  - RC7
+  - RC2
+  - RC8
+  dimensions:
+  - D12
+  - D04
+  - D02
+  - D07
+  verify:
+    commands:
+    - harnesswatch observe <harness-id> --image <image-with-harness> --repo <synthetic-repo> -o observe-<harness-id>.json
+      -- <harness command>
+    rules: []
+    manual: 'Compare the hosts, file modes and pre-trust execution recorded in the observe report with
+      the vendor''s documented claims, one row per claim (format of matrix/claims_vs_observed.csv: claim,
+      source, observed, method, verdict). Use only synthetic credentials and data; observe records metadata
+      only and does not intercept TLS.'
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.10
+    - MEASURE 2.8
+    - GOVERN 1.1
+    - MANAGE 4.3
+    - MEASURE 2.7
+    - MANAGE 1.3
+    - MAP 4.2
+    - MEASURE 2.6
+    nist_ai_600_1:
+      risks:
+      - Data Privacy
+      - Intellectual Property
+      - Information Security
+      section_numbers_unverified:
+      - '2.4'
+      - '2.10'
+      - '2.9'
+    iso_iec_42001:
+      annex_a:
+      - A.4.3
+      - A.7.3
+      - A.8.2
+      - A.6.2.8
+      - A.6.1.3
+      - A.6.2.5
+      - A.9.2
+      - A.4.5
+      clauses:
+      - '7.5'
+      - '9.1'
+      - 6.1.2
+      - '8.3'
+    owasp_llm_2025:
+    - LLM02
+    - LLM06
+    owasp_agentic:
+    - ASI05
+    - ASI02
+    owasp_mcp:
+    - MCP08
+    - MCP09
+    mitre_atlas:
+    - AML.T0081
+    - AML.T0050
+    - AML.T0053
+    - AML.T0105
+    - AML.T0097
+    mas_airm:
+      paragraphs:
+      - '5.4'
+      - '5.11'
+      - '5.23'
+      - '5.16'
+      - '5.22'
+      - '6.3'
+      airmkit_controls:
+      - AIRM-5.4-DATA-PRIVACY
+      - AIRM-5.4-DATA-CLASSIFICATION
+      - AIRM-5.11-THIRD-PARTY-TRANSPARENCY
+      - AIRM-5.23-GENAI-LOGGING
+      - AIRM-5.16-SECURITY-CONTROLS
+      - AIRM-5.16-AGENT-PERMISSIONS
+      - AIRM-5.22-SECURITY-REVIEW
+      - AIRM-6.3-INFRASTRUCTURE
+    notes:
+    - 'T15: ATLAS has no technique for vendor-side collection or audit gaps, so mitre_atlas is empty by
+      design.'
+  gaps: []
+- id: GC-04
+  lifecycle: before-adoption
+  title: Pre-adoption prompt-injection resilience test with inert canaries
+  statement: Before approval, and when the harness, model or permission mode changes materially, the organisation
+    shall test the harness in its intended permission mode against indirect prompt injection placed in
+    repository content and tool output, using inert canaries in a disposable environment, and shall record
+    the result with its confidence interval and number of runs.
+  addresses:
+  - design-weakness
+  rationale: Instruction-following on attacker-written text is a property of the model and harness together,
+    not a defect that a patch removes. A measured baseline shows how much the permission mode and egress
+    controls have to carry. Results apply only to the tested harness, model, mode and version.
+  threats:
+  - T01
+  - T08
+  root_causes:
+  - RC1
+  - RC9
+  dimensions:
+  - D01
+  - D03
+  verify:
+    commands:
+    - harnesswatch bench list
+    - harnesswatch bench run --out bench-results/<date> --harness <adapter-id> --mode default --mode auto
+      -n 5
+    - harnesswatch bench report bench-results/<date>
+    rules: []
+    manual: Review summary.json for per-cell canary rates with Wilson 95% confidence intervals; do not
+      report cells with fewer than 3 runs. Harnesses without a bench adapter need one written or a manual
+      test with the same scenarios.
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.7
+    - MEASURE 2.6
+    - MANAGE 1.3
+    - MANAGE 2.3
+    - MEASURE 2.10
+    nist_ai_600_1:
+      risks:
+      - Information Security
+      - Data Privacy
+      section_numbers_unverified:
+      - '2.9'
+      - '2.4'
+    iso_iec_42001:
+      annex_a:
+      - A.6.1.3
+      - A.6.2.4
+      - A.6.2.6
+      - A.4.3
+      - A.9.2
+      clauses:
+      - 6.1.2
+      - '8.2'
+      - '8.3'
+    owasp_llm_2025:
+    - LLM01
+    - LLM02
+    - LLM05
+    owasp_agentic:
+    - ASI01
+    - ASI02
+    owasp_mcp:
+    - MCP06
+    - MCP10
+    mitre_atlas:
+    - AML.T0051.001
+    - AML.T0093
+    - AML.T0068
+    - AML.T0094
+    - AML.T0086
+    - AML.T0077
+    - AML.T0025
+    - AML.T0057
+    mas_airm:
+      paragraphs:
+      - '5.15'
+      - '5.16'
+      - '5.22'
+      - '5.4'
+      airmkit_controls:
+      - AIRM-5.15-GUARDRAIL-EFFECTIVENESS
+      - AIRM-5.15-GENAI-FAILURE-MODES
+      - AIRM-5.16-SECURITY-CONTROLS
+      - AIRM-5.22-SECURITY-REVIEW
+      - AIRM-5.4-DATA-SECURITY
+      - AIRM-5.4-DATA-PRIVACY
+    notes: []
+  gaps: []
+- id: GC-05
+  lifecycle: before-adoption
+  title: Telemetry, data residency and retention as a documented policy decision
+  statement: For each approved harness and model endpoint, the organisation shall decide and document
+    which data classes may be sent to which vendor or endpoint, where it is processed and stored, how
+    long it is retained, and whether usage telemetry, prompt logging and vendor data sharing are enabled.
+    The decision shall be enforced through managed settings or network controls where the harness supports
+    it.
+  addresses:
+  - policy-choice
+  rationale: Telemetry and vendor-side retention are policy choices of the vendor, not vulnerabilities.
+    Whether they are acceptable depends on the organisation's data classification, outsourcing and residency
+    obligations, so the organisation has to make the choice explicitly and check that configuration matches
+    it.
+  threats:
+  - T15
+  root_causes:
+  - RC7
+  dimensions:
+  - D12
+  - D14
+  verify:
+    commands:
+    - harnesswatch audit config . -f json -o config.json
+    rules:
+    - HG-TEL-001
+    manual: 'Review the vendor''s data-use, retention and region terms against the data-classification
+      policy. HG-TEL-001 is informational: it reports telemetry or prompt logging explicitly enabled in
+      configuration, not whether the organisation''s decision is met.'
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.10
+    - MEASURE 2.8
+    - GOVERN 1.1
+    - MANAGE 4.3
+    nist_ai_600_1:
+      risks:
+      - Data Privacy
+      - Intellectual Property
+      section_numbers_unverified:
+      - '2.4'
+      - '2.10'
+    iso_iec_42001:
+      annex_a:
+      - A.4.3
+      - A.7.3
+      - A.8.2
+      - A.6.2.8
+      clauses:
+      - '7.5'
+      - '9.1'
+    owasp_llm_2025:
+    - LLM02
+    owasp_agentic: []
+    owasp_mcp:
+    - MCP08
+    mitre_atlas: []
+    mas_airm:
+      paragraphs:
+      - '5.4'
+      - '5.11'
+      - '5.23'
+      airmkit_controls:
+      - AIRM-5.4-DATA-PRIVACY
+      - AIRM-5.4-DATA-CLASSIFICATION
+      - AIRM-5.11-THIRD-PARTY-TRANSPARENCY
+      - AIRM-5.23-GENAI-LOGGING
+    notes:
+    - 'T15: ATLAS has no technique for vendor-side collection or audit gaps, so mitre_atlas is empty by
+      design.'
+  gaps:
+  - OWASP Agentic has no entry for T15, so the telemetry mapping rests on NIST, ISO and MAS items (and
+    OWASP LLM02 / MCP08).
+- id: GC-06
+  lifecycle: configuration-baseline
+  title: Managed permission mode and bypass lock
+  statement: Where the harness supports administrator-managed settings, the organisation shall deploy
+    them to every managed endpoint so that the default permission mode asks before shell commands, file
+    writes outside the workspace and network tools, and so that approve-everything modes (bypass, YOLO,
+    full-auto, never-ask) cannot be enabled by users or repositories. Bypass modes are permitted only
+    in disposable environments that hold no organisational credentials.
+  addresses:
+  - design-weakness
+  rationale: 'In approve-everything mode every successful injection reaches the shell directly. Settings
+    that users or a committed repository file can change do not constitute a control; managed settings
+    with precedence over user and project scope do. Examples: Claude Code permissions.disableBypassPermissionsMode,
+    Gemini CLI security.disableYoloMode, Codex requirements.toml.'
+  threats:
+  - T03
+  - T14
+  root_causes:
+  - RC6
+  - RC11
+  dimensions:
+  - D01
+  - D14
+  verify:
+    commands:
+    - harnesswatch audit config . --user -f json -o config.json
+    rules:
+    - HG-PERM-001
+    manual: Confirm the managed settings file (e.g. /etc/claude-code/managed-settings.json) is present,
+      root-owned and not user-writable, and contains the bypass lock. Then try to start the harness in
+      bypass mode as an ordinary user and confirm it refuses.
+  mappings:
+    nist_ai_rmf:
+    - GOVERN 3.2
+    - MAP 3.5
+    - MEASURE 2.6
+    - MANAGE 2.4
+    - MANAGE 2.3
+    - MANAGE 1.3
+    nist_ai_600_1:
+      risks:
+      - Human-AI Configuration
+      - Information Security
+      section_numbers_unverified:
+      - '2.7'
+      - '2.9'
+    iso_iec_42001:
+      annex_a:
+      - A.6.2.5
+      - A.9.2
+      - A.9.3
+      - A.9.4
+      - A.5.4
+      - A.6.2.6
+      clauses:
+      - '8.3'
+      - 6.1.4
+      - '8.4'
+    owasp_llm_2025:
+    - LLM06
+    owasp_agentic:
+    - ASI02
+    - ASI03
+    - ASI08
+    owasp_mcp:
+    - MCP02
+    mitre_atlas:
+    - AML.T0053
+    - AML.T0050
+    - AML.T0102
+    - AML.T0101
+    - AML.T0048.000
+    mas_airm:
+      paragraphs:
+      - '5.9'
+      - '5.16'
+      - '5.2'
+      - '5.3'
+      airmkit_controls:
+      - AIRM-5.16-AGENT-PERMISSIONS
+      - AIRM-5.16-ACCESS-CONTROL
+      - AIRM-5.9-HUMAN-OVERSIGHT
+      - AIRM-5.9-DESIGN-FOR-OVERSIGHT
+      - AIRM-5.3-KILL-SWITCH
+      - AIRM-5.3-CONTINGENCY-PLAN
+      - AIRM-5.2-FN28-PILOT-GUARDRAILS
+    notes: []
+  gaps:
+  - harnesswatch reads managed-scope files, but no HG rule fires when the bypass lock is absent; HG-PERM-001
+    only reports bypass modes that are enabled.
+- id: GC-07
+  lifecycle: configuration-baseline
+  title: Narrow tool allowlists and deny rules
+  statement: Tool allowlists shall name specific commands with fixed arguments; whole-tool or wildcard
+    entries for shells, interpreters, network tools, package managers or git with arbitrary arguments
+    shall not be allowed without a prompt. Where any auto-approval is in force, deny rules shall cover
+    recursive deletion, history-rewriting pushes and reads of credential files.
+  addresses:
+  - design-weakness
+  rationale: An allowlist entry such as Bash(*) or Bash(git *) is equivalent to auto-approve for that
+    tool (git subcommands can run arbitrary programs). Deny rules are the last guard when auto-approval
+    is on, but they are bypassable and do not replace a sandbox.
+  threats:
+  - T03
+  - T14
+  - T07
+  root_causes:
+  - RC6
+  - RC3
+  - RC11
+  dimensions:
+  - D01
+  verify:
+    commands:
+    - harnesswatch audit config . --user -f json -o config.json
+    rules:
+    - HG-PERM-002
+    - HG-PERM-003
+    manual: ''
+  mappings:
+    nist_ai_rmf:
+    - GOVERN 3.2
+    - MAP 3.5
+    - MEASURE 2.6
+    - MANAGE 2.4
+    - MANAGE 2.3
+    - MANAGE 1.3
+    - MEASURE 2.10
+    - MEASURE 2.7
+    - GOVERN 1.1
+    nist_ai_600_1:
+      risks:
+      - Human-AI Configuration
+      - Information Security
+      - Data Privacy
+      section_numbers_unverified:
+      - '2.7'
+      - '2.9'
+      - '2.4'
+    iso_iec_42001:
+      annex_a:
+      - A.6.2.5
+      - A.9.2
+      - A.9.3
+      - A.9.4
+      - A.5.4
+      - A.6.2.6
+      - A.4.3
+      - A.4.5
+      - A.6.2.8
+      clauses:
+      - '8.3'
+      - 6.1.4
+      - '8.4'
+    owasp_llm_2025:
+    - LLM06
+    - LLM02
+    owasp_agentic:
+    - ASI02
+    - ASI03
+    - ASI08
+    owasp_mcp:
+    - MCP02
+    - MCP01
+    mitre_atlas:
+    - AML.T0053
+    - AML.T0050
+    - AML.T0102
+    - AML.T0101
+    - AML.T0048.000
+    - AML.T0055
+    - AML.T0083
+    - AML.T0037
+    - AML.T0098
+    mas_airm:
+      paragraphs:
+      - '5.9'
+      - '5.16'
+      - '5.2'
+      - '5.3'
+      - '5.4'
+      airmkit_controls:
+      - AIRM-5.16-AGENT-PERMISSIONS
+      - AIRM-5.16-ACCESS-CONTROL
+      - AIRM-5.9-HUMAN-OVERSIGHT
+      - AIRM-5.9-DESIGN-FOR-OVERSIGHT
+      - AIRM-5.3-KILL-SWITCH
+      - AIRM-5.3-CONTINGENCY-PLAN
+      - AIRM-5.2-FN28-PILOT-GUARDRAILS
+      - AIRM-5.4-DATA-SECURITY
+      - AIRM-5.4-DATA-PRIVACY
+      - AIRM-5.16-SECURITY-CONTROLS
+    notes: []
+  gaps: []
+- id: GC-08
+  lifecycle: configuration-baseline
+  title: Repository configuration is untrusted until reviewed (hooks, settings, env)
+  statement: 'Harness configuration committed to a repository (hooks, project settings, environment blocks,
+    sandbox or permission overrides) shall be treated as executable code: it shall not take effect before
+    the user grants workspace trust, shall be changed only through reviewed pull requests with designated
+    code owners, and shall not set model endpoints, credentials or network settings. Hooks shall be defined
+    in user-level or managed settings, or restricted to managed hooks where the harness supports it.'
+  addresses:
+  - vulnerability
+  - design-weakness
+  rationale: Opening a repository is enough to run its hooks or start its configured processes in harnesses
+    that honour project configuration before, or without, a trust prompt; several 2025-2026 CVEs were
+    pre-trust execution of exactly this surface. Headless modes often do not prompt at all. A project
+    environment block that redirects the model endpoint sends prompts and code to a third party.
+  threats:
+  - T02
+  root_causes:
+  - RC2
+  dimensions:
+  - D04
+  - D14
+  verify:
+    commands:
+    - harnesswatch audit config . --no-user -f sarif -o config.sarif
+    rules:
+    - HG-HOOK-001
+    - HG-HOOK-002
+    - HG-SEC-003
+    manual: Check that CODEOWNERS covers .claude/, .cursor/, .codex/, .gemini/, .kiro/, .vscode/, .mcp.json
+      and AGENTS.md-type files, and review any env block in project settings for endpoint or proxy overrides
+      (not covered by an HG rule).
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.7
+    - MANAGE 1.3
+    - MAP 4.2
+    nist_ai_600_1:
+      risks:
+      - Information Security
+      section_numbers_unverified:
+      - '2.9'
+    iso_iec_42001:
+      annex_a:
+      - A.6.1.3
+      - A.6.2.5
+      - A.9.2
+      clauses:
+      - 6.1.2
+      - '8.3'
+    owasp_llm_2025:
+    - LLM06
+    owasp_agentic:
+    - ASI05
+    - ASI02
+    owasp_mcp:
+    - MCP09
+    mitre_atlas:
+    - AML.T0081
+    - AML.T0050
+    - AML.T0053
+    mas_airm:
+      paragraphs:
+      - '5.16'
+      - '5.22'
+      airmkit_controls:
+      - AIRM-5.16-SECURITY-CONTROLS
+      - AIRM-5.16-AGENT-PERMISSIONS
+      - AIRM-5.22-SECURITY-REVIEW
+    notes: []
+  gaps:
+  - No HG rule flags a project-scoped env block that redirects the model endpoint or proxy.
+- id: GC-09
+  lifecycle: configuration-baseline
+  title: No auto-approval of repository-declared MCP servers
+  statement: MCP servers declared in a repository file shall not be started or have their tools called
+    without per-server approval. Settings that enable all project MCP servers, mark servers as trusted
+    or auto-approve their tools shall not be used; where the harness supports a managed MCP allowlist,
+    only servers on the organisation's approved list shall be permitted.
+  addresses:
+  - design-weakness
+  rationale: A committed MCP declaration asks every cloner's harness to start a local process. Combined
+    with an enable-all or trust setting in the same repository, cloning and opening the repository runs
+    attacker-chosen commands (the CurXecute / MCPoison class).
+  threats:
+  - T04
+  - T02
+  root_causes:
+  - RC2
+  - RC6
+  dimensions:
+  - D05
+  - D04
+  - D14
+  verify:
+    commands:
+    - harnesswatch audit mcp . --user -f json -o mcp.json
+    rules:
+    - HG-MCP-005
+    - HG-MCP-006
+    manual: Confirm the managed MCP policy (e.g. Claude Code allowedMcpServers / allowManagedMcpServersOnly)
+      matches the register (GC-01).
+  mappings:
+    nist_ai_rmf:
+    - MAP 4.1
+    - MAP 4.2
+    - MANAGE 3.1
+    - GOVERN 6.1
+    - MEASURE 2.7
+    - MANAGE 1.3
+    nist_ai_600_1:
+      risks:
+      - Value Chain and Component Integration
+      - Information Security
+      section_numbers_unverified:
+      - '2.12'
+      - '2.9'
+    iso_iec_42001:
+      annex_a:
+      - A.10.2
+      - A.10.3
+      - A.4.4
+      - A.6.1.3
+      - A.6.2.5
+      - A.9.2
+      clauses:
+      - '8.3'
+      - 6.1.2
+    owasp_llm_2025:
+    - LLM03
+    - LLM01
+    - LLM06
+    owasp_agentic:
+    - ASI04
+    - ASI02
+    - ASI05
+    owasp_mcp:
+    - MCP03
+    - MCP04
+    - MCP05
+    - MCP07
+    - MCP09
+    - MCP10
+    mitre_atlas:
+    - AML.T0110
+    - AML.T0109
+    - AML.T0011.002
+    - AML.T0010.005
+    - AML.T0099
+    - AML.T0131
+    - AML.T0081
+    - AML.T0050
+    - AML.T0053
+    mas_airm:
+      paragraphs:
+      - '5.10'
+      - '5.11'
+      - '5.16'
+      - '5.25'
+      - '5.22'
+      airmkit_controls:
+      - AIRM-5.16-THIRD-PARTY-COMPONENTS
+      - AIRM-5.11-SUPPLY-CHAIN
+      - AIRM-5.25-DYNAMIC-UPDATES
+      - AIRM-5.25-CHANGE-CONTROL
+      - AIRM-5.16-SECURITY-CONTROLS
+      - AIRM-5.16-AGENT-PERMISSIONS
+      - AIRM-5.22-SECURITY-REVIEW
+    notes: []
+  gaps: []
+- id: GC-10
+  lifecycle: configuration-baseline
+  title: MCP server pinning, provenance and change review
+  statement: Every approved MCP server shall be pinned to an exact version or content digest, installed
+    from an approved source or internal mirror, and re-reviewed (including its tool descriptions) before
+    any version change. Launch commands that fetch the latest package at each start shall not be used.
+  addresses:
+  - design-weakness
+  - vulnerability
+  rationale: Unpinned launchers (npx -y, uvx, mutable image tags) run whatever the registry serves at
+    each start, so a compromised maintainer account or malicious update runs with the agent's privileges.
+    Tool descriptions are placed in the model context verbatim and can change after approval (rug pull).
+  threats:
+  - T04
+  - T06
+  root_causes:
+  - RC5
+  dimensions:
+  - D05
+  - D13
+  verify:
+    commands:
+    - harnesswatch audit mcp . --user -f json -o mcp.json
+    - harnesswatch audit mcp . --tools-json <saved-tools-list.json> -f json -o mcp-tools.json
+    rules:
+    - HG-MCP-001
+    - HG-MCP-004
+    manual: Save the server's tools/list response at approval and on each update and diff it; harnesswatch
+      never launches MCP servers itself.
+  mappings:
+    nist_ai_rmf:
+    - MAP 4.1
+    - MAP 4.2
+    - MANAGE 3.1
+    - GOVERN 6.1
+    - GOVERN 6.2
+    nist_ai_600_1:
+      risks:
+      - Value Chain and Component Integration
+      - Information Security
+      section_numbers_unverified:
+      - '2.12'
+      - '2.9'
+    iso_iec_42001:
+      annex_a:
+      - A.10.2
+      - A.10.3
+      - A.4.4
+      - A.6.2.5
+      clauses:
+      - '8.3'
+    owasp_llm_2025:
+    - LLM03
+    - LLM01
+    - LLM06
+    owasp_agentic:
+    - ASI04
+    - ASI02
+    owasp_mcp:
+    - MCP03
+    - MCP04
+    - MCP05
+    - MCP07
+    - MCP09
+    - MCP10
+    mitre_atlas:
+    - AML.T0110
+    - AML.T0109
+    - AML.T0011.002
+    - AML.T0010.005
+    - AML.T0099
+    - AML.T0131
+    - AML.T0010.001
+    - AML.T0011.001
+    - AML.T0010
+    - AML.T0083
+    mas_airm:
+      paragraphs:
+      - '5.10'
+      - '5.11'
+      - '5.16'
+      - '5.25'
+      airmkit_controls:
+      - AIRM-5.16-THIRD-PARTY-COMPONENTS
+      - AIRM-5.11-SUPPLY-CHAIN
+      - AIRM-5.25-DYNAMIC-UPDATES
+      - AIRM-5.25-CHANGE-CONTROL
+      - AIRM-5.11-CHANGE-NOTIFICATION
+      - AIRM-5.10-THIRD-PARTY-TESTING
+    notes: []
+  gaps: []
+- id: GC-11
+  lifecycle: configuration-baseline
+  title: MCP transport security and authentication
+  statement: Remote MCP servers shall be reached only over TLS with authentication (OAuth 2.1 or a token
+    supplied from an environment variable or secret store), and only on hosts the organisation trusts.
+    Credentials shall not be written as literal values in MCP configuration.
+  addresses:
+  - design-weakness
+  rationale: Plaintext transport exposes tool calls, results and tokens on the network path. Literal secrets
+    in MCP configuration are stored in plaintext, copied into backups and, in project files, committed
+    for everyone.
+  threats:
+  - T04
+  - T07
+  root_causes:
+  - RC4
+  - RC7
+  dimensions:
+  - D05
+  - D07
+  verify:
+    commands:
+    - harnesswatch audit mcp . --user -f json -o mcp.json
+    rules:
+    - HG-MCP-002
+    - HG-MCP-003
+    manual: ''
+  mappings:
+    nist_ai_rmf:
+    - MAP 4.1
+    - MAP 4.2
+    - MANAGE 3.1
+    - GOVERN 6.1
+    - MEASURE 2.10
+    - MEASURE 2.7
+    - GOVERN 1.1
+    nist_ai_600_1:
+      risks:
+      - Value Chain and Component Integration
+      - Information Security
+      - Data Privacy
+      section_numbers_unverified:
+      - '2.12'
+      - '2.9'
+      - '2.4'
+    iso_iec_42001:
+      annex_a:
+      - A.10.2
+      - A.10.3
+      - A.4.4
+      - A.4.3
+      - A.4.5
+      - A.6.2.8
+      clauses:
+      - '8.3'
+    owasp_llm_2025:
+    - LLM03
+    - LLM01
+    - LLM06
+    - LLM02
+    owasp_agentic:
+    - ASI04
+    - ASI02
+    - ASI03
+    owasp_mcp:
+    - MCP03
+    - MCP04
+    - MCP05
+    - MCP07
+    - MCP09
+    - MCP10
+    - MCP01
+    mitre_atlas:
+    - AML.T0110
+    - AML.T0109
+    - AML.T0011.002
+    - AML.T0010.005
+    - AML.T0099
+    - AML.T0131
+    - AML.T0055
+    - AML.T0083
+    - AML.T0037
+    - AML.T0098
+    mas_airm:
+      paragraphs:
+      - '5.10'
+      - '5.11'
+      - '5.16'
+      - '5.25'
+      - '5.4'
+      airmkit_controls:
+      - AIRM-5.16-THIRD-PARTY-COMPONENTS
+      - AIRM-5.11-SUPPLY-CHAIN
+      - AIRM-5.25-DYNAMIC-UPDATES
+      - AIRM-5.25-CHANGE-CONTROL
+      - AIRM-5.4-DATA-SECURITY
+      - AIRM-5.4-DATA-PRIVACY
+      - AIRM-5.16-SECURITY-CONTROLS
+    notes: []
+  gaps: []
+- id: GC-12
+  lifecycle: configuration-baseline
+  title: Instruction-file review
+  statement: Instruction, rules and skill files that harnesses load automatically (AGENTS.md, CLAUDE.md,
+    GEMINI.md, .cursor/rules, copilot-instructions.md, SKILL.md and equivalents) shall be reviewed like
+    code, with diffs that reveal hidden and confusable Unicode, and shall not import or tell the agent
+    to fetch instructions from remote URLs.
+  addresses:
+  - design-weakness
+  rationale: These files are placed in the model context verbatim. Hidden characters let an author conceal
+    instructions from reviewers ('rules file backdoor'), and remote imports make agent behaviour depend
+    on content that can change after review. Injection that steers an agent behaving as designed (RC1)
+    is not fixed by patching the harness.
+  threats:
+  - T01
+  - T05
+  root_causes:
+  - RC1
+  dimensions:
+  - D04
+  - D06
+  verify:
+    commands:
+    - harnesswatch audit instructions . -f sarif -o instructions.sarif
+    rules:
+    - HG-INJ-001
+    - HG-INJ-002
+    - HG-INJ-003
+    manual: HG-INJ-002 is a scored heuristic; reviewers decide on flagged lines. A deterministic instruction-file
+      policy checker (e.g. rulewarden) can complement it.
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.7
+    - MEASURE 2.6
+    - MANAGE 1.3
+    - MANAGE 2.3
+    - MAP 4.1
+    - MAP 4.2
+    - MANAGE 3.1
+    - GOVERN 6.1
+    nist_ai_600_1:
+      risks:
+      - Information Security
+      - Value Chain and Component Integration
+      section_numbers_unverified:
+      - '2.9'
+      - '2.12'
+    iso_iec_42001:
+      annex_a:
+      - A.6.1.3
+      - A.6.2.4
+      - A.6.2.6
+      - A.10.3
+      - A.4.4
+      - A.10.2
+      clauses:
+      - 6.1.2
+      - '8.2'
+      - '8.3'
+    owasp_llm_2025:
+    - LLM01
+    - LLM03
+    owasp_agentic:
+    - ASI01
+    - ASI04
+    owasp_mcp:
+    - MCP06
+    - MCP04
+    mitre_atlas:
+    - AML.T0051.001
+    - AML.T0093
+    - AML.T0068
+    - AML.T0094
+    - AML.T0010.005
+    - AML.T0115.002
+    - AML.T0011.001
+    - AML.T0111
+    mas_airm:
+      paragraphs:
+      - '5.15'
+      - '5.16'
+      - '5.22'
+      - '5.11'
+      airmkit_controls:
+      - AIRM-5.15-GUARDRAIL-EFFECTIVENESS
+      - AIRM-5.15-GENAI-FAILURE-MODES
+      - AIRM-5.16-SECURITY-CONTROLS
+      - AIRM-5.22-SECURITY-REVIEW
+      - AIRM-5.16-THIRD-PARTY-COMPONENTS
+      - AIRM-5.11-SUPPLY-CHAIN
+      - AIRM-4.4-FN22-SHADOW-AI
+    notes: []
+  gaps: []
+- id: GC-13
+  lifecycle: configuration-baseline
+  title: Skills, plugins and extensions from approved sources only
+  statement: Skills, plugins and IDE extensions used with a harness shall come only from sources on the
+    register, be pinned to a reviewed version, and be reviewed again before update. Automatic installation
+    or update of skills and plugins from public marketplaces shall be disabled where the harness supports
+    it.
+  addresses:
+  - design-weakness
+  rationale: A skill or plugin runs with the harness's privileges and its text is loaded as instructions.
+    Marketplaces and automatic updates turn a single malicious or hijacked package into code and instructions
+    on every developer machine.
+  threats:
+  - T05
+  - T06
+  root_causes:
+  - RC5
+  dimensions:
+  - D06
+  - D13
+  - D14
+  verify:
+    commands:
+    - harnesswatch audit instructions . --user -f json -o skills.json
+    rules:
+    - HG-INJ-001
+    - HG-INJ-002
+    manual: Compare installed skills and plugins (inventory, harness plugin lists) with the register and
+      check their pins. The HG-INJ rules cover only the text of skill files, not plugin code.
+  mappings:
+    nist_ai_rmf:
+    - MAP 4.1
+    - MAP 4.2
+    - MANAGE 3.1
+    - GOVERN 6.1
+    - GOVERN 6.2
+    nist_ai_600_1:
+      risks:
+      - Value Chain and Component Integration
+      - Information Security
+      section_numbers_unverified:
+      - '2.12'
+      - '2.9'
+    iso_iec_42001:
+      annex_a:
+      - A.10.3
+      - A.4.4
+      - A.10.2
+      - A.6.2.5
+      clauses:
+      - '8.3'
+    owasp_llm_2025:
+    - LLM03
+    owasp_agentic:
+    - ASI04
+    owasp_mcp:
+    - MCP04
+    mitre_atlas:
+    - AML.T0010.005
+    - AML.T0115.002
+    - AML.T0011.001
+    - AML.T0111
+    - AML.T0010.001
+    - AML.T0010
+    - AML.T0083
+    mas_airm:
+      paragraphs:
+      - '5.11'
+      - '5.16'
+      - '5.10'
+      - '5.25'
+      airmkit_controls:
+      - AIRM-5.16-THIRD-PARTY-COMPONENTS
+      - AIRM-5.11-SUPPLY-CHAIN
+      - AIRM-4.4-FN22-SHADOW-AI
+      - AIRM-5.11-CHANGE-NOTIFICATION
+      - AIRM-5.25-DYNAMIC-UPDATES
+      - AIRM-5.10-THIRD-PARTY-TESTING
+    notes: []
+  gaps:
+  - T05 has only partial rule coverage (instruction text); no HG rule checks plugin pinning or provenance.
+- id: GC-14
+  lifecycle: configuration-baseline
+  title: Credentials outside harness configuration files
+  statement: Model-provider keys, tokens and other credentials used by harnesses shall be held in the
+    OS keychain, an organisational secret manager or a credential helper, and shall not be written as
+    literal values in user, project or MCP configuration. Harness sessions shall use scoped, short-lived
+    credentials where the provider supports them.
+  addresses:
+  - design-weakness
+  rationale: Plaintext credentials in configuration files are exposed to every local process, backups,
+    dotfile repositories and, in project files, to everyone with read access to the repository.
+  threats:
+  - T07
+  root_causes:
+  - RC7
+  dimensions:
+  - D07
+  verify:
+    commands:
+    - harnesswatch audit config . --user -f json -o config.json
+    rules:
+    - HG-SEC-003
+    - HG-MCP-003
+    manual: Rotate any credential reported, and add harness configuration paths to secret scanning.
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.10
+    - MEASURE 2.7
+    - GOVERN 1.1
+    nist_ai_600_1:
+      risks:
+      - Data Privacy
+      - Information Security
+      section_numbers_unverified:
+      - '2.4'
+      - '2.9'
+    iso_iec_42001:
+      annex_a:
+      - A.4.3
+      - A.4.5
+      - A.6.2.8
+      clauses:
+      - '8.3'
+    owasp_llm_2025:
+    - LLM02
+    owasp_agentic:
+    - ASI03
+    owasp_mcp:
+    - MCP01
+    mitre_atlas:
+    - AML.T0055
+    - AML.T0083
+    - AML.T0037
+    - AML.T0098
+    mas_airm:
+      paragraphs:
+      - '5.4'
+      - '5.16'
+      airmkit_controls:
+      - AIRM-5.4-DATA-SECURITY
+      - AIRM-5.4-DATA-PRIVACY
+      - AIRM-5.16-SECURITY-CONTROLS
+    notes: []
+  gaps: []
+- id: GC-15
+  lifecycle: configuration-baseline
+  title: Secrets in state directories, file modes and transcript retention
+  statement: Harness state directories shall be owner-only (0700) and credential, transcript and memory
+    files owner-only (0600), including all parent directories on shared hosts, CI runners and dev containers.
+    Transcript and log retention shall be configured to the organisation's retention policy, and agents
+    shall be denied read access to secret files.
+  addresses:
+  - design-weakness
+  rationale: Harnesses persist transcripts, tool output and memory; any secret that passed through a session
+    is then stored at rest, often indefinitely. World-readable state exposes it to every local account
+    and to processes running as other users.
+  threats:
+  - T07
+  - T15
+  root_causes:
+  - RC7
+  dimensions:
+  - D07
+  - D12
+  verify:
+    commands:
+    - harnesswatch audit secrets -f json -o secrets.json
+    rules:
+    - HG-SEC-001
+    - HG-SEC-002
+    manual: Findings are redacted; rotate exposed credentials and purge affected session files. Check
+      the configured retention setting (e.g. Claude Code cleanupPeriodDays).
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.10
+    - MEASURE 2.7
+    - GOVERN 1.1
+    - MEASURE 2.8
+    - MANAGE 4.3
+    nist_ai_600_1:
+      risks:
+      - Data Privacy
+      - Information Security
+      - Intellectual Property
+      section_numbers_unverified:
+      - '2.4'
+      - '2.9'
+      - '2.10'
+    iso_iec_42001:
+      annex_a:
+      - A.4.3
+      - A.4.5
+      - A.6.2.8
+      - A.7.3
+      - A.8.2
+      clauses:
+      - '8.3'
+      - '7.5'
+      - '9.1'
+    owasp_llm_2025:
+    - LLM02
+    owasp_agentic:
+    - ASI03
+    owasp_mcp:
+    - MCP01
+    - MCP08
+    mitre_atlas:
+    - AML.T0055
+    - AML.T0083
+    - AML.T0037
+    - AML.T0098
+    mas_airm:
+      paragraphs:
+      - '5.4'
+      - '5.16'
+      - '5.11'
+      - '5.23'
+      airmkit_controls:
+      - AIRM-5.4-DATA-SECURITY
+      - AIRM-5.4-DATA-PRIVACY
+      - AIRM-5.16-SECURITY-CONTROLS
+      - AIRM-5.4-DATA-CLASSIFICATION
+      - AIRM-5.11-THIRD-PARTY-TRANSPARENCY
+      - AIRM-5.23-GENAI-LOGGING
+    notes:
+    - 'T15: ATLAS has no technique for vendor-side collection or audit gaps, so mitre_atlas is empty by
+      design.'
+  gaps: []
+- id: GC-16
+  lifecycle: configuration-baseline
+  title: Execution sandbox for agent tools, including browser and computer use
+  statement: Shell and code execution by agents shall run inside an OS-level sandbox, container or VM
+    that limits file-system writes to the workspace and holds no credentials beyond those the task needs.
+    Browser and computer-use tools shall run in a separate profile or VM without logged-in organisational
+    sessions. Silent fallback to unsandboxed execution shall be disabled where the harness supports it.
+  addresses:
+  - design-weakness
+  - vulnerability
+  rationale: Approval prompts and deny rules are policy checks inside the agent process; a sandbox is
+    an isolation boundary that still holds when they fail. Sandbox escapes and weak fallbacks are a recurring
+    incident class, so the sandbox should be layered with, not instead of, the permission controls.
+  threats:
+  - T17
+  - T12
+  - T14
+  root_causes:
+  - RC8
+  - RC11
+  dimensions:
+  - D02
+  - D03
+  verify:
+    commands:
+    - harnesswatch observe <harness-id> --image <image-with-harness> --repo <synthetic-repo> -o observe-<harness-id>.json
+      -- <harness command>
+    rules: []
+    manual: Confirm the sandbox setting in managed configuration and that it is active (observe records
+      the sandboxing it detects). From inside an agent session, attempt a write outside the workspace
+      and a read of a synthetic credential file; both shall fail.
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.7
+    - MEASURE 2.6
+    - MANAGE 1.3
+    - MANAGE 2.4
+    - MANAGE 2.3
+    nist_ai_600_1:
+      risks:
+      - Information Security
+      - Data Privacy
+      - Human-AI Configuration
+      section_numbers_unverified:
+      - '2.9'
+      - '2.4'
+      - '2.7'
+    iso_iec_42001:
+      annex_a:
+      - A.6.1.3
+      - A.6.2.5
+      - A.4.5
+      - A.6.2.6
+      - A.9.4
+      - A.5.4
+      - A.9.3
+      clauses:
+      - '8.3'
+      - 6.1.4
+      - '8.4'
+    owasp_llm_2025:
+    - LLM06
+    - LLM01
+    owasp_agentic:
+    - ASI05
+    - ASI01
+    - ASI02
+    - ASI08
+    owasp_mcp: []
+    mitre_atlas:
+    - AML.T0105
+    - AML.T0097
+    - AML.T0100
+    - AML.T0078
+    - AML.T0113
+    - AML.T0112.000
+    - AML.T0101
+    - AML.T0048.000
+    mas_airm:
+      paragraphs:
+      - '5.16'
+      - '5.22'
+      - '6.3'
+      - '5.9'
+      - '5.2'
+      - '5.3'
+      airmkit_controls:
+      - AIRM-5.16-SECURITY-CONTROLS
+      - AIRM-5.22-SECURITY-REVIEW
+      - AIRM-6.3-INFRASTRUCTURE
+      - AIRM-5.9-HUMAN-OVERSIGHT
+      - AIRM-5.3-KILL-SWITCH
+      - AIRM-5.3-CONTINGENCY-PLAN
+      - AIRM-5.2-FN28-PILOT-GUARDRAILS
+    notes: []
+  gaps:
+  - No HG rule targets T17 (sandbox) or T12 (browser/computer use); verification is manual.
+- id: GC-17
+  lifecycle: configuration-baseline
+  title: Network egress allowlist
+  statement: Network access from agent tools shall be off by default and limited to an allowlist of approved
+    destinations (package registries, internal documentation, approved model and MCP endpoints), enforced
+    through the harness's domain allowlist or an egress proxy. Automatic rendering or fetching of remote
+    content (e.g. markdown images) shall be disabled where configurable.
+  addresses:
+  - design-weakness
+  rationale: Network reach is the exfiltration channel for any successful injection; rendering and auto-fetch
+    features can carry data out without an explicit tool call (RC9).
+  threats:
+  - T08
+  - T12
+  root_causes:
+  - RC9
+  - RC6
+  dimensions:
+  - D03
+  verify:
+    commands:
+    - harnesswatch audit config . --user -f json -o config.json
+    - harnesswatch observe <harness-id> --image <image-with-harness> --allow <approved-host:port> -o observe-<harness-id>.json
+      -- <harness command>
+    rules:
+    - HG-NET-001
+    manual: Review the egress-proxy log for destinations outside the allowlist.
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.10
+    - MEASURE 2.7
+    - MANAGE 1.3
+    - MEASURE 2.6
+    nist_ai_600_1:
+      risks:
+      - Data Privacy
+      - Information Security
+      section_numbers_unverified:
+      - '2.4'
+      - '2.9'
+    iso_iec_42001:
+      annex_a:
+      - A.4.3
+      - A.6.2.6
+      - A.9.2
+      - A.9.4
+      clauses:
+      - '8.3'
+    owasp_llm_2025:
+    - LLM02
+    - LLM05
+    - LLM01
+    - LLM06
+    owasp_agentic:
+    - ASI02
+    - ASI01
+    owasp_mcp:
+    - MCP10
+    mitre_atlas:
+    - AML.T0086
+    - AML.T0077
+    - AML.T0025
+    - AML.T0057
+    - AML.T0100
+    - AML.T0078
+    - AML.T0113
+    - AML.T0112.000
+    mas_airm:
+      paragraphs:
+      - '5.4'
+      - '5.16'
+      - '5.9'
+      airmkit_controls:
+      - AIRM-5.4-DATA-SECURITY
+      - AIRM-5.16-SECURITY-CONTROLS
+      - AIRM-5.4-DATA-PRIVACY
+      - AIRM-5.9-HUMAN-OVERSIGHT
+    notes: []
+  gaps:
+  - HG-NET-001 reports only configuration that explicitly opens egress; enforcement is verified at the
+    proxy.
+- id: GC-18
+  lifecycle: configuration-baseline
+  title: Persistent memory
+  statement: Agent-writable persistent memory shall be disabled unless approved for a use case; where
+    enabled it shall be project-scoped, reviewed periodically, and not synchronised to shared repositories
+    or team stores without review.
+  addresses:
+  - design-weakness
+  rationale: Memory replayed into later sessions lets a single successful injection persist, and shared
+    memory spreads it to colleagues.
+  threats:
+  - T10
+  root_causes:
+  - RC1
+  dimensions:
+  - D09
+  verify:
+    commands:
+    - harnesswatch audit config . --user -f json -o config.json
+    rules:
+    - HG-MEM-001
+    manual: Sample memory files in the review cycle and check them for instructions nobody wrote deliberately.
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.4
+    - MANAGE 2.2
+    - MANAGE 4.1
+    nist_ai_600_1:
+      risks:
+      - Information Security
+      - Information Integrity
+      section_numbers_unverified:
+      - '2.9'
+      - '2.8'
+    iso_iec_42001:
+      annex_a:
+      - A.6.2.6
+      - A.7.4
+      - A.7.5
+      clauses:
+      - '9.1'
+    owasp_llm_2025:
+    - LLM04
+    owasp_agentic:
+    - ASI06
+    owasp_mcp: []
+    mitre_atlas:
+    - AML.T0080.000
+    - AML.T0080
+    - AML.T0081
+    mas_airm:
+      paragraphs:
+      - '5.4'
+      - '5.23'
+      airmkit_controls:
+      - AIRM-5.23-AGENT-TRACE-MONITORING
+      - AIRM-5.15-GENAI-FAILURE-MODES
+      - AIRM-5.4-DATA-LINEAGE
+    notes:
+    - 'T10: OWASP LLM04 (Data and Model Poisoning) is the closest LLM Top 10 2025 entry; it is framed
+      around training data, so the mapping is partial.'
+  gaps: []
+- id: GC-19
+  lifecycle: configuration-baseline
+  title: Sub-agent and delegation restrictions
+  statement: Sub-agents and delegated agents (including other harnesses invoked by an agent) shall inherit
+    the parent session's permission rules or narrower ones, shall have an explicit tool list, and shall
+    not be configured with bypass or allow-all modes. Delegation to another harness shall be recorded
+    in the register (GC-01).
+  addresses:
+  - design-weakness
+  rationale: A sub-agent with its own bypass mode runs with broader authority than its parent, and content
+    handed to it executes without prompts. Delegation chains across harnesses make this hard to see.
+  threats:
+  - T11
+  - T03
+  root_causes:
+  - RC6
+  - RC8
+  dimensions:
+  - D10
+  - D01
+  verify:
+    commands:
+    - harnesswatch audit config . --user -f json -o config.json
+    rules:
+    - HG-SUB-001
+    manual: ''
+  mappings:
+    nist_ai_rmf:
+    - GOVERN 3.2
+    - MAP 3.5
+    - MANAGE 2.4
+    - MEASURE 2.6
+    nist_ai_600_1:
+      risks:
+      - Value Chain and Component Integration
+      - Human-AI Configuration
+      - Information Security
+      section_numbers_unverified:
+      - '2.12'
+      - '2.7'
+      - '2.9'
+    iso_iec_42001:
+      annex_a:
+      - A.6.1.3
+      - A.6.2.6
+      - A.10.2
+      - A.6.2.5
+      - A.9.2
+      - A.9.3
+      - A.9.4
+      clauses:
+      - '8.3'
+    owasp_llm_2025:
+    - LLM06
+    owasp_agentic:
+    - ASI03
+    - ASI07
+    - ASI08
+    - ASI02
+    owasp_mcp:
+    - MCP02
+    mitre_atlas:
+    - AML.T0118
+    - AML.T0118.001
+    - AML.T0053
+    - AML.T0050
+    - AML.T0102
+    mas_airm:
+      paragraphs:
+      - '4.8'
+      - '5.16'
+      - '5.23'
+      - '5.9'
+      airmkit_controls:
+      - AIRM-4.8-FN25-AGENT-ATTRIBUTES
+      - AIRM-5.16-AGENT-PERMISSIONS
+      - AIRM-5.23-AGENT-TRACE-MONITORING
+      - AIRM-5.16-ACCESS-CONTROL
+      - AIRM-5.9-HUMAN-OVERSIGHT
+      - AIRM-5.9-DESIGN-FOR-OVERSIGHT
+    notes: []
+  gaps: []
+- id: GC-20
+  lifecycle: configuration-baseline
+  title: Local agent services and control endpoints
+  statement: Local or network services started by a harness (IDE bridges, remote-control gateways, WebSocket
+    or HTTP control endpoints, agent servers) shall be disabled unless needed; where used they shall bind
+    to loopback, require authentication, and validate Origin and Host.
+  addresses:
+  - vulnerability
+  - design-weakness
+  rationale: Unauthenticated local endpoints let any web page or local process drive the agent (DNS rebinding,
+    cross-site WebSocket hijacking). This is an ordinary access-control defect class, mostly fixed by
+    vendors as vulnerabilities, so version currency (GC-29) matters as much as configuration.
+  threats:
+  - T18
+  root_causes:
+  - RC4
+  dimensions:
+  - D16
+  verify:
+    commands: []
+    rules: []
+    manual: With the harness running, list listening sockets (e.g. `ss -ltnp` / `lsof -iTCP -sTCP:LISTEN`),
+      confirm loopback binding, and confirm that requests without the session token, or with a foreign
+      Origin, are rejected.
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.7
+    - MANAGE 1.3
+    - MANAGE 3.1
+    nist_ai_600_1:
+      risks:
+      - Information Security
+      section_numbers_unverified:
+      - '2.9'
+    iso_iec_42001:
+      annex_a:
+      - A.6.2.5
+      - A.4.5
+      - A.6.2.6
+      clauses:
+      - '8.3'
+    owasp_llm_2025: []
+    owasp_agentic:
+    - ASI03
+    owasp_mcp:
+    - MCP07
+    mitre_atlas:
+    - AML.T0132
+    - AML.T0006.002
+    - AML.T0049
+    - AML.T0122
+    - AML.T0078
+    mas_airm:
+      paragraphs:
+      - '5.16'
+      - '5.22'
+      airmkit_controls:
+      - AIRM-5.16-ACCESS-CONTROL
+      - AIRM-5.16-SECURITY-CONTROLS
+      - AIRM-5.22-SECURITY-REVIEW
+    notes:
+    - 'T18: No OWASP LLM Top 10 2025 entry fits (classic OWASP API/Web risk); left empty rather than forced.
+      Added in Phase 2. D16 is a proposed new dimension.'
+  gaps:
+  - No HG rule and no harnesswatch command target T18; OWASP LLM Top 10 2025 has no fitting entry; rubric
+    D16 is proposed only.
+- id: GC-21
+  lifecycle: runtime-and-ci
+  title: 'Headless agents in CI: no untrusted triggers (pwn-request pattern)'
+  statement: A coding agent shall not run non-interactively in CI on events that outsiders can trigger
+    (issue and pull-request comments, issues, pull_request_target) unless the job is gated on author association
+    or an actor allowlist. Event text shall be passed through environment variables, never interpolated
+    into the prompt or script, and deployment secrets shall not be exposed to agent jobs.
+  addresses:
+  - design-weakness
+  rationale: The agent reads attacker-written text in a job that may hold secrets and write access. With
+    auto-approval or interpolation and no actor gate, a crafted issue or pull request can steer the agent
+    to leak secrets or push code.
+  threats:
+  - T09
+  - T01
+  root_causes:
+  - RC1
+  - RC6
+  dimensions:
+  - D08
+  verify:
+    commands:
+    - harnesswatch audit ci . -f sarif -o ci.sarif
+    rules:
+    - HG-CI-001
+    manual: ''
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.7
+    - MANAGE 4.1
+    - GOVERN 4.3
+    - MAP 3.5
+    - MEASURE 2.6
+    - MANAGE 1.3
+    - MANAGE 2.3
+    nist_ai_600_1:
+      risks:
+      - Information Security
+      - Human-AI Configuration
+      section_numbers_unverified:
+      - '2.9'
+      - '2.7'
+    iso_iec_42001:
+      annex_a:
+      - A.6.2.5
+      - A.6.2.6
+      - A.9.2
+      - A.10.2
+      - A.6.1.3
+      - A.6.2.4
+      clauses:
+      - '8.3'
+      - '9.1'
+      - 6.1.2
+      - '8.2'
+    owasp_llm_2025:
+    - LLM01
+    - LLM06
+    owasp_agentic:
+    - ASI01
+    - ASI02
+    - ASI03
+    owasp_mcp:
+    - MCP06
+    mitre_atlas:
+    - AML.T0051.001
+    - AML.T0093
+    - AML.T0119
+    - AML.T0053
+    - AML.T0068
+    - AML.T0094
+    mas_airm:
+      paragraphs:
+      - '5.16'
+      - '5.22'
+      - '5.23'
+      - '5.15'
+      airmkit_controls:
+      - AIRM-5.16-AGENT-PERMISSIONS
+      - AIRM-5.22-SECURITY-REVIEW
+      - AIRM-5.23-AGENT-TRACE-MONITORING
+      - AIRM-5.15-GUARDRAIL-EFFECTIVENESS
+      - AIRM-5.15-GENAI-FAILURE-MODES
+      - AIRM-5.16-SECURITY-CONTROLS
+    notes: []
+  gaps: []
+- id: GC-22
+  lifecycle: runtime-and-ci
+  title: Least-privilege GITHUB_TOKEN and agent identities
+  statement: Every CI job that runs an agent shall declare an explicit permissions block with read-only
+    scopes, granting only the single write scope the job needs. Agent jobs shall use dedicated identities
+    with no production credentials, and branch protection shall require human review of agent-authored
+    changes.
+  addresses:
+  - design-weakness
+  rationale: A default or write-scoped token lets a steered agent push commits, edit workflows or publish
+    packages. Least privilege bounds the blast radius of a successful injection.
+  threats:
+  - T09
+  - T14
+  root_causes:
+  - RC6
+  - RC11
+  dimensions:
+  - D08
+  - D01
+  verify:
+    commands:
+    - harnesswatch audit ci . -f sarif -o ci.sarif
+    rules:
+    - HG-CI-002
+    manual: Check branch-protection settings and the agent identity's credential scopes in the CI platform.
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.7
+    - MANAGE 4.1
+    - GOVERN 4.3
+    - MAP 3.5
+    - MEASURE 2.6
+    - MANAGE 2.4
+    - MANAGE 2.3
+    - MANAGE 1.3
+    nist_ai_600_1:
+      risks:
+      - Information Security
+      - Human-AI Configuration
+      section_numbers_unverified:
+      - '2.9'
+      - '2.7'
+    iso_iec_42001:
+      annex_a:
+      - A.6.2.5
+      - A.6.2.6
+      - A.9.2
+      - A.10.2
+      - A.5.4
+      - A.9.3
+      clauses:
+      - '8.3'
+      - '9.1'
+      - 6.1.4
+      - '8.4'
+    owasp_llm_2025:
+    - LLM01
+    - LLM06
+    owasp_agentic:
+    - ASI01
+    - ASI02
+    - ASI03
+    - ASI08
+    owasp_mcp:
+    - MCP06
+    mitre_atlas:
+    - AML.T0051.001
+    - AML.T0093
+    - AML.T0119
+    - AML.T0053
+    - AML.T0101
+    - AML.T0048.000
+    mas_airm:
+      paragraphs:
+      - '5.16'
+      - '5.22'
+      - '5.23'
+      - '5.2'
+      - '5.3'
+      - '5.9'
+      airmkit_controls:
+      - AIRM-5.16-AGENT-PERMISSIONS
+      - AIRM-5.22-SECURITY-REVIEW
+      - AIRM-5.23-AGENT-TRACE-MONITORING
+      - AIRM-5.3-KILL-SWITCH
+      - AIRM-5.3-CONTINGENCY-PLAN
+      - AIRM-5.9-HUMAN-OVERSIGHT
+      - AIRM-5.2-FN28-PILOT-GUARDRAILS
+    notes: []
+  gaps: []
+- id: GC-23
+  lifecycle: runtime-and-ci
+  title: Harness-configuration gate on every change
+  statement: Repositories in which agents run shall check harness configuration, MCP declarations, instruction
+    files and CI workflows on every pull request, block merges on high-severity findings, and suppress
+    findings only through a reviewed baseline file.
+  addresses:
+  - design-weakness
+  - vulnerability
+  rationale: Repository files are the configuration-as-code attack surface; checking them at review time
+    catches changes before a harness honours them.
+  threats:
+  - T02
+  - T04
+  - T01
+  root_causes:
+  - RC2
+  - RC1
+  dimensions:
+  - D04
+  - D05
+  - D08
+  verify:
+    commands:
+    - harnesswatch audit repo . --fail-on high -f sarif -o harnesswatch.sarif
+    - harnesswatch audit repo . --fail-on high --baseline harnesswatch-baseline.json
+    rules:
+    - HG-PERM-001
+    - HG-PERM-002
+    - HG-HOOK-001
+    - HG-HOOK-002
+    - HG-MCP-001
+    - HG-MCP-005
+    - HG-MCP-006
+    - HG-INJ-001
+    - HG-INJ-002
+    - HG-INJ-003
+    - HG-CI-001
+    - HG-CI-002
+    manual: The harnesswatch GitHub Action (pinned to a full commit SHA) or pre-commit hooks run the same
+      audits; confirm the check is required in branch protection.
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.7
+    - MANAGE 1.3
+    - MAP 4.2
+    - MAP 4.1
+    - MANAGE 3.1
+    - GOVERN 6.1
+    - MEASURE 2.6
+    - MANAGE 2.3
+    nist_ai_600_1:
+      risks:
+      - Information Security
+      - Value Chain and Component Integration
+      section_numbers_unverified:
+      - '2.9'
+      - '2.12'
+    iso_iec_42001:
+      annex_a:
+      - A.6.1.3
+      - A.6.2.5
+      - A.9.2
+      - A.10.2
+      - A.10.3
+      - A.4.4
+      - A.6.2.4
+      - A.6.2.6
+      clauses:
+      - 6.1.2
+      - '8.3'
+      - '8.2'
+    owasp_llm_2025:
+    - LLM06
+    - LLM03
+    - LLM01
+    owasp_agentic:
+    - ASI05
+    - ASI02
+    - ASI04
+    - ASI01
+    owasp_mcp:
+    - MCP09
+    - MCP03
+    - MCP04
+    - MCP05
+    - MCP07
+    - MCP10
+    - MCP06
+    mitre_atlas:
+    - AML.T0081
+    - AML.T0050
+    - AML.T0053
+    - AML.T0110
+    - AML.T0109
+    - AML.T0011.002
+    - AML.T0010.005
+    - AML.T0099
+    - AML.T0131
+    - AML.T0051.001
+    - AML.T0093
+    - AML.T0068
+    - AML.T0094
+    mas_airm:
+      paragraphs:
+      - '5.16'
+      - '5.22'
+      - '5.10'
+      - '5.11'
+      - '5.25'
+      - '5.15'
+      airmkit_controls:
+      - AIRM-5.16-SECURITY-CONTROLS
+      - AIRM-5.16-AGENT-PERMISSIONS
+      - AIRM-5.22-SECURITY-REVIEW
+      - AIRM-5.16-THIRD-PARTY-COMPONENTS
+      - AIRM-5.11-SUPPLY-CHAIN
+      - AIRM-5.25-DYNAMIC-UPDATES
+      - AIRM-5.25-CHANGE-CONTROL
+      - AIRM-5.15-GUARDRAIL-EFFECTIVENESS
+      - AIRM-5.15-GENAI-FAILURE-MODES
+    notes: []
+  gaps: []
+- id: GC-24
+  lifecycle: runtime-and-ci
+  title: Human approval and stop control for irreversible actions
+  statement: Irreversible or high-impact actions by agents (deleting data, force-pushing, changing production
+    infrastructure, sending external communications, moving money) shall require explicit human approval
+    outside the agent's own permission prompt, and the organisation shall be able to stop running agents
+    and revoke their credentials promptly.
+  addresses:
+  - design-weakness
+  rationale: Destructive actions can occur with no attacker involved, when the agent exceeds the user's
+    intent without an enforced guardrail (RC11). Deny rules reduce the likelihood; approval gates and
+    a stop control limit the impact.
+  threats:
+  - T14
+  root_causes:
+  - RC11
+  dimensions:
+  - D01
+  - D02
+  verify:
+    commands:
+    - harnesswatch audit config . --user -f json -o config.json
+    rules:
+    - HG-PERM-003
+    - HG-CI-002
+    manual: 'Test the stop procedure in an exercise: terminate a running agent session and revoke its
+      credentials, and record the time taken.'
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.6
+    - MANAGE 2.4
+    - MANAGE 2.3
+    - MANAGE 1.3
+    nist_ai_600_1:
+      risks:
+      - Human-AI Configuration
+      section_numbers_unverified:
+      - '2.7'
+    iso_iec_42001:
+      annex_a:
+      - A.5.4
+      - A.9.3
+      - A.6.2.6
+      clauses:
+      - 6.1.4
+      - '8.4'
+    owasp_llm_2025:
+    - LLM06
+    owasp_agentic:
+    - ASI02
+    - ASI08
+    owasp_mcp: []
+    mitre_atlas:
+    - AML.T0101
+    - AML.T0048.000
+    mas_airm:
+      paragraphs:
+      - '5.2'
+      - '5.3'
+      - '5.9'
+      airmkit_controls:
+      - AIRM-5.3-KILL-SWITCH
+      - AIRM-5.3-CONTINGENCY-PLAN
+      - AIRM-5.9-HUMAN-OVERSIGHT
+      - AIRM-5.2-FN28-PILOT-GUARDRAILS
+    notes: []
+  gaps: []
+- id: GC-25
+  lifecycle: monitoring-and-incident-response
+  title: Agent activity logging and audit trail
+  statement: 'The organisation shall retain, in a store the agent cannot modify, a record of agent sessions
+    sufficient to reconstruct what the agent did: the user or trigger, harness and version, permission
+    mode, tool and MCP calls with their approval decisions, sub-agent delegation, and files changed. Logs
+    shall be redacted for secrets and retained according to policy.'
+  addresses:
+  - policy-choice
+  - design-weakness
+  rationale: Without a record of tool calls and approvals an organisation cannot investigate an incident
+    or show supervisors what an agent did. Local transcripts are under the user's and the agent's control
+    and can contain secrets (GC-15).
+  threats:
+  - T15
+  - T11
+  - T09
+  root_causes:
+  - RC7
+  dimensions:
+  - D11
+  verify:
+    commands: []
+    rules: []
+    manual: Pick a recent agent session and reconstruct it from the central log; check that the fields
+      listed above are present and that secrets are redacted.
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.10
+    - MEASURE 2.8
+    - GOVERN 1.1
+    - MANAGE 4.3
+    - GOVERN 3.2
+    - MAP 3.5
+    - MANAGE 2.4
+    - MEASURE 2.7
+    - MANAGE 4.1
+    - GOVERN 4.3
+    nist_ai_600_1:
+      risks:
+      - Data Privacy
+      - Intellectual Property
+      - Value Chain and Component Integration
+      - Human-AI Configuration
+      - Information Security
+      section_numbers_unverified:
+      - '2.4'
+      - '2.10'
+      - '2.12'
+      - '2.7'
+      - '2.9'
+    iso_iec_42001:
+      annex_a:
+      - A.4.3
+      - A.7.3
+      - A.8.2
+      - A.6.2.8
+      - A.6.1.3
+      - A.6.2.6
+      - A.10.2
+      - A.6.2.5
+      - A.9.2
+      clauses:
+      - '7.5'
+      - '9.1'
+      - '8.3'
+    owasp_llm_2025:
+    - LLM02
+    - LLM06
+    - LLM01
+    owasp_agentic:
+    - ASI03
+    - ASI07
+    - ASI08
+    - ASI01
+    - ASI02
+    owasp_mcp:
+    - MCP08
+    - MCP06
+    mitre_atlas:
+    - AML.T0118
+    - AML.T0118.001
+    - AML.T0053
+    - AML.T0051.001
+    - AML.T0093
+    - AML.T0119
+    mas_airm:
+      paragraphs:
+      - '5.4'
+      - '5.11'
+      - '5.23'
+      - '4.8'
+      - '5.16'
+      - '5.22'
+      airmkit_controls:
+      - AIRM-5.4-DATA-PRIVACY
+      - AIRM-5.4-DATA-CLASSIFICATION
+      - AIRM-5.11-THIRD-PARTY-TRANSPARENCY
+      - AIRM-5.23-GENAI-LOGGING
+      - AIRM-4.8-FN25-AGENT-ATTRIBUTES
+      - AIRM-5.16-AGENT-PERMISSIONS
+      - AIRM-5.23-AGENT-TRACE-MONITORING
+      - AIRM-5.22-SECURITY-REVIEW
+    notes:
+    - 'T15: ATLAS has no technique for vendor-side collection or audit gaps, so mitre_atlas is empty by
+      design.'
+  gaps:
+  - No HG rule checks audit-log configuration; D11 is assessed manually.
+- id: GC-26
+  lifecycle: monitoring-and-incident-response
+  title: Continuous configuration posture monitoring
+  statement: The organisation shall audit harness configuration, MCP declarations, secret residue, file
+    modes and installed versions on managed endpoints and build agents on a fixed schedule and after each
+    harness upgrade, and track new findings against an approved baseline.
+  addresses:
+  - design-weakness
+  - vulnerability
+  rationale: 'User-level configuration drifts after onboarding: bypass modes are switched on, MCP servers
+    added, transcripts accumulate. A scheduled audit with a baseline turns drift into tickets.'
+  threats:
+  - T03
+  - T07
+  - T06
+  root_causes:
+  - RC6
+  - RC7
+  - RC5
+  dimensions:
+  - D14
+  - D07
+  - D13
+  verify:
+    commands:
+    - harnesswatch audit all . --online -f json -o <host>-<date>.json
+    - harnesswatch report <host>-*.json --baseline baseline.json -f sarif -o posture.sarif
+    rules:
+    - HG-PERM-001
+    - HG-PERM-002
+    - HG-PERM-003
+    - HG-SEC-001
+    - HG-SEC-002
+    - HG-SEC-003
+    - HG-SUP-001
+    - HG-SUP-002
+    - HG-MCP-001
+    - HG-MCP-003
+    manual: --online sends package name and version only to OSV.dev; omit it on hosts without approved
+      egress.
+  mappings:
+    nist_ai_rmf:
+    - GOVERN 3.2
+    - MAP 3.5
+    - MEASURE 2.6
+    - MANAGE 2.4
+    - MEASURE 2.10
+    - MEASURE 2.7
+    - GOVERN 1.1
+    - MAP 4.1
+    - MAP 4.2
+    - MANAGE 3.1
+    - GOVERN 6.1
+    - GOVERN 6.2
+    nist_ai_600_1:
+      risks:
+      - Human-AI Configuration
+      - Information Security
+      - Data Privacy
+      - Value Chain and Component Integration
+      section_numbers_unverified:
+      - '2.7'
+      - '2.9'
+      - '2.4'
+      - '2.12'
+    iso_iec_42001:
+      annex_a:
+      - A.6.2.5
+      - A.9.2
+      - A.9.3
+      - A.9.4
+      - A.4.3
+      - A.4.5
+      - A.6.2.8
+      - A.10.3
+      - A.4.4
+      clauses:
+      - '8.3'
+    owasp_llm_2025:
+    - LLM06
+    - LLM02
+    - LLM03
+    owasp_agentic:
+    - ASI02
+    - ASI03
+    - ASI04
+    owasp_mcp:
+    - MCP02
+    - MCP01
+    - MCP04
+    mitre_atlas:
+    - AML.T0053
+    - AML.T0050
+    - AML.T0102
+    - AML.T0055
+    - AML.T0083
+    - AML.T0037
+    - AML.T0098
+    - AML.T0010.001
+    - AML.T0011.001
+    - AML.T0010
+    mas_airm:
+      paragraphs:
+      - '5.9'
+      - '5.16'
+      - '5.4'
+      - '5.10'
+      - '5.11'
+      - '5.25'
+      airmkit_controls:
+      - AIRM-5.16-AGENT-PERMISSIONS
+      - AIRM-5.16-ACCESS-CONTROL
+      - AIRM-5.9-HUMAN-OVERSIGHT
+      - AIRM-5.9-DESIGN-FOR-OVERSIGHT
+      - AIRM-5.4-DATA-SECURITY
+      - AIRM-5.4-DATA-PRIVACY
+      - AIRM-5.16-SECURITY-CONTROLS
+      - AIRM-5.11-SUPPLY-CHAIN
+      - AIRM-5.11-CHANGE-NOTIFICATION
+      - AIRM-5.25-DYNAMIC-UPDATES
+      - AIRM-5.10-THIRD-PARTY-TESTING
+    notes: []
+  gaps: []
+- id: GC-27
+  lifecycle: monitoring-and-incident-response
+  title: Harness-specific incident response
+  statement: 'The incident-response plan shall cover agent-harness incidents, including: revoking and
+    rotating credentials the harness could reach; purging transcripts, memory and caches that hold secrets
+    or injected instructions; removing or disabling MCP servers, skills and plugins; stopping running
+    agents; detecting unapproved or attacker-operated harness use; and notifying the supplier and, where
+    required, the supervisor.'
+  addresses:
+  - vulnerability
+  - design-weakness
+  - policy-choice
+  rationale: A compromised harness session leaves state in places conventional playbooks do not cover
+    (transcripts, memory, MCP tokens). Attackers also operate harnesses as tools; detecting that is an
+    incident-management task, not a product fix.
+  threats:
+  - T16
+  - T07
+  - T14
+  root_causes:
+  - RC12
+  - RC7
+  - RC11
+  dimensions:
+  - D11
+  - D07
+  verify:
+    commands:
+    - harnesswatch audit secrets -f json -o secrets.json
+    rules:
+    - HG-SEC-001
+    - HG-SEC-002
+    manual: Run a tabletop exercise for a prompt-injection-led credential leak through a harness.
+  mappings:
+    nist_ai_rmf:
+    - MANAGE 4.3
+    - MANAGE 2.3
+    - GOVERN 4.3
+    - MEASURE 2.10
+    - MEASURE 2.7
+    - GOVERN 1.1
+    - MEASURE 2.6
+    - MANAGE 2.4
+    - MANAGE 1.3
+    nist_ai_600_1:
+      risks:
+      - Information Security
+      - Data Privacy
+      - Human-AI Configuration
+      section_numbers_unverified:
+      - '2.9'
+      - '2.4'
+      - '2.7'
+    iso_iec_42001:
+      annex_a:
+      - A.8.4
+      - A.9.2
+      - A.3.3
+      - A.4.3
+      - A.4.5
+      - A.6.2.8
+      - A.5.4
+      - A.9.3
+      - A.6.2.6
+      clauses:
+      - '10.2'
+      - '8.3'
+      - 6.1.4
+      - '8.4'
+    owasp_llm_2025:
+    - LLM02
+    - LLM06
+    owasp_agentic:
+    - ASI10
+    - ASI03
+    - ASI02
+    - ASI08
+    owasp_mcp:
+    - MCP01
+    mitre_atlas:
+    - AML.T0124
+    - AML.T0116
+    - AML.T0117
+    - AML.T0055
+    - AML.T0083
+    - AML.T0037
+    - AML.T0098
+    - AML.T0101
+    - AML.T0048.000
+    mas_airm:
+      paragraphs:
+      - '4.4'
+      - '5.23'
+      - '5.4'
+      - '5.16'
+      - '5.2'
+      - '5.3'
+      - '5.9'
+      airmkit_controls:
+      - AIRM-5.23-INCIDENT-MANAGEMENT
+      - AIRM-4.4-FN22-SHADOW-AI
+      - AIRM-5.4-DATA-SECURITY
+      - AIRM-5.4-DATA-PRIVACY
+      - AIRM-5.16-SECURITY-CONTROLS
+      - AIRM-5.3-KILL-SWITCH
+      - AIRM-5.3-CONTINGENCY-PLAN
+      - AIRM-5.9-HUMAN-OVERSIGHT
+      - AIRM-5.2-FN28-PILOT-GUARDRAILS
+    notes:
+    - 'T16: ASI10 (Rogue Agents) concerns agents deviating from intended behaviour; the fit with attacker-operated
+      agents is loose, so treat as indicative.'
+  gaps:
+  - taxonomy/mappings.yaml links AIRM-5.23-INCIDENT-MANAGEMENT only through T16; no HG rule targets T16
+    and OWASP LLM 2025 has no T16 entry.
+- id: GC-28
+  lifecycle: supplier-management
+  title: Verified installers and a controlled update channel
+  statement: Harnesses shall be installed from a package manager with a lockfile or from vendor artefacts
+    whose checksum or signature is verified, not through unverified 'curl | sh' installers. Automatic
+    updates shall follow an organisation-controlled channel or version pin, so that new versions are adopted
+    deliberately and can be rolled back.
+  addresses:
+  - design-weakness
+  rationale: With on-by-default auto-update, whoever controls the download host or CDN path controls code
+    that runs with the developer's credentials. Harness packages and update channels have been compromised
+    (RC5).
+  threats:
+  - T06
+  root_causes:
+  - RC5
+  dimensions:
+  - D13
+  - D14
+  verify:
+    commands:
+    - harnesswatch audit supply -f json -o supply.json
+    rules:
+    - HG-SUP-001
+    manual: Confirm the auto-update setting in managed configuration.
+  mappings:
+    nist_ai_rmf:
+    - MAP 4.1
+    - MAP 4.2
+    - MANAGE 3.1
+    - GOVERN 6.1
+    - GOVERN 6.2
+    nist_ai_600_1:
+      risks:
+      - Value Chain and Component Integration
+      - Information Security
+      section_numbers_unverified:
+      - '2.12'
+      - '2.9'
+    iso_iec_42001:
+      annex_a:
+      - A.10.3
+      - A.4.4
+      - A.6.2.5
+      clauses:
+      - '8.3'
+    owasp_llm_2025:
+    - LLM03
+    owasp_agentic:
+    - ASI04
+    owasp_mcp:
+    - MCP04
+    mitre_atlas:
+    - AML.T0010.001
+    - AML.T0011.001
+    - AML.T0010
+    - AML.T0083
+    mas_airm:
+      paragraphs:
+      - '5.10'
+      - '5.11'
+      - '5.25'
+      airmkit_controls:
+      - AIRM-5.11-SUPPLY-CHAIN
+      - AIRM-5.11-CHANGE-NOTIFICATION
+      - AIRM-5.25-DYNAMIC-UPDATES
+      - AIRM-5.10-THIRD-PARTY-TESTING
+    notes: []
+  gaps: []
+- id: GC-29
+  lifecycle: supplier-management
+  title: SBOM, advisories and patch deadlines
+  statement: The organisation shall keep an SBOM of installed harnesses, subscribe to each supplier's
+    security advisories, and apply security fixes for harnesses within a defined deadline set by severity.
+    Versions with known exploitable advisories shall not remain in use past that deadline.
+  addresses:
+  - vulnerability
+  rationale: Most counted harness incidents are vulnerabilities, and fixes are usually available by the
+    time an advisory is published (see context figures), so the exposure window is set mainly by how fast
+    adopters upgrade.
+  threats:
+  - T06
+  - T19
+  root_causes:
+  - RC5
+  - RC10
+  dimensions:
+  - D13
+  - D15
+  verify:
+    commands:
+    - harnesswatch audit supply --online --sbom harness-sbom.cdx.json -f json -o supply.json
+    rules:
+    - HG-SUP-002
+    manual: ''
+  mappings:
+    nist_ai_rmf:
+    - MAP 4.1
+    - MAP 4.2
+    - MANAGE 3.1
+    - GOVERN 6.1
+    - GOVERN 6.2
+    - MEASURE 2.7
+    - MANAGE 4.1
+    nist_ai_600_1:
+      risks:
+      - Value Chain and Component Integration
+      - Information Security
+      section_numbers_unverified:
+      - '2.12'
+      - '2.9'
+    iso_iec_42001:
+      annex_a:
+      - A.10.3
+      - A.4.4
+      - A.6.2.5
+      - A.6.2.4
+      - A.6.2.7
+      clauses:
+      - '8.3'
+    owasp_llm_2025:
+    - LLM03
+    - LLM05
+    - LLM10
+    owasp_agentic:
+    - ASI04
+    - ASI05
+    owasp_mcp:
+    - MCP04
+    - MCP05
+    mitre_atlas:
+    - AML.T0010.001
+    - AML.T0011.001
+    - AML.T0010
+    - AML.T0083
+    - AML.T0049
+    - AML.T0029
+    mas_airm:
+      paragraphs:
+      - '5.10'
+      - '5.11'
+      - '5.25'
+      - '5.14'
+      - '5.22'
+      airmkit_controls:
+      - AIRM-5.11-SUPPLY-CHAIN
+      - AIRM-5.11-CHANGE-NOTIFICATION
+      - AIRM-5.25-DYNAMIC-UPDATES
+      - AIRM-5.10-THIRD-PARTY-TESTING
+      - AIRM-5.22-SECURITY-REVIEW
+      - AIRM-5.14-TESTING-APPROACHES
+      - AIRM-5.25-CHANGE-CONTROL
+    notes: []
+  gaps: []
+- id: GC-30
+  lifecycle: supplier-management
+  title: 'Supplier terms: transparency, change notice and disclosure'
+  statement: 'Contracts or terms for harness and model suppliers shall cover: data use, retention and
+    processing locations; notice of material changes to the client, its data flows or default settings;
+    a security contact and advisory process; incident notification; and the organisation''s right to test
+    the client''s behaviour (GC-03). Gaps shall be risk-accepted by the accountable owner.'
+  addresses:
+  - policy-choice
+  rationale: Accountability for third-party AI tooling stays with the adopting organisation. Telemetry,
+    default changes and update behaviour are supplier decisions the adopter can only manage if they are
+    disclosed.
+  threats:
+  - T15
+  - T06
+  root_causes:
+  - RC7
+  - RC5
+  dimensions:
+  - D12
+  - D15
+  - D13
+  verify:
+    commands: []
+    rules: []
+    manual: Procurement and legal review against this list at contract signature and renewal.
+  mappings:
+    nist_ai_rmf:
+    - MEASURE 2.10
+    - MEASURE 2.8
+    - GOVERN 1.1
+    - MANAGE 4.3
+    - MAP 4.1
+    - MAP 4.2
+    - MANAGE 3.1
+    - GOVERN 6.1
+    - GOVERN 6.2
+    nist_ai_600_1:
+      risks:
+      - Data Privacy
+      - Intellectual Property
+      - Value Chain and Component Integration
+      - Information Security
+      section_numbers_unverified:
+      - '2.4'
+      - '2.10'
+      - '2.12'
+      - '2.9'
+    iso_iec_42001:
+      annex_a:
+      - A.4.3
+      - A.7.3
+      - A.8.2
+      - A.6.2.8
+      - A.10.3
+      - A.4.4
+      - A.6.2.5
+      clauses:
+      - '7.5'
+      - '9.1'
+      - '8.3'
+    owasp_llm_2025:
+    - LLM02
+    - LLM03
+    owasp_agentic:
+    - ASI04
+    owasp_mcp:
+    - MCP08
+    - MCP04
+    mitre_atlas:
+    - AML.T0010.001
+    - AML.T0011.001
+    - AML.T0010
+    - AML.T0083
+    mas_airm:
+      paragraphs:
+      - '5.4'
+      - '5.11'
+      - '5.23'
+      - '5.10'
+      - '5.25'
+      airmkit_controls:
+      - AIRM-5.4-DATA-PRIVACY
+      - AIRM-5.4-DATA-CLASSIFICATION
+      - AIRM-5.11-THIRD-PARTY-TRANSPARENCY
+      - AIRM-5.23-GENAI-LOGGING
+      - AIRM-5.11-SUPPLY-CHAIN
+      - AIRM-5.11-CHANGE-NOTIFICATION
+      - AIRM-5.25-DYNAMIC-UPDATES
+      - AIRM-5.10-THIRD-PARTY-TESTING
+    notes:
+    - 'T15: ATLAS has no technique for vendor-side collection or audit gaps, so mitre_atlas is empty by
+      design.'
+  gaps: []

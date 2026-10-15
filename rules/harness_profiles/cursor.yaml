@@ -1,0 +1,113 @@
+id: cursor
+name: Cursor (IDE + Cursor CLI + Cloud Agents)
+vendor: Anysphere
+tier: B
+license: Proprietary
+open_source: false
+status: docs-only
+version_analysed: null            # docs-only; docs changelog references Cursor 3.23 (2026-10-01); CLI build 2026.08.11-e8db854 seen via third-party tracker (unverified)
+analysed_on: "2026-10-15"
+homepage: https://cursor.com
+repo: null                        # https://github.com/cursor/cursor hosts issues + security advisories only (no source)
+
+binaries: [cursor, agent, cursor-agent]   # CLI primary entrypoint is `agent`; `cursor-agent` kept as alias (Cursor forum, 2026-01-08; third-party relay)
+packages: []
+install_methods:
+  - {method: curl-installer, command: "curl https://cursor.com/install -fsS | bash", checksum_verified: null, signed: null, source: https://cursor.com/docs/cli/headless}
+  - {method: powershell, command: "irm 'https://cursor.com/install?win32=true' | iex", checksum_verified: null, signed: null, source: https://cursor.com/docs/cli/headless}
+  - {method: homebrew-cask, command: "brew install --cask cursor-cli", source: "third-party (skillselion.com); unverified against cursor.com"}
+auto_update: {default: true, config: null, source: "unverified; update domains mentioned at https://cursor.com/security"}
+
+state_dirs: ["~/.cursor", "$XDG_CONFIG_HOME/cursor", "~/.config/Cursor"]
+credential_files: []              # unverified: CLI token storage path not documented in pages read
+credential_storage: "unverified (not documented in fetched pages). CURSOR_API_KEY env var for scripts."
+log_paths: []                     # unverified
+memory_paths: ["~/.cursor/rules"]  # user rules are stored in app settings (Customize > Rules); no on-disk path documented
+
+config_files:
+  - {path: ".cursor/rules/*.mdc", scope: project, format: markdown, kind: rules}
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: ".cursorrules", scope: project, format: markdown, kind: rules}      # legacy; docs rules page no longer mentions it (status unverified)
+  - {path: ".cursor/mcp.json", scope: project, format: json, kind: mcp}
+  - {path: "~/.cursor/mcp.json", scope: user, format: json, kind: mcp}
+  - {path: ".cursor/hooks.json", scope: project, format: json, kind: hooks}
+  - {path: "~/.cursor/hooks.json", scope: user, format: json, kind: hooks}
+  - {path: "/etc/cursor/hooks.json", scope: managed, format: json, kind: hooks}                       # Linux/WSL
+  - {path: "/Library/Application Support/Cursor/hooks.json", scope: managed, format: json, kind: hooks}
+  - {path: "C:\\ProgramData\\Cursor\\hooks.json", scope: managed, format: json, kind: hooks}
+  - {path: "~/.cursor/cli-config.json", scope: user, format: json, kind: settings}
+  - {path: ".cursor/cli.json", scope: project, format: json, kind: settings}      # permissions only
+  - {path: "~/.cursor/permissions.json", scope: user, format: json, kind: settings}   # Auto-review guidance (autoRun.allow_instructions / block_instructions)
+  - {path: ".cursor/permissions.json", scope: project, format: json, kind: settings}
+  - {path: "~/.cursor/sandbox.json", scope: user, format: json, kind: settings}
+  - {path: ".cursor/sandbox.json", scope: project, format: json, kind: settings}
+  - {path: ".cursorignore", scope: project, format: ini, kind: ignore}
+  - {path: ".vscode/tasks.json", scope: project, format: jsonc, kind: settings}   # VS Code fork; runOn folderOpen autorun, Workspace Trust reported OFF by default (third-party)
+instruction_files: [".cursor/rules/*.mdc", "AGENTS.md", ".cursorrules"]
+skills_paths: []                  # unverified
+
+mcp:
+  files: [".cursor/mcp.json", "~/.cursor/mcp.json"]
+  servers_key: "mcpServers"
+  server_fields: {command: command, args: args, env: env, url: url, headers: headers, type: type, envFile: envFile, auth: auth}
+  project_servers_require_approval: null   # docs say tools prompt by default; no explicit project-server approval described. CVE-2025-54136 (MCPoison) = edits to approved server not re-approved (fixed 1.3).
+  notes: "stdio entries use type=stdio + command; remote use url/headers/auth(CLIENT_ID,CLIENT_SECRET,scopes). Interpolation ${env:NAME}, ${userHome}, ${workspaceFolder}. Team admins: Dashboard > Plugins & MCPs; Team Settings > MCP Configuration allowlist (command patterns, URL patterns, tool allowlists)."
+
+permissions:
+  config_keys:
+    mode: "approvalMode"                 # cli-config.json; values allowlist | auto-review | unrestricted
+    allow: "permissions.allow"
+    deny: "permissions.deny"
+    sandbox_mode: "sandbox.mode"
+    sandbox_network: "sandbox.networkAccess"
+    read_boundary: "sandbox.readBoundary"      # system (default) | workspace
+  default_mode: "IDE: Auto-review (recommended default since 3.6, 2026-05-29); CLI default not documented"
+  auto_approve_values:
+    - {key: "approvalMode", value: "unrestricted"}            # cli-config.json
+    - {key: "IDE Settings > Agents > Approvals & Execution > Run Mode", value: "Run Everything"}   # UI setting, on-disk key unverified
+  cli_flags_auto_approve: ["--force", "--yolo"]       # print mode: lets agent modify files; --yolo alias per headless docs
+  allow_rule_syntax: "Shell(git) | Shell(curl:*) | Read(src/**/*.ts) | Write(package.json) | WebFetch(docs.github.com) | Mcp(datadog:*)"
+  overbroad_patterns: ["Shell(*)", "WebFetch(*)", "Mcp(*:*)", "Write(**)", "Read(**)", "Shell(bash)", "Shell(sh)", "Shell(python)", "Shell(node)"]
+  notes: "deny beats allow. Legacy IDE 'Auto-Run Mode' / allowlist / 'YOLO mode' were replaced by Run Modes (Auto-review / Allowlist / Run Everything); 'Ask Every Time' deprecated 3.5. CVE-2026-22708 (allowlist bypass via env-var shell builtins, fixed 2.3)."
+
+hooks:
+  supported: true
+  config_key: "hooks"            # top-level {version: 1, hooks: {<event>: [{command, type, timeout, matcher, failClosed, loop_limit}]}}
+  repo_scoped_allowed: true      # project hooks require trusted workspace per docs
+  command_field: "command"
+  events: [sessionStart, sessionEnd, preToolUse, postToolUse, postToolUseFailure, subagentStart, subagentStop, beforeShellExecution, afterShellExecution, beforeMCPExecution, afterMCPExecution, beforeReadFile, afterFileEdit, beforeSubmitPrompt, preCompact, stop, afterAgentResponse, afterAgentThought, beforeTabFileRead, afterTabFileEdit, workspaceOpen]
+  notes: "precedence Enterprise > Team > Project > User"
+
+sandbox: {available: true, default_on: true, mechanism: "macOS Seatbelt (sandbox-exec, Cursor >=2.0); Linux Landlock+seccomp (kernel >=6.2) with bubblewrap fallback; Windows/WSL not documented", config: "sandbox.json (readBoundary, additionalReadPaths, network allowlist); CLI: sandbox.mode / sandbox.networkAccess in cli-config.json", source: https://cursor.com/docs/agent/security/run-modes}
+network: {domain_allowlist: true, config: "sandbox.json; network modes: 'sandbox.json Only' | 'sandbox.json + Defaults' (default, ~100 package-manager domains) | 'Allow All'; CLI WebFetch(domain) permission tokens", default: "sandbox.json + Defaults (sandboxed terminal only); non-sandboxed Run Everything has no egress control", source: https://cursor.com/docs/agent/security/run-modes}
+workspace_trust: {prompt_on_new_folder: false, notes: "Third-party (Oasis Security, 2025): Cursor ships with VS Code Workspace Trust disabled, so .vscode/tasks.json runOn:folderOpen executes without prompt; vendor said users can enable it. Hooks docs say project hooks require a trusted workspace. Current default not re-verified.", source: "https://devops.com/oasis-security-identifies-security-weakness-in-cursor-ai-coding-tool/ (not fetched; via search summary)"}
+memory: {persistent: true, cross_project: true, agent_writable: null, notes: "User Rules (global) + Team Rules; Memories feature not covered in pages read.", source: https://cursor.com/docs/context/rules}
+subagents: {supported: true, inherits_permissions: "unverified", notes: "hooks events subagentStart/subagentStop exist", source: https://cursor.com/docs/agent/hooks}
+telemetry: {default_on: true, opt_out: "Privacy Mode (user setting; admin-enforceable on Teams/Enterprise)", training_default: "Privacy Mode OFF: Cursor may store/train on code, prompts, snippets. Default state for new users not stated on pages read.", source: https://cursor.com/data-use}
+headless:
+  command: "agent -p \"<prompt>\"   (alias: cursor-agent -p)"
+  flags: ["--print/-p", "--force/--yolo", "--output-format text|json|stream-json", "--stream-partial-output"]
+  ci_integrations: []            # no official Action found in pages read
+  model_override: "model via /model; CURSOR_API_KEY env for auth"
+  local_model_support: "no (B4 2026-10-15): CLI auth is Cursor account browser login or CURSOR_API_KEY (https://cursor.com/docs/cli/reference/authentication); no CLI base-URL override documented. IDE Override OpenAI Base URL routes via Cursor servers, needs a public HTTPS endpoint (Cursor staff on forum, third-party-report). All requests route via Cursor backend even with API keys (data-use page)."
+
+security_policy: {security_md: https://cursor.com/security, bug_bounty: null, advisories: https://github.com/cursor/cursor/security/advisories}
+extra:
+  enterprise_admin: "Team/Enterprise dashboard: enforce Privacy Mode, Sandbox mode (Enterprise), Auto-run/Browser/Network controls (Enterprise), MCP allowlist, hooks via MDM/server, model access restrictions, repo blocklist, audit logs + SIEM, disable BYOK, restrict CLI/Cloud Agent. MDM policy for allowed extensions/team IDs. Team permissions override local sandbox.json/permissions.json."
+  auto_review: "Classifier models Gemini 3.5 Flash Lite (fallback Claude 4.5 Haiku) per docs; non-sandboxed calls reviewed by classifier."
+  other_protections: "Browser Protection, File-Deletion Protection, External-File Protection can force approval in auto modes."
+  cloud_agents: "Run on Cursor machines and never ask for approval (Run Modes apply to local agents only)."
+  advisory_count_github: "29 published advisories at github.com/cursor/cursor as of 2026-10-15 (2024-09 .. 2026-07)."
+  env_vars: [CURSOR_API_KEY, CURSOR_CONFIG_DIR, CURSOR_SANDBOX, CURSOR_AGENT]
+sources:
+  - {url: https://cursor.com/docs/cli/reference/permissions, accessed: "2026-10-15", note: "cli permissions tokens"}
+  - {url: https://cursor.com/docs/cli/reference/configuration, accessed: "2026-10-15", note: "cli-config.json keys"}
+  - {url: https://cursor.com/docs/context/mcp, accessed: "2026-10-15", note: "mcp.json schema, allowlist"}
+  - {url: https://cursor.com/docs/agent/hooks, accessed: "2026-10-15", note: "hooks.json"}
+  - {url: https://cursor.com/docs/agent/security/run-modes, accessed: "2026-10-15", note: "run modes, sandbox, network"}
+  - {url: https://cursor.com/docs/context/rules, accessed: "2026-10-15", note: "rules"}
+  - {url: https://cursor.com/docs/cli/headless, accessed: "2026-10-15", note: "print mode"}
+  - {url: https://cursor.com/docs/enterprise, accessed: "2026-10-15", note: "admin controls"}
+  - {url: https://cursor.com/security, accessed: "2026-10-15", note: "security contact"}
+  - {url: https://cursor.com/data-use, accessed: "2026-10-15", note: "privacy mode"}
+  - {url: https://github.com/cursor/cursor/security/advisories, accessed: "2026-10-15", note: "advisories via gh api"}

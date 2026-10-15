@@ -1,0 +1,260 @@
+{
+  "harness": "hermes-agent",
+  "version": "0.22.1",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "approvals.mode smart|manual|off, default smart; approvals.deny globs enforced before --yolo; hardline blocklist cannot be overridden.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/security.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "SECURITY.md: approval gate is a heuristic over shell strings, 'not a boundary'.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Approval gate with smart (LLM-assisted) default, manual and off modes, glob deny list enforced before yolo, hardline blocklist, allowlist; but the project itself says the gate is a heuristic, and smart mode lets an auxiliary LLM auto-approve."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Default terminal backend runs commands directly on the host; non-default backends confine only shell/file tools.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CVE-2026-9368: sandbox issue in execute_code env handler (< 0.11.0).",
+          "source": "https://github.com/advisories/GHSA-wm96-9gfh-vvgq",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Default terminal backend runs commands on the host; Docker/SSH/cloud backends and whole-process wrapping are opt-in; official docs say sandboxes do not confine in-process code (execute_code, MCP, plugins, hooks)."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "iron-proxy wired into Docker backend only; sandbox holds opaque proxy tokens, upstream host allowlist in proxy.yaml.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/egress/iron-proxy.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Default Docker network_mode: host gives unrestricted outbound access.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/egress/network-isolation.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Egress controls are opt-in: iron-proxy credential-injection proxy (Docker backend only) and Docker network segmentation guide; default is unrestricted."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Project-local plugins under ./.hermes/plugins/ are disabled by default; enable with HERMES_ENABLE_PROJECT_PLUGINS=true.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/plugins.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Shell-hook consent is first-use per (event, command); allowlist keys on command string so script edits are silently trusted.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/hooks.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CVE-2026-9366: _scan_context_content injection bypass (< 0.15.0); CVE-2026-9369: project-plugin env comparison flaw (< 0.15.0).",
+          "source": "https://github.com/advisories/GHSA-pgp4-xr4j-h5cg",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Project plugins disabled by default (env opt-in), shell hooks need per-(event,command) consent, MCP trust prompts; context files load without trust prompt but are injection-scanned (scanner itself had bypass CVEs)."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "Credentials stripped from the env of MCP subprocesses by default; variables explicitly declared are passed through.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Approval hook surfaces include `mcp-trust/<server>` and `mcp-elicitation/<server>`.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/hooks.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "MCP servers only in user/managed config; consent surfaces for MCP trust/elicitation; env scrubbing of MCP subprocesses; per-server tool include/exclude; no repo-level MCP file."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Skills execute arbitrary Python at import time; Skills Guard is a review aid, boundary is operator review.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CVE-2026-9353: Skills Guard multi-word prompt handling THREAT_PATTERNS bypass (< 0.15.0).",
+          "source": "https://github.com/advisories/GHSA-238w-f66p-w349",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Skills Guard scans skills but is explicitly a review aid; skills and plugins execute arbitrary Python in-process; plugins explicit-enable; catalog exists."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Provider keys and gateway tokens are stripped from env passed to shell/MCP/cron/code-exec children by default.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CVE-2026-53870: response_store.db and webhook_subscriptions.json created world-readable (0o644); fixed 0.16.0.",
+          "source": "https://github.com/advisories/GHSA-99f9-j8r3-p853",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Secrets in .env/auth.json (chmod 600 guidance), credential vault 0600, env scrubbing for subprocesses, log redaction, managed secret pins, optional external secret managers; a world-readable-files CVE existed."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "approvals.cron_mode, single_query_mode, unattended_mode default `deny`.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/security.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Gateway authorization order ends with default: deny.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/security.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Headless paths default to deny: single_query_mode, cron_mode, unattended_mode all deny dangerous commands; gateway authorization is default-deny with DM pairing."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "MEMORY.md/USER.md written by the agent via memory tool; frozen snapshot injected at session start; memory.write_approval default false.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/memory.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CVE-2026-10223: injection issue in _scan_memory_content (< 0.15.0).",
+          "source": "https://github.com/advisories/GHSA-33qv-c5qm-799v",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Persistent cross-project agent-writable memory injected into every session; write_approval gate off by default; injection scanning exists but had a CVE."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "delegate_task children get isolated context, inherited tool access, own terminal sessions; model cannot pass toolsets.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/delegation.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Children inherit only the parent's enabled toolsets (cannot be widened by the model) with isolated context and terminals; credential pinning per delegation; no stronger isolation documented."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Logs under ~/.hermes/logs with secrets auto-redacted; pre-approval hooks allow auditing.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/configuration.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Session store, gateway/error logs with secret redaction, approval-surface hooks for audit; no tamper-evident or enterprise audit log."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "No telemetry/analytics opt-out documented in security/configuration docs searched; token analytics are local-only.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/configuration.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "No telemetry feature documented either way (unverified); prompts go to configured provider."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Install via `curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash`; signed APT repo for Termux.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "updates.pre_update_backup quick|full|off.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/configuration.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "curl|bash installer plus pip, Docker, Nix, signed Termux APT; pre-update state snapshots; no checksum/signature statement for the main installer found."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Managed scope values win over ~/.hermes/config.yaml, ~/.hermes/.env and the shell environment for exactly the pinned keys; dir 0755 root-owned.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/managed-scope.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Managed scope: root-owned /etc/hermes config.yaml and .env pin selected keys above user config and shell env; enforced by filesystem permissions."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md: report via GHSA or security@nousresearch.com; no bug bounty.",
+          "source": "https://github.com/NousResearch/hermes-agent/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "10 GitHub advisory DB entries for pip hermes-agent (CVE-2026-9353 ... 53870).",
+          "source": "https://api.github.com/advisories?affects=hermes-agent",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Detailed SECURITY.md with explicit trust model and scope; GHSA channel; 10 CVE-bearing advisories in 2026; no bounty; some advisories report vendor non-response and lack fixed versions."
+    }
+  }
+}

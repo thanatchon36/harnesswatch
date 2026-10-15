@@ -1,0 +1,14 @@
+{
+  "tools": {
+    "approvalMode": "auto-edit"
+  },
+  "permissions": {
+    "allow": [
+      "read_file",
+      "run_shell_command(npm test)"
+    ],
+    "deny": [
+      "run_shell_command(rm -rf)"
+    ]
+  }
+}

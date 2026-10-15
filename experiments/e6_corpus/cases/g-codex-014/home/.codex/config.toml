@@ -1,0 +1,15 @@
+model = "o4-mini"
+model_reasoning_effort = "low"
+approval_policy = "never"
+sandbox_mode = "workspace-write"
+approvals_reviewer = "auto_review"
+
+[features]
+memories = false
+
+[otel]
+environment = "dev"
+log_user_prompt = false
+
+[mcp_servers.figma]
+url = "http://127.0.0.1:3845/mcp"

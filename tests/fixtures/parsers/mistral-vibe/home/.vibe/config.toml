@@ -1,0 +1,8 @@
+default_agent = "auto-approve"
+bypass_tool_permissions = true
+
+[[mcp_servers]]
+name = "fs"
+transport = "stdio"
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-filesystem", "."]

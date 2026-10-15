@@ -1,0 +1,4 @@
+expected: [HG-INJ-002]
+origin: hand
+family: instr
+note: "tool-shadowing instruction with exfiltration URL"

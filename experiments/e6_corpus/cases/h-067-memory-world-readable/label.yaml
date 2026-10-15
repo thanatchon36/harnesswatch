@@ -1,0 +1,4 @@
+expected: [HG-SEC-002]
+origin: hand
+family: sec
+note: "world-readable memory file, no secrets"

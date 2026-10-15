@@ -1,0 +1,6 @@
+{
+  "permissions": {"defaultMode": "acceptEdits", "allow": ["Bash(git status)", "Bash(git diff:*)", "Bash(npm run test:*)"]},
+  "statusLine": {"type": "command", "command": "~/.claude/statusline.sh"},
+  "env": {"DISABLE_TELEMETRY": "1", "DISABLE_ERROR_REPORTING": "1"},
+  "autoMemoryEnabled": false
+}

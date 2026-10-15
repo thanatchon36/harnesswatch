@@ -1,0 +1,4 @@
+model: sonnet
+yes-always: true
+auto-test: true
+test-cmd: pytest -q

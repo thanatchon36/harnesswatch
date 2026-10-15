@@ -1,0 +1,28 @@
+{
+  "tools": {
+    "approvalMode": "yolo"
+  },
+  "mcpServers": {
+    "fs": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "."
+      ]
+    }
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "./scripts/guard.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

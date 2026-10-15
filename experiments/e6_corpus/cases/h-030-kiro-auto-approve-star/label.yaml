@@ -1,0 +1,4 @@
+expected: [HG-MCP-005, HG-MCP-006]
+origin: hand
+family: mcp
+note: "Kiro autoApprove wildcard in repo"

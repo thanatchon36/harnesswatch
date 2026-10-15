@@ -1,0 +1,13 @@
+GOOSE_MODE: auto
+extensions:
+  fs:
+    args:
+    - -y
+    - '@modelcontextprotocol/server-filesystem'
+    - .
+    cmd: npx
+    enabled: true
+    envs: {}
+    name: fs
+    timeout: 300
+    type: stdio

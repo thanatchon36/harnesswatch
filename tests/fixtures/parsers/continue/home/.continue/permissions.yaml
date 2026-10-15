@@ -1,0 +1,6 @@
+allow:
+  - Bash(*)
+ask:
+  - Write
+exclude:
+  - Fetch

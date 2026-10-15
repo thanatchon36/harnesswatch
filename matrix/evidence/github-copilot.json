@@ -1,0 +1,260 @@
+{
+ "harness": "github-copilot",
+ "version": "copilot-cli v1.0.98 (release 2026-10-14); docs-level",
+ "analysed_on": "2026-10-15",
+ "status": "docs-only",
+ "dimensions": {
+  "D01": {
+   "facts": [
+    {
+     "claim": "CLI prompts for tools/paths/URLs by default; --allow-all-tools, --allow-all/--yolo, /allow-all, /yolo auto-approve; --deny-tool beats allow-all.",
+     "source": "https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/configure-copilot-cli",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "VS Code: chat.tools.global.autoApprove default false; terminal autoApprove default denies rm/curl/wget/eval/chmod/chown/kill; chat.permissions.default autoApprove/autopilot (experimental).",
+     "source": "https://code.visualstudio.com/docs/agents/reference/ai-settings",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "CVE-2025-53773: prompt injection could enable auto-approve and run code (VS Code/Copilot).",
+     "source": "https://github.com/advisories/GHSA-3m2x-p87c-pwv6",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "CVE-2026-29783: shell read-only classifier bypass via bash parameter expansion (<=0.0.422).",
+     "source": "https://github.com/github/copilot-cli/security/advisories/GHSA-g8r9-g2v8-jv6f",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Strong default prompting and deny precedence, admin can block yolo; history of approval-bypass bugs."
+  },
+  "D02": {
+   "facts": [
+    {
+     "claim": "CLI settings sandbox.* (enabled, allowBypass, userPolicy network/filesystem); VS Code chat.agent.sandbox.enabled default off, allowUnsandboxedCommands default true.",
+     "source": "https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Cloud agent runs in ephemeral cloud environment.",
+     "source": "https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Local sandbox is opt-in/off by default; cloud agent isolated by design."
+  },
+  "D03": {
+   "facts": [
+    {
+     "claim": "Cloud agent firewall on by default with recommended allowlist; org setting Enabled/Disabled/Let repos decide; applies only to bash-tool processes, not MCP servers or setup steps.",
+     "source": "https://github.blog/changelog/2026-04-03-organization-firewall-settings-for-copilot-cloud-agent/",
+     "label": "third-party-report",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "CLI: all URLs require approval by default; --allow-url/--deny-url, allowedUrls/deniedUrls.",
+     "source": "https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/configure-copilot-cli",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "VS Code chat.agent.networkFilter default false; sandbox allowNetwork default true.",
+     "source": "https://code.visualstudio.com/docs/agents/reference/ai-settings",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Good cloud default; local network control opt-in."
+  },
+  "D04": {
+   "facts": [
+    {
+     "claim": "CLI asks to trust launch directory; project MCP servers skipped in untrusted directories; VS Code Restricted Mode disables agents and MCP in .vscode/mcp.json/.mcp.json inherit trust.",
+     "source": "https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/configure-copilot-cli",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "CVE-2026-45033: nested bare repo core.fsmonitor RCE via git operations (<=1.0.42).",
+     "source": "https://github.com/github/copilot-cli/security/advisories/GHSA-9ccr-r5hg-74gf",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Trust prompt in CLI and VS Code; pre-trust loading of hooks/instructions undocumented."
+  },
+  "D05": {
+   "facts": [
+    {
+     "claim": "VS Code policies ChatMCP (registryOnly/off), McpGalleryServiceUrl; Workspace-trust-gated project servers; no per-server prompt once trusted.",
+     "source": "https://code.visualstudio.com/docs/copilot/security",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Cloud agent: once MCP is configured Copilot uses tools without approval; OAuth remote servers unsupported; tools array required.",
+     "source": "https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/extend-cloud-agent-with-mcp",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Registry-only policy available; cloud agent autonomy by design."
+  },
+  "D06": {
+   "facts": [
+    {
+     "claim": "Plugins/extensions: installed-plugins, extraKnownMarketplaces setting; VS Code policy ChatAgentExtensionTools.",
+     "source": "https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": null,
+   "rationale": "N/A (Marketplace vetting not verified.)"
+  },
+  "D07": {
+   "facts": [
+    {
+     "claim": "MCP OAuth/secrets use keychain with ~/.copilot/mcp-oauth-config and mcp-secrets fallbacks.",
+     "source": "https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Cloud agent MCP secrets must be COPILOT_MCP_* Agents secrets.",
+     "source": "https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/extend-cloud-agent-with-mcp",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Keychain-first with documented fallbacks."
+  },
+  "D08": {
+   "facts": [
+    {
+     "claim": "copilot -p, --allow-tool, --no-ask-user; docs recommend GITHUB_TOKEN least privilege and GitHub Agentic Workflows over raw invocation.",
+     "source": "https://docs.github.com/en/copilot/how-tos/copilot-cli/automate-with-actions",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Cloud agent: only write-access users trigger; workflows need approval; hidden characters filtered; pushes to copilot/ branch only.",
+     "source": "https://docs.github.com/en/copilot/concepts/agents/coding-agent/risks-and-mitigations",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 3,
+   "rationale": "Documented least-privilege CI guidance and strong cloud-agent guardrails."
+  },
+  "D09": {
+   "facts": [
+    {
+     "claim": "session-store.db cross-session index; personal instructions ~/.copilot/copilot-instructions.md.",
+     "source": "https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Persistent cross-session store, review UX undocumented."
+  },
+  "D10": {
+   "facts": [
+    {
+     "claim": "Custom agents *.agent.md; customAgents.defaultLocalOnly setting.",
+     "source": "https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": null,
+   "rationale": "N/A (Inheritance undocumented.)"
+  },
+  "D11": {
+   "facts": [
+    {
+     "claim": "session-state/<id>/events.jsonl, logs/process-*.log, session-store.db local; cloud session logs visible to teammates.",
+     "source": "https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Local structured event log plus cloud logs; enterprise audit not verified."
+  },
+  "D12": {
+   "facts": [
+    {
+     "claim": "Business/Enterprise prompts not used for training; individual plans used by default from 2026-04-24 unless opted out.",
+     "source": "https://dev.classmethod.jp/en/articles/github-copilot-interaction-data-ai-training-opt-out-2026/",
+     "label": "third-party-report",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": null,
+   "rationale": "N/A (Official page not fetched; third-party only.)"
+  },
+  "D13": {
+   "facts": [
+    {
+     "claim": "Install via curl script, npm @github/copilot, brew, winget; custom license; signing undocumented in pages read.",
+     "source": "https://github.com/github/copilot-cli",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "autoUpdate / autoUpdatesChannel settings.",
+     "source": "https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Multiple channels, integrity verification undocumented."
+  },
+  "D14": {
+   "facts": [
+    {
+     "claim": "Enterprise can block /allow-all and /yolo; permissions.disableBypassPermissionsMode; VS Code policies ChatToolsAutoApprove, ChatAgentMode, ChatMCP; org firewall; admin can disable CLI.",
+     "source": "https://code.visualstudio.com/docs/copilot/security",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 3,
+   "rationale": "Broad centrally enforced policy set."
+  },
+  "D15": {
+   "facts": [
+    {
+     "claim": "GitHub Bug Bounty via HackerOne (public payouts from $10,000); copilot-cli GHSA advisories with CVEs.",
+     "source": "https://bounty.github.com/",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "GHSA-9ccr-r5hg-74gf and GHSA-g8r9-g2v8-jv6f published on github/copilot-cli.",
+     "source": "https://github.com/github/copilot-cli/security/advisories",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 3,
+   "rationale": "Bounty + CVE advisories."
+  }
+ }
+}

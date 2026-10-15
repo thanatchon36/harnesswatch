@@ -1,0 +1,65 @@
+id: manus
+name: Manus
+vendor: Butterfly Effect (Manus); briefly owned by Meta (Dec 2025 - unwound 2026)
+tier: C
+license: Proprietary (SaaS)
+open_source: false
+status: docs-only
+version_analysed: null   # SaaS
+analysed_on: "2026-10-15"
+homepage: https://manus.im
+repo: null
+
+binaries: []
+packages: []
+install_methods: []
+auto_update: {default: true, config: "SaaS", source: https://manus.im}
+
+state_dirs: []
+credential_files: []
+credential_storage: "Cloud. Connector OAuth tokens (e.g. Gmail) held by service; researchers found API keys/endpoints present as environment variables inside the task sandbox (Aurascape, mitigated per vendor)."
+log_paths: []
+memory_paths: []
+
+config_files: []
+instruction_files: []
+skills_paths: []
+
+mcp:
+  files: []
+  servers_key: null
+  server_fields: {}
+  project_servers_require_approval: null
+  notes: "unverified: connector/MCP governance not documented on pages read"
+
+permissions:
+  config_keys: {}
+  default_mode: "unverified; Aurascape reports high-risk connectors (Gmail) exposed as ordinary tools without per-action consent (pre-Nov 2025)"
+  auto_approve_values: []
+  cli_flags_auto_approve: []
+  overbroad_patterns: []
+
+hooks: {supported: false}
+
+sandbox: {available: true, default_on: true, mechanism: "per-task cloud VM with network, file system, browser, tools; user has root inside (vendor blog); passwordless sudo observed by researchers", config: null, source: https://manus.im/blog/manus-sandbox}
+network: {domain_allowlist: false, config: null, default: "outbound network open; researchers reached instance metadata service and internal hosts pre-mitigation (Aurascape)", source: https://aurascape.ai/resources/auralabs-research/silentbridge-zero-click-agent-takeover-meta-manus/}
+workspace_trust: {prompt_on_new_folder: null, notes: "N/A", source: null}
+memory: {persistent: null, cross_project: null, agent_writable: null, notes: "unverified", source: null}
+subagents: {supported: null, inherits_permissions: null, notes: "unverified", source: null}
+telemetry: {default_on: true, opt_out: null, training_default: "unverified (trust page silent; VerifyWise notes privacy policy silent on plan differences)", source: https://manus.im/security}
+headless:
+  command: null
+  flags: []
+  ci_integrations: []
+  model_override: null
+  local_model_support: "none (SaaS)"
+
+security_policy: {security_md: null, bug_bounty: "none found on trust page; Salt Labs reported via Meta bug bounty after no reply from Manus (secondary report)", advisories: null}
+sources:
+  - {url: https://manus.im/security, accessed: "2026-10-15", note: "certifications"}
+  - {url: https://manus.im/blog/manus-sandbox, accessed: "2026-10-15", note: "sandbox description (search summary only)"}
+  - {url: https://aurascape.ai/resources/auralabs-research/silentbridge-zero-click-agent-takeover-meta-manus/, accessed: "2026-10-15", note: "SilentBridge research"}
+  - {url: https://techcrunch.com/2026/04/27/china-vetoes-metas-2b-manus-deal-after-months-long-probe/, accessed: "2026-10-15", note: "acquisition blocked"}
+  - {url: https://techxplore.com/news/2026-10-ai-startup-manus-million-meta.html, accessed: "2026-10-15", note: "independent again"}
+extra:
+  ownership: "Meta deal announced Dec 2025; China NDRC ordered unwind 2026-04-27; Manus independent again (Sept 2026), >$500M round reported 2026-10-08"

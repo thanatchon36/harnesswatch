@@ -1,0 +1,27 @@
+id: HG-PERM-003
+title: Unrestricted execution without a deny list for destructive or credential-reading commands
+area: PERM
+severity: medium
+confidence: medium
+kind: design-weakness
+taxonomy: [T14, T07]
+description: >
+  When approve-everything or an over-broad allowlist is active, deny rules are the only remaining
+  guard (deny rules still apply in bypass mode in harnesses such as Claude Code). The rule fires when
+  the deny list does not cover each destructive class: recursive deletion, history-rewriting git
+  pushes, and reads of credential/secret files.
+remediation: >
+  Add deny rules, e.g. Claude Code: `"deny": ["Bash(rm -rf:*)", "Bash(git push --force:*)",
+  "Read(./.env)", "Read(~/.ssh/**)", "Read(~/.aws/**)"]`; Cursor CLI `Shell(rm)`; Gemini
+  `tools.exclude`. Prefer an OS sandbox over deny lists, which are bypassable.
+references:
+  - https://code.claude.com/docs/en/settings
+params:
+  generic_patterns: ["*", "Bash", "Bash(*)", "Shell(*)", "Exec(*)", "run_shell_command"]
+  destructive_patterns:
+    - 'rm\b'
+    - 'push.*(?:--force|-f\b)|force'
+    - '\.env|\.ssh|\.aws|credential|secret'
+  # reuse PERM-001's notion of bounded modes
+  ignore_keys: [sandbox_workspace_write.network_access, projects.<path>.trust_level, skipDangerousModePermissionPrompt, security.autoAddToPolicyByDefault, security.enablePermanentToolApproval, security.disableYoloMode, tools.allowed, permissions.allow, permissions.allowed_tools, allow, mcpServers.<name>.trust, mcpServers.*.trust, mcpServers.*.autoApprove, mcpServers.*.alwaysAllow, mcpServers.<name>.autoApprove]
+  ignore: [permissions.defaultMode=auto, permissions.defaultMode=acceptEdits, general.defaultApprovalMode=auto_edit, tools.approvalMode=auto, tools.approvalMode=auto-edit, approvals_reviewer=auto_review, general.defaultPermissionMode=auto, general.defaultPermissionMode=accept_edits, sessionDefaultSettings.autonomyLevel=medium, toolPermission=proceed-in-sandbox, ui.permission_mode=auto]

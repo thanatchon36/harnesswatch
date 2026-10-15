@@ -1,0 +1,4 @@
+expected: [HG-MCP-005]
+origin: hand
+family: mcp
+note: "exact-pinned scoped npm package in repo .mcp.json"

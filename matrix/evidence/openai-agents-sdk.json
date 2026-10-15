@@ -1,0 +1,152 @@
+{
+  "harness": "openai-agents-sdk",
+  "version": "0.24.0",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "tier": "C",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "function/shell tools: needs_approval default False; MCP require_approval default None; approval callbacks supported",
+          "source": "https://github.com/openai/openai-agents-python/blob/main/src/agents/tool.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Input guardrails run in parallel with the agent by default",
+          "source": "https://github.com/openai/openai-agents-python/blob/main/docs/guardrails.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "HITL primitive exists but every tool is auto-run unless the builder opts in."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "UnixLocalSandboxClient adds no OS confinement on Linux; Docker and hosted sandbox clients exist",
+          "source": "https://github.com/openai/openai-agents-python/blob/main/docs/sandbox_agents.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Sandbox abstraction exists but the local default client is unconfined and opt-in."
+    },
+    "D03": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (no SDK-level egress control found; not exhaustively searched)"
+    },
+    "D04": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP docs warn to trust servers; require_approval and tool_filter available",
+          "source": "https://github.com/openai/openai-agents-python/blob/main/docs/mcp.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Per-server approval and filtering exist, default no approval."
+    },
+    "D06": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "trace_include_sensitive_data defaults true",
+          "source": "https://github.com/openai/openai-agents-python/blob/main/src/agents/run_config.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Tracing API key via OPENAI_API_KEY / set_tracing_export_api_key",
+          "source": "https://github.com/openai/openai-agents-python/blob/main/src/agents/_config.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Keys live in env/process; sensitive tool data included in exported traces by default."
+    },
+    "D08": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D09": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "handoffs with handoff input filters (extensions/handoff_filters.py)",
+          "source": "https://github.com/openai/openai-agents-python/blob/main/src/agents/extensions/handoff_filters.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "Handoff isolation semantics not examined at source level."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Built-in tracing of generations, tool calls, handoffs, guardrails; custom processors supported",
+          "source": "https://github.com/openai/openai-agents-python/blob/main/docs/tracing.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Rich default-on trace record, but destination is vendor cloud and unavailable under ZDR."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "Tracing default-on to https://api.openai.com/v1/traces/ingest; disable with OPENAI_AGENTS_DISABLE_TRACING=1",
+          "source": "https://github.com/openai/openai-agents-python/blob/main/src/agents/tracing/processors.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Default-on export of prompts/tool IO to OpenAI with opt-out; JS SDK has same env var."
+    },
+    "D13": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D14": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md with CVD policy; no published GHSA",
+          "source": "https://github.com/openai/openai-agents-python/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Clear policy, no advisories published so far."
+    }
+  }
+}

@@ -1,0 +1,11 @@
+on: push
+permissions:
+  contents: read
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - run: codex exec "summarise"

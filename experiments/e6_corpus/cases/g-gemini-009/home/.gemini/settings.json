@@ -1,0 +1,21 @@
+{
+  "general": {
+    "defaultApprovalMode": "auto_edit"
+  },
+  "tools": {
+    "allowed": [
+      "run_shell_command(npm test)",
+      "read_file",
+      "run_shell_command"
+    ],
+    "exclude": [
+      "run_shell_command(rm -rf)"
+    ]
+  },
+  "privacy": {
+    "usageStatisticsEnabled": true
+  },
+  "security": {
+    "disableYoloMode": true
+  }
+}

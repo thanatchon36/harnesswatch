@@ -1,0 +1,2 @@
+chmod:
+  home/.gemini: '0755'

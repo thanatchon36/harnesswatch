@@ -1,0 +1,1 @@
+{"sandbox": {"enabled": true, "network": {"allowedDomains": ["registry.npmjs.org", "pypi.org"]}}}

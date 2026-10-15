@@ -1,0 +1,126 @@
+{
+ "bomFormat": "CycloneDX",
+ "specVersion": "1.5",
+ "version": 1,
+ "metadata": {
+  "timestamp": "2026-10-15T00:00:00Z",
+  "tools": [
+   {
+    "name": "harnesswatch experiments/e4_supply.py"
+   }
+  ],
+  "component": {
+   "type": "application",
+   "name": "opencode-ai",
+   "version": "1.19.0",
+   "purl": "pkg:npm/opencode-ai@1.19.0",
+   "bom-ref": "root:opencode"
+  },
+  "properties": [
+   {
+    "name": "harnesswatch:note",
+    "value": "resolved from lockfile/compile output; not installed"
+   }
+  ]
+ },
+ "components": [
+  {
+   "type": "library",
+   "name": "opencode-ai",
+   "version": "1.19.0",
+   "purl": "pkg:npm/opencode-ai@1.19.0",
+   "bom-ref": "pkg:npm/opencode-ai@1.19.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "MIT"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "opencode-darwin-arm64",
+   "version": "1.19.0",
+   "purl": "pkg:npm/opencode-darwin-arm64@1.19.0",
+   "bom-ref": "pkg:npm/opencode-darwin-arm64@1.19.0"
+  },
+  {
+   "type": "library",
+   "name": "opencode-darwin-x64",
+   "version": "1.19.0",
+   "purl": "pkg:npm/opencode-darwin-x64@1.19.0",
+   "bom-ref": "pkg:npm/opencode-darwin-x64@1.19.0"
+  },
+  {
+   "type": "library",
+   "name": "opencode-darwin-x64-baseline",
+   "version": "1.19.0",
+   "purl": "pkg:npm/opencode-darwin-x64-baseline@1.19.0",
+   "bom-ref": "pkg:npm/opencode-darwin-x64-baseline@1.19.0"
+  },
+  {
+   "type": "library",
+   "name": "opencode-linux-arm64",
+   "version": "1.19.0",
+   "purl": "pkg:npm/opencode-linux-arm64@1.19.0",
+   "bom-ref": "pkg:npm/opencode-linux-arm64@1.19.0"
+  },
+  {
+   "type": "library",
+   "name": "opencode-linux-arm64-musl",
+   "version": "1.19.0",
+   "purl": "pkg:npm/opencode-linux-arm64-musl@1.19.0",
+   "bom-ref": "pkg:npm/opencode-linux-arm64-musl@1.19.0"
+  },
+  {
+   "type": "library",
+   "name": "opencode-linux-x64",
+   "version": "1.19.0",
+   "purl": "pkg:npm/opencode-linux-x64@1.19.0",
+   "bom-ref": "pkg:npm/opencode-linux-x64@1.19.0"
+  },
+  {
+   "type": "library",
+   "name": "opencode-linux-x64-baseline",
+   "version": "1.19.0",
+   "purl": "pkg:npm/opencode-linux-x64-baseline@1.19.0",
+   "bom-ref": "pkg:npm/opencode-linux-x64-baseline@1.19.0"
+  },
+  {
+   "type": "library",
+   "name": "opencode-linux-x64-baseline-musl",
+   "version": "1.19.0",
+   "purl": "pkg:npm/opencode-linux-x64-baseline-musl@1.19.0",
+   "bom-ref": "pkg:npm/opencode-linux-x64-baseline-musl@1.19.0"
+  },
+  {
+   "type": "library",
+   "name": "opencode-linux-x64-musl",
+   "version": "1.19.0",
+   "purl": "pkg:npm/opencode-linux-x64-musl@1.19.0",
+   "bom-ref": "pkg:npm/opencode-linux-x64-musl@1.19.0"
+  },
+  {
+   "type": "library",
+   "name": "opencode-windows-arm64",
+   "version": "1.19.0",
+   "purl": "pkg:npm/opencode-windows-arm64@1.19.0",
+   "bom-ref": "pkg:npm/opencode-windows-arm64@1.19.0"
+  },
+  {
+   "type": "library",
+   "name": "opencode-windows-x64",
+   "version": "1.19.0",
+   "purl": "pkg:npm/opencode-windows-x64@1.19.0",
+   "bom-ref": "pkg:npm/opencode-windows-x64@1.19.0"
+  },
+  {
+   "type": "library",
+   "name": "opencode-windows-x64-baseline",
+   "version": "1.19.0",
+   "purl": "pkg:npm/opencode-windows-x64-baseline@1.19.0",
+   "bom-ref": "pkg:npm/opencode-windows-x64-baseline@1.19.0"
+  }
+ ]
+}

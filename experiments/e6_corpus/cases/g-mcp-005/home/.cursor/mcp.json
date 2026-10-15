@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "internal-docs": {
+      "command": "node",
+      "args": [
+        "./tools/mcp/docs-server.js"
+      ],
+      "env": {
+        "SENTRY_AUTH_TOKEN": "{{SYNTH:high-entropy}}"
+      }
+    }
+  }
+}

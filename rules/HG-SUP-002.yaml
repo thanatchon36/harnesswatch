@@ -1,0 +1,14 @@
+id: HG-SUP-002
+title: Installed harness package version has known vulnerabilities (OSV)
+area: SUP
+severity: high
+confidence: high
+kind: vulnerability-pattern
+taxonomy: [T06]
+description: >
+  With `--online`, harnesswatch asks OSV.dev (package name + version only) whether the installed
+  harness version is affected by published advisories. Many 2025–2026 harness advisories are
+  pre-trust execution and permission bypasses, so outdated harnesses carry known-exploitable bugs.
+remediation: Upgrade to a fixed version and enable your organisation's update channel.
+references:
+  - https://osv.dev/

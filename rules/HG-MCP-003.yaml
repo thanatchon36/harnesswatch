@@ -1,0 +1,14 @@
+id: HG-MCP-003
+title: Literal secret in an MCP server's env, headers or arguments
+area: MCP
+severity: high
+confidence: medium
+kind: vulnerability-pattern
+taxonomy: [T07, T04]
+description: >
+  API keys and tokens written directly into MCP configuration are stored in plaintext, copied into
+  backups and dotfile repos, and — in project files — committed for everyone. Variable references
+  (`${GITHUB_TOKEN}`, `${env:X}`) are not flagged. Critical in a repository file.
+remediation: Reference secrets through environment variables or the harness's secret store, rotate the exposed value, and add the file to secret scanning.
+references:
+  - https://code.claude.com/docs/en/mcp

@@ -1,0 +1,1 @@
+{"mcpServers": {"supabase": {"command": "/opt/supabase/bin/supabase-mcp", "env": {"SUPABASE_PROJECT_ID": "8f14e45f-ceea-467f-a8e0-3d6ab9c2d1f0", "MODEL": "claude-sonnet-4-5-20250929"}}}}

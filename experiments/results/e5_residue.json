@@ -1,0 +1,202 @@
+{
+  "aider": {
+    "content": {
+      "credential_supplied_via": "environment",
+      "other_user_readable_state_files": 3,
+      "rc": "0",
+      "residue": [
+        {
+          "category": "workspace",
+          "group_readable": true,
+          "mode": "0o644",
+          "path": "/workspace/.aider.chat.history.md",
+          "world_reachable": true,
+          "world_readable": true
+        }
+      ],
+      "residue_files": 1,
+      "state_files_written": 3,
+      "world_readable_state_files": 3
+    },
+    "key": {
+      "na": "harness takes no credential for the local endpoint"
+    }
+  },
+  "claude-code": {
+    "content": {
+      "credential_supplied_via": "environment",
+      "other_user_readable_state_files": 2,
+      "rc": "0",
+      "residue": [
+        {
+          "category": "log",
+          "group_readable": false,
+          "mode": "0o600",
+          "path": "/home/agent/.claude/projects/-workspace/f17a1d49-086c-4adc-a2fd-eae0cefd39ab.jsonl",
+          "world_reachable": false,
+          "world_readable": false
+        }
+      ],
+      "residue_files": 1,
+      "state_files_written": 5,
+      "world_readable_state_files": 2
+    },
+    "key": {
+      "credential_supplied_via": "environment",
+      "other_user_readable_state_files": 1,
+      "rc": "0",
+      "residue": [],
+      "residue_files": 0,
+      "state_files_written": 4,
+      "world_readable_state_files": 1
+    }
+  },
+  "codex-cli": {
+    "content": {
+      "credential_supplied_via": "environment",
+      "other_user_readable_state_files": 67,
+      "rc": "0",
+      "residue": [
+        {
+          "category": "log",
+          "group_readable": true,
+          "mode": "0o644",
+          "path": "/home/agent/.codex/sessions/2026/10/15/rollout-2026-10-15T09-33-17-01a13ee8-a8a4-7de0-8a9f-3174a9e606c3.jsonl",
+          "world_reachable": true,
+          "world_readable": true
+        },
+        {
+          "category": "log",
+          "group_readable": true,
+          "mode": "0o644",
+          "path": "/home/agent/.codex/thread_history_1.sqlite",
+          "world_reachable": true,
+          "world_readable": true
+        }
+      ],
+      "residue_files": 2,
+      "state_files_written": 69,
+      "world_readable_state_files": 67
+    },
+    "key": {
+      "credential_supplied_via": "environment",
+      "other_user_readable_state_files": 59,
+      "rc": "0",
+      "residue": [],
+      "residue_files": 0,
+      "state_files_written": 61,
+      "world_readable_state_files": 59
+    }
+  },
+  "github-copilot": {
+    "content": {
+      "credential_supplied_via": "environment",
+      "other_user_readable_state_files": 236,
+      "rc": "0",
+      "residue": [
+        {
+          "category": "state",
+          "group_readable": true,
+          "mode": "0o644",
+          "path": "/home/agent/.copilot/session-store.db-wal",
+          "world_reachable": false,
+          "world_readable": true
+        },
+        {
+          "category": "log",
+          "group_readable": false,
+          "mode": "0o600",
+          "path": "/home/agent/.copilot/session-state/25655946-66a1-4145-8514-39d966fbcb0d/events.jsonl",
+          "world_reachable": false,
+          "world_readable": false
+        }
+      ],
+      "residue_files": 2,
+      "state_files_written": 248,
+      "world_readable_state_files": 244
+    },
+    "key": {
+      "na": "harness takes no credential for the local endpoint"
+    }
+  },
+  "grok-build": {
+    "content": {
+      "credential_supplied_via": "config file",
+      "other_user_readable_state_files": 35,
+      "rc": "0",
+      "residue": [
+        {
+          "category": "log",
+          "group_readable": true,
+          "mode": "0o644",
+          "path": "/home/agent/.grok/sessions/%2Fworkspace/01a13ee6-a55f-71c3-b59f-ce45cb6282a9/updates.jsonl",
+          "world_reachable": false,
+          "world_readable": true
+        },
+        {
+          "category": "log",
+          "group_readable": true,
+          "mode": "0o644",
+          "path": "/home/agent/.grok/sessions/%2Fworkspace/01a13ee6-a55f-71c3-b59f-ce45cb6282a9/chat_history.jsonl",
+          "world_reachable": false,
+          "world_readable": true
+        }
+      ],
+      "residue_files": 2,
+      "state_files_written": 54,
+      "world_readable_state_files": 53
+    },
+    "key": {
+      "credential_supplied_via": "config file",
+      "other_user_readable_state_files": 35,
+      "rc": "0",
+      "residue": [],
+      "residue_files": 0,
+      "state_files_written": 53,
+      "world_readable_state_files": 52
+    }
+  },
+  "opencode": {
+    "content": {
+      "credential_supplied_via": "environment",
+      "other_user_readable_state_files": 26,
+      "rc": "0",
+      "residue": [],
+      "residue_files": 0,
+      "state_files_written": 26,
+      "world_readable_state_files": 26
+    },
+    "key": {
+      "na": "harness takes no credential for the local endpoint"
+    }
+  },
+  "qwen-code": {
+    "content": {
+      "credential_supplied_via": "environment",
+      "other_user_readable_state_files": 10,
+      "rc": "0",
+      "residue": [
+        {
+          "category": "log",
+          "group_readable": true,
+          "mode": "0o644",
+          "path": "/home/agent/.qwen/projects/-workspace/chats/fad76d4a-4626-49cb-84fd-1a3809c12296.jsonl",
+          "world_reachable": true,
+          "world_readable": true
+        }
+      ],
+      "residue_files": 1,
+      "state_files_written": 13,
+      "world_readable_state_files": 10
+    },
+    "key": {
+      "credential_supplied_via": "environment",
+      "other_user_readable_state_files": 10,
+      "rc": "0",
+      "residue": [],
+      "residue_files": 0,
+      "state_files_written": 13,
+      "world_readable_state_files": 10
+    }
+  }
+}

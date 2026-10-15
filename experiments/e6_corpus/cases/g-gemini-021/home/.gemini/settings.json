@@ -1,0 +1,14 @@
+{
+  "general": {
+    "defaultApprovalMode": "default"
+  },
+  "tools": {
+    "allowed": [
+      "run_shell_command(go test ./...)",
+      "run_shell_command(git status)"
+    ]
+  },
+  "privacy": {
+    "usageStatisticsEnabled": false
+  }
+}

@@ -1,0 +1,1515 @@
+{
+  "experiment": "E6",
+  "unit": "(case, rule) pair; all audits run on every case",
+  "split_rule": "sha256(case_id) mod 100 >= 60 -> test",
+  "corpus": {
+    "cases": 376,
+    "dev": 245,
+    "test": 131,
+    "hand": 113,
+    "generated": 263,
+    "negative_cases": 108,
+    "labelled_positives": 510
+  },
+  "splits": {
+    "test": {
+      "n_cases": 131,
+      "micro": {
+        "tp": 168,
+        "fp": 7,
+        "fn": 3,
+        "precision": 0.96,
+        "precision_ci": [
+          0.9197,
+          0.9805
+        ],
+        "recall": 0.9825,
+        "recall_ci": [
+          0.9497,
+          0.994
+        ],
+        "f1": 0.9711
+      },
+      "macro": {
+        "precision": 0.9577,
+        "recall": 0.9516,
+        "rules_with_precision": 23,
+        "rules_with_recall": 24
+      },
+      "per_rule": {
+        "HG-CI-001": {
+          "tp": 5,
+          "fp": 0,
+          "fn": 0,
+          "support": 5,
+          "precision": 1.0,
+          "precision_ci": [
+            0.5655,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.5655,
+            1.0
+          ]
+        },
+        "HG-CI-002": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "support": 4,
+          "precision": 1.0,
+          "precision_ci": [
+            0.5101,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.5101,
+            1.0
+          ]
+        },
+        "HG-HOOK-001": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "support": 12,
+          "precision": 1.0,
+          "precision_ci": [
+            0.7575,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.7575,
+            1.0
+          ]
+        },
+        "HG-HOOK-002": {
+          "tp": 9,
+          "fp": 0,
+          "fn": 0,
+          "support": 9,
+          "precision": 1.0,
+          "precision_ci": [
+            0.7009,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.7009,
+            1.0
+          ]
+        },
+        "HG-INJ-001": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0,
+          "support": 3,
+          "precision": 1.0,
+          "precision_ci": [
+            0.4385,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.4385,
+            1.0
+          ]
+        },
+        "HG-INJ-002": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "support": 7,
+          "precision": 1.0,
+          "precision_ci": [
+            0.6457,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.6457,
+            1.0
+          ]
+        },
+        "HG-INJ-003": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0,
+          "support": 3,
+          "precision": 1.0,
+          "precision_ci": [
+            0.4385,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.4385,
+            1.0
+          ]
+        },
+        "HG-MCP-001": {
+          "tp": 13,
+          "fp": 0,
+          "fn": 0,
+          "support": 13,
+          "precision": 1.0,
+          "precision_ci": [
+            0.7719,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.7719,
+            1.0
+          ]
+        },
+        "HG-MCP-002": {
+          "tp": 6,
+          "fp": 0,
+          "fn": 0,
+          "support": 6,
+          "precision": 1.0,
+          "precision_ci": [
+            0.6097,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.6097,
+            1.0
+          ]
+        },
+        "HG-MCP-003": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "support": 7,
+          "precision": 1.0,
+          "precision_ci": [
+            0.6457,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.6457,
+            1.0
+          ]
+        },
+        "HG-MCP-004": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 0,
+          "support": 1,
+          "precision": 0.5,
+          "precision_ci": [
+            0.0945,
+            0.9055
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "HG-MCP-005": {
+          "tp": 17,
+          "fp": 0,
+          "fn": 0,
+          "support": 17,
+          "precision": 1.0,
+          "precision_ci": [
+            0.8157,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.8157,
+            1.0
+          ]
+        },
+        "HG-MCP-006": {
+          "tp": 8,
+          "fp": 1,
+          "fn": 0,
+          "support": 8,
+          "precision": 0.8889,
+          "precision_ci": [
+            0.565,
+            0.9801
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.6756,
+            1.0
+          ]
+        },
+        "HG-MEM-001": {
+          "tp": 6,
+          "fp": 0,
+          "fn": 0,
+          "support": 6,
+          "precision": 1.0,
+          "precision_ci": [
+            0.6097,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.6097,
+            1.0
+          ]
+        },
+        "HG-NET-001": {
+          "tp": 12,
+          "fp": 3,
+          "fn": 0,
+          "support": 12,
+          "precision": 0.8,
+          "precision_ci": [
+            0.5481,
+            0.9295
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.7575,
+            1.0
+          ]
+        },
+        "HG-PERM-001": {
+          "tp": 10,
+          "fp": 1,
+          "fn": 1,
+          "support": 11,
+          "precision": 0.9091,
+          "precision_ci": [
+            0.6226,
+            0.9838
+          ],
+          "recall": 0.9091,
+          "recall_ci": [
+            0.6226,
+            0.9838
+          ]
+        },
+        "HG-PERM-002": {
+          "tp": 8,
+          "fp": 0,
+          "fn": 0,
+          "support": 8,
+          "precision": 1.0,
+          "precision_ci": [
+            0.6756,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.6756,
+            1.0
+          ]
+        },
+        "HG-PERM-003": {
+          "tp": 13,
+          "fp": 1,
+          "fn": 1,
+          "support": 14,
+          "precision": 0.9286,
+          "precision_ci": [
+            0.6853,
+            0.9873
+          ],
+          "recall": 0.9286,
+          "recall_ci": [
+            0.6853,
+            0.9873
+          ]
+        },
+        "HG-SEC-001": {
+          "tp": 5,
+          "fp": 0,
+          "fn": 0,
+          "support": 5,
+          "precision": 1.0,
+          "precision_ci": [
+            0.5655,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.5655,
+            1.0
+          ]
+        },
+        "HG-SEC-002": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "support": 2,
+          "precision": 1.0,
+          "precision_ci": [
+            0.3424,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "HG-SEC-003": {
+          "tp": 11,
+          "fp": 0,
+          "fn": 0,
+          "support": 11,
+          "precision": 1.0,
+          "precision_ci": [
+            0.7412,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.7412,
+            1.0
+          ]
+        },
+        "HG-SUB-001": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1,
+          "support": 1,
+          "precision": null,
+          "precision_ci": null,
+          "recall": 0.0,
+          "recall_ci": [
+            0.0,
+            0.7935
+          ]
+        },
+        "HG-SUP-001": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "support": 0,
+          "precision": null,
+          "precision_ci": null,
+          "recall": null,
+          "recall_ci": null
+        },
+        "HG-SUP-002": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "support": 1,
+          "precision": 1.0,
+          "precision_ci": [
+            0.2065,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "HG-TEL-001": {
+          "tp": 5,
+          "fp": 0,
+          "fn": 0,
+          "support": 5,
+          "precision": 1.0,
+          "precision_ci": [
+            0.5655,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.5655,
+            1.0
+          ]
+        }
+      }
+    },
+    "dev": {
+      "n_cases": 245,
+      "micro": {
+        "tp": 325,
+        "fp": 21,
+        "fn": 14,
+        "precision": 0.9393,
+        "precision_ci": [
+          0.909,
+          0.96
+        ],
+        "recall": 0.9587,
+        "recall_ci": [
+          0.9319,
+          0.9752
+        ],
+        "f1": 0.9489
+      },
+      "macro": {
+        "precision": 0.9067,
+        "recall": 0.9581,
+        "rules_with_precision": 24,
+        "rules_with_recall": 23
+      },
+      "per_rule": {
+        "HG-CI-001": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "support": 7,
+          "precision": 1.0,
+          "precision_ci": [
+            0.6457,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.6457,
+            1.0
+          ]
+        },
+        "HG-CI-002": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "support": 12,
+          "precision": 1.0,
+          "precision_ci": [
+            0.7575,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.7575,
+            1.0
+          ]
+        },
+        "HG-HOOK-001": {
+          "tp": 22,
+          "fp": 0,
+          "fn": 2,
+          "support": 24,
+          "precision": 1.0,
+          "precision_ci": [
+            0.8513,
+            1.0
+          ],
+          "recall": 0.9167,
+          "recall_ci": [
+            0.7415,
+            0.9768
+          ]
+        },
+        "HG-HOOK-002": {
+          "tp": 21,
+          "fp": 0,
+          "fn": 1,
+          "support": 22,
+          "precision": 1.0,
+          "precision_ci": [
+            0.8454,
+            1.0
+          ],
+          "recall": 0.9545,
+          "recall_ci": [
+            0.782,
+            0.9919
+          ]
+        },
+        "HG-INJ-001": {
+          "tp": 9,
+          "fp": 1,
+          "fn": 0,
+          "support": 9,
+          "precision": 0.9,
+          "precision_ci": [
+            0.5958,
+            0.9821
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.7009,
+            1.0
+          ]
+        },
+        "HG-INJ-002": {
+          "tp": 0,
+          "fp": 1,
+          "fn": 0,
+          "support": 0,
+          "precision": 0.0,
+          "precision_ci": [
+            0.0,
+            0.7935
+          ],
+          "recall": null,
+          "recall_ci": null
+        },
+        "HG-INJ-003": {
+          "tp": 4,
+          "fp": 1,
+          "fn": 0,
+          "support": 4,
+          "precision": 0.8,
+          "precision_ci": [
+            0.3755,
+            0.9638
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.5101,
+            1.0
+          ]
+        },
+        "HG-MCP-001": {
+          "tp": 31,
+          "fp": 2,
+          "fn": 0,
+          "support": 31,
+          "precision": 0.9394,
+          "precision_ci": [
+            0.8039,
+            0.9832
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.8897,
+            1.0
+          ]
+        },
+        "HG-MCP-002": {
+          "tp": 18,
+          "fp": 2,
+          "fn": 0,
+          "support": 18,
+          "precision": 0.9,
+          "precision_ci": [
+            0.699,
+            0.9721
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.8241,
+            1.0
+          ]
+        },
+        "HG-MCP-003": {
+          "tp": 13,
+          "fp": 3,
+          "fn": 1,
+          "support": 14,
+          "precision": 0.8125,
+          "precision_ci": [
+            0.5699,
+            0.9341
+          ],
+          "recall": 0.9286,
+          "recall_ci": [
+            0.6853,
+            0.9873
+          ]
+        },
+        "HG-MCP-004": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "support": 1,
+          "precision": 1.0,
+          "precision_ci": [
+            0.2065,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "HG-MCP-005": {
+          "tp": 33,
+          "fp": 0,
+          "fn": 0,
+          "support": 33,
+          "precision": 1.0,
+          "precision_ci": [
+            0.8957,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.8957,
+            1.0
+          ]
+        },
+        "HG-MCP-006": {
+          "tp": 14,
+          "fp": 1,
+          "fn": 0,
+          "support": 14,
+          "precision": 0.9333,
+          "precision_ci": [
+            0.7018,
+            0.9881
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.7847,
+            1.0
+          ]
+        },
+        "HG-MEM-001": {
+          "tp": 16,
+          "fp": 0,
+          "fn": 0,
+          "support": 16,
+          "precision": 1.0,
+          "precision_ci": [
+            0.8064,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.8064,
+            1.0
+          ]
+        },
+        "HG-NET-001": {
+          "tp": 13,
+          "fp": 6,
+          "fn": 0,
+          "support": 13,
+          "precision": 0.6842,
+          "precision_ci": [
+            0.4601,
+            0.8464
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.7719,
+            1.0
+          ]
+        },
+        "HG-PERM-001": {
+          "tp": 16,
+          "fp": 1,
+          "fn": 1,
+          "support": 17,
+          "precision": 0.9412,
+          "precision_ci": [
+            0.7302,
+            0.9895
+          ],
+          "recall": 0.9412,
+          "recall_ci": [
+            0.7302,
+            0.9895
+          ]
+        },
+        "HG-PERM-002": {
+          "tp": 20,
+          "fp": 0,
+          "fn": 1,
+          "support": 21,
+          "precision": 1.0,
+          "precision_ci": [
+            0.8389,
+            1.0
+          ],
+          "recall": 0.9524,
+          "recall_ci": [
+            0.7733,
+            0.9915
+          ]
+        },
+        "HG-PERM-003": {
+          "tp": 28,
+          "fp": 0,
+          "fn": 2,
+          "support": 30,
+          "precision": 1.0,
+          "precision_ci": [
+            0.8794,
+            1.0
+          ],
+          "recall": 0.9333,
+          "recall_ci": [
+            0.7868,
+            0.9815
+          ]
+        },
+        "HG-SEC-001": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "support": 4,
+          "precision": 1.0,
+          "precision_ci": [
+            0.5101,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.5101,
+            1.0
+          ]
+        },
+        "HG-SEC-002": {
+          "tp": 9,
+          "fp": 0,
+          "fn": 0,
+          "support": 9,
+          "precision": 1.0,
+          "precision_ci": [
+            0.7009,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.7009,
+            1.0
+          ]
+        },
+        "HG-SEC-003": {
+          "tp": 17,
+          "fp": 3,
+          "fn": 4,
+          "support": 21,
+          "precision": 0.85,
+          "precision_ci": [
+            0.6396,
+            0.9476
+          ],
+          "recall": 0.8095,
+          "recall_ci": [
+            0.6,
+            0.9233
+          ]
+        },
+        "HG-SUB-001": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 2,
+          "support": 5,
+          "precision": 1.0,
+          "precision_ci": [
+            0.4385,
+            1.0
+          ],
+          "recall": 0.6,
+          "recall_ci": [
+            0.2307,
+            0.8824
+          ]
+        },
+        "HG-SUP-001": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "support": 1,
+          "precision": 1.0,
+          "precision_ci": [
+            0.2065,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "HG-SUP-002": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "support": 0,
+          "precision": null,
+          "precision_ci": null,
+          "recall": null,
+          "recall_ci": null
+        },
+        "HG-TEL-001": {
+          "tp": 13,
+          "fp": 0,
+          "fn": 0,
+          "support": 13,
+          "precision": 1.0,
+          "precision_ci": [
+            0.7719,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.7719,
+            1.0
+          ]
+        }
+      }
+    },
+    "all": {
+      "n_cases": 376,
+      "micro": {
+        "tp": 493,
+        "fp": 28,
+        "fn": 17,
+        "precision": 0.9463,
+        "precision_ci": [
+          0.9234,
+          0.9626
+        ],
+        "recall": 0.9667,
+        "recall_ci": [
+          0.9473,
+          0.9791
+        ],
+        "f1": 0.9564
+      },
+      "macro": {
+        "precision": 0.942,
+        "recall": 0.9626,
+        "rules_with_precision": 25,
+        "rules_with_recall": 25
+      },
+      "per_rule": {
+        "HG-CI-001": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "support": 12,
+          "precision": 1.0,
+          "precision_ci": [
+            0.7575,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.7575,
+            1.0
+          ]
+        },
+        "HG-CI-002": {
+          "tp": 16,
+          "fp": 0,
+          "fn": 0,
+          "support": 16,
+          "precision": 1.0,
+          "precision_ci": [
+            0.8064,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.8064,
+            1.0
+          ]
+        },
+        "HG-HOOK-001": {
+          "tp": 34,
+          "fp": 0,
+          "fn": 2,
+          "support": 36,
+          "precision": 1.0,
+          "precision_ci": [
+            0.8985,
+            1.0
+          ],
+          "recall": 0.9444,
+          "recall_ci": [
+            0.8186,
+            0.9846
+          ]
+        },
+        "HG-HOOK-002": {
+          "tp": 30,
+          "fp": 0,
+          "fn": 1,
+          "support": 31,
+          "precision": 1.0,
+          "precision_ci": [
+            0.8865,
+            1.0
+          ],
+          "recall": 0.9677,
+          "recall_ci": [
+            0.8381,
+            0.9943
+          ]
+        },
+        "HG-INJ-001": {
+          "tp": 12,
+          "fp": 1,
+          "fn": 0,
+          "support": 12,
+          "precision": 0.9231,
+          "precision_ci": [
+            0.6669,
+            0.9863
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.7575,
+            1.0
+          ]
+        },
+        "HG-INJ-002": {
+          "tp": 7,
+          "fp": 1,
+          "fn": 0,
+          "support": 7,
+          "precision": 0.875,
+          "precision_ci": [
+            0.5291,
+            0.9776
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.6457,
+            1.0
+          ]
+        },
+        "HG-INJ-003": {
+          "tp": 7,
+          "fp": 1,
+          "fn": 0,
+          "support": 7,
+          "precision": 0.875,
+          "precision_ci": [
+            0.5291,
+            0.9776
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.6457,
+            1.0
+          ]
+        },
+        "HG-MCP-001": {
+          "tp": 44,
+          "fp": 2,
+          "fn": 0,
+          "support": 44,
+          "precision": 0.9565,
+          "precision_ci": [
+            0.8547,
+            0.988
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.9197,
+            1.0
+          ]
+        },
+        "HG-MCP-002": {
+          "tp": 24,
+          "fp": 2,
+          "fn": 0,
+          "support": 24,
+          "precision": 0.9231,
+          "precision_ci": [
+            0.7586,
+            0.9786
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.862,
+            1.0
+          ]
+        },
+        "HG-MCP-003": {
+          "tp": 20,
+          "fp": 3,
+          "fn": 1,
+          "support": 21,
+          "precision": 0.8696,
+          "precision_ci": [
+            0.6787,
+            0.9546
+          ],
+          "recall": 0.9524,
+          "recall_ci": [
+            0.7733,
+            0.9915
+          ]
+        },
+        "HG-MCP-004": {
+          "tp": 2,
+          "fp": 1,
+          "fn": 0,
+          "support": 2,
+          "precision": 0.6667,
+          "precision_ci": [
+            0.2077,
+            0.9385
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "HG-MCP-005": {
+          "tp": 50,
+          "fp": 0,
+          "fn": 0,
+          "support": 50,
+          "precision": 1.0,
+          "precision_ci": [
+            0.9287,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.9287,
+            1.0
+          ]
+        },
+        "HG-MCP-006": {
+          "tp": 22,
+          "fp": 2,
+          "fn": 0,
+          "support": 22,
+          "precision": 0.9167,
+          "precision_ci": [
+            0.7415,
+            0.9768
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.8513,
+            1.0
+          ]
+        },
+        "HG-MEM-001": {
+          "tp": 22,
+          "fp": 0,
+          "fn": 0,
+          "support": 22,
+          "precision": 1.0,
+          "precision_ci": [
+            0.8513,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.8513,
+            1.0
+          ]
+        },
+        "HG-NET-001": {
+          "tp": 25,
+          "fp": 9,
+          "fn": 0,
+          "support": 25,
+          "precision": 0.7353,
+          "precision_ci": [
+            0.5688,
+            0.854
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.8668,
+            1.0
+          ]
+        },
+        "HG-PERM-001": {
+          "tp": 26,
+          "fp": 2,
+          "fn": 2,
+          "support": 28,
+          "precision": 0.9286,
+          "precision_ci": [
+            0.7735,
+            0.9802
+          ],
+          "recall": 0.9286,
+          "recall_ci": [
+            0.7735,
+            0.9802
+          ]
+        },
+        "HG-PERM-002": {
+          "tp": 28,
+          "fp": 0,
+          "fn": 1,
+          "support": 29,
+          "precision": 1.0,
+          "precision_ci": [
+            0.8794,
+            1.0
+          ],
+          "recall": 0.9655,
+          "recall_ci": [
+            0.8282,
+            0.9939
+          ]
+        },
+        "HG-PERM-003": {
+          "tp": 41,
+          "fp": 1,
+          "fn": 3,
+          "support": 44,
+          "precision": 0.9762,
+          "precision_ci": [
+            0.8768,
+            0.9958
+          ],
+          "recall": 0.9318,
+          "recall_ci": [
+            0.8177,
+            0.9765
+          ]
+        },
+        "HG-SEC-001": {
+          "tp": 9,
+          "fp": 0,
+          "fn": 0,
+          "support": 9,
+          "precision": 1.0,
+          "precision_ci": [
+            0.7009,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.7009,
+            1.0
+          ]
+        },
+        "HG-SEC-002": {
+          "tp": 11,
+          "fp": 0,
+          "fn": 0,
+          "support": 11,
+          "precision": 1.0,
+          "precision_ci": [
+            0.7412,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.7412,
+            1.0
+          ]
+        },
+        "HG-SEC-003": {
+          "tp": 28,
+          "fp": 3,
+          "fn": 4,
+          "support": 32,
+          "precision": 0.9032,
+          "precision_ci": [
+            0.751,
+            0.9665
+          ],
+          "recall": 0.875,
+          "recall_ci": [
+            0.7193,
+            0.9503
+          ]
+        },
+        "HG-SUB-001": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 3,
+          "support": 6,
+          "precision": 1.0,
+          "precision_ci": [
+            0.4385,
+            1.0
+          ],
+          "recall": 0.5,
+          "recall_ci": [
+            0.1876,
+            0.8124
+          ]
+        },
+        "HG-SUP-001": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "support": 1,
+          "precision": 1.0,
+          "precision_ci": [
+            0.2065,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "HG-SUP-002": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "support": 1,
+          "precision": 1.0,
+          "precision_ci": [
+            0.2065,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "HG-TEL-001": {
+          "tp": 18,
+          "fp": 0,
+          "fn": 0,
+          "support": 18,
+          "precision": 1.0,
+          "precision_ci": [
+            0.8241,
+            1.0
+          ],
+          "recall": 1.0,
+          "recall_ci": [
+            0.8241,
+            1.0
+          ]
+        }
+      }
+    }
+  },
+  "errors": [
+    {
+      "case": "g-claude-004",
+      "split": "dev",
+      "false_positives": [
+        "HG-NET-001"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "g-claude-014",
+      "split": "dev",
+      "false_positives": [
+        "HG-NET-001"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "g-claude-023",
+      "split": "dev",
+      "false_positives": [
+        "HG-NET-001"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "g-claude-034",
+      "split": "dev",
+      "false_positives": [
+        "HG-NET-001"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "g-claude-037",
+      "split": "dev",
+      "false_positives": [
+        "HG-NET-001"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "g-codex-008",
+      "split": "dev",
+      "false_positives": [
+        "HG-MCP-002"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "g-mcp-018",
+      "split": "dev",
+      "false_positives": [],
+      "false_negatives": [
+        "HG-SEC-003"
+      ]
+    },
+    {
+      "case": "g-mcp-023",
+      "split": "dev",
+      "false_positives": [
+        "HG-MCP-006"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "g-misc-018",
+      "split": "dev",
+      "false_positives": [],
+      "false_negatives": [
+        "HG-HOOK-001"
+      ]
+    },
+    {
+      "case": "g-misc-026",
+      "split": "dev",
+      "false_positives": [],
+      "false_negatives": [
+        "HG-HOOK-001",
+        "HG-HOOK-002"
+      ]
+    },
+    {
+      "case": "g-opencode-002",
+      "split": "dev",
+      "false_positives": [],
+      "false_negatives": [
+        "HG-SUB-001"
+      ]
+    },
+    {
+      "case": "g-opencode-012",
+      "split": "dev",
+      "false_positives": [],
+      "false_negatives": [
+        "HG-SUB-001"
+      ]
+    },
+    {
+      "case": "h-012-npx-git-commit-pin",
+      "split": "dev",
+      "false_positives": [
+        "HG-MCP-001",
+        "HG-MCP-003"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "h-015-npx-package-flag-pinned",
+      "split": "dev",
+      "false_positives": [
+        "HG-MCP-001"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "h-020-codex-bearer-env",
+      "split": "dev",
+      "false_positives": [
+        "HG-MCP-002"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "h-022-mcp-arg-flag-equals",
+      "split": "dev",
+      "false_positives": [],
+      "false_negatives": [
+        "HG-MCP-003",
+        "HG-SEC-003"
+      ]
+    },
+    {
+      "case": "h-023-mcp-arg-separate",
+      "split": "dev",
+      "false_positives": [],
+      "false_negatives": [
+        "HG-SEC-003"
+      ]
+    },
+    {
+      "case": "h-024-env-default-syntax",
+      "split": "dev",
+      "false_positives": [
+        "HG-MCP-003",
+        "HG-SEC-003"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "h-026-env-uuid-ids",
+      "split": "dev",
+      "false_positives": [
+        "HG-MCP-003",
+        "HG-SEC-003"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "h-034-amp-literal-auth-header",
+      "split": "dev",
+      "false_positives": [],
+      "false_negatives": [
+        "HG-SEC-003"
+      ]
+    },
+    {
+      "case": "h-040-claude-python-interpreter",
+      "split": "dev",
+      "false_positives": [],
+      "false_negatives": [
+        "HG-PERM-002",
+        "HG-PERM-003"
+      ]
+    },
+    {
+      "case": "h-046-continue-allow-bash",
+      "split": "dev",
+      "false_positives": [
+        "HG-PERM-001"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "h-048-vscode-terminal-regex-all",
+      "split": "dev",
+      "false_positives": [],
+      "false_negatives": [
+        "HG-PERM-001",
+        "HG-PERM-003"
+      ]
+    },
+    {
+      "case": "h-061-claude-env-gateway-model",
+      "split": "dev",
+      "false_positives": [
+        "HG-SEC-003"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "h-073-agents-security-guidance",
+      "split": "dev",
+      "false_positives": [
+        "HG-INJ-002"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "h-074-claude-md-micro-units",
+      "split": "dev",
+      "false_positives": [
+        "HG-INJ-001"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "h-085-agents-vendored-style-ref",
+      "split": "dev",
+      "false_positives": [
+        "HG-INJ-003"
+      ],
+      "false_negatives": []
+    },
+    {
+      "case": "h-109-claude-webfetch-domains",
+      "split": "dev",
+      "false_positives": [
+        "HG-NET-001"
+      ],
+      "false_negatives": []
+    }
+  ],
+  "test_error_counts": {
+    "cases_with_errors": 8
+  }
+}

@@ -1,0 +1,2 @@
+{ "permissions": { "defaultMode": "bypassPermissions",
+  "deny": ["Bash(rm -rf:*)", "Bash(git push --force:*)", "Read(./.env)", "Read(~/.ssh/**)"] } }

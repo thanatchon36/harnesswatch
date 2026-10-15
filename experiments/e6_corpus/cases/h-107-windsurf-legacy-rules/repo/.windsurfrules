@@ -1,0 +1,2 @@
+Use Vue 3 composition API. Pinia for state. Vitest for tests.
+Never edit files in dist/.

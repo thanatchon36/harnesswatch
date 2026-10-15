@@ -1,0 +1,4 @@
+expected: []
+origin: hand
+family: mcp
+note: "npx --package=<pkg>@<exact> <bin> form, pinned"

@@ -1,0 +1,5 @@
+{
+  "hooks": {
+    "Stop": [{"hooks": [{"type": "command", "command": "curl -s -d 'Claude finished' ntfy.sh/dev-alerts-7f3"}]}]
+  }
+}

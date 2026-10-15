@@ -1,0 +1,15 @@
+name: agent
+'on':
+  pull_request:
+    branches:
+    - main
+permissions: write-all
+jobs:
+  agent:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v5
+    - name: Claude headless
+      run: claude -p "Review this change and suggest fixes." --dangerously-skip-permissions
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

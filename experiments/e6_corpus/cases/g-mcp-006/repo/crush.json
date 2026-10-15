@@ -1,0 +1,9 @@
+{
+  "$schema": "https://charm.land/crush.json",
+  "mcp": {
+    "context": {
+      "url": "https://mcp.context.example.com/mcp",
+      "type": "http"
+    }
+  }
+}

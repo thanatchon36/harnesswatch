@@ -1,0 +1,1 @@
+{"enabled": true, "name": "Lint on save", "version": "1", "when": {"type": "fileEdited", "patterns": ["src/**/*.ts"]}, "then": {"type": "runCommand", "command": "npm run lint"}}

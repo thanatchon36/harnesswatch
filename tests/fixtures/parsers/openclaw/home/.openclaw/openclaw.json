@@ -1,0 +1,5 @@
+{
+  // JSON5 config
+  tools: { exec: { security: "full", ask: "off" } },
+  mcp: { servers: { fs: { command: "npx", args: ["-y", "@modelcontextprotocol/server-filesystem", "."] } } },
+}

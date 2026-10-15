@@ -1,0 +1,206 @@
+{
+  "harness": "smolagents",
+  "version": "1.27.0.dev0 (1.26.0 latest release)",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "CodeAgent runs LLM-written Python with no approval step; control is the interpreter's import/function allowlist.",
+          "source": "https://github.com/huggingface/smolagents/blob/main/docs/source/en/tutorials/secure_code_execution.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No approval mechanism; autonomous code execution."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Default executor_type='local' = in-process AST interpreter; docs: no local sandbox can be completely secure; recommended isolation = docker/e2b/modal/blaxel executors (opt-in).",
+          "source": "https://github.com/huggingface/smolagents/blob/main/docs/source/en/tutorials/secure_code_execution.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "5 GHSAs incl. critical sandbox escape CVE-2025-5120 (fixed 1.17.0) and CVE-2026-4963 (incomplete fix, CVE-2025-9959 follow-up) in LocalPythonExecutor.",
+          "source": "https://github.com/huggingface/smolagents/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No Wasm/Pyodide executor in src/ (lead's mention not supported by source).",
+          "source": "https://github.com/huggingface/smolagents/blob/main/src/smolagents/agents.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Weak default boundary, real sandboxes opt-in."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "No egress control in LocalPythonExecutor; SSRF via requests in authorised code (CVE-2026-2654, no fix listed).",
+          "source": "https://github.com/advisories/GHSA-jxgv-6j54-wwc7",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "DockerExecutor publishes the Jupyter kernel gateway on host 127.0.0.1:8888 by default.",
+          "source": "https://github.com/huggingface/smolagents/blob/main/src/smolagents/remote_executors.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "None."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "No repo-level config loaded.",
+          "source": "https://github.com/huggingface/smolagents/blob/main/src/smolagents/cli.py",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCPClient / ToolCollection.from_mcp require trust_remote_code=True for stdio; Hub tools need trust_remote_code=True (default False).",
+          "source": "https://github.com/huggingface/smolagents/blob/main/src/smolagents/tools.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Explicit trust flag only."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Tool.from_hub refuses unless trust_remote_code=True.",
+          "source": "https://github.com/huggingface/smolagents/blob/main/src/smolagents/tools.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Opt-in trust gate for Hub code."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "smolagent CLI accepts --api-key on the command line (process-list exposure); otherwise env vars; remote executors do not receive secrets.",
+          "source": "https://github.com/huggingface/smolagents/blob/main/src/smolagents/cli.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Env/flags only."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "Library/CLI only.",
+          "source": "https://github.com/huggingface/smolagents/blob/main/src/smolagents/cli.py",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Only in-run AgentMemory; no persistent store.",
+          "source": "https://github.com/huggingface/smolagents/blob/main/docs/source/en/tutorials/memory.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (none)."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "managed_agents share the process; with remote executors multi-agent needs the entire system run inside the sandbox.",
+          "source": "https://github.com/huggingface/smolagents/blob/main/docs/source/en/tutorials/secure_code_execution.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Isolation only by running everything in a sandbox."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "OpenTelemetry via OpenInference SmolagentsInstrumentor is opt-in; agent step memory kept in run.",
+          "source": "https://github.com/huggingface/smolagents/blob/main/docs/source/en/tutorials/inspect_runs.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Opt-in."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "No telemetry in library; opt-in OTel only.",
+          "source": "https://github.com/huggingface/smolagents/blob/main/docs/source/en/tutorials/inspect_runs.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "No default telemetry."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "PyPI smolagents; provenance not checked.",
+          "source": "https://pypi.org/project/smolagents/",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (Not verified)"
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "No managed policy.",
+          "source": "https://github.com/huggingface/smolagents/blob/main/README.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md with private reporting and security@huggingface.co, no bounty; GHSAs: CVE-2025-5120 (critical, fixed 1.17.0), CVE-2025-11844 (fixed 1.22.0), CVE-2025-14931 (critical pickle RCE in remote executor), CVE-2026-2654, CVE-2026-4963 (no fixed version listed).",
+          "source": "https://github.com/huggingface/smolagents/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Active but several advisories list no patched version."
+    }
+  }
+}

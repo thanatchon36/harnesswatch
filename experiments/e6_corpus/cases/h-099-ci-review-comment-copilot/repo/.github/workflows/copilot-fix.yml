@@ -1,0 +1,14 @@
+name: copilot-fix
+on:
+  pull_request_review_comment:
+    types: [created]
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Copilot
+        env:
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
+        run: |
+          copilot -p "Apply this review comment: ${{ github.event.comment.body }}" --allow-all-tools

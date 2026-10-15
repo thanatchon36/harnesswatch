@@ -1,0 +1,13 @@
+{
+  "pre_tool_use": [
+    {
+      "matcher": "terminal",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "./scripts/guard.sh"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+---
+description: Python conventions
+globs: "**/*.py"
+---
+Type-annotate public functions. Use `pydantic` models for request bodies.

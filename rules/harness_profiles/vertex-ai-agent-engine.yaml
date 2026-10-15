@@ -1,0 +1,64 @@
+id: vertex-ai-agent-engine
+name: "Gemini Enterprise Agent Platform: Agent Runtime (formerly Vertex AI Agent Engine)"
+vendor: Google Cloud
+tier: C
+license: Proprietary hosted
+open_source: false
+status: docs-only
+version_analysed: null
+analysed_on: "2026-10-15"
+homepage: https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes
+repo: null
+
+binaries: [gcloud]
+packages:
+  - {ecosystem: pypi, name: "google-cloud-aiplatform"}
+  - {ecosystem: pypi, name: "google-adk"}
+install_methods: []
+auto_update: {default: null, config: null, source: null}
+
+state_dirs: ["~/.config/gcloud"]
+credential_files: ["~/.config/gcloud/application_default_credentials.json"]
+credential_storage: "Deployed agent: Agent Identity (SPIFFE, preview) or a service account (default Reasoning Engine Service Agent or custom). API keys recommended in Secret Manager."
+log_paths: []
+memory_paths: []
+
+config_files: []
+
+mcp:
+  files: []
+  servers_key: null
+  server_fields: {}
+  project_servers_require_approval: null
+  notes: "Tool governance via Agent Gateway / Agent Registry; per-framework (ADK) MCP config out of scope."
+
+permissions:
+  config_keys:
+    mode: "IAM allow/deny policies on principal://agents... (Agent Identity) or service account roles"
+  default_mode: "service account default: Reasoning Engine Service Agent role; agent identity default: roles/aiplatform.agentDefaultAccess + roles/aiplatform.agentContextEditor"
+  auto_approve_values: []
+  cli_flags_auto_approve: []
+  overbroad_patterns: ["roles/editor", "roles/owner", "roles/storage.admin", "roles/aiplatform.admin"]   # on the agent's service account
+
+hooks: {supported: false}
+sandbox: {available: true, default_on: null, mechanism: "Agent Sandbox (computer use and shell sandboxes GA 2026-09-09; VPC-SC, PSC, CMEK, pause/resume)", config: null, source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes}
+network: {domain_allowlist: null, config: "VPC Service Controls; Agent Gateway enforces VPC-SC for gateways created after 2026-09-08 (ALL_TRAFFIC egress mode)", default: null, source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes}
+workspace_trust: {prompt_on_new_folder: false, notes: "cloud deployment", source: null}
+memory: {persistent: true, cross_project: null, agent_writable: true, notes: "Memory Bank (Agent Platform Memory Bank) GA; memory profiles GA 2026-07-15", source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes}
+subagents: {supported: null, inherits_permissions: null, notes: null, source: null}
+telemetry: {default_on: null, opt_out: null, training_default: null, source: null}
+headless:
+  command: null
+  flags: []
+  ci_integrations: []
+  model_override: "framework-level (ADK)"
+  local_model_support: "not applicable to the hosted runtime"
+
+security_policy: {security_md: null, bug_bounty: null, advisories: "https://github.com/advisories?query=google-cloud-aiplatform"}
+sources:
+  - {url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes, accessed: "2026-10-15", note: "rename, GA dates, sandboxes, VPC-SC"}
+  - {url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/manage-agent-access, accessed: "2026-10-15", note: "identities for deployed agents"}
+  - {url: https://unit42.paloaltonetworks.com/double-agents-vertex-ai/, accessed: "2026-10-15", note: "P4SA excessive default permissions research"}
+extra:
+  seed_name_correction: "MISSION.md name 'Vertex AI Agent Engine' is outdated: on 2026-04-22 Vertex AI became part of Gemini Enterprise Agent Platform and 'Agent Engine is now Agent Runtime'. Agent Builder Sessions -> Agent Platform Sessions, Memory Bank -> Agent Platform Memory Bank."
+  risky_config: "Deploy agents with a custom least-privilege service account (BYOSA) instead of the default Reasoning Engine Service Agent; prefer Agent Identity."

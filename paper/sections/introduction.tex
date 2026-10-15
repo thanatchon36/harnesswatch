@@ -1,0 +1,21 @@
+\section{Introduction}\label{sec:intro}
+\answers{the motivation for RQ1--RQ7 and summarises the contributions}
+
+In 2025 and 2026 coding agents moved from chat windows into terminals, IDEs and CI pipelines. Vendors and open-source projects converged on a common architecture: an agent is a \emph{model} plus a \emph{harness}. The harness is the program around the model. It assembles context from the repository, exposes tools (shell, file edit, web fetch, MCP servers), decides which tool calls need human approval, stores credentials and transcripts, spawns sub-agents, and can run unattended in CI. The model proposes actions; the harness carries them out.
+
+Most security research on LLM agents studies the model side, i.e.\ whether a model follows injected instructions~\cite{greshake2023,agentdojo,injecagent}, and treats the tool-execution layer as fixed. Yet the harness decides whether an injected instruction becomes a shell command, whether a cloned repository can run a hook before the user consents, whether an MCP server starts from a cloned file, and whether a secret lands in a world-readable log. These are deterministic software decisions that can be specified, tested and audited like any access-control code.
+
+Public advisories point the same way. Of the \nIncCounted{} verified harness-level advisories and incidents we collected for 2025--2026 (Section~\ref{sec:incidents}), \nIncRCThree{} stem from flawed approval, allowlist or path checks and \nIncRCTwo{} from workspace configuration honoured before consent; only \nIncRCOne{} are pure prompt injection. This population is filtered towards software defects (model failures rarely receive CVEs) and RC1 is the residual class of our procedure, so these shares describe disclosed harness bugs, not overall risk; within that scope, injection is often the vector while the damage depends on harness controls.
+
+Comparing harnesses is hard: the field changes monthly, many popular harnesses are closed source, and documentation describes intended rather than actual behaviour. We therefore organise the study by \emph{method}: white-box for open source, black-box observation for closed harnesses we can run, documentation for those we cannot, and a separate track for SDK runtimes (Section~\ref{sec:method}).
+
+\paragraph*{Research questions}
+\RQ{RQ1}: What is the attack surface of a harness and how does it differ from classic LLM-application risk?
+\RQ{RQ2}: How do harnesses differ in their security controls?
+\RQ{RQ3}: Which harness-level incidents were disclosed in 2025--2026, and with which root causes?
+\RQ{RQ4}: Can dangerous configuration be detected automatically across harness formats?
+\RQ{RQ5}: How resilient are harness $\times$ model $\times$ permission-mode combinations to indirect prompt injection and secret residue, measured with inert canaries?
+\RQ{RQ6}: Which controls should an organisation mandate before adopting harnesses?
+\RQ{RQ7}: For closed harnesses, do documented controls match observable client behaviour?
+
+\paragraph*{Contributions} A harness threat taxonomy with framework mappings (RQ1, Section~\ref{sec:threats}); an evidence-linked control matrix of \nHarnesses{} harnesses and runtimes (RQ2, Section~\ref{sec:controls}); a black-box claims-versus-observed method for closed harnesses (RQ7, Section~\ref{sec:claims}); a two-source incident survey (RQ3, Section~\ref{sec:incidents}); \tool{}, an Apache-2.0 auditor, with accuracy, prevalence, canary-bench and residue experiments (RQ4, RQ5, Sections~\ref{sec:tool}--\ref{sec:eval}); and a governance checklist (RQ6, Section~\ref{sec:governance}). \texttt{make all} rebuilds every table, figure and result number from versioned results (Appendix~\ref{app:repro}).

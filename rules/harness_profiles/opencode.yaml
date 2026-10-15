@@ -1,0 +1,122 @@
+id: opencode
+name: OpenCode
+vendor: anomalyco (formerly SST)
+tier: A
+license: MIT
+open_source: true
+status: analysed
+version_analysed: "1.19.0"       # v1.19.0 (2026-10-11), source read at tag v1.19.0; dev branch is already a v2 rewrite (packages/cli 2.0.29) - not analysed
+analysed_on: "2026-10-15"
+homepage: https://opencode.ai
+repo: https://github.com/anomalyco/opencode      # sst/opencode redirects here; opencode-ai/opencode (Go, archived 2025-09) is a different lineage
+
+binaries: [opencode]
+packages:
+  - {ecosystem: npm, name: "opencode-ai"}
+install_methods:
+  - {method: curl-installer, command: "curl -fsSL https://opencode.ai/install | bash", checksum_verified: false, signed: false, source: https://github.com/anomalyco/opencode/blob/v1.19.0/install}   # script has no checksum/signature verification (read at v1.19.0)
+  - {method: npm, command: "npm i -g opencode-ai@latest", checksum_verified: null, signed: null, source: https://opencode.ai/docs}
+  - {method: homebrew, command: "brew install anomalyco/tap/opencode", checksum_verified: null, signed: null, source: https://opencode.ai/docs}      # tap name unverified
+auto_update: {default: true, config: "autoupdate (opencode.json): true|false|\"notify\"; OPENCODE_DISABLE_AUTOUPDATE", source: https://opencode.ai/docs/config}
+
+state_dirs: ["~/.config/opencode", "~/.local/share/opencode", "~/.local/state/opencode", "~/.cache/opencode", ".opencode"]
+credential_files: ["~/.local/share/opencode/auth.json", "~/.local/share/opencode/mcp-auth.json"]
+credential_storage: "plaintext JSON files written mode 0600 under the XDG data dir; env vars and {env:VAR}/{file:path} substitution in config"
+log_paths: ["~/.local/share/opencode/opencode.db", "~/.local/share/opencode/log/*", "~/.local/share/opencode/storage/**"]
+memory_paths: ["~/.config/opencode/AGENTS.md", "AGENTS.md"]
+
+config_files:
+  - {path: "/etc/opencode/opencode.json", scope: managed, format: jsonc, kind: settings}        # also opencode.jsonc; macOS /Library/Application Support/opencode; Windows %ProgramData%\opencode
+  - {path: "/Library/Managed Preferences/ai.opencode.managed.plist", scope: managed, format: json, kind: settings}   # MDM plist, converted to JSON; highest precedence
+  - {path: "~/.config/opencode/opencode.json", scope: user, format: jsonc, kind: settings}      # also opencode.jsonc, config.json
+  - {path: "~/.config/opencode/tui.json", scope: user, format: jsonc, kind: settings}
+  - {path: "~/.config/opencode/AGENTS.md", scope: user, format: markdown, kind: instructions}
+  - {path: "~/.config/opencode/agents/*.md", scope: user, format: markdown, kind: agents}
+  - {path: "~/.config/opencode/commands/*.md", scope: user, format: markdown, kind: skills}
+  - {path: "~/.config/opencode/plugins/*", scope: user, format: ini, kind: skills}              # TS/JS plugin code
+  - {path: "~/.config/opencode/skills/*/SKILL.md", scope: user, format: markdown, kind: skills}
+  - {path: "opencode.json", scope: project, format: jsonc, kind: settings}                      # also opencode.jsonc; found by walking up to the worktree root
+  - {path: ".opencode/opencode.json", scope: project, format: jsonc, kind: settings}
+  - {path: ".opencode/agents/*.md", scope: project, format: markdown, kind: agents}
+  - {path: ".opencode/commands/*.md", scope: project, format: markdown, kind: skills}
+  - {path: ".opencode/plugins/*", scope: project, format: ini, kind: skills}                    # auto-loaded code at startup
+  - {path: ".opencode/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: "CLAUDE.md", scope: project, format: markdown, kind: instructions}                   # fallback when no AGENTS.md; disable with OPENCODE_DISABLE_CLAUDE_CODE
+  - {path: "$OPENCODE_CONFIG", scope: env, format: jsonc, kind: settings}
+  - {path: "$OPENCODE_CONFIG_CONTENT", scope: env, format: json, kind: settings}                # inline JSON, overrides project config
+
+instruction_files: ["AGENTS.md", "CLAUDE.md", "~/.config/opencode/AGENTS.md", "~/.claude/CLAUDE.md", "instructions[] globs from config"]
+skills_paths: [".opencode/skills/*/SKILL.md", ".claude/skills/*/SKILL.md", ".agents/skills/*/SKILL.md", "~/.config/opencode/skills/*/SKILL.md", "~/.claude/skills/*/SKILL.md", "~/.agents/skills/*/SKILL.md"]
+
+mcp:
+  files: ["opencode.json", "opencode.jsonc", "~/.config/opencode/opencode.json", ".opencode/opencode.json"]
+  servers_key: "mcp"
+  server_fields:
+    command: command           # ARRAY: ["npx", "-y", "pkg"] (command + args in one list)
+    args: null
+    env: environment
+    url: url
+    headers: headers
+    type: type                 # "local" | "remote"
+    cwd: cwd
+    enabled: enabled
+    timeout: timeout
+    oauth: oauth
+  project_servers_require_approval: false     # no approval/trust gate found; SECURITY.md puts malicious config and MCP servers out of scope
+  notes: "Remote org defaults via .well-known/opencode may ship servers with enabled=false."
+
+permissions:
+  config_keys:
+    permission: "permission"          # string "allow"|"ask"|"deny" for all, or object {tool: action | {pattern: action}}; legacy `tools` booleans
+    env_override: "OPENCODE_PERMISSION"   # inline JSON
+    per_agent: "agent.<name>.permission"
+  default_mode: "permissive: '*' = allow; doom_loop = ask; external_directory = ask; read of *.env and *.env.* = ask (docs claim deny); question/plan_* = deny"
+  auto_approve_values:
+    - {key: "permission", value: "allow", note: "everything allowed"}
+    - {key: "permission.bash", value: "allow", note: "all shell commands"}
+    - {key: "permission.external_directory", value: "allow", note: "paths outside workspace"}
+    - {key: "permission.edit", value: "allow"}
+  cli_flags_auto_approve: ["--auto", "--yolo", "--dangerously-skip-permissions"]   # `opencode run`; `opencode --auto` per docs
+  allow_rule_syntax: "\"bash\": { \"*\": \"ask\", \"git *\": \"allow\", \"rm *\": \"deny\" }   # last matching rule wins; * and ? wildcards"
+  overbroad_patterns: ["\"permission\": \"allow\"", "\"bash\": \"allow\"", "\"bash\": {\"*\": \"allow\"}", "\"external_directory\": \"allow\"", "\"webfetch\": \"allow\""]
+
+hooks:
+  supported: true                      # via plugins (TS/JS) not a declarative hooks key
+  config_key: "plugin"                 # npm package names (auto-installed with Bun) or file paths; also .opencode/plugins/ auto-load
+  repo_scoped_allowed: true
+  command_field: null
+  notes: "Plugins run in-process with full user privileges; npm plugins are installed at startup."
+
+sandbox: {available: false, default_on: false, mechanism: "none - SECURITY.md: permission system is not a sandbox; use Docker/VM", config: null, source: https://github.com/anomalyco/opencode/blob/v1.19.0/SECURITY.md}
+network: {domain_allowlist: false, config: null, default: "webfetch/websearch allowed by default (permission '*': allow)", source: https://github.com/anomalyco/opencode/blob/v1.19.0/packages/opencode/src/agent/agent.ts}
+workspace_trust: {prompt_on_new_folder: false, notes: "No trust prompt: project opencode.json, .opencode/plugins, MCP and agents load immediately; 'Malicious config files' is listed out of scope in SECURITY.md", source: https://github.com/anomalyco/opencode/blob/v1.19.0/SECURITY.md}
+memory: {persistent: false, cross_project: false, agent_writable: false, notes: "No dedicated agent memory; AGENTS.md (via /init) and session DB", source: https://opencode.ai/docs/rules}
+subagents: {supported: true, inherits_permissions: "parent session deny rules and external_directory rules are copied to subagent sessions; todowrite/task denied unless allowed", notes: "built-in primary agents build/plan; subagents general/explore; custom via agent config or .opencode/agents", source: https://github.com/anomalyco/opencode/blob/v1.19.0/packages/opencode/src/agent/subagent-permissions.ts}
+telemetry: {default_on: null, opt_out: null, training_default: null, source: null}   # no telemetry/retention docs found: unverified; share default is "manual"
+headless:
+  command: "opencode run"
+  flags: ["--format default|json", "-m/--model provider/model", "--agent", "--auto", "--yolo", "--dangerously-skip-permissions", "-c/--continue", "-s/--session", "-f/--file", "--attach URL", "--dir", "--port", "--variant", "--share"]
+  ci_integrations: ["opencode github install / anomalyco/opencode/github action", "GitLab CI"]
+  model_override: "provider/model via -m or config `model`; provider block with npm @ai-sdk/openai-compatible + options.baseURL; OPENCODE_CONFIG_CONTENT for ephemeral config in containers"
+  local_model_support: "Yes (OpenAI-compatible): provider.ollama = {npm:\"@ai-sdk/openai-compatible\", options:{baseURL:\"http://localhost:11434/v1\"}, models:{\"<name>\":{}}}; raise Ollama num_ctx to 16-32k for tool calls."
+server_mode:
+  command: "opencode serve | opencode web"
+  auth: "OPENCODE_SERVER_PASSWORD (basic auth, user OPENCODE_SERVER_USERNAME or 'opencode'); unauthenticated with warning if unset"
+  advisories: ["CVE-2026-22812", "CVE-2026-22813", "GHSA-632h-h47v-g4x4"]
+
+security_policy: {security_md: https://github.com/anomalyco/opencode/blob/dev/SECURITY.md, bug_bounty: null, advisories: https://github.com/anomalyco/opencode/security/advisories}
+sources:
+  - {url: https://github.com/anomalyco/opencode/blob/v1.19.0/SECURITY.md, accessed: "2026-10-15", note: "threat model"}
+  - {url: https://github.com/anomalyco/opencode/blob/v1.19.0/packages/opencode/src/agent/agent.ts, accessed: "2026-10-15", note: "default permissions"}
+  - {url: https://github.com/anomalyco/opencode/blob/v1.19.0/packages/opencode/src/config/config.ts, accessed: "2026-10-15", note: "config loading/precedence"}
+  - {url: https://github.com/anomalyco/opencode/blob/v1.19.0/packages/opencode/src/cli/cmd/run.ts, accessed: "2026-10-15", note: "run flags"}
+  - {url: https://github.com/anomalyco/opencode/blob/v1.19.0/packages/web/src/content/docs/permissions.mdx, accessed: "2026-10-15", note: "permission docs"}
+  - {url: https://github.com/anomalyco/opencode/blob/v1.19.0/packages/web/src/content/docs/mcp-servers.mdx, accessed: "2026-10-15", note: "mcp"}
+  - {url: https://github.com/anomalyco/opencode/blob/v1.19.0/packages/web/src/content/docs/providers.mdx, accessed: "2026-10-15", note: "Ollama"}
+  - {url: https://github.com/anomalyco/opencode/security/advisories, accessed: "2026-10-15", note: "3 GHSAs"}
+  - {url: https://opencode.ai/config.json, accessed: "2026-10-15", note: "JSON schema (top-level keys incl. permission, mcp, agent, provider, plugin, share, autoupdate, experimental)"}
+extra:
+  schema_top_level_keys: [shell, model, default_agent, update, share, enterprise, username, permissions, policies, agents, snapshots, watcher, formatter, lsp, media, tool_output, mcp, compaction, skills, commands, instructions, references, websearch, plugins, worktree, warming, providers, experimental, logLevel, server, command, reference, snapshot, plugin, autoshare, autoupdate, disabled_providers, enabled_providers, small_model, subagent_depth, mode, agent, provider, layout, permission, tools, attachment]   # opencode.ai/config.json now includes both legacy singular and new plural (v2) keys
+  note_v2: "The published schema contains v2-style plural keys (permissions, providers, agents, plugins); this profile follows v1.19.0 source which reads `permission`, `agent`, `provider`, `plugin`, `mcp`. A linter should accept both spellings."
+  doc_vs_code: "docs/permissions.mdx says *.env reads are denied by default; agent.ts sets them to ask"

@@ -1,0 +1,4 @@
+expected: [HG-CI-001]
+origin: hand
+family: ci
+note: "GitLab merge-request pipeline running claude -p with bypass"

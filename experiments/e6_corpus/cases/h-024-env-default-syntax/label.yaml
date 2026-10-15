@@ -1,0 +1,4 @@
+expected: [HG-MCP-005]
+origin: hand
+family: mcp
+note: "env values are ${VAR:-default} expansions"

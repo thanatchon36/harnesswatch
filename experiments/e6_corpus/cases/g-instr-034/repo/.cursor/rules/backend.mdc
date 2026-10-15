@@ -1,0 +1,26 @@
+---
+description: Backend conventions
+globs: src/**/*.py
+alwaysApply: false
+---
+
+<!-- markdownlint-disable MD013 -->
+## Release
+
+Bump the version in `pyproject.toml`, update CHANGELOG.md, tag `vX.Y.Z`.
+
+Always run the linter​​​ before pushing changes.
+
+## Database
+
+Migrations are generated with `alembic revision --autogenerate`; review them by hand before applying.
+
+## Architecture
+
+- `src/api/` HTTP handlers
+- `src/core/` domain logic (no I/O)
+- `src/db/` repositories and migrations
+
+## Style
+
+Follow PEP 8 and the existing module layout. Prefer small pure functions and type hints.

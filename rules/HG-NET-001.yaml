@@ -1,0 +1,28 @@
+id: HG-NET-001
+title: Unrestricted network egress for agent tools where the harness supports restriction
+area: NET
+severity: low
+confidence: medium
+kind: design-weakness
+taxonomy: [T08]
+description: >
+  The configuration explicitly opens network access for sandboxed commands or allows fetching any
+  domain (Codex `sandbox_workspace_write.network_access = true` or a `*` domain rule, Claude Code
+  `WebFetch` without a domain or `allowedDomains: ["*"]`, Gemini `tools.sandboxNetworkAccess`, Qwen
+  `executionSandbox.network = "open"`, OpenCode `permission.webfetch = "allow"`). Network reach is the
+  exfiltration channel for any successful injection.
+remediation: Keep network off by default and allow specific domains (package registries, your docs) through the harness's domain allowlist or an egress proxy.
+references:
+  - https://developers.openai.com/codex/security
+  - https://code.claude.com/docs/en/sandboxing
+params:
+  settings:
+    codex-cli: [{key: sandbox_workspace_write.network_access, value: true}, {key: "features.network_proxy.domains.*", value: allow}]
+    claude-code: [{key: permissions.allow, value: WebFetch}, {key: sandbox.network.allowedDomains, value: "*"}]
+    cursor: [{key: permissions.allow, value: "WebFetch(*)"}]
+    gemini-cli: [{key: tools.sandboxNetworkAccess, value: true}]
+    qwen-code: [{key: tools.executionSandbox.network, value: open}]
+    opencode: [{key: permission.webfetch, value: allow}]
+    kilo-code: [{key: permission.webfetch, value: allow}]
+    crush: [{key: permissions.allowed_tools, value: fetch}]
+    github-copilot: [{key: chat.tools.urls.autoApprove, value: "*"}]

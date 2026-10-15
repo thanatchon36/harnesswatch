@@ -1,0 +1,17 @@
+model = "o4-mini"
+model_reasoning_effort = "high"
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+approvals_reviewer = "auto_review"
+
+[sandbox_workspace_write]
+network_access = true
+
+[features]
+memories = false
+
+[analytics]
+enabled = false
+
+[projects."/home/dev/src/app"]
+trust_level = "trusted"

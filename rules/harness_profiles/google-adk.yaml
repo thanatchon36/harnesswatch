@@ -1,0 +1,87 @@
+id: google-adk
+tier: C
+analysed_on: '2026-10-15'
+config_files: []
+binaries:
+- adk
+name: Google Agent Development Kit (Python)
+vendor: Google
+license: Apache-2.0
+open_source: true
+status: analysed
+version_analysed: 2.12.0
+homepage: https://google.github.io/adk-docs/
+repo: https://github.com/google/adk-python
+packages:
+- ecosystem: pypi
+  name: google-adk
+state_dirs: []
+credential_files: []
+credential_storage: Delegated to Google ADC / env API keys (GOOGLE_API_KEY etc.); not examined in source
+log_paths: []
+memory_paths: []
+mcp:
+  files: []
+  servers_key: null
+  server_fields:
+    note: 'programmatic: McpToolset(connection_params=StdioConnectionParams|SseConnectionParams|StreamableHTTPConnectionParams, tool_filter=, require_confirmation=, header_provider=)'
+  project_servers_require_approval: null
+  notes: require_confirmation default False
+permissions:
+  config_keys: {}
+  default_mode: no confirmation (require_confirmation=False); BashToolPolicy allowed_command_prefixes=('*',)
+  auto_approve_values:
+  - key: require_confirmation
+    value: false
+  - key: BashToolPolicy.allowed_command_prefixes
+    value:
+    - '*'
+  cli_flags_auto_approve: []
+  allow_rule_syntax: null
+  overbroad_patterns:
+  - allowed_command_prefixes=("*",)
+hooks:
+  supported: true
+  config_key: plugins / callbacks (before_tool_callback etc.), code-only
+  repo_scoped_allowed: false
+sandbox:
+  available: true
+  default_on: false
+  mechanism: 'code_executors: ContainerCodeExecutor (Docker), GkeCodeExecutor, VertexAiCodeExecutor, AgentEngineSandboxCodeExecutor; UnsafeLocalCodeExecutor runs on host'
+  config: LlmAgent(code_executor=...)
+  source: https://github.com/google/adk-python/blob/main/src/google/adk/code_executors/unsafe_local_code_executor.py
+network:
+  domain_allowlist: null
+  default: adk web/api_server --host default 127.0.0.1; --allow_origins for CORS
+  source: https://github.com/google/adk-python/blob/main/src/google/adk/cli/cli_tools_click.py
+telemetry:
+  default_on: null
+  opt_out: OTel export only if OTEL_EXPORTER_OTLP_* configured
+  training_default: null
+  source: https://github.com/google/adk-python/blob/main/src/google/adk/telemetry/setup.py
+headless:
+  command: adk run <agent_dir> (CLI), adk api_server
+  model_override: LiteLlm(model=..., api_base=...) in google.adk.models.lite_llm for OpenAI-compatible/Ollama
+  local_model_support: via LiteLlm (docs-level, untested)
+security_policy:
+  security_md: null
+  bug_bounty: null
+  advisories: https://github.com/advisories/GHSA-rg7c-g689-fr3x
+extra:
+  critical_advisory: CVE-2026-4810 (fixed 1.28.1 / 2.0.0a2)
+  v2_ga: '2026-05-19'
+  telemetry_env_vars:
+  - OTEL_EXPORTER_OTLP_ENDPOINT
+sources:
+- url: https://github.com/google/adk-python/blob/main/src/google/adk/code_executors/unsafe_local_code_executor.py
+  accessed: '2026-10-15'
+  note: executor
+- url: https://github.com/google/adk-python/blob/main/src/google/adk/tools/bash_tool.py
+  accessed: '2026-10-15'
+  note: bash policy
+- url: https://github.com/advisories/GHSA-rg7c-g689-fr3x
+  accessed: '2026-10-15'
+  note: CVE-2026-4810
+- url: https://github.com/google/adk-python/releases
+  accessed: '2026-10-15'
+  note: releases

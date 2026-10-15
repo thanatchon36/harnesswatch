@@ -1,0 +1,12 @@
+# Project guide
+
+Team channel: #dev-👩‍💻 (yes, the emoji is part of the name) 🎉
+
+## Git
+
+Use Conventional Commits (`feat:`, `fix:`, `docs:`). Do not rewrite published history.
+
+<!-- markdownlint-disable MD013 -->
+## Release
+
+Bump the version in `pyproject.toml`, update CHANGELOG.md, tag `vX.Y.Z`.

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://charm.land/crush.json",
+  "mcp": {
+    "internal-docs": {
+      "command": "node",
+      "args": [
+        "./tools/mcp/docs-server.js"
+      ],
+      "env": {
+        "SLACK_BOT_TOKEN": "{{SYNTH:slack-token}}"
+      },
+      "type": "stdio"
+    },
+    "git": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-git",
+        "--repository",
+        "."
+      ],
+      "env": {
+        "LOG_LEVEL": "info",
+        "ALLOWED_DIRECTORIES": "/workspace/app"
+      },
+      "type": "stdio"
+    },
+    "context": {
+      "url": "https://mcp.context.example.com/mcp",
+      "type": "http"
+    }
+  }
+}

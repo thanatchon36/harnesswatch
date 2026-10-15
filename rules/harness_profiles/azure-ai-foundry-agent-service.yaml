@@ -1,0 +1,62 @@
+id: azure-ai-foundry-agent-service
+name: Microsoft Foundry Agent Service (formerly Azure AI Foundry Agent Service / Azure AI Agent Service)
+vendor: Microsoft
+tier: C
+license: Proprietary hosted
+open_source: false
+status: docs-only
+version_analysed: null
+analysed_on: "2026-10-15"
+homepage: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+repo: null
+
+binaries: [az, azd]
+packages:
+  - {ecosystem: pypi, name: "azure-ai-projects"}
+install_methods: []
+auto_update: {default: null, config: null, source: null}
+
+state_dirs: ["~/.azure"]
+credential_files: ["~/.azure/msal_token_cache.json"]   # az CLI cache path unverified here
+credential_storage: "Entra agent identity (blueprint federated credential from project managed identity); project connections for key-based tools"
+log_paths: []
+memory_paths: []
+
+config_files: []
+
+mcp:
+  files: []
+  servers_key: "tools[] type mcp (project connection with authType AgenticIdentityToken | key | OAuth passthrough)"
+  server_fields: {url: server_url, type: type}
+  project_servers_require_approval: null   # MCP approval doc URL returned 404; unverified
+  notes: "Toolboxes expose curated tools behind one managed MCP endpoint with centralized auth/governance/versioning."
+
+permissions:
+  config_keys:
+    mode: "Azure RBAC role assignments (Foundry User/Owner/Account Owner/Project Manager) and agent identity roles"
+  default_mode: "unpublished agents share the project agent identity; published agents get a distinct identity"
+  auto_approve_values: []
+  cli_flags_auto_approve: []
+  overbroad_patterns: ["Owner or Contributor assigned to the shared project agent identity", "Storage Blob Data Contributor at subscription scope"]
+
+hooks: {supported: false}
+sandbox: {available: true, default_on: true, mechanism: "hosted agents: VM-isolated sandbox per session; prompt agents fully managed", config: null, source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview}
+network: {domain_allowlist: true, config: "guardrail (RAI policy) network egress controls for hosted agents (preview); BYO VNet; private networking for prompt agents", default: null, source: https://learn.microsoft.com/en-us/azure/foundry/guardrails/guardrails-overview}
+workspace_trust: {prompt_on_new_folder: false, notes: "cloud service", source: null}
+memory: {persistent: null, cross_project: null, agent_writable: null, notes: "memory listed as a built-in tool; controls not verified", source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview}
+subagents: {supported: null, inherits_permissions: null, notes: "A2A tool with agent-identity auth", source: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-identity}
+telemetry: {default_on: null, opt_out: null, training_default: null, source: null}
+headless:
+  command: null
+  flags: []
+  ci_integrations: ["azd (Azure Developer CLI) for deploy"]
+  model_override: "Foundry model deployment per agent"
+  local_model_support: "not applicable to hosted service"
+
+security_policy: {security_md: null, bug_bounty: null, advisories: "https://msrc.microsoft.com/update-guide"}
+sources:
+  - {url: https://learn.microsoft.com/en-us/azure/foundry/agents/overview, accessed: "2026-10-15", note: "name, agent types, enterprise capabilities"}
+  - {url: https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-identity, accessed: "2026-10-15", note: "Entra Agent ID"}
+  - {url: https://learn.microsoft.com/en-us/azure/foundry/guardrails/guardrails-overview, accessed: "2026-10-15", note: "guardrails and controls"}
+extra:
+  seed_name_correction: "Official name is now 'Microsoft Foundry Agent Service' (rename from Azure AI Foundry effective 2026-01-01 per third-party reports; Learn page confirms current name). Learn URL path is /azure/foundry/agents/. Prompt agents can opt into a preview 'GitHub Copilot harness'."

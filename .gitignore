@@ -1,0 +1,30 @@
+__pycache__/
+*.py[cod]
+.venv/
+dist/
+build/
+*.egg-info/
+.coverage
+coverage.xml
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.hypothesis/
+site/
+# Never commit private notes, disclosure drafts or credentials
+/private/
+.env
+/*.local.json
+# Bench scratch (results under bench/results/ are committed after scrubbing)
+bench/.work/
+experiments/corpus/raw/
+.tools/
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.blg

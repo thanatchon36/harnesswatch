@@ -1,0 +1,236 @@
+{
+  "harness": "mistral-vibe",
+  "version": "2.26.1",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Default agent `accept-edits` auto-approves file edits only; `ask` requires approval; `plan` read-only; `auto-approve` approves all.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "config.toml `bypass_tool_permissions` defaults to False; --auto-approve/--yolo available in interactive and -p.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/vibe/core/config/vibe_schema.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Four built-in agents with per-tool ask/always/never permissions, glob/regex tool filters and hooks; safe-ish default (edits auto, shell asks); global bypass flags exist."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "No sandbox in README feature list; only experimental hidden --agent-socket remote tool sandbox.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/README.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No built-in sandbox for local sessions."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Network-related config limited to TLS trust anchors.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/README.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No egress control (only TLS trust-store options)."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Trust Folder System: project .vibe content loaded only for trusted folders; managed via ~/.vibe/trusted_folders.toml.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "AGENTS.md files 'are only loaded for trusted folders'; project hooks.toml 'trusted only'.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "ProjectConfigLayer consults trusted_folders_manager before reading ./.vibe/config.toml.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/vibe/core/config/layers/project.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Folder-trust system gates project config, hooks, AGENTS.md, skills, tools and agents; trust persisted 0600; --trust required for automation; project config layer walks to a trusted .vibe/config.toml only."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "`[[mcp_servers]]` with transport http/streamable-http/stdio, auth.type static|oauth; disabled_tools = [\"mcp_*\"] glob supported.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "MCP servers are declared in config (project ones gated by trust); static/OAuth auth with api_key_env; tool filters (disabled_tools mcp_*); no central policy."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Custom tools in ~/.vibe/tools and .vibe/tools are Python code; will be deprecated in favour of skills.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Skills, custom tools and plugins from trusted project dirs; skills execute with agent privileges; custom tools slated for deprecation; no registry vetting documented."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "GLOBAL_ENV_FILE touched with mode 0o600; os.chmod strips group/other bits.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/vibe/setup/auth/api_key_persistence.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "otel_redaction default redacts sensitive values (strict|default|none).",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": ".env created 0600 and group/other stripped; env precedence; OTel redaction default on; trust file 0600; no keychain."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "-p supports --max-turns, --max-price, --max-tokens, --time-limit, --enabled-tools (disables all others), exit codes 0-4.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Official action.yml runs `vibe -p \"$PROMPT_INPUT\"` with prompt passed via env var, no --trust.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/action.yml",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "`--trust`: trust cwd for this invocation only; 'Use this for non-interactive automation.'",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/vibe/cli/entrypoint.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Purpose-built programmatic mode with turn/price/token/time limits, structured exit codes, --enabled-tools narrowing, and an official composite GitHub Action; untrusted folders ignore repo config unless --trust is passed."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "No memory feature in README.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/README.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (no persistent memory feature found)."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Subagents inherit the parent's hook config so policies apply transitively; explore is read-only.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Subagents inherit hooks; `explore` subagent read-only; custom subagents definable; permission inheritance partly documented."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Logs at ~/.vibe/logs/vibe.log; `--output-dir` writes export.json and copies session journal; OTel traces opt-in.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Structured log file, session journal, optional OTLP traces with redaction, --output-dir export (effective config with redactions, tokens, cost)."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "`enable_telemetry: bool = True`; default telemetry base URL https://api.mistral.ai.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/vibe/core/config/vibe_schema.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "README: data collection per Mistral Privacy Policy; disable telemetry/crash reporting in config.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Telemetry on by default (opt-out flag); remote experiment flags; OTel off by default."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Update checks at most daily, prompt before install; `enable_update_checks = false` disables.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "curl|bash installer and PyPI/uv; daily update check prompts rather than silent install; PyInstaller specs in repo; no checksum/signature statement found."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Config is user/project TOML with no admin layer.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/README.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "No managed policy mechanism found."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md requests private reports to security@mistral.ai.",
+          "source": "https://github.com/mistralai/mistral-vibe/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "0 repository security advisories at access time.",
+          "source": "https://api.github.com/repos/mistralai/mistral-vibe/security-advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "SECURITY.md with private email (security@mistral.ai) and agent-specific report guidance; no published advisories or CVEs found."
+    }
+  }
+}

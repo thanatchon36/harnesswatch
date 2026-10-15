@@ -1,0 +1,5 @@
+expected:
+- HG-CI-001
+origin: generated
+family: ci
+note: workflow issue_comment/claude_cli

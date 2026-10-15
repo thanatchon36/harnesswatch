@@ -1,0 +1,236 @@
+{
+  "harness": "warp",
+  "version": "stable v0.2026.06.03.09.49.stable_00",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "GUI default profile: execute_commands AlwaysAsk, apply_code_diffs/read_files/mcp AgentDecides, allowlist empty, 18-regex denylist",
+          "source": "https://github.com/warpdotdev/warp/blob/master/crates/cloud_object_models/src/ai_execution_profile.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "'Default (CLI)' profile: apply_code_diffs/read_files/execute_commands/mcp/pty/run_agents all AlwaysAllow; denylist only if not sandboxed",
+          "source": "https://github.com/warpdotdev/warp/blob/master/crates/cloud_object_models/src/ai_execution_profile.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "auto_approve_bypasses_command_denylist default true",
+          "source": "https://github.com/warpdotdev/warp/blob/master/app/src/settings/ai.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GHSA-3839-h8jj-ph82 / CVE-2026-48721: env-var prefixes bypass denylist in CLI agent (fixed v0.2026.05.06.15.42.stable_01)",
+          "source": "https://github.com/warpdotdev/warp/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GHSA-8r78-7jwh-m6hm / CVE-2026-48703: Grep/FileGlob tool args injected into shell command, bypassing approval policy",
+          "source": "https://github.com/warpdotdev/warp/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Per-category profiles (diffs, read, execute, MCP, pty, agents) with regex allow/deny lists; GUI default asks for commands; CLI profile is allow-all; auto-approve bypasses denylist by default; several denylist/approval bypass CVEs fixed 2026-05."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "`--sandboxed` and `--environment` flags on `agent run`",
+          "source": "https://github.com/warpdotdev/warp/blob/master/crates/warp_cli/src/agent.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Cloud/ambient agent environments and a --sandboxed CLI mode exist; local agent runs unsandboxed."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "DEFAULT_COMMAND_EXECUTION_DENYLIST contents",
+          "source": "https://github.com/warpdotdev/warp/blob/master/crates/cloud_object_models/src/ai_execution_profile.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "GUI profile default-denylists curl/wget/ssh/scp/dig etc.; not a network control."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "file_based_mcp_enabled default false; Warp-native config always detected and spawned",
+          "source": "https://github.com/warpdotdev/warp/blob/master/app/src/settings/ai.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "No folder trust prompt; project .warp/.mcp.json auto-spawned; third-party MCP files (Claude/Codex/.agents) gated by file_based_mcp_enabled default false."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "AIExecutionProfile mcp_allowlist / mcp_denylist / mcp_permissions",
+          "source": "https://github.com/warpdotdev/warp/blob/master/crates/cloud_object_models/src/ai_execution_profile.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Docs: MCP denylist requires approval even if allowlisted",
+          "source": "https://docs.warp.dev/agents/using-agents/agent-profiles-permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Per-profile MCP allowlist/denylist (denylist wins), mcp_permissions default AgentDecides, third-party config import off by default."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "warp_home_skills_dir ~/.warp/skills",
+          "source": "https://github.com/warpdotdev/warp/blob/master/crates/warp_core/src/paths.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Workflows/skills/Drive objects; Oz harness integrations; no signing documented."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "crates/secret_redaction + CustomSecretRegex setting",
+          "source": "https://github.com/warpdotdev/warp/blob/master/app/src/settings/privacy.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "API keys never appear in settings value or sync payloads (custom endpoints spec)",
+          "source": "https://github.com/warpdotdev/warp/blob/master/specs/APP-5380/PRODUCT.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Dedicated secret_redaction crate and custom secret regex setting; custom-endpoint keys kept in local secure storage, not settings.toml."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "create_default_cli_profile: 'will never ask the user for permission'",
+          "source": "https://github.com/warpdotdev/warp/blob/master/crates/cloud_object_models/src/ai_execution_profile.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "oz agent run with allow-all CLI profile; denylist as the only guard unless sandboxed (CVE-2026-48721 showed fragility)."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "agents.knowledge.rules_enabled, warp_drive_context_enabled settings",
+          "source": "https://github.com/warpdotdev/warp/blob/master/app/src/settings/ai.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Warp Drive rules/knowledge and oz memory-store; cloud-synced."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "run_agents field in AIExecutionProfile",
+          "source": "https://github.com/warpdotdev/warp/blob/master/crates/cloud_object_models/src/ai_execution_profile.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "run_agents permission AlwaysAsk (GUI) / AlwaysAllow (CLI)."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "include_agent_commands_in_history default false",
+          "source": "https://github.com/warpdotdev/warp/blob/master/app/src/settings/ai.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Local block history and agent conversations; team audit features not verified."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "privacy.telemetry_enabled / crash_reporting_enabled default true",
+          "source": "https://github.com/warpdotdev/warp/blob/master/app/src/settings/privacy.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Telemetry and crash reporting default ON (opt-out in settings); agent traffic goes via Warp's closed server."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "autoupdate module",
+          "source": "https://github.com/warpdotdev/warp/blob/master/app/src/autoupdate",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Native installers/auto-update; repo buildable from source (AGPL); release signing not verified."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Docs: denylist rules enforced through Admin Panel are never bypassed",
+          "source": "https://docs.warp.dev/agents/using-agents/agent-profiles-permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Team-managed custom endpoints resolved server-side (byok-byoe-enterprise spec)",
+          "source": "https://github.com/warpdotdev/warp/blob/master/specs/byok-byoe-enterprise/PRODUCT.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Team Admin Panel can enforce denylist rules ('always require approval and are never bypassed') and team-managed provider keys."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md",
+          "source": "https://github.com/warpdotdev/warp/blob/master/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "10 published GHSAs",
+          "source": "https://github.com/warpdotdev/warp/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "SECURITY.md + GitHub private advisory channel; 10 GHSAs/CVEs published 2026-06-09 with fixes dated 2026-05; bounty not confirmed."
+    }
+  }
+}

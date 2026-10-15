@@ -1,0 +1,13 @@
+name: agent
+'on':
+  schedule:
+  - cron: 0 6 * * 1
+jobs:
+  agent:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v5
+    - uses: anthropics/claude-code-action@v1
+      with:
+        prompt: Review this change and suggest fixes.
+        claude_args: --dangerously-skip-permissions

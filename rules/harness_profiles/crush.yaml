@@ -1,0 +1,116 @@
+id: crush
+name: Crush
+vendor: Charm (Charmbracelet)
+tier: A
+license: FSL-1.1-MIT            # Functional Source License 1.1, MIT Future License (source-available, not OSI); GitHub API reports NOASSERTION
+open_source: false              # source-available; converts to MIT two years after each release (per FSL-1.1-MIT)
+status: analysed
+version_analysed: "0.98.1"      # v0.98.1 (2026-10-09); source read at main f49b281 (2026-10-14)
+analysed_on: "2026-10-15"
+homepage: https://github.com/charmbracelet/crush
+repo: https://github.com/charmbracelet/crush
+
+binaries: [crush]
+packages:
+  - {ecosystem: go, name: "github.com/charmbracelet/crush"}
+  - {ecosystem: npm, name: "@charmland/crush"}            # per README install section
+install_methods:
+  - {method: homebrew, command: "brew install charmbracelet/tap/crush", checksum_verified: null, signed: null, source: https://github.com/charmbracelet/crush/blob/main/README.md}
+  - {method: github-release, command: "download archive + checksums.txt + .sigstore.json (cosign verify-blob)", checksum_verified: true, signed: true, source: https://github.com/charmbracelet/crush/blob/main/.goreleaser.yml}
+  - {method: go-install, command: "go install github.com/charmbracelet/crush@latest", checksum_verified: null, signed: null, source: https://github.com/charmbracelet/crush/blob/main/README.md}
+auto_update: {default: null, config: "providers list auto-updates from Catwalk (options.disable_provider_auto_update / CRUSH_DISABLE_PROVIDER_AUTO_UPDATE); binary self-update behaviour not verified", source: https://github.com/charmbracelet/crush/blob/main/README.md}
+
+state_dirs: ["~/.config/crush", "~/.local/share/crush", "~/.cache/crush", ".crush"]
+credential_files: ["~/.local/share/crush/crush.json", "~/.config/crush/crush.json"]    # api_key literals or $VAR references; app-written state in data dir
+credential_storage: "API keys in env vars or crush.json (api_key may be $VAR); OAuth/provider login state written to the data-dir crush.json (written 0600 by migration helper; general mode unverified)"
+log_paths: [".crush/logs/crush.log", ".crush/crush.db"]     # data_directory option default ".crush" (relative to project); SQLite sessions
+memory_paths: ["CRUSH.md", "AGENTS.md", "~/.config/crush/CRUSH.md", "~/.config/AGENTS.md"]
+
+config_files:
+  - {path: "/etc/crush/crush.json", scope: managed, format: json, kind: settings}          # lowest priority; cannot enforce (project config merges after)
+  - {path: "~/.config/crush/crush.json", scope: user, format: json, kind: settings}        # CRUSH_GLOBAL_CONFIG overrides dir
+  - {path: "~/.config/crush/crushrc", scope: user, format: ini, kind: settings}            # Bash script executed at load (format: shell)
+  - {path: "~/.local/share/crush/crush.json", scope: user, format: json, kind: settings}   # CRUSH_GLOBAL_DATA; machine-owned state, never executed as shell
+  - {path: "crush.json", scope: project, format: json, kind: settings}                     # walks up to git root
+  - {path: ".crush.json", scope: project, format: json, kind: settings}
+  - {path: "crushrc", scope: project, format: ini, kind: settings}                         # EXECUTED as Bash at config load, no trust prompt
+  - {path: ".crushrc", scope: project, format: ini, kind: settings}
+  - {path: "CRUSH.md", scope: project, format: markdown, kind: instructions}
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: ".crush/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+  - {path: ".agents/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+  - {path: ".claude/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+  - {path: ".cursor/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+  - {path: "~/.config/crush/skills/*/SKILL.md", scope: user, format: markdown, kind: skills}
+  - {path: "~/.claude/skills/*/SKILL.md", scope: user, format: markdown, kind: skills}
+
+instruction_files: ["AGENTS.md", "agents.md", "Agents.md", "CRUSH.md", "crush.md", "Crush.md", "CRUSH.local.md", "CLAUDE.md", "CLAUDE.local.md", "GEMINI.md", "gemini.md", ".cursorrules", ".cursor/rules/", ".github/copilot-instructions.md"]
+skills_paths: [".agents/skills", ".crush/skills", ".claude/skills", ".cursor/skills", "~/.config/crush/skills", "~/.config/agents/skills", "~/.agents/skills", "~/.claude/skills", "$CRUSH_SKILLS_DIR", "options.skills_paths"]
+
+mcp:
+  files: ["crush.json", ".crush.json", "~/.config/crush/crush.json", "crushrc (mcp builtin)"]
+  servers_key: "mcp"
+  server_fields:
+    command: command
+    args: args
+    env: env
+    url: url
+    headers: headers
+    type: type               # stdio (default) | sse | http
+    disabled: disabled
+    enabled_tools: enabled_tools
+    disabled_tools: disabled_tools
+    timeout: timeout          # seconds, default 10
+    oauth: oauth
+  project_servers_require_approval: false     # no approval step found in source/schema (unverified absence)
+  notes: "Values are shell-expanded at load ($VAR, $(cmd)); fields documented in docs/config/README.md."
+
+permissions:
+  config_keys:
+    allow: "permissions.allowed_tools"     # tools that skip prompts, e.g. ["bash","view"]
+    disabled_tools: "options.disabled_tools"
+  default_mode: "prompt for tool use except read-only tools and a hard-coded safe-command prefix list for bash (no command chaining)"
+  auto_approve_values:
+    - {key: "permissions.allowed_tools", value: "bash", note: "bash without prompts"}
+    - {key: "permissions.allowed_tools", value: "*", note: "unverified whether wildcard is honoured"}
+  cli_flags_auto_approve: ["--yolo", "-y"]
+  implicit_auto_approve: ["crush run (non-interactive) auto-approves the whole session via AutoApproveSession"]
+  allow_rule_syntax: "\"permissions\": { \"allowed_tools\": [\"view\", \"ls\", \"grep\"] }"
+  overbroad_patterns: ["bash", "edit", "write", "multiedit", "fetch", "download"]
+
+hooks:
+  supported: true
+  config_key: "hooks"            # {"PreToolUse": [{"matcher": "^bash$", "command": "./hook.sh", "timeout": 30, "name": "..."}]}
+  repo_scoped_allowed: true      # project crush.json hooks are the documented example
+  command_field: "command"
+  events: [PreToolUse]
+  notes: "Claude Code-compatible hook I/O; hooks can rewrite tool input and auto-approve."
+
+sandbox: {available: false, default_on: false, mechanism: "none found", config: null, source: https://github.com/charmbracelet/crush}
+network: {domain_allowlist: false, config: null, default: "no egress controls found; bash tool has a banned-command list (configurability requested in issue #2474)", source: https://github.com/charmbracelet/crush/issues/2474}
+workspace_trust: {prompt_on_new_folder: false, notes: "README: crushrc and crush.json are 'trusted code'; crushrc runs in a full shell and $(...) in crush.json runs at load; lookup walks up to the git root. A 'trust configs' PR (#3607) is open.", source: https://github.com/charmbracelet/crush/blob/main/README.md}
+memory: {persistent: false, cross_project: false, agent_writable: false, notes: "Context files only (CRUSH.md/AGENTS.md); sessions in project .crush/crush.db", source: https://github.com/charmbracelet/crush/blob/main/README.md}
+subagents: {supported: null, inherits_permissions: null, notes: "agentic_fetch sub-agent auto-approves its own session (agentic_fetch_tool.go); other delegation not assessed", source: https://github.com/charmbracelet/crush/blob/main/internal/agent/agentic_fetch_tool.go}
+telemetry: {default_on: true, opt_out: "CRUSH_DISABLE_METRICS=1 ; DO_NOT_TRACK=1 ; options.disable_metrics", training_default: null, source: https://github.com/charmbracelet/crush/blob/main/README.md}
+headless:
+  command: "crush run"
+  flags: ["-m/--model provider/model", "--small-model", "--reasoning-effort", "-s/--session", "-C/--continue", "-q/--quiet", "-v/--verbose", "-c/--cwd", "-D/--data-dir", "-d/--debug"]
+  ci_integrations: []
+  model_override: "crush run -m <provider/model>; providers in crush.json (providers.<id>.base_url, api_key, type) or crushrc `provider add`"
+  local_model_support: "Yes: provider types ollama, lmstudio, llamacpp, litellm, openai-compat, anthropic; e.g. `provider add ollama --type ollama --base-url http://localhost:11434/v1` and `model add ollama/<name> --context-window N` (crushrc), or providers.ollama in crush.json."
+
+security_policy: {security_md: https://github.com/charmbracelet/.github/blob/main/SECURITY.md, bug_bounty: null, advisories: null}   # email vt100@charm.sh; no repo advisories
+sources:
+  - {url: https://github.com/charmbracelet/crush/blob/main/README.md, accessed: "2026-10-15", note: "config, security note, metrics, skills"}
+  - {url: https://github.com/charmbracelet/crush/blob/main/docs/config/README.md, accessed: "2026-10-15", note: "crushrc and JSON config"}
+  - {url: https://github.com/charmbracelet/crush/blob/main/internal/config/load.go, accessed: "2026-10-15", note: "lookupConfigs / shell config"}
+  - {url: https://github.com/charmbracelet/crush/blob/main/internal/shellconfig/load.go, accessed: "2026-10-15", note: "crushrc executes in shell interpreter"}
+  - {url: https://github.com/charmbracelet/crush/blob/main/schema.json, accessed: "2026-10-15", note: "crush.json schema"}
+  - {url: https://github.com/charmbracelet/crush/blob/main/internal/app/app.go, accessed: "2026-10-15", note: "AutoApproveSession for run"}
+  - {url: https://github.com/charmbracelet/crush/blob/main/internal/agent/tools/safe.go, accessed: "2026-10-15", note: "safe commands"}
+  - {url: https://github.com/charmbracelet/crush/blob/main/docs/hooks/README.md, accessed: "2026-10-15", note: "hooks"}
+  - {url: https://github.com/charmbracelet/crush/blob/main/.goreleaser.yml, accessed: "2026-10-15", note: "cosign, SBOM, checksums"}
+  - {url: https://github.com/charmbracelet/.github/blob/main/SECURITY.md, accessed: "2026-10-15", note: "disclosure email"}
+extra:
+  mission_corrections: "MISSION lists license FSL-1.1-MIT as 'source-available' - confirmed. Config is now primarily `crushrc` (Bash DSL); crush.json is documented as deprecated."
+  disclosure_note: "Project-level crushrc / $(...) execution without a trust gate is documented by the vendor as 'trusted code' (README 'A note on security') and a trust PR is public - treated as a design weakness, not a new vulnerability."

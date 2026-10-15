@@ -1,0 +1,19 @@
+name: codex-triage
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+    steps:
+      - uses: actions/checkout@v5
+      - name: Codex
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          COMMENT: ${{ github.event.comment.body }}
+        run: |
+          npm i -g @openai/codex@0.58.0
+          codex exec "Answer the question in $COMMENT using the repo docs"

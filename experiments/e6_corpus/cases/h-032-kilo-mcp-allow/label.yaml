@@ -1,0 +1,4 @@
+expected: [HG-MCP-006]
+origin: hand
+family: mcp
+note: "Kilo auto-allows every MCP tool call"

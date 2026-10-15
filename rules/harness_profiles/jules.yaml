@@ -1,0 +1,76 @@
+id: jules
+name: Google Jules (async cloud coding agent + Jules Tools CLI + REST API)
+vendor: Google
+tier: B
+license: Proprietary (CLI npm package `@google/jules` has no license field in registry metadata)
+open_source: false
+status: docs-only
+version_analysed: "Jules Tools npm @google/jules 0.1.42 (registry modified 2025-12-16); service changelog newest entry 2026-03-09"
+analysed_on: "2026-10-15"
+homepage: https://jules.google
+repo: null
+
+binaries: [jules]
+packages:
+  - {ecosystem: npm, name: "@google/jules"}
+install_methods:
+  - {method: npm, command: "npm install -g @google/jules", checksum_verified: null, signed: null, source: https://jules.google/docs/cli/reference}
+auto_update: {default: null, config: "unverified", source: null}
+
+state_dirs: []          # CLI state paths not documented
+credential_files: []
+credential_storage: "unverified; `jules login` does browser Google OAuth (docs). REST API uses an API key (not read in detail)."
+log_paths: []
+memory_paths: []
+
+config_files:
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}   # repo root only per docs ("looks in the root of your repository")
+  # No repo/user config files for permissions, MCP or hooks are documented: environment setup script ("Initial Setup") and MCP servers are configured in the web UI (Settings / Codebases > Configuration), stored server-side.
+
+instruction_files: ["AGENTS.md", "agents.md?"]   # changelog and env page mention lowercase agents.md; filename case handling unverified
+skills_paths: []
+
+mcp:
+  files: []
+  servers_key: null
+  server_fields: {}
+  project_servers_require_approval: null
+  notes: "MCP support launched 2026-02-02 as curated integrations (Linear, Stitch, Neon, Tinybird, Context7, Supabase) connected with API keys in Settings; no user-supplied arbitrary server config documented. Source: https://jules.google/docs/changelog/"
+
+permissions:
+  config_keys: {}
+  default_mode: "Plan approval: Jules generates a plan the user reviews; changelog 2026-01-26 'Planning Critic for Auto-Approved Plans' => an auto-approve-plan option exists (setting name unverified). Output is a branch/PR for review; actions happen inside a cloud VM."
+  auto_approve_values:
+    - {key: "UI: auto-approve plan (name unverified)", value: "enabled"}
+  cli_flags_auto_approve: []
+  allow_rule_syntax: null
+  overbroad_patterns: []
+
+hooks: {supported: false, config_key: null, repo_scoped_allowed: null, command_field: null}
+
+sandbox: {available: true, default_on: true, mechanism: "short-lived cloud VM per task (Ubuntu with Node, Python, Go, Java, Rust, Docker); not a local sandbox", config: "n/a", source: https://jules.google/docs/environment/}
+network: {domain_allowlist: false, config: "none documented", default: "VM 'with internet access' (FAQ); can web search (changelog 2025-08-08)", source: https://jules.google/docs/faq/}
+workspace_trust: {prompt_on_new_folder: false, notes: "cloud agent; access scoped by GitHub app repo permissions (user can change which repos Jules can access). Setup script and AGENTS.md from the repo are consumed.", source: https://jules.google/docs/faq/}
+memory: {persistent: null, cross_project: null, agent_writable: null, notes: "unverified; environment snapshot is saved per repo (Run and Snapshot)", source: https://jules.google/docs/environment/}
+subagents: {supported: null, inherits_permissions: null, notes: "not documented in pages read", source: null}
+telemetry: {default_on: null, opt_out: "unverified", training_default: "FAQ: 'Jules does not train on private repository content.' Public-repo handling not stated.", source: https://jules.google/docs/faq/}
+headless:
+  command: "jules remote new --repo <owner/repo> --session \"<prompt>\""
+  flags: ["--parallel <n>", "jules remote list --repo|--session", "jules remote pull --session <id>", "jules login", "jules logout", "--theme dark|light"]
+  ci_integrations: ["REST API (https://jules.google/docs/api/reference/)", "Continuous AI guides (https://jules.google/docs/guides/continuous-ai-overview)"]
+  model_override: null
+  local_model_support: "none (hosted Gemini models only)"
+
+security_policy: {security_md: null, bug_bounty: "Google VRP / AI VRP (assumed; Jules-specific scope unverified)", advisories: null}
+sources:
+  - {url: https://jules.google/docs, accessed: "2026-10-15", note: "overview, AGENTS.md, nav"}
+  - {url: https://jules.google/docs/changelog/, accessed: "2026-10-15", note: "newest entry 2026-03-09"}
+  - {url: https://jules.google/docs/environment/, accessed: "2026-10-15", note: "VM"}
+  - {url: https://jules.google/docs/faq/, accessed: "2026-10-15", note: "privacy/internet access"}
+  - {url: https://jules.google/docs/cli/reference, accessed: "2026-10-15", note: "Jules Tools"}
+  - {url: https://jules.google/docs/usage-limits/, accessed: "2026-10-15", note: "plans; Workspace/enterprise not supported"}
+  - {url: https://registry.npmjs.org/@google/jules, accessed: "2026-10-15", note: "latest 0.1.42"}
+extra:
+  existence_note: "Docs site live; no shutdown/merge found in search (Google I/O 2026 coverage centres on Antigravity 2.0). Newest docs changelog entry is 2026-03-09, so Oct 2026 status is unverified-but-likely-active."
+  linter_risky_snippets:
+    - 'AGENTS.md in repo is the only repo-level control surface: treat as T01 prompt-injection vector; setup script ("Initial Setup") runs arbitrary commands in VM with internet access.'

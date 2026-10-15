@@ -1,0 +1,4 @@
+expected: [HG-MCP-005]
+origin: hand
+family: mcp
+note: "npx from git pinned to full commit hash (an exact pin)"

@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "browser": {
+      "url": "http://0.0.0.0:8931/sse"
+    }
+  }
+}

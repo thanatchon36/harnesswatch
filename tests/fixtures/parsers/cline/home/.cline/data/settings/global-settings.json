@@ -1,0 +1,9 @@
+{
+  "autoApprovalSettings": {
+    "enabled": true,
+    "actions": {
+      "readFiles": true,
+      "executeAllCommands": true
+    }
+  }
+}

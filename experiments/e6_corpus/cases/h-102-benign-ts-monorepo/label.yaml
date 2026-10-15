@@ -1,0 +1,4 @@
+expected: []
+origin: hand
+family: repo
+note: "TS monorepo: specific terminal approvals, remote MCP with prompted token, ask-mode opencode"

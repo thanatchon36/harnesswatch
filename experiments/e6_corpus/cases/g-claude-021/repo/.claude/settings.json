@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "defaultMode": "auto",
+    "allow": [
+      "Bash(npm run test:*)",
+      "Bash(make build)",
+      "Bash(git status)"
+    ]
+  },
+  "env": {
+    "BASH_DEFAULT_TIMEOUT_MS": "120000",
+    "DISABLE_TELEMETRY": "1"
+  },
+  "enabledMcpjsonServers": [
+    "github",
+    "internal-docs"
+  ],
+  "sandbox": {
+    "enabled": true,
+    "network": {
+      "allowedDomains": [
+        "*"
+      ]
+    }
+  }
+}

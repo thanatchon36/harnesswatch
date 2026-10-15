@@ -1,0 +1,152 @@
+{
+  "harness": "strands-agents",
+  "version": "strands-py 1.61.0 / strands-harness 0.3.0",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "tier": "C",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "harness interventions default None (off: every call runs); presets ask/smart, Cedar",
+          "source": "https://github.com/strands-agents/harness-sdk/blob/main/harness-py/src/strands_harness/agent.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "BYPASS_TOOL_CONSENT env documented",
+          "source": "https://github.com/strands-agents/harness-sdk/blob/main/site/src/content/docs/user-guide/evals-sdk/eval-sop.mdx",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Strong policy primitives (HITL, Cedar, LLM classifier) but harness default is off."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Default NotASandboxLocalEnvironment runs on host; Docker/SSH sandboxes",
+          "source": "https://github.com/strands-agents/harness-sdk/blob/main/strands-py/src/strands/sandbox/not_a_sandbox_local_environment.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Honestly named unsandboxed default; isolation opt-in."
+    },
+    "D03": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D04": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D05": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D06": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "GHSA-763v-5pjm-fx36 world-readable /tmp/strands/sessions; GHSA-3w55-933p-8pv5 symlink LPE; fixed 1.48.0",
+          "source": "https://github.com/strands-agents/harness-sdk/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Session store defaults were insecure until 1.48.0; harness default session dir is ./.agent/sessions."
+    },
+    "D08": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Harness memory dir ./.agent/memory and session dir ./.agent/sessions",
+          "source": "https://github.com/strands-agents/harness-sdk/blob/main/harness-py/src/strands_harness/defaults.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Session data injection (GHSA-3w55) enables persistent prompt injection",
+          "source": "https://github.com/strands-agents/harness-sdk/security/advisories/GHSA-3w55-933p-8pv5",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Project-scoped memory; shared-/tmp default was exploitable (fixed)."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Subagent tool, DEFAULT_SUBAGENT_MAX_DEPTH=2; hooks and sandbox forwarded to children",
+          "source": "https://github.com/strands-agents/harness-sdk/blob/main/harness-py/src/strands_harness/defaults.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Subagents share parent sandbox/hooks; depth-capped."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "OTEL tracing only when OTEL_TRACES_EXPORTER set",
+          "source": "https://github.com/strands-agents/harness-sdk/blob/main/harness-py/src/strands_harness/telemetry.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Instrumented loop; export off by default so no data leaves unintentionally."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "No exporter unless configured",
+          "source": "https://github.com/strands-agents/harness-sdk/blob/main/harness-py/src/strands_harness/telemetry.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "No vendor telemetry found; export off unless configured (source not exhaustively searched)."
+    },
+    "D13": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D14": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md with supported versions; two GHSAs 2026-10-05",
+          "source": "https://github.com/strands-agents/harness-sdk/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Advisories published; SECURITY.md body (reporting channel) not fully read."
+    }
+  }
+}

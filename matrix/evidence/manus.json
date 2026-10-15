@@ -1,0 +1,137 @@
+{
+ "harness": "manus",
+ "version": null,
+ "analysed_on": "2026-10-15",
+ "status": "docs-only",
+ "dimensions": {
+  "D01": {
+   "facts": [
+    {
+     "claim": "High-risk connectors (Gmail) were exposed as ordinary tools without per-action consent (researcher, pre-mitigation).",
+     "source": "https://aurascape.ai/resources/auralabs-research/silentbridge-zero-click-agent-takeover-meta-manus/",
+     "label": "third-party-report",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "No documented approval model; research shows weak gating."
+  },
+  "D02": {
+   "facts": [
+    {
+     "claim": "Per-task isolated cloud VM; root inside.",
+     "source": "https://manus.im/blog/manus-sandbox",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Passwordless sudo and secrets in env vars within sandbox (pre-mitigation).",
+     "source": "https://aurascape.ai/resources/auralabs-research/silentbridge-zero-click-agent-takeover-meta-manus/",
+     "label": "third-party-report",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "VM-per-task isolation by default; intra-VM privilege is deliberately high, and secrets/infra reachable from it were an issue."
+  },
+  "D03": {
+   "facts": [
+    {
+     "claim": "Outbound network and instance metadata/internal hosts reachable (pre-mitigation).",
+     "source": "https://aurascape.ai/resources/auralabs-research/silentbridge-zero-click-agent-takeover-meta-manus/",
+     "label": "third-party-report",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "No documented egress control."
+  },
+  "D04": {
+   "facts": [],
+   "proposed_score": null,
+   "rationale": "N/A (SaaS; no workspace)"
+  },
+  "D05": {
+   "facts": [],
+   "proposed_score": null,
+   "rationale": "N/A (no MCP governance docs found)"
+  },
+  "D06": {
+   "facts": [],
+   "proposed_score": null,
+   "rationale": "N/A (not assessed)"
+  },
+  "D07": {
+   "facts": [
+    {
+     "claim": "Secrets/API keys exposed in sandbox env (pre-mitigation).",
+     "source": "https://aurascape.ai/resources/auralabs-research/silentbridge-zero-click-agent-takeover-meta-manus/",
+     "label": "third-party-report",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Weak at time of research; fixes not independently verified."
+  },
+  "D08": {
+   "facts": [],
+   "proposed_score": null,
+   "rationale": "N/A (SaaS)"
+  },
+  "D09": {
+   "facts": [],
+   "proposed_score": null,
+   "rationale": "N/A (unverified)"
+  },
+  "D10": {
+   "facts": [],
+   "proposed_score": null,
+   "rationale": "N/A (unverified)"
+  },
+  "D11": {
+   "facts": [],
+   "proposed_score": null,
+   "rationale": "N/A (no audit-log docs found)"
+  },
+  "D12": {
+   "facts": [
+    {
+     "claim": "Trust page claims SOC 2 T1/T2, ISO 27001/27701; silent on retention and training.",
+     "source": "https://manus.im/security",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Certifications claimed but no retention/training/residency statement."
+  },
+  "D13": {
+   "facts": [],
+   "proposed_score": null,
+   "rationale": "N/A (SaaS)"
+  },
+  "D14": {
+   "facts": [],
+   "proposed_score": null,
+   "rationale": "N/A (enterprise policy controls not verified; a Team plan SSO headline is secondary only)"
+  },
+  "D15": {
+   "facts": [
+    {
+     "claim": "No VDP/bounty contact on trust page; Salt Labs got no reply and used Meta bounty (secondary).",
+     "source": "https://manus.im/security",
+     "label": "third-party-report",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Aurascape report acknowledged in 17 days, mitigations ~2 months.",
+     "source": "https://aurascape.ai/resources/auralabs-research/silentbridge-zero-click-agent-takeover-meta-manus/",
+     "label": "third-party-report",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Responds to researchers but no published disclosure program or advisories."
+  }
+ }
+}

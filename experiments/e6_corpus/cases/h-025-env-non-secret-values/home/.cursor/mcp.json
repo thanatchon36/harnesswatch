@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "postgres": {"command": "/usr/local/bin/postgres-mcp", "args": ["--readonly"], "env": {"DATABASE_URL": "postgresql://app@localhost:5432/app_dev", "SENTRY_ORG": "acme-corp", "SENTRY_PROJECT": "web-frontend-2024", "PGAPPNAME": "mcp-readonly"}}
+  }
+}

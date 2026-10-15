@@ -1,0 +1,233 @@
+{
+  "harness": "qwen-code",
+  "version": "0.25.1",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Five modes: plan, default ('Ask permissions'), auto-edit, auto (LLM classifier approves safe actions and blocks risky ones; schema default is AUTO) and yolo; CLI --yolo/-y and --approval-mode; permissions.allow/ask/deny (deny > ask > allow) replace deprecated tools.allowed/exclude.",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/packages/cli/src/config/settingsSchema.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-116",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Default mode is an LLM classifier (auto) rather than human approval; permissions.allow/ask/deny exist; --yolo available."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Opt-in tools.executionSandbox {backend auto|bwrap|landlock, filesystem workspace-write, network closed} on Linux (workspace settings cannot change it), plus legacy whole-CLI sandbox (Docker/Podman/Seatbelt).",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/docs/users/features/sandbox.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-119"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "bwrap/Landlock execution sandbox is opt-in and operator-scope only."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Opt-in tools.executionSandbox {backend auto|bwrap|landlock, filesystem workspace-write, network closed} on Linux (workspace settings cannot change it), plus legacy whole-CLI sandbox (Docker/Podman/Seatbelt).",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/docs/users/features/sandbox.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-119"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Execution sandbox network 'closed' option when enabled; no general egress allowlist found."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Folder trust is off by default in code (security.folderTrust.enabled ?? false), so project .qwen/settings.json, project .env and project extensions are honoured unless the user enables trust; when enabled, untrusted folders ignore workspace settings/.env and disable auto-acceptance.",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/packages/cli/src/config/trustedFolders.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-117",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Some keys (e.g. review policy, hook private-network allow, execution sandbox) are read only from operator scopes (user/system/system-defaults) so a cloned repo cannot set them.",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/settings.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-118"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Folder trust exists but is disabled by default in code, so repo settings/.env load unless enabled."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP servers under mcpServers (Gemini-style entries: command,args,env,url,httpUrl,headers,trust,...) in settings.json; project servers are subject to folder trust only when trust is enabled.",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/docs/users/features/mcp.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-121"
+        },
+        {
+          "claim": "Folder trust is off by default in code (security.folderTrust.enabled ?? false), so project .qwen/settings.json, project .env and project extensions are honoured unless the user enables trust; when enabled, untrusted folders ignore workspace settings/.env and disable auto-acceptance.",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/packages/cli/src/config/trustedFolders.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-117",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "mcpServers in settings with trust flag; protections depend on folder trust being enabled."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Hooks under 'hooks' in settings (PreToolUse etc., command hooks with QWEN_PROJECT_DIR/CLAUDE_PROJECT_DIR); project-agent hooks recheck trust; security.allowedHttpHookUrls / allowPrivateNetworkHooks (operator scopes only).",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/docs/users/features/hooks.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-120"
+        },
+        {
+          "claim": "Some keys (e.g. review policy, hook private-network allow, execution sandbox) are read only from operator scopes (user/system/system-defaults) so a cloned repo cannot set them.",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/settings.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-118"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Extensions, skills and project hooks load from the workspace; HTTP hook URL allowlists are operator-only."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Qwen OAuth free tier discontinued 2026-04-15; current auth: Alibaba ModelStudio, third-party providers, custom provider; modelProviders keyed openai|anthropic|gemini|vertex-ai with baseUrl and envKey; keys may be stored plaintext in settings.json 'env'.",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/auth.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-122"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "API keys may be stored plaintext in settings.json env; OAuth free tier ended."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "QwenLM/qwen-code-action (Apache-2.0) provides the official GitHub Action; headless via qwen -p.",
+          "source": "https://github.com/QwenLM/qwen-code-action",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-129"
+        },
+        {
+          "claim": "qwen serve daemon binds 127.0.0.1:4170 with bearer auth off by default; any local process can use the operator API including code execution as the daemon user; non-loopback binds always carry a bearer token.",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/docs/users/qwen-serve.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-124"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Headless -p and official Action; qwen serve daemon has no auth on loopback by default."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Auto-memory plus optional team memory (.qwen/team-memory/, git-tracked, secret-scanned) and Mem0; QWEN.md/AGENTS.md instruction files.",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/settings.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-125"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Auto/team memory with secret scanning and reviewable git diff."
+    },
+    "D10": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (subagent permission inheritance not verified)."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "privacy.usageStatisticsEnabled defaults true; telemetry.enabled is opt-in with logPrompts opt-in.",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/settings.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-126"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Local session storage and opt-in OTel only (not deeply assessed)."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "privacy.usageStatisticsEnabled defaults true; telemetry.enabled is opt-in with logPrompts opt-in.",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/settings.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-126"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Usage statistics on by default with opt-out; OTel opt-in."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Install: standalone script curl -fsSL https://qwen-code-assets.oss-cn-hangzhou.aliyuncs.com/installation/install-qwen-standalone.sh | bash, npm @qwen-code/qwen-code, Homebrew; checksum/signature verification not confirmed.",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-127"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "curl|bash installer from an OSS bucket and npm; verification not confirmed."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Settings: system defaults /etc/qwen-code/system-defaults.json, user ~/.qwen/settings.json, project .qwen/settings.json, system /etc/qwen-code/settings.json (QWEN_CODE_SYSTEM_SETTINGS_PATH); macOS /Library/Application Support/QwenCode/, Windows C:\\ProgramData\\qwen-code\\.",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/settings.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-115"
+        },
+        {
+          "claim": "Some keys (e.g. review policy, hook private-network allow, execution sandbox) are read only from operator scopes (user/system/system-defaults) so a cloned repo cannot set them.",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/settings.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-118"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "System settings and system-defaults files at higher precedence; several keys honoured only from operator scopes."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md routes reports to an Alibaba Cloud (Aliyun) security portal; no GitHub security advisories are published for QwenLM/qwen-code.",
+          "source": "https://github.com/QwenLM/qwen-code/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-128"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "SECURITY.md routes to Aliyun portal; no public advisories."
+    }
+  }
+}

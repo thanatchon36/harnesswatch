@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "defaultMode": "default",
+    "allow": [
+      "Bash(npm run test:*)",
+      "Bash(npm run lint)",
+      "mcp__*",
+      "Read(./src/**)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(git push --force:*)",
+      "Read(./.env)",
+      "Read(~/.ssh/**)"
+    ]
+  },
+  "autoMemoryEnabled": false,
+  "enableAllProjectMcpServers": true,
+  "sandbox": {
+    "enabled": true,
+    "network": {
+      "allowedDomains": [
+        "*"
+      ]
+    }
+  }
+}

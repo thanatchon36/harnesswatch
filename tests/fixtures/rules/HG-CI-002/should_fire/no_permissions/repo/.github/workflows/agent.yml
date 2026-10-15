@@ -1,0 +1,6 @@
+on: workflow_dispatch
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: openai/codex-action@v1

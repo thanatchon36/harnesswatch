@@ -1,0 +1,12 @@
+name: Team MCP servers
+version: 0.0.1
+schema: v1
+mcpServers:
+- name: filesystem
+  command: npx
+  args:
+  - -y
+  - '@modelcontextprotocol/server-filesystem@2025.8.21'
+  - ./
+  env:
+    GITHUB_PERSONAL_ACCESS_TOKEN: '{{SYNTH:github-token}}'

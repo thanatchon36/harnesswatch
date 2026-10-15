@@ -1,0 +1,128 @@
+id: github-copilot
+name: GitHub Copilot (cloud agent + Copilot CLI + VS Code agent mode)
+vendor: GitHub (Microsoft)
+tier: B
+license: "Proprietary (Copilot CLI: custom 'GitHub Copilot CLI License', GitHub API reports NOASSERTION; redistribution of unmodified copies allowed)"
+open_source: false
+status: docs-only
+version_analysed: "copilot-cli v1.0.98 (latest release tag; documentation-level only, binary not run)"
+analysed_on: "2026-10-15"
+homepage: https://github.com/features/copilot
+repo: https://github.com/github/copilot-cli    # README/changelog/install.sh/LICENSE only; not the source
+
+binaries: [copilot]
+packages:
+  - {ecosystem: npm, name: "@github/copilot"}
+install_methods:
+  - {method: curl-installer, command: "curl -fsSL https://gh.io/copilot-install | bash", checksum_verified: null, signed: null, source: https://github.com/github/copilot-cli}
+  - {method: npm, command: "npm install -g @github/copilot"}
+  - {method: homebrew, command: "brew install copilot-cli"}
+  - {method: winget, command: "winget install GitHub.Copilot"}
+auto_update: {default: true, config: "settings.json: autoUpdate / autoUpdatesChannel", source: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference}
+
+state_dirs: ["~/.copilot", "$COPILOT_HOME"]
+credential_files: ["~/.copilot/mcp-oauth-config/", "~/.copilot/mcp-secrets/", "~/.copilot/config.json"]   # fallbacks used when OS keychain unavailable; config.json holds loggedInUsers state
+credential_storage: "OS keychain preferred (MCP OAuth/secrets fall back to the two ~/.copilot dirs when keychain unavailable); GH_TOKEN/GITHUB_TOKEN/COPILOT_GITHUB_TOKEN env accepted. Exact auth-token storage not documented in pages read."
+log_paths: ["~/.copilot/session-state/*/events.jsonl", "~/.copilot/logs/process-*.log", "~/.copilot/session-store.db", "~/.copilot/command-history-state/"]
+memory_paths: ["~/.copilot/copilot-instructions.md", "~/.copilot/instructions/*.instructions.md", ".github/copilot-instructions.md"]
+
+config_files:
+  - {path: "~/.copilot/settings.json", scope: user, format: jsonc, kind: settings}
+  - {path: "~/.copilot/config.json", scope: user, format: json, kind: settings}          # app state: loggedInUsers, trustedFolders, installedPlugins
+  - {path: "~/.copilot/permissions-config.json", scope: user, format: json, kind: settings}   # saved tool/dir approvals (locations.<path>.tool_approvals, allowed_directories)
+  - {path: "~/.copilot/mcp-config.json", scope: user, format: json, kind: mcp}
+  - {path: ".mcp.json", scope: project, format: json, kind: mcp}          # CLI; cwd up to repo root
+  - {path: ".github/mcp.json", scope: project, format: json, kind: mcp}   # CLI; committed shared config
+  - {path: ".vscode/mcp.json", scope: project, format: jsonc, kind: mcp, servers_key: servers}  # VS Code only (key 'servers'); NOT read by Copilot CLI
+  - {path: "~/.copilot/providers.json", scope: user, format: json, kind: settings}   # BYOK registry
+  - {path: ".github/hooks/*.json", scope: project, format: json, kind: hooks}
+  - {path: "~/.copilot/hooks/", scope: user, format: json, kind: hooks}
+  - {path: ".github/copilot-instructions.md", scope: project, format: markdown, kind: instructions}
+  - {path: ".github/instructions/*.instructions.md", scope: project, format: markdown, kind: instructions}
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: "CLAUDE.md", scope: project, format: markdown, kind: instructions}
+  - {path: "GEMINI.md", scope: project, format: markdown, kind: instructions}
+  - {path: ".github/agents/*.agent.md", scope: project, format: markdown, kind: agents}    # unverified in instructions docs; ~/.copilot/agents/ documented
+  - {path: "~/.copilot/agents/*.agent.md", scope: user, format: markdown, kind: agents}
+  - {path: ".github/lsp.json", scope: project, format: json, kind: settings}
+  - {path: ".vscode/settings.json", scope: project, format: jsonc, kind: settings}   # chat.tools.* keys (workspace-scope may be restricted by Workspace Trust)
+  - {path: ".github/workflows/copilot-setup-steps.yml", scope: project, format: yaml, kind: settings}   # cloud agent environment setup
+instruction_files: [".github/copilot-instructions.md", ".github/instructions/*.instructions.md", "AGENTS.md", "CLAUDE.md", "GEMINI.md"]
+skills_paths: [".github/skills/*/SKILL.md", "~/.copilot/skills/*/SKILL.md"]
+
+mcp:
+  files: ["~/.copilot/mcp-config.json", ".mcp.json", ".github/mcp.json", ".vscode/mcp.json"]
+  servers_key: "mcpServers"           # Copilot CLI + cloud agent; VS Code .vscode/mcp.json uses "servers"
+  server_fields: {command: command, args: args, env: env, url: url, headers: headers, type: type, tools: tools}
+  project_servers_require_approval: true   # CLI: project servers silently skipped in untrusted dirs; VS Code: inherit Workspace Trust, no separate prompt once trusted. Cloud agent: tools used autonomously once configured.
+  notes: "CLI types: local|http|sse; cloud agent types local|stdio|http|sse with required 'tools' array; env refs must be COPILOT_MCP_*. Built-in GitHub MCP server always available. VS Code per-server sandbox: sandboxEnabled + sandbox{filesystem,network}."
+
+permissions:
+  config_keys:
+    allow: "permissions-config.json: locations.<path>.tool_approvals (saved approvals)"
+    allowed_urls: "settings.json: allowedUrls"
+    denied_urls: "settings.json: deniedUrls"
+    disable_bypass: "settings.json: permissions.disableBypassPermissionsMode"
+    vscode_global_auto_approve: "chat.tools.global.autoApprove"
+    vscode_terminal_rules: "chat.tools.terminal.autoApprove"
+    vscode_terminal_enable: "chat.tools.terminal.enableAutoApprove"
+    vscode_edits: "chat.tools.edits.autoApprove"
+    vscode_urls: "chat.tools.urls.autoApprove"
+    vscode_default_level: "chat.permissions.default"
+  default_mode: "CLI: prompts for tools and for all URLs; VS Code: chat.permissions.default=default (manual), chat.tools.global.autoApprove=false, chat.tools.terminal.enableAutoApprove=true with deny-by-default for rm/curl/wget/eval/chmod/chown/kill"
+  auto_approve_values:
+    - {key: "chat.tools.global.autoApprove", value: true}          # VS Code settings (CVE-2025-53773 flipped this via prompt injection writing .vscode/settings.json)
+    - {key: "chat.permissions.default", value: "autoApprove"}      # experimental
+    - {key: "chat.permissions.default", value: "autopilot"}        # experimental
+    - {key: "chat.tools.terminal.autoApprove", value: {".*": true}}  # example of overbroad rule (regex form uses /…/ delimiters)
+    - {key: "chat.tools.urls.autoApprove", value: ["*"]}
+  cli_flags_auto_approve: ["--allow-all-tools", "--allow-all", "--yolo", "--allow-all-paths", "--allow-all-urls", "--allow-tool='shell'", "/allow-all", "/yolo"]
+  allow_rule_syntax: "--allow-tool='shell(git:*)' | --allow-tool='write' | --deny-tool='shell(git push)' | --allow-tool='My-MCP-Server(tool_name)' | --allow-url=DOMAIN | --deny-url=DOMAIN"
+  overbroad_patterns: ["shell", "shell(*)", "--allow-all-tools", "--allow-all-urls", "--yolo"]
+  notes: "--deny-tool takes precedence over --allow-all-tools. permissions-config.json has no deny/URL rules. Enterprise admin can block /allow-all and /yolo (Business/Enterprise). CVE-2026-29783: shell safety assessment bypass via bash parameter expansion (<=0.0.422)."
+
+hooks:
+  supported: true
+  config_key: "hooks"
+  repo_scoped_allowed: true       # .github/hooks/*.json; disableAllHooks setting turns off user+repo hooks
+  command_field: "bash|powershell|command"   # docs.github.com/en/copilot/reference/hooks-configuration (2026-10-15): bash (Unix), powershell (Windows), command = cross-platform fallback
+  notes: "Cloud agent / CLI hooks documented separately; verify schema before writing rules."
+
+sandbox:
+  available: true
+  default_on: false
+  mechanism: "CLI: settings.json sandbox.* (enabled, allowBypass, userPolicy.network/filesystem, seatbelt on macOS); VS Code: chat.agent.sandbox.enabled (default off), allowUnsandboxedCommands default true; cloud agent: ephemeral cloud env"
+  config: "settings.json: sandbox.enabled; VS Code: chat.agent.sandbox.enabled"
+  source: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference
+network: {domain_allowlist: true, config: "Cloud agent: org/repo 'Internet access' firewall (Enabled|Disabled|Let repositories decide) + recommended allowlist + custom allowlist; applies only to agent bash-tool processes, NOT MCP servers or setup steps. CLI: allowedUrls/deniedUrls, --allow-url. VS Code: chat.agent.networkFilter, allowedNetworkDomains, deniedNetworkDomains", default: "Cloud agent firewall ON with recommended allowlist; CLI prompts per URL; VS Code allowNetwork=true", source: "https://github.blog/changelog/2026-04-03-organization-firewall-settings-for-copilot-cloud-agent/ (via search; docs page not fetched)"}
+workspace_trust: {prompt_on_new_folder: true, notes: "CLI asks to trust launch directory (trustedFolders in config.json); project .mcp.json skipped in untrusted dirs. VS Code Restricted Mode disables agents; .vscode/mcp.json and .mcp.json inherit Workspace Trust. Whether CLI repo hooks/instructions load pre-trust is not documented.", source: https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/configure-copilot-cli}
+memory: {persistent: true, cross_project: true, agent_writable: true, notes: "session-store.db cross-session checkpoint index (/chronicle); personal instructions ~/.copilot/copilot-instructions.md; cloud-agent memory not verified.", source: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference}
+subagents: {supported: true, inherits_permissions: "unverified", notes: "custom agents *.agent.md; customAgents.defaultLocalOnly setting", source: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference}
+telemetry: {default_on: true, opt_out: "unverified for CLI; account setting 'Allow GitHub to use my interactions with Copilot to improve AI models' for Free/Pro/Pro+ (third-party report); COPILOT_OFFLINE=true disables GitHub contact in BYOK mode", training_default: "Business/Enterprise: not used for training (third-party). Individual plans: used by default from 2026-04-24 unless opted out (third-party, unverified vs official docs).", source: "https://dev.classmethod.jp/en/articles/github-copilot-interaction-data-ai-training-opt-out-2026/ (search summary only)"}
+headless:
+  command: "copilot -p \"<prompt>\""
+  flags: ["-p/--prompt", "--allow-tool", "--deny-tool", "--allow-all-tools", "--no-ask-user", "--model", "--yolo"]
+  ci_integrations: ["GitHub Agentic Workflows (recommended by docs over raw copilot invocation)", "Copilot cloud agent (assign issue)"]
+  model_override: "COPILOT_MODEL or --model"
+  local_model_support: "yes, no login (verified in docs, B4 2026-10-15): BYOK needs no GitHub auth (docs.github.com .../authenticate-copilot-cli). Env: COPILOT_PROVIDER_BASE_URL (required; docs Ollama example http://localhost:11434, no /v1), COPILOT_MODEL (required), COPILOT_PROVIDER_TYPE=openai|azure|anthropic (default openai), COPILOT_PROVIDER_API_KEY optional (not needed for Ollama), COPILOT_OFFLINE=true (no GitHub contact, telemetry disabled). Never silently falls back to GitHub models. Registry file ~/.copilot/providers.json (COPILOT_PROVIDERS_CONFIG). Source https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-byok-models"
+
+security_policy: {security_md: https://github.com/github/copilot-cli/security, bug_bounty: https://bounty.github.com/, advisories: https://github.com/github/copilot-cli/security/advisories}
+extra:
+  cloud_agent_protections: "write-access users only; pushes only to copilot/ branch; workflows not run until reviewed; hidden characters filtered from inputs; firewall; 59 min session cap; repo MCP settings JSON in Settings > Copilot."
+  vscode_enterprise_policies: [ChatAgentMode, ChatAgentExtensionTools, ChatMCP, McpGalleryServiceUrl, ChatToolsAutoApprove, ChatToolsEligibleForAutoApproval, ChatToolsTerminalEnableAutoApprove]
+  env_vars: [COPILOT_HOME, COPILOT_GITHUB_TOKEN, GH_TOKEN, GITHUB_TOKEN, COPILOT_MODEL, COPILOT_PROVIDER_BASE_URL, COPILOT_PROVIDER_TYPE, COPILOT_PROVIDER_API_KEY, COPILOT_OFFLINE, COPILOT_PROVIDERS_CONFIG]
+  naming: "docs now say 'Copilot cloud agent' (formerly 'coding agent')."
+sources:
+  - {url: https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/configure-copilot-cli, accessed: "2026-10-15", note: "permission flags, trust"}
+  - {url: https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference, accessed: "2026-10-15", note: "~/.copilot layout, settings keys"}
+  - {url: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-mcp-servers, accessed: "2026-10-15", note: "mcp-config.json"}
+  - {url: https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/use-byok-models, accessed: "2026-10-15", note: "BYOK"}
+  - {url: https://docs.github.com/en/copilot/how-tos/copilot-cli/automate-with-actions, accessed: "2026-10-15", note: "headless"}
+  - {url: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/extend-cloud-agent-with-mcp, accessed: "2026-10-15", note: "cloud agent MCP"}
+  - {url: https://docs.github.com/en/copilot/concepts/agents/coding-agent/risks-and-mitigations, accessed: "2026-10-15", note: "protections"}
+  - {url: https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions, accessed: "2026-10-15", note: "instruction files"}
+  - {url: https://code.visualstudio.com/docs/agents/reference/ai-settings, accessed: "2026-10-15", note: "VS Code settings"}
+  - {url: https://code.visualstudio.com/docs/copilot/security, accessed: "2026-10-15", note: "VS Code policies"}
+  - {url: https://code.visualstudio.com/docs/copilot/customization/mcp-servers, accessed: "2026-10-15", note: ".vscode/mcp.json"}
+  - {url: https://github.com/github/copilot-cli, accessed: "2026-10-15", note: "repo, license, install"}
+  - {url: https://bounty.github.com/, accessed: "2026-10-15", note: "bug bounty"}

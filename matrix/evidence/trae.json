@@ -1,0 +1,242 @@
+{
+  "harness": "trae",
+  "version": "TRAE v3.6.0 (docs changelog 2026-10-08; not executed). trae-agent 0.1.0 (source read)",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Three preset permission modes (Manual Approval, Automatic Approval via LLM Guardian [not in US], Full Access) plus Custom mode via ~/.trae/permission/global.json.",
+          "source": "https://docs.trae.ai/ide/permission-and-approval",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Auto-Run command mode 'always executes outside the sandbox' and 'bypasses all security checks'; 'Automatically Run MCP' toggle lets agent run MCP tools unprompted.",
+          "source": "https://docs.trae.ai/ide/auto-run-and-security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Command execution mode options reported: Always Manual / Use Allowlist / Use Denylist / Always Run.",
+          "source": "https://docs.trae.ai/ide/auto-run-and-security",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Granular modes and global.json rules; auto-run bypass is a UI toggle, no repo-level enablement found."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Sandbox for agent commands on macOS, Windows (incl. WSL2), Linux (bubblewrap via Remote SSH); allowlisted prefixes run outside it; project dir except .trae/.vscode/.git writable, root read-only.",
+          "source": "https://docs.trae.ai/ide/sandbox",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Default on/off state of sandbox not stated in pages read.",
+          "source": "https://docs.trae.ai/ide/sandbox",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Real OS sandbox with configurable FS/network; default state unverified."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Network access is allowed to all networks by default; sandbox.json/global.json support allow/deny (deny wins) for domains, wildcards, IPs, CIDR, ports.",
+          "source": "https://docs.trae.ai/ide/permission-and-approval",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Allowlist capability exists but default is allow-all."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Project MCP (.trae/mcp.json) requires enabling a toggle with confirmation popup.",
+          "source": "https://docs.trae.ai/ide/add-mcp-servers",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Project hooks .trae/hooks.json and imported .claude/settings*.json hooks are supported; no workspace-trust gating statement found.",
+          "source": "https://docs.trae.ai/ide/hook-configuration-reference",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "MCP gated; hooks/rules from repo have no documented trust gate."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "Global MCP in UI; project MCP opt-in; all external MCP connections need explicit authorization first time; mcpRules per server/tool in global.json; 'TRAE does not review MCP servers'.",
+          "source": "https://docs.trae.ai/ide/auto-run-and-security",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "MCP transports stdio, SSE, Streamable HTTP; only ${workspaceFolder} variable.",
+          "source": "https://docs.trae.ai/ide/add-mcp-servers",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "First-use authorization and per-tool rules; no change-detection documented."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Marketplace of plugins launched 2026-09-20 (TraeCode v3.5.97-3.5.104); Skills page exists; vetting not documented.",
+          "source": "https://docs.trae.ai/ide/changelog",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Marketplace without documented vetting/signing."
+    },
+    "D07": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not documented in pages read)."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "No CLI for the IDE found; cloud agents/scheduled tasks exist inside product.",
+          "source": "https://docs.trae.ai/ide/changelog",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (no headless mode for IDE). trae-agent CLI has no approval layer (see extra)."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Settings has 'Rules & Memories'; global rules ~/.trae/user_rules, project rules .trae/rules.",
+          "source": "https://docs.trae.ai/ide/rules",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Memory exists; scope and review controls only partially documented."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Subagents page exists; permission inheritance not read.",
+          "source": "https://docs.trae.ai/ide/subagents",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (unverified)."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "MCP server logs viewable in Settings > MCP; no audit-log/OTel facts found.",
+          "source": "https://docs.trae.ai/ide/ide-settings-overview",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (unverified)."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "Chat interactions incl. code snippets and AI outputs may be used for analytics/improvement/training unless Privacy mode enabled; Privacy mode only effective when logged in; codebase files not used; indexing uploads plaintext temporarily.",
+          "source": "https://docs.trae.ai/ide/privacy-mode",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "July 2025 report: ~500 calls / up to 26 MB in ~7 min with telemetry disabled; ByteDance said the toggle only covers VS Code-framework telemetry.",
+          "source": "https://www.theregister.com/2025/07/28/bytedance_trae_telemetry/",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Cloud agent stores repo content, rules, MCP, memory, hooks and chat history server-side; promised not used for training.",
+          "source": "https://docs.trae.ai/ide/data-storage-policy-for-remote-agents",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Training use default depends on opt-in Privacy mode; third-party evidence of telemetry beyond toggle."
+    },
+    "D13": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (installer integrity/auto-update not verified)."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "No enterprise/managed policy documentation located; custom permission files are per-user (~/.trae).",
+          "source": "https://docs.trae.ai/ide/permission-and-approval",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (unverified)."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "bytedance/trae-agent has no SECURITY.md and no GitHub security advisories (API 2026-10-15); no TRAE IDE disclosure program located.",
+          "source": "https://github.com/bytedance/trae-agent",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (not located)."
+    }
+  },
+  "extra": {
+    "trae_agent": {
+      "license": "MIT",
+      "version": "0.1.0",
+      "facts": [
+        {
+          "claim": "No permission/approval layer: bash tool is a persistent /bin/bash session (120 s timeout); isolation only if run with --docker-* options.",
+          "source": "https://github.com/bytedance/trae-agent/blob/main/trae_agent/tools/bash_tool.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Default config file trae_config.yaml is resolved relative to CWD; contains api keys and mcp_servers; MCP servers only started when listed in allow_mcp_servers.",
+          "source": "https://github.com/bytedance/trae-agent/blob/main/trae_agent/utils/config.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Trajectories (full LLM I/O) written to trajectories/trajectory_<ts>.json in CWD by default.",
+          "source": "https://github.com/bytedance/trae-agent/blob/main/trae_agent/utils/trajectory_recorder.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ]
+    }
+  }
+}

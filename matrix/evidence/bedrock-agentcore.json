@@ -1,0 +1,212 @@
+{
+  "harness": "bedrock-agentcore",
+  "version": "AgentCore harness GA (docs 2026-10-15); SDKs bedrock-agentcore 1.18.1+, starter toolkit 0.3.14+",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Default tools shell and file_operations are available in every session unless restricted with allowedTools; if allowedTools is omitted all tools are allowed.",
+          "source": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-tools.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "allowedTools scopes LLM tool selection only; InvokeAgentRuntimeCommand executes commands without the LLM and needs its own IAM action.",
+          "source": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-tools.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "AgentCore Policy intercepts all Gateway traffic and evaluates it against Cedar (or Dogwood) policies before tool access; supports session-aware temporal conditions.",
+          "source": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Harness: all tools incl. shell and file_operations are allowed unless allowedTools is set; human-in-the-loop via inline_function tools; deterministic Cedar/Dogwood policies on Gateway tool calls (default stance not stated in pages read)."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Every harness session runs in its own Firecracker microVM in AgentCore Runtime; no shared state or filesystem.",
+          "source": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-security.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "BeyondTrust Phantom Labs (Mar 2026) reported Code Interpreter sandbox mode still permits DNS lookups usable as a covert channel; AWS response reported inconsistently (documentation/VPC-mode guidance); no CVE.",
+          "source": "https://thehackernews.com/2026/03/ai-flaws-in-amazon-bedrock-langsmith.html",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Each harness session runs in its own Firecracker microVM; Code Interpreter/Browser are separate sandboxes. Code Interpreter 'sandbox' network mode was reported (BeyondTrust, Mar 2026) to permit DNS egress."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "'By default, harness sessions run on the public network. To access private resources ... deploy the harness in your VPC.'",
+          "source": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-security.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CSA research note recommends VPC mode with Route 53 Resolver DNS Firewall for Code Interpreter.",
+          "source": "https://labs.cloudsecurityalliance.org/research/csa-research-note-ai-sandbox-dns-exfiltration-bedrock-langsm/",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Harness sessions run on the public network by default; VPC mode is opt-in; DNS firewall controls only available in VPC mode."
+    },
+    "D04": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (cloud service; no local workspace)."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "remote_mcp tool config supports plaintext headers or ${arn:...} references to Token Vault API-key credential providers; docs advise Gateway + Identity for managed rotation and OAuth.",
+          "source": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-tools.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Registry: centralized catalog with governed publish/review/approve workflow for agents, MCP servers, tools and skills.",
+          "source": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Gateway converts APIs/Lambda to MCP tools with inbound/outbound auth and Policy; Registry offers governed publishing; but remote_mcp tools allow plaintext Authorization headers and skills/MCP sources are overridable per invocation."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "'The harness treats all skill content as trusted input. It does not validate, sanitize, or inspect the content or source of skills'; skills can be overridden per call.",
+          "source": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-security.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Harness skills (markdown + scripts) are fetched from S3/Git at invocation and treated as trusted input with no validation; callers can override the skills field per InvokeHarness."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Per-user credential scoping (Token Vault, OBO exchange) only available with Bearer JWT inbound auth, not SigV4.",
+          "source": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-security.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GHSA-hqf8-7w95-9r33 / CVE-2026-15737: sensitive content disclosure via OpenTelemetry spans in bedrock-agentcore-sdk-python (1.4.8, 1.5.0), fixed >=1.5.1 (published 2026-07-16).",
+          "source": "https://github.com/aws/bedrock-agentcore-sdk-python/security/advisories/GHSA-hqf8-7w95-9r33",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "AgentCore Identity Token Vault stores OAuth/API-key credentials, execution roles use IAM; limitations: SigV4 callers lose per-user credential scoping; plaintext MCP headers possible; CVE-2026-15737 leaked sensitive content into OTel spans in the SDK."
+    },
+    "D08": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (managed runtime); Step Functions InvokeHarness integration exists."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Memory events are scoped by actorId + sessionId; omitting memory config in the service API provisions managed memory, CLI harnesses default to memory disabled.",
+          "source": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-memory.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "AgentCore Memory: events scoped by actorId+sessionId, configurable strategies and eventExpiryDuration; service API provisions managed memory by default whereas CLI-created harnesses default to memory disabled."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Harness does not validate additionalParams, apiBase, modelId; callers able to set them can redirect requests, override headers (incl. Authorization) or attempt role assumption.",
+          "source": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-security.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Per-session microVMs; AWS shared-responsibility note: any principal passing IAM/JWT gate reaches the full session and its tools; customers must validate model additionalParams/apiBase/modelId and skills overrides."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Every harness action is traced automatically through AgentCore Observability; policy enforcement decisions are logged through CloudWatch.",
+          "source": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "All actions traced to CloudWatch/X-Ray via AgentCore Observability; Policy decisions logged to CloudWatch; CloudTrail logging for Code Interpreter."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "'AgentCore may use and store your content to improve your service experience or performance. Such improvements would be for your use of AgentCore and not for other customers.'",
+          "source": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "AgentCore docs state it 'may use and store your content to improve your service experience or performance' (for the customer's use only); retention beyond memory expiry not verified."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Harness managed container image is pulled from ECR Public on public network and from a private ECR repo harness-<region> in VPC mode.",
+          "source": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-security.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "SDK and starter toolkit are Apache-2.0 on GitHub with GHSA/CVE history; harness managed image pulled from ECR Public (public mode) or private ECR (VPC mode)."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "InvokeHarness requires both bedrock-agentcore:InvokeHarness and bedrock-agentcore:InvokeAgentRuntime on the harness ARN.",
+          "source": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-security.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "IAM on harness and underlying runtime ARNs, execution roles, resource policies, VPC, JWT authorizers and Policy engines give strong central controls; enforcement of an organisation-wide default is up to the customer."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "bedrock-agentcore-sdk-python CVEs: CVE-2026-12530, CVE-2026-16796 (install_packages argument injection), CVE-2026-15737; starter toolkit CVE-2026-4269, CVE-2026-105812, CVE-2026-106032.",
+          "source": "https://github.com/aws/bedrock-agentcore-sdk-python/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "AWS issues GHSA+CVE for AgentCore SDK and starter toolkit (6 CVEs across 2026); bug bounty not verified; the Code Interpreter DNS finding received no CVE."
+    }
+  }
+}

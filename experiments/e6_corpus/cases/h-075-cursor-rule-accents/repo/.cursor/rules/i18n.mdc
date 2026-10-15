@@ -1,0 +1,7 @@
+---
+description: i18n conventions
+globs: web/src/**/*.tsx
+---
+
+Keep user-facing strings in `locales/`. Examples: café, naïve, Straße, Çalışma, Ærøskøbing.
+Our mascot is 🧑‍🔬 and the release emoji is 🏳️‍🌈.

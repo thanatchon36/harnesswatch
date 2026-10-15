@@ -1,0 +1,92 @@
+id: augment
+name: Augment Code (Auggie CLI)
+vendor: Augment Computing, Inc.
+tier: B
+license: "Custom proprietary license (LICENSE.md in augmentcode/auggie; npm: SEE LICENSE IN LICENSE.md)"
+open_source: false
+status: docs-only
+version_analysed: "0.36.0"       # npm latest, 2026-08-21; prerelease 0.37.0 and daemon/preview 1.2.0-prerelease tags exist
+analysed_on: "2026-10-15"
+homepage: https://www.augmentcode.com
+repo: https://github.com/augmentcode/auggie   # docs/examples/plugin marketplace/issues; CLI source not published (unverified)
+
+binaries: [auggie]
+packages:
+  - {ecosystem: npm, name: "@augmentcode/auggie"}
+install_methods:
+  - {method: npm, command: "npm install -g @augmentcode/auggie", source: https://docs.augmentcode.com/cli/setup-auggie/install-auggie-cli.md}
+auto_update: {default: true, config: "env AUGMENT_DISABLE_AUTO_UPDATE; auggie upgrade", source: https://docs.augmentcode.com/cli/reference.md}
+
+state_dirs: ["~/.augment"]
+credential_files: []        # location of session token not documented (unverified); auggie token print outputs it
+credential_storage: "auggie login stores token locally (mechanism undocumented); AUGMENT_SESSION_AUTH env / --augment-session-json for CI"
+log_paths: []               # --log-file default is a temp file
+memory_paths: ["~/.augment/rules/*.md"]
+
+config_files:
+  - {path: "~/.augment/settings.json", scope: user, format: json, kind: settings}
+  - {path: ".augment/settings.json", scope: project, format: json, kind: settings}
+  - {path: ".augment/settings.local.json", scope: project-local, format: json, kind: settings}
+  - {path: "/etc/augment/settings.json", scope: managed, format: json, kind: settings}
+  - {path: "C:\\ProgramData\\Augment\\settings.json", scope: managed, format: json, kind: settings}
+  - {path: "~/.augment/rules/*.md", scope: user, format: markdown, kind: rules}
+  - {path: ".augment/rules/*.md", scope: project, format: markdown, kind: rules}
+  - {path: ".augment-guidelines", scope: project, format: markdown, kind: instructions}
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: "CLAUDE.md", scope: project, format: markdown, kind: instructions}
+
+instruction_files: ["CLAUDE.md", "AGENTS.md", ".augment-guidelines", ".augment/rules/*.md"]
+skills_paths: [".augment/skills/*", ".claude/skills/*", "~/.augment/skills/*", "~/.claude/skills/*"]
+
+mcp:
+  files: ["~/.augment/settings.json"]        # project-level mcpServers loading not documented
+  servers_key: "mcpServers"
+  server_fields: {command: command, args: args, env: env, url: url, headers: headers, type: type}   # type: http|sse (stdio via command)
+  project_servers_require_approval: null
+  notes: "auggie mcp add persists to ~/.augment/settings.json; --mcp-config <file> for a run; ${workspaceFolder} expansion. Docs warn Auggie runs commands/tools automatically - only use trusted MCP servers."
+
+permissions:
+  config_keys:
+    rules: "toolPermissions"
+    removed_tools: "removedTools"
+  default_mode: "no matching rule -> implicit runtime behavior (docs: Auggie runs commands and tools automatically)"
+  auto_approve_values:
+    - {key: "toolPermissions[].permission.type", value: "allow", note: "with no shellInputRegex on toolName 'terminal'/'launch-process' it auto-approves all shell"}
+  cli_flags_auto_approve: ["--permission launch-process:allow"]
+  allow_rule_syntax: '{"toolName":"terminal","shellInputRegex":"^(rm|sudo|shutdown|reboot)","permission":{"type":"deny"}}'
+  overbroad_patterns: ["toolPermissions entry {toolName: launch-process|terminal, permission:{type: allow}} without shellInputRegex"]
+  malformed_gotcha: "permission must be an object {type: ...}; a bare string 'deny' is dropped (warned at startup in recent versions)"
+
+hooks:
+  supported: true
+  config_key: "hooks"
+  repo_scoped_allowed: true      # .augment/settings.json applies to all contributors automatically
+  command_field: "command"       # unverified exact field; events PreToolUse/PostToolUse/Stop documented, only PreToolUse can block
+
+sandbox: {available: false, default_on: false, mechanism: "none documented", config: null, source: https://docs.augmentcode.com/cli/reference.md}
+network: {domain_allowlist: false, config: null, default: "unrestricted; web-fetch/web-search removable via removedTools", source: https://docs.augmentcode.com/cli/reference.md}
+workspace_trust: {prompt_on_new_folder: false, notes: "only an indexing confirmation (skip with --allow-indexing); repo .augment/settings.json (hooks, permissions) applies automatically", source: https://docs.augmentcode.com/cli/hooks.md}
+memory: {persistent: true, cross_project: true, agent_writable: null, notes: "user rules in ~/.augment/rules always applied", source: https://docs.augmentcode.com/cli/rules.md}
+subagents: {supported: true, inherits_permissions: null, notes: "custom subagents documented at /cli/subagents (not read)", source: https://docs.augmentcode.com/cli/subagents.md}
+telemetry: {default_on: null, opt_out: "not documented (unverified)", training_default: "vendor states it never trains on customer proprietary code", source: https://www.augmentcode.com/security}
+headless:
+  command: "auggie --print \"<instruction>\""
+  flags: ["--print", "--quiet", "--compact", "--max-turns N", "--instruction-file", "--queue", "--mcp-config", "--permission <tool:type>", "--remove-tool", "--ask", "--rules", "--model", "--workspace-root", "--allow-indexing", "--acp", "--mcp"]
+  ci_integrations: ["augmentcode GitHub Actions (existence unverified)"]
+  model_override: "--model <name> from auggie models list (Augment-hosted models only documented)"
+  local_model_support: "none documented (unverified); no base-URL override found"
+  env: {session: AUGMENT_SESSION_AUTH, github_token: GITHUB_API_TOKEN}
+
+security_policy: {security_md: https://github.com/augmentcode/auggie/blob/main/SECURITY.md, bug_bounty: null, advisories: https://github.com/augmentcode/auggie/security/advisories, contact: security@augmentcode.com}
+extra:
+  note_ide_extension: "toolPermissions NOT enforced in the Augment IDE extension (VS Code/JetBrains); only CLI and Cosmos cloud agents"
+sources:
+  - {url: https://docs.augmentcode.com/cli/permissions.md, accessed: "2026-10-15"}
+  - {url: https://docs.augmentcode.com/cli/integrations.md, accessed: "2026-10-15"}
+  - {url: https://docs.augmentcode.com/cli/hooks.md, accessed: "2026-10-15"}
+  - {url: https://docs.augmentcode.com/cli/reference.md, accessed: "2026-10-15"}
+  - {url: https://docs.augmentcode.com/cli/rules.md, accessed: "2026-10-15"}
+  - {url: https://docs.augmentcode.com/cli/automation/overview.md, accessed: "2026-10-15"}
+  - {url: https://registry.npmjs.org/@augmentcode/auggie, accessed: "2026-10-15"}
+  - {url: https://github.com/augmentcode/auggie, accessed: "2026-10-15"}
+  - {url: https://www.augmentcode.com/security, accessed: "2026-10-15"}

@@ -1,0 +1,2117 @@
+{
+ "experiment": "E4",
+ "accessed": "2026-10-15",
+ "summary": {
+  "harnesses": 23,
+  "with_transitive_count": 21,
+  "median_transitive": 97,
+  "with_provenance": 10,
+  "provenance_known": 18,
+  "harnesses_with_curl_installer": 17,
+  "harnesses_with_unsigned_curl_installer": 17,
+  "harnesses_with_install_hooks": 7,
+  "osv_unique_vulns_total": 299,
+  "osv_by_severity_sum": {
+   "high": 67,
+   "critical": 7,
+   "low": 28,
+   "medium": 62,
+   "unrated": 135
+  },
+  "auto_update_default_on": 12
+ },
+ "rows": [
+  {
+   "harness": "aider",
+   "tier": "A",
+   "ecosystem": "pypi",
+   "package": "aider-chat",
+   "version": "0.86.2",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://pypi.org/pypi/aider-chat/0.86.2/json",
+    "https://aider.chat/install.sh",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "metadata_url": "https://pypi.org/pypi/aider-chat/0.86.2/json",
+   "license": null,
+   "requires_dist": 301,
+   "direct_dependencies": 108,
+   "files": [
+    {
+     "filename": "aider_chat-0.86.2-py3-none-any.whl",
+     "packagetype": "bdist_wheel"
+    },
+    {
+     "filename": "aider_chat-0.86.2.tar.gz",
+     "packagetype": "sdist"
+    }
+   ],
+   "has_wheel": true,
+   "has_sdist": true,
+   "provenance_files": [
+    {
+     "filename": "aider_chat-0.86.2-py3-none-any.whl",
+     "url": "https://pypi.org/integrity/aider-chat/0.86.2/aider_chat-0.86.2-py3-none-any.whl/provenance",
+     "present": false,
+     "status": 404
+    },
+    {
+     "filename": "aider_chat-0.86.2.tar.gz",
+     "url": "https://pypi.org/integrity/aider-chat/0.86.2/aider_chat-0.86.2.tar.gz/provenance",
+     "present": false,
+     "status": 404
+    }
+   ],
+   "has_provenance": false,
+   "provenance_url": "https://pypi.org/integrity/aider-chat/0.86.2/aider_chat-0.86.2-py3-none-any.whl/provenance",
+   "install_hooks": {},
+   "has_install_hooks": null,
+   "transitive_packages": 108,
+   "transitive_unique": 108,
+   "release": {
+    "repo": "Aider-AI/aider",
+    "tags_tried": [
+     "v0.86.2"
+    ],
+    "release": null,
+    "reason": "no GitHub release found for the pinned tag"
+   },
+   "installers": [
+    {
+     "url": "https://aider.chat/install.sh",
+     "declared_command": "curl -LsSf https://aider.chat/install.sh | sh",
+     "declared_signed": null,
+     "declared_checksum_verified": null,
+     "accessed": "2026-10-15",
+     "final_url": "https://aider.chat/install.sh",
+     "status": 200,
+     "bytes": 57501,
+     "sha256": "0c907752bf2a087fecbc0fe9f2dce7f6a6e46f379dfb8e41acf99b6b810b8567",
+     "verifies_checksum": true,
+     "verifies_signature": false,
+     "checksum_evidence": [
+      "verify_checksum \"$_file\" \"$_checksum_style\" \"$_checksum_value\"",
+      "say \"no checksums to verify\"",
+      "verify_checksum() {"
+     ],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": true,
+    "config": "--check-update (default on: prompts to upgrade), --no-check-update; --upgrade; --install-main-branch",
+    "source": "https://github.com/Aider-AI/aider/blob/main/aider/args.py",
+    "evidence_label": "from-official-docs"
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 16,
+    "unique_vulns": 238,
+    "by_severity": {
+     "high": 53,
+     "critical": 5,
+     "low": 22,
+     "medium": 41,
+     "unrated": 117
+    },
+    "own_package_vulns": [
+     "GHSA-7w7m-v5vp-w699",
+     "GHSA-hchg-qm84-cj9p",
+     "PYSEC-2026-2335",
+     "PYSEC-2026-2336"
+    ],
+    "vuln_ids": [
+     "GHSA-239g-whfq-7xj9",
+     "GHSA-27vj-qcqg-25rc",
+     "GHSA-284h-m62q-gf8w",
+     "GHSA-2f96-g7mh-g2hx",
+     "GHSA-2fqr-mr3j-6wp8",
+     "GHSA-2vrm-gr82-f7m5",
+     "GHSA-2wc2-fm75-p42x",
+     "GHSA-3cv6-jpf6-8222",
+     "GHSA-3f7w-8rr8-f37f",
+     "GHSA-3rp5-jjmw-4wv2",
+     "GHSA-3wq7-rqq7-wx6j",
+     "GHSA-3wxw-xv34-2frg",
+     "GHSA-45hq-cxwh-f6vc",
+     "GHSA-4fvr-rgm6-gqmc",
+     "GHSA-4g5m-c9r5-49xf",
+     "GHSA-4gmw-gg2m-w46p",
+     "GHSA-4jcj-7x88-m979",
+     "GHSA-4m7w-qmgq-4wj5",
+     "GHSA-4x4j-2g7c-83w6",
+     "GHSA-4xpc-pv4p-pm3w",
+     "GHSA-5239-wwwm-4pmq",
+     "GHSA-539m-9xh6-q6rr",
+     "GHSA-53mr-6c8q-9789",
+     "GHSA-54p9-h82j-f925",
+     "GHSA-59cr-6r3x-644w",
+     "GHSA-5jmr-gcrj-2c9q",
+     "GHSA-5p39-cfhj-2xmp",
+     "GHSA-5x94-69rx-g8h2",
+     "GHSA-5xmw-vc9v-4wf2",
+     "GHSA-5xxx-qhh7-9287",
+     "GHSA-62p4-gmf7-7g93",
+     "GHSA-63hf-3vf5-4wqf",
+     "GHSA-63hw-fmq6-xxg2",
+     "GHSA-65pc-fj4g-8rjx",
+     "GHSA-69x8-hrgq-fjj8",
+     "GHSA-6p8h-3wgx-97gf",
+     "GHSA-6r8x-57c9-28j4",
+     "GHSA-6wvf-77m9-58rm",
+     "GHSA-72m8-9m7m-h278",
+     "GHSA-7488-6r32-c95q",
+     "GHSA-7545-fcxq-7j24",
+     "GHSA-7833-fr7j-v32q",
+     "GHSA-7w7m-v5vp-w699",
+     "GHSA-82r6-8w77-94w6",
+     "GHSA-82w8-qh3p-5jfq",
+     "GHSA-836r-79rf-4m37",
+     "GHSA-86qp-5c8j-p5mr",
+     "GHSA-8988-9cw3-xx77",
+     "GHSA-8mcc-hrx5-hvxc",
+     "GHSA-8v84-f9pq-wr9x",
+     "GHSA-94p4-4cq8-9g67",
+     "GHSA-956x-8gvw-wg5v",
+     "GHSA-966j-vmvw-g2g9",
+     "GHSA-9hw9-ch79-4vh6",
+     "GHSA-9rj7-rf2p-w77r",
+     "GHSA-9x8q-7h8h-wcw9",
+     "GHSA-c427-h43c-vf67",
+     "GHSA-c693-x898-5g4h",
+     "GHSA-cq5v-8q36-5273",
+     "GHSA-fj7v-r99m-22gq"
+    ]
+   },
+   "sbom": "experiments/results/e4_sbom/aider.cdx.json",
+   "null_reasons": {
+    "install_hooks": "PyPI has no install-script field; wheel installs run no code, sdist builds may (wheel available: True)"
+   }
+  },
+  {
+   "harness": "cline",
+   "tier": "A",
+   "ecosystem": "npm",
+   "package": "cline",
+   "version": "3.0.71",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://registry.npmjs.org/cline/3.0.71",
+    "https://api.github.com/repos/cline/cline/releases/tags/cli-v3.0.71",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {
+    "postinstall": "node ./postinstall.mjs || true"
+   },
+   "has_install_hooks": true,
+   "direct_dependencies": 5,
+   "optional_dependencies": 6,
+   "bundled_dependencies": 0,
+   "attestations_url": "https://registry.npmjs.org/-/npm/v1/attestations/cline@3.0.71",
+   "attestations_predicate": "https://slsa.dev/provenance/v1",
+   "registry_signatures": 2,
+   "license": "Apache-2.0",
+   "unpacked_size": 48236,
+   "repository": "git+https://github.com/cline/cline.git",
+   "provenance_url": "https://registry.npmjs.org/-/npm/v1/attestations/cline@3.0.71",
+   "attestation_predicates": [
+    "https://github.com/npm/attestation/tree/main/specs/publish/v0.1",
+    "https://slsa.dev/provenance/v1"
+   ],
+   "has_provenance": true,
+   "transitive_packages": 335,
+   "transitive_unique": 315,
+   "transitive_with_install_scripts": 2,
+   "install_script_packages": [
+    "cline@3.0.71",
+    "protobufjs@7.6.6"
+   ],
+   "release": {
+    "repo": "cline/cline",
+    "tag": "cli-v3.0.71",
+    "url": "https://github.com/cline/cline/releases/tag/cli-v3.0.71",
+    "asset_count": 0,
+    "checksum_assets": [],
+    "signature_assets": [],
+    "sbom_assets": [],
+    "has_checksums": false,
+    "has_signatures": false,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/cline/cline/releases/tags/cli-v3.0.71"
+   },
+   "installers": [],
+   "auto_update": {
+    "default": null,
+    "config": "`cline update` / `cline --update` (manual trigger); default auto-check behaviour unverified",
+    "source": "https://github.com/cline/cline/blob/main/docs/cli/cli-reference.mdx",
+    "evidence_label": null
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 7,
+    "unique_vulns": 22,
+    "by_severity": {
+     "medium": 9,
+     "low": 4,
+     "high": 7,
+     "critical": 2
+    },
+    "own_package_vulns": [],
+    "vuln_ids": [
+     "GHSA-2mjp-6q6p-2qxm",
+     "GHSA-35p6-xmwp-9g52",
+     "GHSA-4992-7rv2-5pvq",
+     "GHSA-858h-whjf-mvg5",
+     "GHSA-866g-f22w-33x8",
+     "GHSA-86w9-cpqp-85rv",
+     "GHSA-8988-4f7v-96qf",
+     "GHSA-8xcm-r25x-g524",
+     "GHSA-g4wm-2vf7-vfgr",
+     "GHSA-g8m3-5g58-fq7m",
+     "GHSA-g9mf-h72j-4rw9",
+     "GHSA-gxm5-99cw-xjw9",
+     "GHSA-m8rv-5g2x-5cg5",
+     "GHSA-p88m-4jfj-68fv",
+     "GHSA-r53p-7pc4-xj5r",
+     "GHSA-v3r7-h72x-cjcm",
+     "GHSA-v5rq-49vh-5v5c",
+     "GHSA-v9p9-hfj2-hcw8",
+     "GHSA-vrm6-8vpv-qv8q",
+     "GHSA-vxpw-j846-p89q",
+     "GHSA-x6jw-m9v5-85vh",
+     "GHSA-x8mw-p69m-v3mx"
+    ]
+   },
+   "sbom": "experiments/results/e4_sbom/cline.cdx.json",
+   "null_reasons": {
+    "auto_update": "profile records default as unverified"
+   }
+  },
+  {
+   "harness": "codex-cli",
+   "tier": "A",
+   "ecosystem": "npm",
+   "package": "@openai/codex",
+   "version": "0.162.1",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://registry.npmjs.org/@openai%2Fcodex/0.162.1",
+    "https://api.github.com/repos/openai/codex/releases/tags/rust-v0.162.1",
+    "https://chatgpt.com/codex/install.sh",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {},
+   "has_install_hooks": false,
+   "direct_dependencies": 0,
+   "optional_dependencies": 6,
+   "bundled_dependencies": 0,
+   "attestations_url": "https://registry.npmjs.org/-/npm/v1/attestations/@openai%2fcodex@0.162.1",
+   "attestations_predicate": "https://slsa.dev/provenance/v1",
+   "registry_signatures": 2,
+   "license": "Apache-2.0",
+   "unpacked_size": 13206,
+   "repository": "git+https://github.com/openai/codex.git",
+   "provenance_url": "https://registry.npmjs.org/-/npm/v1/attestations/@openai%2fcodex@0.162.1",
+   "attestation_predicates": [
+    "https://github.com/npm/attestation/tree/main/specs/publish/v0.1",
+    "https://slsa.dev/provenance/v1"
+   ],
+   "has_provenance": true,
+   "transitive_packages": 7,
+   "transitive_unique": 7,
+   "transitive_with_install_scripts": 0,
+   "install_script_packages": [],
+   "release": {
+    "repo": "openai/codex",
+    "tag": "rust-v0.162.1",
+    "url": "https://github.com/openai/codex/releases/tag/rust-v0.162.1",
+    "asset_count": 176,
+    "checksum_assets": [
+     "codex-package_SHA256SUMS"
+    ],
+    "signature_assets": [
+     "bwrap-aarch64-unknown-linux-musl.sigstore",
+     "bwrap-x86_64-unknown-linux-musl.sigstore",
+     "codex-aarch64-unknown-linux-musl.sigstore",
+     "codex-app-server-aarch64-unknown-linux-musl.sigstore",
+     "codex-app-server-x86_64-unknown-linux-musl.sigstore",
+     "codex-code-mode-host-aarch64-unknown-linux-musl.sigstore",
+     "codex-code-mode-host-x86_64-unknown-linux-musl.sigstore",
+     "codex-package-aarch64-unknown-linux-musl.tar.gz.sigstore"
+    ],
+    "sbom_assets": [],
+    "has_checksums": true,
+    "has_signatures": true,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/openai/codex/releases/tags/rust-v0.162.1"
+   },
+   "installers": [
+    {
+     "url": "https://chatgpt.com/codex/install.sh",
+     "declared_command": "curl -fsSL https://chatgpt.com/codex/install.sh | sh",
+     "declared_signed": null,
+     "declared_checksum_verified": null,
+     "accessed": "2026-10-15",
+     "final_url": "https://releases.openai.com/codex/install.sh",
+     "status": 200,
+     "bytes": 34564,
+     "sha256": "150e3cf675682efeaac115aa3747add3f27887896d04ce6d0b56478d8b428bf6",
+     "verifies_checksum": true,
+     "verifies_signature": false,
+     "checksum_evidence": [
+      "sha256:????????????????????????????????????????????????????????????????)",
+      "digest=\"${digest#sha256:}\"",
+      "echo \"Could not find SHA-256 digest for release asset $asset.\" >&2"
+     ],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": true,
+    "config": "check_for_update_on_startup (config.toml); update prompt in TUI",
+    "source": "https://github.com/openai/codex/blob/main/codex-rs/core/config.schema.json",
+    "evidence_label": "from-official-docs"
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 0,
+    "unique_vulns": 0,
+    "by_severity": {},
+    "own_package_vulns": [],
+    "vuln_ids": []
+   },
+   "sbom": "experiments/results/e4_sbom/codex-cli.cdx.json",
+   "null_reasons": {}
+  },
+  {
+   "harness": "continue",
+   "tier": "A",
+   "ecosystem": "npm",
+   "package": "@continuedev/cli",
+   "version": "1.5.47",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://registry.npmjs.org/@continuedev%2Fcli/1.5.47",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {},
+   "has_install_hooks": false,
+   "direct_dependencies": 4,
+   "optional_dependencies": 6,
+   "bundled_dependencies": 0,
+   "attestations_url": "https://registry.npmjs.org/-/npm/v1/attestations/@continuedev%2fcli@1.5.47",
+   "attestations_predicate": "https://slsa.dev/provenance/v1",
+   "registry_signatures": 1,
+   "license": "Apache-2.0",
+   "unpacked_size": 64823055,
+   "repository": "git+https://github.com/continuedev/continue.git",
+   "provenance_url": "https://registry.npmjs.org/-/npm/v1/attestations/@continuedev%2fcli@1.5.47",
+   "attestation_predicates": [
+    "https://github.com/npm/attestation/tree/main/specs/publish/v0.1",
+    "https://slsa.dev/provenance/v1"
+   ],
+   "has_provenance": true,
+   "transitive_packages": 22,
+   "transitive_unique": 22,
+   "transitive_with_install_scripts": 0,
+   "install_script_packages": [],
+   "release": {
+    "repo": "continuedev/continue",
+    "tags_tried": [
+     "v1.5.47",
+     "cli-v1.5.47"
+    ],
+    "release": null,
+    "reason": "no GitHub release found for the pinned tag"
+   },
+   "installers": [],
+   "auto_update": {
+    "default": null,
+    "config": "unverified",
+    "source": null,
+    "evidence_label": null
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 0,
+    "unique_vulns": 0,
+    "by_severity": {},
+    "own_package_vulns": [],
+    "vuln_ids": []
+   },
+   "sbom": "experiments/results/e4_sbom/continue.cdx.json",
+   "null_reasons": {
+    "auto_update": "profile records default as unverified"
+   }
+  },
+  {
+   "harness": "crush",
+   "tier": "A",
+   "ecosystem": "go",
+   "package": "github.com/charmbracelet/crush",
+   "version": "v0.98.1",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://github.com/charmbracelet/crush/blob/v0.98.1/go.mod",
+    "https://api.github.com/repos/charmbracelet/crush/releases/tags/v0.98.1",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {},
+   "has_install_hooks": false,
+   "has_provenance": null,
+   "lock_url": "https://github.com/charmbracelet/crush/blob/v0.98.1/go.mod",
+   "license": "FSL-1.1-MIT (VERSIONS.md)",
+   "transitive_packages": 197,
+   "transitive_unique": 197,
+   "release": {
+    "repo": "charmbracelet/crush",
+    "tag": "v0.98.1",
+    "url": "https://github.com/charmbracelet/crush/releases/tag/v0.98.1",
+    "asset_count": 64,
+    "checksum_assets": [
+     "checksums.txt"
+    ],
+    "signature_assets": [
+     "checksums.txt.sigstore.json"
+    ],
+    "sbom_assets": [
+     "crush-0.98.1.tar.gz.sbom.json",
+     "crush_0.98.1_Android_arm64.tar.gz.sbom.json",
+     "crush_0.98.1_Darwin_arm64.tar.gz.sbom.json",
+     "crush_0.98.1_Darwin_x86_64.tar.gz.sbom.json",
+     "crush_0.98.1_Freebsd_arm64.tar.gz.sbom.json",
+     "crush_0.98.1_Freebsd_armv7.tar.gz.sbom.json",
+     "crush_0.98.1_Freebsd_i386.tar.gz.sbom.json",
+     "crush_0.98.1_Freebsd_x86_64.tar.gz.sbom.json"
+    ],
+    "has_checksums": true,
+    "has_signatures": true,
+    "has_sbom": true,
+    "api_url": "https://api.github.com/repos/charmbracelet/crush/releases/tags/v0.98.1"
+   },
+   "installers": [],
+   "auto_update": {
+    "default": null,
+    "config": "providers list auto-updates from Catwalk (options.disable_provider_auto_update / CRUSH_DISABLE_PROVIDER_AUTO_UPDATE); binary self-update behaviour not verified",
+    "source": "https://github.com/charmbracelet/crush/blob/main/README.md",
+    "evidence_label": null
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 3,
+    "unique_vulns": 9,
+    "by_severity": {
+     "low": 1,
+     "unrated": 8
+    },
+    "own_package_vulns": [],
+    "vuln_ids": [
+     "GHSA-q7pp-wcgr-pffx",
+     "GO-2026-5932",
+     "GO-2026-6354",
+     "GO-2026-6355",
+     "GO-2026-6603",
+     "GO-2026-6610",
+     "GO-2026-6611",
+     "GO-2026-6612",
+     "GO-2026-6617"
+    ]
+   },
+   "sbom": "experiments/results/e4_sbom/crush.cdx.json",
+   "null_reasons": {
+    "install_hooks": "go modules have no install scripts",
+    "provenance": "no registry-level provenance for Go modules; see release assets",
+    "auto_update": "profile records default as unverified"
+   }
+  },
+  {
+   "harness": "deepseek-harness",
+   "tier": "A",
+   "ecosystem": "npm",
+   "package": "@deepseek-ai/dsh",
+   "version": "0.2.1-alpha.3",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://registry.npmjs.org/@deepseek-ai%2Fdsh/0.2.1-alpha.3",
+    "https://api.github.com/repos/deepseek-ai/deepseek-harness/releases/tags/dsh-v0.2.1-alpha.3",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {},
+   "has_install_hooks": false,
+   "direct_dependencies": 85,
+   "optional_dependencies": 0,
+   "bundled_dependencies": 0,
+   "attestations_url": null,
+   "attestations_predicate": null,
+   "registry_signatures": 2,
+   "license": "MIT",
+   "unpacked_size": 76226,
+   "repository": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+   "provenance_url": null,
+   "has_provenance": false,
+   "transitive_packages": 679,
+   "transitive_unique": 624,
+   "transitive_with_install_scripts": 5,
+   "install_script_packages": [
+    "@deepseek-ai/dsh-subprocess-local@0.2.1-alpha.3",
+    "@google/genai@2.21.0",
+    "koffi@3.1.1",
+    "node-pty@1.2.0-beta.15",
+    "protobufjs@7.6.6"
+   ],
+   "release": {
+    "repo": "deepseek-ai/deepseek-harness",
+    "tag": "dsh-v0.2.1-alpha.3",
+    "url": "https://github.com/deepseek-ai/deepseek-harness/releases/tag/dsh-v0.2.1-alpha.3",
+    "asset_count": 0,
+    "checksum_assets": [],
+    "signature_assets": [],
+    "sbom_assets": [],
+    "has_checksums": false,
+    "has_signatures": false,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/deepseek-ai/deepseek-harness/releases/tags/dsh-v0.2.1-alpha.3"
+   },
+   "installers": [],
+   "auto_update": {
+    "default": null,
+    "config": "not found in CLI docs (unverified); plugin updates only via `dsh plugin ... update`",
+    "source": "https://github.com/deepseek-ai/deepseek-harness/blob/master/apps/cli/README.md",
+    "evidence_label": null
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 1,
+    "unique_vulns": 1,
+    "by_severity": {
+     "medium": 1
+    },
+    "own_package_vulns": [],
+    "vuln_ids": [
+     "GHSA-px8p-9vwx-vf98"
+    ]
+   },
+   "sbom": "experiments/results/e4_sbom/deepseek-harness.cdx.json",
+   "null_reasons": {
+    "auto_update": "profile records default as unverified"
+   }
+  },
+  {
+   "harness": "gemini-cli",
+   "tier": "A",
+   "ecosystem": "npm",
+   "package": "@google/gemini-cli",
+   "version": "0.64.0",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://registry.npmjs.org/@google%2Fgemini-cli/0.64.0",
+    "https://api.github.com/repos/google-gemini/gemini-cli/releases/tags/v0.64.0",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {},
+   "has_install_hooks": false,
+   "direct_dependencies": 0,
+   "optional_dependencies": 8,
+   "bundled_dependencies": 0,
+   "attestations_url": null,
+   "attestations_predicate": null,
+   "registry_signatures": 2,
+   "license": "Apache-2.0",
+   "unpacked_size": 98597935,
+   "repository": "git+https://github.com/google-gemini/gemini-cli.git",
+   "provenance_url": null,
+   "has_provenance": false,
+   "transitive_packages": 12,
+   "transitive_unique": 12,
+   "transitive_with_install_scripts": 2,
+   "install_script_packages": [
+    "@github/keytar@7.10.6",
+    "node-pty@1.0.0"
+   ],
+   "release": {
+    "repo": "google-gemini/gemini-cli",
+    "tag": "v0.64.0",
+    "url": "https://github.com/google-gemini/gemini-cli/releases/tag/v0.64.0",
+    "asset_count": 3,
+    "checksum_assets": [],
+    "signature_assets": [],
+    "sbom_assets": [],
+    "has_checksums": false,
+    "has_signatures": false,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/google-gemini/gemini-cli/releases/tags/v0.64.0"
+   },
+   "installers": [],
+   "auto_update": {
+    "default": true,
+    "config": "general.enableAutoUpdate / general.enableAutoUpdateNotification (settings.json)",
+    "source": "https://github.com/google-gemini/gemini-cli/blob/main/schemas/settings.schema.json",
+    "evidence_label": "from-official-docs"
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 0,
+    "unique_vulns": 0,
+    "by_severity": {},
+    "own_package_vulns": [],
+    "vuln_ids": []
+   },
+   "sbom": "experiments/results/e4_sbom/gemini-cli.cdx.json",
+   "null_reasons": {}
+  },
+  {
+   "harness": "goose",
+   "tier": "A",
+   "ecosystem": "cargo",
+   "package": "goose-cli",
+   "version": "1.54.0",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://github.com/aaif-goose/goose/blob/v1.54.0/Cargo.lock",
+    "https://api.github.com/repos/aaif-goose/goose/releases/tags/v1.54.0",
+    "https://github.com/aaif-goose/goose/releases/download/stable/download_cli.sh",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {},
+   "has_install_hooks": null,
+   "has_provenance": null,
+   "lock_url": "https://github.com/aaif-goose/goose/blob/v1.54.0/Cargo.lock",
+   "license": null,
+   "transitive_packages": 1282,
+   "transitive_unique": 1282,
+   "release": {
+    "repo": "aaif-goose/goose",
+    "tag": "v1.54.0",
+    "url": "https://github.com/aaif-goose/goose/releases/tag/v1.54.0",
+    "asset_count": 40,
+    "checksum_assets": [],
+    "signature_assets": [],
+    "sbom_assets": [],
+    "has_checksums": false,
+    "has_signatures": false,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/aaif-goose/goose/releases/tags/v1.54.0"
+   },
+   "installers": [
+    {
+     "url": "https://github.com/aaif-goose/goose/releases/download/stable/download_cli.sh",
+     "declared_command": "curl -fsSL https://github.com/aaif-goose/goose/releases/download/stable/download_cli.sh | bash",
+     "declared_signed": null,
+     "declared_checksum_verified": null,
+     "accessed": "2026-10-15",
+     "final_url": "https://release-assets.githubusercontent.com/github-production-release-asset/846698999/0eac6c2c-a0b5-43ee-9ecf-25e19e5c306b?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-10-15T07%3A05%3A15Z&rscd=attachment%3B+filename%3Ddownload_cli.sh&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-10-15T06%3A04%3A17Z&ske=2026-10-15T07%3A05%3A15Z&sks=b&skv=2018-11-09&sig=d8oPBSoGbG%2BUKPdjyiGiGjvh2BPK2q%2BAJxrZcwZygF8%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5MjA0NTc0OCwibmJmIjoxNzkyMDQ1NDQ4LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.m9M3OoDHO8gOtfKpahyxFG2AjvL9fxafDWYYozeQq5I&response-content-disposition=attachment%3B%20filename%3Ddownload_cli.sh&response-content-type=application%2Foctet-stream",
+     "status": 200,
+     "bytes": 17488,
+     "sha256": "710f208cf0225ac330f71cc1540d36b10a6be7a850334b5ec4770fe96fbc57c4",
+     "verifies_checksum": false,
+     "verifies_signature": false,
+     "checksum_evidence": [],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": null,
+    "config": "`goose update`; docs guides/updating-goose.md",
+    "source": "https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/updating-goose.md",
+    "evidence_label": null
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 9,
+    "unique_vulns": 15,
+    "by_severity": {
+     "high": 2,
+     "medium": 3,
+     "unrated": 10
+    },
+    "own_package_vulns": [],
+    "vuln_ids": [
+     "GHSA-33f5-2c5q-wgwj",
+     "GHSA-9g45-5xwm-f3wc",
+     "GHSA-9pj6-vhgr-3mwh",
+     "GHSA-c9xm-49cp-xcr9",
+     "GHSA-w9wp-h8wv-79jx",
+     "RUSTSEC-2023-0071",
+     "RUSTSEC-2024-0370",
+     "RUSTSEC-2024-0436",
+     "RUSTSEC-2024-0449",
+     "RUSTSEC-2025-0141",
+     "RUSTSEC-2026-0249",
+     "RUSTSEC-2026-0346",
+     "RUSTSEC-2026-0347",
+     "RUSTSEC-2026-0348",
+     "RUSTSEC-2026-0349"
+    ]
+   },
+   "sbom": "experiments/results/e4_sbom/goose.cdx.json",
+   "null_reasons": {
+    "install_hooks": "cargo build.rs scripts run at build time, not install, for binary releases",
+    "provenance": "crates.io has no provenance attestations",
+    "license": "not read for this ecosystem (see VERSIONS.md)",
+    "auto_update": "profile records default as unverified"
+   }
+  },
+  {
+   "harness": "hermes-agent",
+   "tier": "A",
+   "ecosystem": "pypi",
+   "package": "hermes-agent",
+   "version": "0.22.1",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://pypi.org/pypi/hermes-agent/0.22.1/json",
+    "https://api.github.com/repos/NousResearch/hermes-agent/releases/tags/v0.22.1",
+    "https://hermes-agent.nousresearch.com/install.sh"
+   ],
+   "metadata_url": "https://pypi.org/pypi/hermes-agent/0.22.1/json",
+   "has_provenance": null,
+   "release": {
+    "repo": "NousResearch/hermes-agent",
+    "tag": "v0.22.1",
+    "url": "https://github.com/NousResearch/hermes-agent/releases/tag/v0.22.1",
+    "asset_count": 0,
+    "checksum_assets": [],
+    "signature_assets": [],
+    "sbom_assets": [],
+    "has_checksums": false,
+    "has_signatures": false,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/NousResearch/hermes-agent/releases/tags/v0.22.1"
+   },
+   "installers": [
+    {
+     "url": "https://hermes-agent.nousresearch.com/install.sh",
+     "declared_command": "curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash",
+     "declared_signed": null,
+     "declared_checksum_verified": null,
+     "accessed": "2026-10-15",
+     "final_url": "https://hermes-agent.nousresearch.com/install.sh",
+     "status": 200,
+     "bytes": 56525,
+     "sha256": "f4cdb0e20f1aca2c3871a76b962fd4db61510f549cf973759c753ac13349beb5",
+     "verifies_checksum": true,
+     "verifies_signature": false,
+     "checksum_evidence": [
+      "UV_PIN_MIRROR=\"https://hermes-assets.nousresearch.com/upstream/sha256/600cf9a742aca00d292673b16b5acffaa7b8c269a364ad0c2e79498dcb1fe101\"",
+      "UV_PIN_SHA256=\"600cf9a742aca00d292673b16b5acffaa7b8c269a364ad0c2e79498dcb1fe101\"",
+      "UV_PIN_MIRROR=\"https://hermes-assets.nousresearch.com/upstream/sha256/bb66cb52e7b1823aed1183630d8d8e5c958840d584a4c55ec10a4cfc168dcca2\""
+     ],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": null,
+    "config": "`hermes update` (explicit); updates.pre_update_backup: quick|full|off",
+    "source": "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/configuration.md",
+    "evidence_label": null
+   },
+   "osv": null,
+   "sbom": null,
+   "null_reasons": {
+    "registry_metadata": "HTTP 404: hermes-agent==0.22.1 is not published on PyPI",
+    "auto_update": "profile records default as unverified",
+    "osv": "no dependency set could be resolved"
+   }
+  },
+  {
+   "harness": "kilo-code",
+   "tier": "A",
+   "ecosystem": "npm",
+   "package": "@kilocode/cli",
+   "version": "7.8.10",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://registry.npmjs.org/@kilocode%2Fcli/7.8.10",
+    "https://api.github.com/repos/Kilo-Org/kilocode/releases/tags/v7.8.10",
+    "https://kilo.ai/cli/install",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {
+    "postinstall": "node ./postinstall.mjs"
+   },
+   "has_install_hooks": true,
+   "direct_dependencies": 0,
+   "optional_dependencies": 12,
+   "bundled_dependencies": 0,
+   "attestations_url": "https://registry.npmjs.org/-/npm/v1/attestations/@kilocode%2fcli@7.8.10",
+   "attestations_predicate": "https://slsa.dev/provenance/v1",
+   "registry_signatures": 2,
+   "license": "MIT",
+   "unpacked_size": 27665,
+   "repository": "git+https://github.com/Kilo-Org/kilocode.git",
+   "provenance_url": "https://registry.npmjs.org/-/npm/v1/attestations/@kilocode%2fcli@7.8.10",
+   "attestation_predicates": [
+    "https://github.com/npm/attestation/tree/main/specs/publish/v0.1",
+    "https://slsa.dev/provenance/v1"
+   ],
+   "has_provenance": true,
+   "transitive_packages": 13,
+   "transitive_unique": 13,
+   "transitive_with_install_scripts": 1,
+   "install_script_packages": [
+    "@kilocode/cli@7.8.10"
+   ],
+   "release": {
+    "repo": "Kilo-Org/kilocode",
+    "tag": "v7.8.10",
+    "url": "https://github.com/Kilo-Org/kilocode/releases/tag/v7.8.10",
+    "asset_count": 59,
+    "checksum_assets": [
+     "kilo-cli-distribution-SHA256SUMS",
+     "kilo-cli-SHA256SUMS",
+     "kilo-vscode-SHA256SUMS"
+    ],
+    "signature_assets": [],
+    "sbom_assets": [
+     "cli-distribution-sbom-evidence.json",
+     "cli-sbom-evidence.json",
+     "kilo-darwin-arm64.zip.cdx.json",
+     "kilo-darwin-x64-baseline.zip.cdx.json",
+     "kilo-darwin-x64.zip.cdx.json",
+     "kilo-linux-arm64-musl.tar.gz.cdx.json",
+     "kilo-linux-arm64.tar.gz.cdx.json",
+     "kilo-linux-x64-baseline-musl.tar.gz.cdx.json"
+    ],
+    "has_checksums": true,
+    "has_signatures": false,
+    "has_sbom": true,
+    "api_url": "https://api.github.com/repos/Kilo-Org/kilocode/releases/tags/v7.8.10"
+   },
+   "installers": [
+    {
+     "url": "https://kilo.ai/cli/install",
+     "declared_command": "curl -fsSL https://kilo.ai/cli/install | bash",
+     "declared_signed": null,
+     "declared_checksum_verified": null,
+     "accessed": "2026-10-15",
+     "final_url": "https://raw.githubusercontent.com/Kilo-Org/kilocode/refs/heads/main/install",
+     "status": 200,
+     "bytes": 17892,
+     "sha256": "a9f615d2dfd86555864cd4c04ebda6dd7e2f6f600a5abfc5d8baae666be07b07",
+     "verifies_checksum": false,
+     "verifies_signature": false,
+     "checksum_evidence": [],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": true,
+    "config": "KILO_DISABLE_AUTOUPDATE=1 (env flag exists in source)",
+    "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/opencode/src/flag",
+    "evidence_label": "from-official-docs"
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 0,
+    "unique_vulns": 0,
+    "by_severity": {},
+    "own_package_vulns": [],
+    "vuln_ids": []
+   },
+   "sbom": "experiments/results/e4_sbom/kilo-code.cdx.json",
+   "null_reasons": {}
+  },
+  {
+   "harness": "kimi-cli",
+   "tier": "A",
+   "ecosystem": "npm",
+   "package": "@moonshot-ai/kimi-code",
+   "version": "2.2.0",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://registry.npmjs.org/@moonshot-ai%2Fkimi-code/2.2.0",
+    "https://code.kimi.com/kimi-code/install.sh",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {
+    "postinstall": "node scripts/postinstall.mjs"
+   },
+   "has_install_hooks": true,
+   "direct_dependencies": 2,
+   "optional_dependencies": 2,
+   "bundled_dependencies": 0,
+   "attestations_url": "https://registry.npmjs.org/-/npm/v1/attestations/@moonshot-ai%2fkimi-code@2.2.0",
+   "attestations_predicate": "https://slsa.dev/provenance/v1",
+   "registry_signatures": 2,
+   "license": "MIT",
+   "unpacked_size": 54263008,
+   "repository": "git+https://github.com/MoonshotAI/kimi-code.git",
+   "provenance_url": "https://registry.npmjs.org/-/npm/v1/attestations/@moonshot-ai%2fkimi-code@2.2.0",
+   "attestation_predicates": [
+    "https://github.com/npm/attestation/tree/main/specs/publish/v0.1",
+    "https://slsa.dev/provenance/v1"
+   ],
+   "has_provenance": true,
+   "transitive_packages": 44,
+   "transitive_unique": 44,
+   "transitive_with_install_scripts": 2,
+   "install_script_packages": [
+    "@moonshot-ai/kimi-code@2.2.0",
+    "node-pty@1.1.0"
+   ],
+   "release": {
+    "repo": "MoonshotAI/kimi-code",
+    "tags_tried": [
+     "v2.2.0"
+    ],
+    "release": null,
+    "reason": "no GitHub release found for the pinned tag"
+   },
+   "installers": [
+    {
+     "url": "https://code.kimi.com/kimi-code/install.sh",
+     "declared_command": "curl -fsSL https://code.kimi.com/kimi-code/install.sh | bash",
+     "declared_signed": null,
+     "declared_checksum_verified": null,
+     "accessed": "2026-10-15",
+     "final_url": "https://cdn.kimi.com/kimi-code/install.sh",
+     "status": 200,
+     "bytes": 19407,
+     "sha256": "270a86f2d2304529b6d8a3783fca9534874ebaeecb6cfcc1aebcdb6ce20ae1d7",
+     "verifies_checksum": true,
+     "verifies_signature": false,
+     "checksum_evidence": [
+      "_sha256_check() {",
+      "if _have shasum; then",
+      "actual=\"$(shasum -a 256 \"$file\" | cut -d' ' -f1)\""
+     ],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": true,
+    "config": "tui.toml [upgrade] auto_install = false (legacy: KIMI_CLI_NO_AUTO_UPDATE=1)",
+    "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/configuration/data-locations.md",
+    "evidence_label": "from-official-docs"
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 0,
+    "unique_vulns": 0,
+    "by_severity": {},
+    "own_package_vulns": [],
+    "vuln_ids": []
+   },
+   "sbom": "experiments/results/e4_sbom/kimi-cli.cdx.json",
+   "null_reasons": {}
+  },
+  {
+   "harness": "mistral-vibe",
+   "tier": "A",
+   "ecosystem": "pypi",
+   "package": "mistral-vibe",
+   "version": "2.26.1",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://pypi.org/pypi/mistral-vibe/2.26.1/json",
+    "https://api.github.com/repos/mistralai/mistral-vibe/releases/tags/v2.26.1",
+    "https://mistral.ai/vibe/install.sh",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "metadata_url": "https://pypi.org/pypi/mistral-vibe/2.26.1/json",
+   "license": "Apache-2.0",
+   "requires_dist": 101,
+   "direct_dependencies": 100,
+   "files": [
+    {
+     "filename": "mistral_vibe-2.26.1-cp312-abi3-macosx_11_0_arm64.whl",
+     "packagetype": "bdist_wheel"
+    },
+    {
+     "filename": "mistral_vibe-2.26.1-cp312-abi3-macosx_11_0_x86_64.whl",
+     "packagetype": "bdist_wheel"
+    },
+    {
+     "filename": "mistral_vibe-2.26.1-cp312-abi3-manylinux_2_28_aarch64.whl",
+     "packagetype": "bdist_wheel"
+    },
+    {
+     "filename": "mistral_vibe-2.26.1-cp312-abi3-manylinux_2_28_x86_64.whl",
+     "packagetype": "bdist_wheel"
+    },
+    {
+     "filename": "mistral_vibe-2.26.1-cp312-abi3-win_amd64.whl",
+     "packagetype": "bdist_wheel"
+    },
+    {
+     "filename": "mistral_vibe-2.26.1.tar.gz",
+     "packagetype": "sdist"
+    }
+   ],
+   "has_wheel": true,
+   "has_sdist": true,
+   "provenance_files": [
+    {
+     "filename": "mistral_vibe-2.26.1-cp312-abi3-macosx_11_0_arm64.whl",
+     "url": "https://pypi.org/integrity/mistral-vibe/2.26.1/mistral_vibe-2.26.1-cp312-abi3-macosx_11_0_arm64.whl/provenance",
+     "present": true,
+     "publishers": [
+      "GitHub"
+     ],
+     "predicates": []
+    },
+    {
+     "filename": "mistral_vibe-2.26.1-cp312-abi3-macosx_11_0_x86_64.whl",
+     "url": "https://pypi.org/integrity/mistral-vibe/2.26.1/mistral_vibe-2.26.1-cp312-abi3-macosx_11_0_x86_64.whl/provenance",
+     "present": true,
+     "publishers": [
+      "GitHub"
+     ],
+     "predicates": []
+    },
+    {
+     "filename": "mistral_vibe-2.26.1-cp312-abi3-manylinux_2_28_aarch64.whl",
+     "url": "https://pypi.org/integrity/mistral-vibe/2.26.1/mistral_vibe-2.26.1-cp312-abi3-manylinux_2_28_aarch64.whl/provenance",
+     "present": true,
+     "publishers": [
+      "GitHub"
+     ],
+     "predicates": []
+    },
+    {
+     "filename": "mistral_vibe-2.26.1-cp312-abi3-manylinux_2_28_x86_64.whl",
+     "url": "https://pypi.org/integrity/mistral-vibe/2.26.1/mistral_vibe-2.26.1-cp312-abi3-manylinux_2_28_x86_64.whl/provenance",
+     "present": true,
+     "publishers": [
+      "GitHub"
+     ],
+     "predicates": []
+    },
+    {
+     "filename": "mistral_vibe-2.26.1-cp312-abi3-win_amd64.whl",
+     "url": "https://pypi.org/integrity/mistral-vibe/2.26.1/mistral_vibe-2.26.1-cp312-abi3-win_amd64.whl/provenance",
+     "present": true,
+     "publishers": [
+      "GitHub"
+     ],
+     "predicates": []
+    },
+    {
+     "filename": "mistral_vibe-2.26.1.tar.gz",
+     "url": "https://pypi.org/integrity/mistral-vibe/2.26.1/mistral_vibe-2.26.1.tar.gz/provenance",
+     "present": true,
+     "publishers": [
+      "GitHub"
+     ],
+     "predicates": []
+    }
+   ],
+   "has_provenance": true,
+   "provenance_url": "https://pypi.org/integrity/mistral-vibe/2.26.1/mistral_vibe-2.26.1-cp312-abi3-macosx_11_0_arm64.whl/provenance",
+   "install_hooks": {},
+   "has_install_hooks": null,
+   "transitive_packages": 97,
+   "transitive_unique": 97,
+   "release": {
+    "repo": "mistralai/mistral-vibe",
+    "tag": "v2.26.1",
+    "url": "https://github.com/mistralai/mistral-vibe/releases/tag/v2.26.1",
+    "asset_count": 14,
+    "checksum_assets": [],
+    "signature_assets": [],
+    "sbom_assets": [],
+    "has_checksums": false,
+    "has_signatures": false,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/mistralai/mistral-vibe/releases/tags/v2.26.1"
+   },
+   "installers": [
+    {
+     "url": "https://mistral.ai/vibe/install.sh",
+     "declared_command": "curl -LsSf https://mistral.ai/vibe/install.sh | bash",
+     "declared_signed": null,
+     "declared_checksum_verified": null,
+     "accessed": "2026-10-15",
+     "final_url": "https://raw.githubusercontent.com/mistralai/mistral-vibe/refs/heads/main/scripts/install.sh",
+     "status": 200,
+     "bytes": 6449,
+     "sha256": "89d2ac2675726785134799c7a605cdab1e2ddaf569b2d300007285d162bdc283",
+     "verifies_checksum": true,
+     "verifies_signature": false,
+     "checksum_evidence": [
+      "UV_INSTALLER_SHA256=\"92fa9085d24c214bb4445cc1da8c15ca9cca8cffb34726240fa08c5302e94ccc\"",
+      "function sha256_of() {",
+      "if command -v sha256sum >/dev/null 2>&1; then"
+     ],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": true,
+    "config": "enable_update_checks = false (config.toml); daily check, prompts before install; `vibe --check-upgrade`",
+    "source": "https://github.com/mistralai/mistral-vibe/blob/main/README.md",
+    "evidence_label": "from-official-docs"
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 0,
+    "unique_vulns": 0,
+    "by_severity": {},
+    "own_package_vulns": [],
+    "vuln_ids": []
+   },
+   "sbom": "experiments/results/e4_sbom/mistral-vibe.cdx.json",
+   "null_reasons": {
+    "install_hooks": "PyPI has no install-script field; wheel installs run no code, sdist builds may (wheel available: True)"
+   }
+  },
+  {
+   "harness": "oh-my-pi",
+   "tier": "A",
+   "ecosystem": "npm",
+   "package": "@oh-my-pi/pi-coding-agent",
+   "version": "18.11.0",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://registry.npmjs.org/@oh-my-pi%2Fpi-coding-agent/18.11.0",
+    "https://api.github.com/repos/can1357/oh-my-pi/releases/tags/v18.11.0",
+    "https://omp.sh/install",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {},
+   "has_install_hooks": false,
+   "direct_dependencies": 25,
+   "optional_dependencies": 2,
+   "bundled_dependencies": 0,
+   "attestations_url": "https://registry.npmjs.org/-/npm/v1/attestations/@oh-my-pi%2fpi-coding-agent@18.11.0",
+   "attestations_predicate": "https://slsa.dev/provenance/v1",
+   "registry_signatures": 2,
+   "license": "MIT",
+   "unpacked_size": 59324974,
+   "repository": "git+https://github.com/can1357/oh-my-pi.git",
+   "provenance_url": "https://registry.npmjs.org/-/npm/v1/attestations/@oh-my-pi%2fpi-coding-agent@18.11.0",
+   "attestation_predicates": [
+    "https://github.com/npm/attestation/tree/main/specs/publish/v0.1",
+    "https://slsa.dev/provenance/v1"
+   ],
+   "has_provenance": true,
+   "transitive_packages": 178,
+   "transitive_unique": 167,
+   "transitive_with_install_scripts": 3,
+   "install_script_packages": [
+    "onnxruntime-node@1.21.0",
+    "onnxruntime-node@1.30.0",
+    "protobufjs@7.6.6"
+   ],
+   "release": {
+    "repo": "can1357/oh-my-pi",
+    "tag": "v18.11.0",
+    "url": "https://github.com/can1357/oh-my-pi/releases/tag/v18.11.0",
+    "asset_count": 12,
+    "checksum_assets": [
+     "SHA256SUMS.txt"
+    ],
+    "signature_assets": [],
+    "sbom_assets": [],
+    "has_checksums": true,
+    "has_signatures": false,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/can1357/oh-my-pi/releases/tags/v18.11.0"
+   },
+   "installers": [
+    {
+     "url": "https://omp.sh/install",
+     "declared_command": "curl -fsSL https://omp.sh/install | sh",
+     "declared_signed": null,
+     "declared_checksum_verified": true,
+     "accessed": "2026-10-15",
+     "final_url": "https://raw.githubusercontent.com/can1357/oh-my-pi/main/scripts/install.sh",
+     "status": 200,
+     "bytes": 12297,
+     "sha256": "cd2ea5553e9ad8f89fe5e04f771ec13db6f33a773f7ba8f85c84b63cdbeb9065",
+     "verifies_checksum": true,
+     "verifies_signature": false,
+     "checksum_evidence": [
+      "sha256_of() {",
+      "if command -v sha256sum >/dev/null 2>&1; then",
+      "sha256sum \"$1\" | cut -d ' ' -f 1"
+     ],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": null,
+    "config": "`omp update` subcommand exists; auto-update default not determined (unverified)",
+    "source": "https://github.com/can1357/oh-my-pi/blob/main/docs/cli-reference.md",
+    "evidence_label": null
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 1,
+    "unique_vulns": 1,
+    "by_severity": {
+     "medium": 1
+    },
+    "own_package_vulns": [],
+    "vuln_ids": [
+     "GHSA-hp3w-g68c-fv3c"
+    ]
+   },
+   "sbom": "experiments/results/e4_sbom/oh-my-pi.cdx.json",
+   "null_reasons": {
+    "auto_update": "profile records default as unverified"
+   }
+  },
+  {
+   "harness": "openclaw",
+   "tier": "A",
+   "ecosystem": "npm",
+   "package": "openclaw",
+   "version": "2026.10.3",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://registry.npmjs.org/openclaw/2026.10.3",
+    "https://api.github.com/repos/openclaw/openclaw/releases/tags/v2026.10.3",
+    "https://openclaw.ai/install.sh",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {
+    "preinstall": "node scripts/preinstall-package-manager-warning.mjs",
+    "postinstall": "node scripts/postinstall-bundled-plugins.mjs"
+   },
+   "has_install_hooks": true,
+   "direct_dependencies": 65,
+   "optional_dependencies": 79,
+   "bundled_dependencies": 3,
+   "attestations_url": "https://registry.npmjs.org/-/npm/v1/attestations/openclaw@2026.10.3",
+   "attestations_predicate": "https://slsa.dev/provenance/v1",
+   "registry_signatures": 2,
+   "license": "MIT",
+   "unpacked_size": 257692083,
+   "repository": "git+https://github.com/openclaw/openclaw.git",
+   "provenance_url": "https://registry.npmjs.org/-/npm/v1/attestations/openclaw@2026.10.3",
+   "attestation_predicates": [
+    "https://github.com/npm/attestation/tree/main/specs/publish/v0.1",
+    "https://slsa.dev/provenance/v1"
+   ],
+   "has_provenance": true,
+   "transitive_packages": 562,
+   "transitive_unique": 541,
+   "transitive_with_install_scripts": 5,
+   "install_script_packages": [
+    "@google/genai@2.24.0",
+    "esbuild@0.28.2",
+    "koffi@3.3.1",
+    "openclaw@2026.10.3",
+    "protobufjs@7.6.6"
+   ],
+   "release": {
+    "repo": "openclaw/openclaw",
+    "tag": "v2026.10.3",
+    "url": "https://github.com/openclaw/openclaw/releases/tag/v2026.10.3",
+    "asset_count": 21,
+    "checksum_assets": [
+     "openclaw-2026.10.3-postpublish-evidence.json.sha256",
+     "openclaw-2026.10.3-release-manifest.json.sha256",
+     "openclaw-2026.10.3-stable-main-closeout.json.sha256"
+    ],
+    "signature_assets": [],
+    "sbom_assets": [],
+    "has_checksums": true,
+    "has_signatures": false,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/openclaw/openclaw/releases/tags/v2026.10.3"
+   },
+   "installers": [
+    {
+     "url": "https://openclaw.ai/install.sh",
+     "declared_command": "curl -fsSL https://openclaw.ai/install.sh | bash",
+     "declared_signed": null,
+     "declared_checksum_verified": null,
+     "accessed": "2026-10-15",
+     "final_url": "https://openclaw.ai/install.sh",
+     "status": 200,
+     "bytes": 168790,
+     "sha256": "8cb0ff775c7886d347faf00a9d9bbe97817653630fe89724be7e670ddd08368c",
+     "verifies_checksum": true,
+     "verifies_signature": false,
+     "checksum_evidence": [
+      "verify_sha256sum_file() {",
+      "local checksums=\"$1\"",
+      "if command -v sha256sum >/dev/null 2>&1; then"
+     ],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": true,
+    "config": "daily update-check request on by default (version, OS, Node, arch); anonymous feature stats opt-in; see `openclaw telemetry show`",
+    "source": "https://github.com/openclaw/openclaw/blob/main/docs/gateway/telemetry.md",
+    "evidence_label": "from-official-docs"
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 5,
+    "unique_vulns": 12,
+    "by_severity": {
+     "medium": 7,
+     "high": 4,
+     "low": 1
+    },
+    "own_package_vulns": [],
+    "vuln_ids": [
+     "GHSA-2vr4-cq9g-pvrc",
+     "GHSA-3wwx-pv8p-q78v",
+     "GHSA-6j4f-fj2g-mc7p",
+     "GHSA-ch52-4w7c-c8xp",
+     "GHSA-h3mg-xc3c-68pw",
+     "GHSA-j6r3-76f7-8jcv",
+     "GHSA-q2hr-2g5m-vwhr",
+     "GHSA-qhr7-859c-m2p7",
+     "GHSA-r53p-7pc4-xj5r",
+     "GHSA-rfgv-xxqx-mfg5",
+     "GHSA-rj75-hqrm-r3gf",
+     "GHSA-rpw4-54j3-4h4q"
+    ]
+   },
+   "sbom": "experiments/results/e4_sbom/openclaw.cdx.json",
+   "null_reasons": {}
+  },
+  {
+   "harness": "opencode",
+   "tier": "A",
+   "ecosystem": "npm",
+   "package": "opencode-ai",
+   "version": "1.19.0",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://registry.npmjs.org/opencode-ai/1.19.0",
+    "https://api.github.com/repos/anomalyco/opencode/releases/tags/v1.19.0",
+    "https://opencode.ai/install",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {
+    "postinstall": "node ./postinstall.mjs"
+   },
+   "has_install_hooks": true,
+   "direct_dependencies": 0,
+   "optional_dependencies": 12,
+   "bundled_dependencies": 0,
+   "attestations_url": null,
+   "attestations_predicate": null,
+   "registry_signatures": 2,
+   "license": "MIT",
+   "unpacked_size": 7852,
+   "repository": null,
+   "provenance_url": null,
+   "has_provenance": false,
+   "transitive_packages": 13,
+   "transitive_unique": 13,
+   "transitive_with_install_scripts": 1,
+   "install_script_packages": [
+    "opencode-ai@1.19.0"
+   ],
+   "release": {
+    "repo": "anomalyco/opencode",
+    "tag": "v1.19.0",
+    "url": "https://github.com/anomalyco/opencode/releases/tag/v1.19.0",
+    "asset_count": 37,
+    "checksum_assets": [],
+    "signature_assets": [],
+    "sbom_assets": [],
+    "has_checksums": false,
+    "has_signatures": false,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/anomalyco/opencode/releases/tags/v1.19.0"
+   },
+   "installers": [
+    {
+     "url": "https://opencode.ai/install",
+     "declared_command": "curl -fsSL https://opencode.ai/install | bash",
+     "declared_signed": false,
+     "declared_checksum_verified": false,
+     "accessed": "2026-10-15",
+     "final_url": "https://raw.githubusercontent.com/anomalyco/opencode/refs/heads/v1/install",
+     "status": 200,
+     "bytes": 13690,
+     "sha256": "fc3c1b2123f49b6df545a7622e5127d21cd794b15134fc3b66e1ca49f7fb297e",
+     "verifies_checksum": false,
+     "verifies_signature": false,
+     "checksum_evidence": [],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": true,
+    "config": "autoupdate (opencode.json): true|false|\"notify\"; OPENCODE_DISABLE_AUTOUPDATE",
+    "source": "https://opencode.ai/docs/config",
+    "evidence_label": "from-official-docs"
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 0,
+    "unique_vulns": 0,
+    "by_severity": {},
+    "own_package_vulns": [],
+    "vuln_ids": []
+   },
+   "sbom": "experiments/results/e4_sbom/opencode.cdx.json",
+   "null_reasons": {}
+  },
+  {
+   "harness": "openhands",
+   "tier": "A",
+   "ecosystem": "pypi",
+   "package": "openhands",
+   "version": "1.16.0",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://pypi.org/pypi/openhands/1.16.0/json",
+    "https://api.github.com/repos/OpenHands/OpenHands-CLI/releases/tags/1.16.0",
+    "https://install.openhands.dev/install.sh",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "metadata_url": "https://pypi.org/pypi/openhands/1.16.0/json",
+   "license": "MIT",
+   "requires_dist": 13,
+   "direct_dependencies": 13,
+   "files": [
+    {
+     "filename": "openhands-1.16.0-py3-none-any.whl",
+     "packagetype": "bdist_wheel"
+    },
+    {
+     "filename": "openhands-1.16.0.tar.gz",
+     "packagetype": "sdist"
+    }
+   ],
+   "has_wheel": true,
+   "has_sdist": true,
+   "provenance_files": [
+    {
+     "filename": "openhands-1.16.0-py3-none-any.whl",
+     "url": "https://pypi.org/integrity/openhands/1.16.0/openhands-1.16.0-py3-none-any.whl/provenance",
+     "present": false,
+     "status": 404
+    },
+    {
+     "filename": "openhands-1.16.0.tar.gz",
+     "url": "https://pypi.org/integrity/openhands/1.16.0/openhands-1.16.0.tar.gz/provenance",
+     "present": false,
+     "status": 404
+    }
+   ],
+   "has_provenance": false,
+   "provenance_url": "https://pypi.org/integrity/openhands/1.16.0/openhands-1.16.0-py3-none-any.whl/provenance",
+   "install_hooks": {},
+   "has_install_hooks": null,
+   "closure_built_sdists_in_container": true,
+   "transitive_packages": 207,
+   "transitive_unique": 207,
+   "release": {
+    "repo": "OpenHands/OpenHands-CLI",
+    "tag": "1.16.0",
+    "url": "https://github.com/OpenHands/OpenHands-CLI/releases/tag/1.16.0",
+    "asset_count": 4,
+    "checksum_assets": [],
+    "signature_assets": [],
+    "sbom_assets": [],
+    "has_checksums": false,
+    "has_signatures": false,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/OpenHands/OpenHands-CLI/releases/tags/1.16.0"
+   },
+   "installers": [
+    {
+     "url": "https://install.openhands.dev/install.sh",
+     "declared_command": "curl -fsSL https://install.openhands.dev/install.sh | sh",
+     "declared_signed": null,
+     "declared_checksum_verified": null,
+     "accessed": "2026-10-15",
+     "final_url": "https://install.openhands.dev/install.sh",
+     "status": 200,
+     "bytes": 5355,
+     "sha256": "78b498d34900c0c3b30654568b3c00e57ec7728fb6af7c27494b2305dbeea240",
+     "verifies_checksum": false,
+     "verifies_signature": false,
+     "checksum_evidence": [],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": null,
+    "config": "unverified",
+    "source": null,
+    "evidence_label": null
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 0,
+    "unique_vulns": 0,
+    "by_severity": {},
+    "own_package_vulns": [],
+    "vuln_ids": []
+   },
+   "sbom": "experiments/results/e4_sbom/openhands.cdx.json",
+   "null_reasons": {
+    "install_hooks": "PyPI has no install-script field; wheel installs run no code, sdist builds may (wheel available: True)",
+    "auto_update": "profile records default as unverified"
+   }
+  },
+  {
+   "harness": "pi",
+   "tier": "A",
+   "ecosystem": "npm",
+   "package": "@earendil-works/pi-coding-agent",
+   "version": "1.2.0",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://registry.npmjs.org/@earendil-works%2Fpi-coding-agent/1.2.0",
+    "https://api.github.com/repos/earendil-works/pi/releases/tags/v1.2.0",
+    "https://pi.dev/install.sh",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {},
+   "has_install_hooks": false,
+   "direct_dependencies": 22,
+   "optional_dependencies": 0,
+   "bundled_dependencies": 0,
+   "attestations_url": "https://registry.npmjs.org/-/npm/v1/attestations/@earendil-works%2fpi-coding-agent@1.2.0",
+   "attestations_predicate": "https://slsa.dev/provenance/v1",
+   "registry_signatures": 2,
+   "license": "MIT",
+   "unpacked_size": 23199269,
+   "repository": "git+https://github.com/earendil-works/pi.git",
+   "provenance_url": "https://registry.npmjs.org/-/npm/v1/attestations/@earendil-works%2fpi-coding-agent@1.2.0",
+   "attestation_predicates": [
+    "https://github.com/npm/attestation/tree/main/specs/publish/v0.1",
+    "https://slsa.dev/provenance/v1"
+   ],
+   "has_provenance": true,
+   "transitive_packages": 118,
+   "transitive_unique": 118,
+   "transitive_with_install_scripts": 2,
+   "install_script_packages": [
+    "@google/genai@2.21.0",
+    "protobufjs@7.6.6"
+   ],
+   "release": {
+    "repo": "earendil-works/pi",
+    "tag": "v1.2.0",
+    "url": "https://github.com/earendil-works/pi/releases/tag/v1.2.0",
+    "asset_count": 10,
+    "checksum_assets": [
+     "SHA256SUMS"
+    ],
+    "signature_assets": [],
+    "sbom_assets": [],
+    "has_checksums": true,
+    "has_signatures": false,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/earendil-works/pi/releases/tags/v1.2.0"
+   },
+   "installers": [
+    {
+     "url": "https://pi.dev/install.sh",
+     "declared_command": "curl -fsSL https://pi.dev/install.sh | sh",
+     "declared_signed": null,
+     "declared_checksum_verified": null,
+     "accessed": "2026-10-15",
+     "final_url": "https://pi.dev/install.sh",
+     "status": 200,
+     "bytes": 56084,
+     "sha256": "822e94298a79e61b5285fc559b7bfe89ac6ff64aac53d3dc9fc331a23d72e12e",
+     "verifies_checksum": true,
+     "verifies_signature": false,
+     "checksum_evidence": [
+      "curl -fsSL \"$node_dist_base/SHASUMS256.txt\" -o \"$node_tmp_dir/SHASUMS256.txt\"",
+      "' \"$node_tmp_dir/SHASUMS256.txt\")",
+      "awk -v file=\"$checksum_file_name\" '$2 == file { print }' \"$checksum_dir/SHASUMS256.txt\" > \"$checksum_dir/SHASUMS256.selected\""
+     ],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": null,
+    "config": "PI_SKIP_VERSION_CHECK disables the pi.dev latest-version request; PI_OFFLINE disables automatic network activity; updates are explicit via `pi update`",
+    "source": "https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/environment-variables.md",
+    "evidence_label": null
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 0,
+    "unique_vulns": 0,
+    "by_severity": {},
+    "own_package_vulns": [],
+    "vuln_ids": []
+   },
+   "sbom": "experiments/results/e4_sbom/pi.cdx.json",
+   "null_reasons": {
+    "auto_update": "profile records default as unverified"
+   }
+  },
+  {
+   "harness": "qwen-code",
+   "tier": "A",
+   "ecosystem": "npm",
+   "package": "@qwen-code/qwen-code",
+   "version": "0.25.1",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://registry.npmjs.org/@qwen-code%2Fqwen-code/0.25.1",
+    "https://api.github.com/repos/QwenLM/qwen-code/releases/tags/v0.25.1",
+    "https://qwen-code-assets.oss-cn-hangzhou.aliyuncs.com/installation/install-qwen-standalone.sh",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {},
+   "has_install_hooks": false,
+   "direct_dependencies": 0,
+   "optional_dependencies": 16,
+   "bundled_dependencies": 0,
+   "attestations_url": "https://registry.npmjs.org/-/npm/v1/attestations/@qwen-code%2fqwen-code@0.25.1",
+   "attestations_predicate": "https://slsa.dev/provenance/v1",
+   "registry_signatures": 2,
+   "license": null,
+   "unpacked_size": 118602898,
+   "repository": "git+https://github.com/QwenLM/qwen-code.git",
+   "provenance_url": "https://registry.npmjs.org/-/npm/v1/attestations/@qwen-code%2fqwen-code@0.25.1",
+   "attestation_predicates": [
+    "https://github.com/npm/attestation/tree/main/specs/publish/v0.1",
+    "https://slsa.dev/provenance/v1"
+   ],
+   "has_provenance": true,
+   "transitive_packages": 49,
+   "transitive_unique": 49,
+   "transitive_with_install_scripts": 1,
+   "install_script_packages": [
+    "@qwen-code/audio-capture@0.25.1"
+   ],
+   "release": {
+    "repo": "QwenLM/qwen-code",
+    "tag": "v0.25.1",
+    "url": "https://github.com/QwenLM/qwen-code/releases/tag/v0.25.1",
+    "asset_count": 12,
+    "checksum_assets": [
+     "SHA256SUMS"
+    ],
+    "signature_assets": [],
+    "sbom_assets": [],
+    "has_checksums": true,
+    "has_signatures": false,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/QwenLM/qwen-code/releases/tags/v0.25.1"
+   },
+   "installers": [
+    {
+     "url": "https://qwen-code-assets.oss-cn-hangzhou.aliyuncs.com/installation/install-qwen-standalone.sh",
+     "declared_command": "curl -fsSL https://qwen-code-assets.oss-cn-hangzhou.aliyuncs.com/installation/install-qwen-standalone.sh | bash",
+     "declared_signed": null,
+     "declared_checksum_verified": null,
+     "accessed": "2026-10-15",
+     "final_url": "https://qwen-code-assets.oss-cn-hangzhou.aliyuncs.com/installation/install-qwen-standalone.sh",
+     "status": 200,
+     "bytes": 50040,
+     "sha256": "8afbc4e7658737575c20efab59b99213d0d5be2152f27b628130342b5c0d271e",
+     "verifies_checksum": true,
+     "verifies_signature": false,
+     "checksum_evidence": [
+      "gh_head=\"$(github_base_url_for_version \"${version_path}\")/SHA256SUMS\"",
+      "oss_head=\"$(aliyun_base_url_for_version \"${version_path}\")/SHA256SUMS\"",
+      "sha256_file() {"
+     ],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": null,
+    "config": "general.enableAutoUpdate (inherited from Gemini CLI settings; unverified)",
+    "source": "https://github.com/QwenLM/qwen-code/blob/main/docs/users/configuration/settings.md",
+    "evidence_label": null
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 1,
+    "unique_vulns": 1,
+    "by_severity": {
+     "high": 1
+    },
+    "own_package_vulns": [],
+    "vuln_ids": [
+     "GHSA-wq5f-xc86-pv6w"
+    ]
+   },
+   "sbom": "experiments/results/e4_sbom/qwen-code.cdx.json",
+   "null_reasons": {
+    "auto_update": "profile records default as unverified"
+   }
+  },
+  {
+   "harness": "roo-code",
+   "tier": "A",
+   "ecosystem": "npm",
+   "package": "@roo-code/cli",
+   "version": "0.1.17",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://registry.npmjs.org/@roo-code%2Fcli/0.1.17",
+    "https://api.github.com/repos/RooCodeInc/Roo-Code/releases/tags/cli-v0.1.17",
+    "https://raw.githubusercontent.com/RooCodeInc/Roo-Code/main/apps/cli/install.sh"
+   ],
+   "has_provenance": null,
+   "release": {
+    "repo": "RooCodeInc/Roo-Code",
+    "tag": "cli-v0.1.17",
+    "url": "https://github.com/RooCodeInc/Roo-Code/releases/tag/cli-v0.1.17",
+    "asset_count": 6,
+    "checksum_assets": [
+     "roo-cli-darwin-arm64.tar.gz.sha256",
+     "roo-cli-linux-arm64.tar.gz.sha256",
+     "roo-cli-linux-x64.tar.gz.sha256"
+    ],
+    "signature_assets": [],
+    "sbom_assets": [],
+    "has_checksums": true,
+    "has_signatures": false,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/RooCodeInc/Roo-Code/releases/tags/cli-v0.1.17"
+   },
+   "installers": [
+    {
+     "url": "https://raw.githubusercontent.com/RooCodeInc/Roo-Code/main/apps/cli/install.sh",
+     "declared_command": "curl -fsSL https://raw.githubusercontent.com/RooCodeInc/Roo-Code/main/apps/cli/install.sh | sh",
+     "declared_signed": null,
+     "declared_checksum_verified": null,
+     "accessed": "2026-10-15",
+     "final_url": "https://raw.githubusercontent.com/RooCodeInc/Roo-Code/main/apps/cli/install.sh",
+     "status": 200,
+     "bytes": 10265,
+     "sha256": "76369430fc05434a73220668b234b3992c9300fcdcb6527c3d88e1836069402a",
+     "verifies_checksum": false,
+     "verifies_signature": false,
+     "checksum_evidence": [],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": null,
+    "config": "CLI: `roo upgrade` / re-run install.sh",
+    "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/apps/cli/README.md",
+    "evidence_label": null
+   },
+   "osv": null,
+   "sbom": null,
+   "null_reasons": {
+    "registry_metadata": "package not found on the npm registry (HTTP 404)",
+    "auto_update": "profile records default as unverified",
+    "osv": "no dependency set could be resolved"
+   }
+  },
+  {
+   "harness": "warp",
+   "tier": "A",
+   "ecosystem": "github-release",
+   "package": "warpdotdev/warp",
+   "version": "v0.2026.06.03.09.49.stable_00",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://github.com/warpdotdev/warp/blob/v0.2026.06.03.09.49.stable_00/Cargo.lock",
+    "https://api.github.com/repos/warpdotdev/warp/releases/tags/v0.2026.06.03.09.49.stable_00",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {},
+   "has_install_hooks": null,
+   "has_provenance": null,
+   "lock_url": "https://github.com/warpdotdev/warp/blob/v0.2026.06.03.09.49.stable_00/Cargo.lock",
+   "scope_note": "whole Cargo.lock registry crates (workspace upper bound, not release-pruned)",
+   "license": null,
+   "transitive_packages": 1397,
+   "transitive_unique": 1397,
+   "release": {
+    "repo": "warpdotdev/warp",
+    "tag": "v0.2026.06.03.09.49.stable_00",
+    "url": "https://github.com/warpdotdev/warp/releases/tag/v0.2026.06.03.09.49.stable_00",
+    "asset_count": 0,
+    "checksum_assets": [],
+    "signature_assets": [],
+    "sbom_assets": [],
+    "has_checksums": false,
+    "has_signatures": false,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/warpdotdev/warp/releases/tags/v0.2026.06.03.09.49.stable_00"
+   },
+   "installers": [],
+   "auto_update": {
+    "default": true,
+    "config": "autoupdate module in app/src/autoupdate; opt-out setting unverified",
+    "source": "https://github.com/warpdotdev/warp/tree/master/app/src/autoupdate",
+    "evidence_label": "from-official-docs"
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 0,
+    "unique_vulns": 0,
+    "by_severity": {},
+    "own_package_vulns": [],
+    "vuln_ids": []
+   },
+   "sbom": "experiments/results/e4_sbom/warp.cdx.json",
+   "null_reasons": {
+    "install_hooks": "cargo build.rs scripts run at build time, not install, for binary releases",
+    "provenance": "no package-registry artifact (GitHub release only)",
+    "license": "not read for this ecosystem (see VERSIONS.md)"
+   }
+  },
+  {
+   "harness": "claude-code",
+   "tier": "B",
+   "ecosystem": "npm",
+   "package": "@anthropic-ai/claude-code",
+   "version": "2.1.300",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://registry.npmjs.org/@anthropic-ai%2Fclaude-code/2.1.300",
+    "https://api.github.com/repos/anthropics/claude-code/releases/tags/v2.1.300",
+    "https://claude.ai/install.sh",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {
+    "postinstall": "node install.cjs"
+   },
+   "has_install_hooks": true,
+   "direct_dependencies": 0,
+   "optional_dependencies": 8,
+   "bundled_dependencies": 0,
+   "attestations_url": null,
+   "attestations_predicate": null,
+   "registry_signatures": 2,
+   "license": "SEE LICENSE IN README.md",
+   "unpacked_size": 189328,
+   "repository": null,
+   "provenance_url": null,
+   "has_provenance": false,
+   "transitive_packages": 9,
+   "transitive_unique": 9,
+   "transitive_with_install_scripts": 1,
+   "install_script_packages": [
+    "@anthropic-ai/claude-code@2.1.300"
+   ],
+   "release": {
+    "repo": "anthropics/claude-code",
+    "tag": "v2.1.300",
+    "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.300",
+    "asset_count": 10,
+    "checksum_assets": [],
+    "signature_assets": [
+     "SHASUMS256.txt.sig"
+    ],
+    "sbom_assets": [],
+    "has_checksums": false,
+    "has_signatures": true,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/anthropics/claude-code/releases/tags/v2.1.300"
+   },
+   "installers": [
+    {
+     "url": "https://claude.ai/install.sh",
+     "declared_command": "curl -fsSL https://claude.ai/install.sh | bash",
+     "declared_signed": true,
+     "declared_checksum_verified": null,
+     "accessed": "2026-10-15",
+     "final_url": "https://downloads.claude.ai/claude-code-releases/bootstrap.sh",
+     "status": 200,
+     "bytes": 9710,
+     "sha256": "8e5f464149a74065cab924119f2c66a795ff7f442408751ddebeced78f49f4a2",
+     "verifies_checksum": true,
+     "verifies_signature": false,
+     "checksum_evidence": [
+      "if [[ $json =~ \\\"$platform\\\"[[:space:]]*:[[:space:]]*[{][^{}]*\\\"checksum\\\"[[:space:]]*:[[:space:]]*\\\"([a-f0-9]{64})\\\" ]]; then",
+      "checksum=$(echo \"$manifest_json\" | jq -r \".platforms[\\\"$platform\\\"].checksum // empty\")",
+      "checksum=$(get_checksum_from_manifest \"$manifest_json\" \"$platform\" || true)"
+     ],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": true,
+    "config": "autoUpdatesChannel latest|stable, minimumVersion (settings.json); DISABLE_AUTOUPDATER=1 (background check only) / DISABLE_UPDATES=1 (all update paths); CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC also disables auto-updates; update checks go to downloads.claude.ai (native) or registry.npmjs.org (npm); brew/winget/apt/dnf/apk do not auto-update by default; Linux binaries not individually code-signed, manifest.json GPG-signed from 2.1.89",
+    "source": "https://code.claude.com/docs/en/setup",
+    "evidence_label": "from-official-docs"
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 0,
+    "unique_vulns": 0,
+    "by_severity": {},
+    "own_package_vulns": [],
+    "vuln_ids": []
+   },
+   "sbom": "experiments/results/e4_sbom/claude-code.cdx.json",
+   "null_reasons": {}
+  },
+  {
+   "harness": "grok-build",
+   "tier": "A",
+   "ecosystem": "npm",
+   "package": "@xai-official/grok",
+   "version": "1.0.52",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://registry.npmjs.org/@xai-official%2Fgrok/1.0.52",
+    "https://x.ai/cli/install.sh",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {
+    "postinstall": "node bin/postinstall.js"
+   },
+   "has_install_hooks": true,
+   "direct_dependencies": 1,
+   "optional_dependencies": 6,
+   "bundled_dependencies": 0,
+   "attestations_url": null,
+   "attestations_predicate": null,
+   "registry_signatures": 2,
+   "license": "Apache-2.0",
+   "unpacked_size": 18250,
+   "repository": null,
+   "provenance_url": null,
+   "has_provenance": false,
+   "transitive_packages": 8,
+   "transitive_unique": 8,
+   "transitive_with_install_scripts": 1,
+   "install_script_packages": [
+    "@xai-official/grok@1.0.52"
+   ],
+   "release": null,
+   "installers": [
+    {
+     "url": "https://x.ai/cli/install.sh",
+     "declared_command": "curl -fsSL https://x.ai/cli/install.sh | bash",
+     "declared_signed": null,
+     "declared_checksum_verified": null,
+     "accessed": "2026-10-15",
+     "final_url": "https://x.ai/cli/install.sh",
+     "status": 200,
+     "bytes": 19513,
+     "sha256": "eb06f8e41ebac69bf16d61737bb8fc03048b00e8b581c5c60011359261f26e1a",
+     "verifies_checksum": false,
+     "verifies_signature": false,
+     "checksum_evidence": [],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": true,
+    "config": "[cli] auto_update; env GROK_DISABLE_AUTOUPDATER; flag --no-auto-update; [cli] channel stable|alpha. Headless -p skips the update check (source main.rs); hosts x.ai/cli, storage.googleapis.com/grok-build-public-artifacts, registry.npmjs.org",
+    "source": "https://docs.x.ai/build/settings/reference.md",
+    "evidence_label": "from-official-docs"
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 0,
+    "unique_vulns": 0,
+    "by_severity": {},
+    "own_package_vulns": [],
+    "vuln_ids": []
+   },
+   "sbom": "experiments/results/e4_sbom/grok-build.cdx.json",
+   "null_reasons": {
+    "release": "no public GitHub release (npm-only distribution)"
+   }
+  },
+  {
+   "harness": "github-copilot",
+   "tier": "B",
+   "ecosystem": "npm",
+   "package": "@github/copilot",
+   "version": "1.0.98",
+   "accessed": "2026-10-15",
+   "sources": [
+    "https://registry.npmjs.org/@github%2Fcopilot/1.0.98",
+    "https://api.github.com/repos/github/copilot-cli/releases/tags/v1.0.98",
+    "https://gh.io/copilot-install",
+    "https://api.osv.dev/v1/querybatch"
+   ],
+   "install_hooks": {},
+   "has_install_hooks": false,
+   "direct_dependencies": 1,
+   "optional_dependencies": 8,
+   "bundled_dependencies": 0,
+   "attestations_url": null,
+   "attestations_predicate": null,
+   "registry_signatures": 2,
+   "license": "SEE LICENSE IN LICENSE.md",
+   "unpacked_size": 12971,
+   "repository": "git+https://github.com/github/copilot-cli.git",
+   "provenance_url": null,
+   "has_provenance": false,
+   "transitive_packages": 10,
+   "transitive_unique": 10,
+   "transitive_with_install_scripts": 0,
+   "install_script_packages": [],
+   "release": {
+    "repo": "github/copilot-cli",
+    "tag": "v1.0.98",
+    "url": "https://github.com/github/copilot-cli/releases/tag/v1.0.98",
+    "asset_count": 20,
+    "checksum_assets": [
+     "SHA256SUMS.txt"
+    ],
+    "signature_assets": [],
+    "sbom_assets": [],
+    "has_checksums": true,
+    "has_signatures": false,
+    "has_sbom": false,
+    "api_url": "https://api.github.com/repos/github/copilot-cli/releases/tags/v1.0.98"
+   },
+   "installers": [
+    {
+     "url": "https://gh.io/copilot-install",
+     "declared_command": "curl -fsSL https://gh.io/copilot-install | bash",
+     "declared_signed": null,
+     "declared_checksum_verified": null,
+     "accessed": "2026-10-15",
+     "final_url": "https://raw.githubusercontent.com/github/copilot-cli/refs/heads/main/install.sh",
+     "status": 200,
+     "bytes": 7018,
+     "sha256": "00efcc2e196f0793d097935d6230062fc66e8247dc01334d2ac3eae4e26a1c7f",
+     "verifies_checksum": true,
+     "verifies_signature": false,
+     "checksum_evidence": [
+      "CHECKSUMS_URL=\"https://github.com/github/copilot-cli/releases/latest/download/SHA256SUMS.txt\"",
+      "CHECKSUMS_URL=\"https://github.com/github/copilot-cli/releases/download/${VERSION}/SHA256SUMS.txt\"",
+      "CHECKSUMS_URL=\"https://github.com/github/copilot-cli/releases/download/${VERSION}/SHA256SUMS.txt\""
+     ],
+     "signature_evidence": []
+    }
+   ],
+   "auto_update": {
+    "default": true,
+    "config": "settings.json: autoUpdate / autoUpdatesChannel",
+    "source": "https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference",
+    "evidence_label": "from-official-docs"
+   },
+   "osv": {
+    "queried_at": "2026-10-15",
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "vulnerable_packages": 0,
+    "unique_vulns": 0,
+    "by_severity": {},
+    "own_package_vulns": [],
+    "vuln_ids": []
+   },
+   "sbom": "experiments/results/e4_sbom/github-copilot.cdx.json",
+   "null_reasons": {}
+  }
+ ]
+}

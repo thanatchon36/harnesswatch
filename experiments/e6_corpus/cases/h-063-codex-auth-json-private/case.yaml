@@ -1,0 +1,1 @@
+chmod: {home/.codex/auth.json: "0600"}

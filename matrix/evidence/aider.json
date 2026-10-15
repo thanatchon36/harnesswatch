@@ -1,0 +1,177 @@
+{
+  "harness": "aider",
+  "version": "0.86.2",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "confirm_ask returns 'n' under --yes-always when explicit_yes_required=True; shell suggestions use explicit_yes_required",
+          "source": "https://github.com/Aider-AI/aider/blob/main/aider/io.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "--auto-commits and --dirty-commits default True; --suggest-shell-commands default True",
+          "source": "https://github.com/Aider-AI/aider/blob/main/aider/args.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "--auto-test + --test-cmd execute configured shell command after edits without prompt",
+          "source": "https://github.com/Aider-AI/aider/blob/main/aider/args.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Interactive confirmation for file adds, URL adds, file creation, shell commands; --yes-always does not auto-run LLM-suggested shell commands (explicit_yes_required); auto-commits default on."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "No sandbox in repo",
+          "source": "https://github.com/Aider-AI/aider/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No sandbox."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Add URL to chat? confirm (check_for_urls), auto-yes under --yes-always",
+          "source": "https://github.com/Aider-AI/aider/blob/main/aider/coders/base_coder.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No egress control; /web scrapes URLs."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "generate_search_path_list: home, git root, cwd; load_dotenv_files(override=True)",
+          "source": "https://github.com/Aider-AI/aider/blob/main/aider/main.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "Repo-controlled .aider.conf.yml and .env are loaded from git root and cwd automatically (.env with override=True), no trust prompt; can set api base, test/lint commands, load file, analytics host."
+    },
+    "D05": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (no MCP client in aider source)."
+    },
+    "D06": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (no plugin/extension system)."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "history defaults .aider.chat.history.md and .aider.input.history in git root",
+          "source": "https://github.com/Aider-AI/aider/blob/main/aider/args.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "check_gitignore adds '.aider*'",
+          "source": "https://github.com/Aider-AI/aider/blob/main/aider/main.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Keys in env/.env/plaintext config; history files (.aider.chat.history.md, .aider.llm.history) written in repo root; .aider* auto-added to .gitignore after prompt."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "--message, --yes-always, --exit flags",
+          "source": "https://github.com/Aider-AI/aider/blob/main/aider/args.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "--message/--yes-always/--exit scripted runs; shell suggestions still need explicit yes; no official CI action."
+    },
+    "D09": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (no persistent memory; chat history restore is opt-in)."
+    },
+    "D10": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (no sub-agents)."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "--chat-history-file, --llm-history-file, --analytics-log options",
+          "source": "https://github.com/Aider-AI/aider/blob/main/aider/args.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Local markdown chat history + optional --llm-history-file and --analytics-log."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "Analytics.need_to_ask uses PERCENT=10 sampling; disable() unless asked_opt_in",
+          "source": "https://github.com/Aider-AI/aider/blob/main/aider/analytics.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Analytics opt-in only: permanently disabled by default unless asked_opt_in; opt-in prompt shown to ~10% sample; --analytics-disable permanent."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "install.sh via curl|sh",
+          "source": "https://github.com/Aider-AI/aider/blob/main/aider/website/docs/install.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "--check-update default behaviour contacts pypi.org",
+          "source": "https://github.com/Aider-AI/aider/blob/main/aider/versioncheck.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "PyPI + aider-install + curl|sh; no provenance/signing documented; update check on by default."
+    },
+    "D14": {
+      "facts": [],
+      "proposed_score": 0,
+      "rationale": "No managed or enterprise policy mechanism."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "GitHub security-advisories API returned none; no SECURITY.md in repo root listing",
+          "source": "https://github.com/Aider-AI/aider/blob/main/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No SECURITY.md and no published advisories found."
+    }
+  }
+}

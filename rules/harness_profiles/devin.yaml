@@ -1,0 +1,107 @@
+id: devin
+name: Devin (Devin CLI / Devin for Terminal + Devin cloud agent)
+vendor: Cognition
+tier: B
+license: Proprietary
+open_source: false
+status: docs-only
+version_analysed: "Devin CLI v3000.11.3 (stable changelog, 2026-09-22; documentation-level only)"
+analysed_on: "2026-10-15"
+homepage: https://devin.ai
+repo: null
+
+binaries: [devin]
+packages: []
+install_methods:
+  - {method: curl-installer, command: "curl -fsSL https://cli.devin.ai/install.sh | bash", checksum_verified: null, signed: null, source: https://docs.devin.ai/work-with-devin/devin-cli.md}
+  - {method: homebrew-cask, command: "brew install --cask devin-cli"}
+  - {method: powershell, command: "irm https://static.devin.ai/cli/setup.ps1 | iex"}
+auto_update: {default: null, config: null, source: null}
+
+state_dirs: ["~/.config/devin", "~/.devin", "%APPDATA%\\devin"]
+credential_files: []
+credential_storage: "unverified; MCP OAuth tokens 'stored locally and refreshed automatically'; `devin auth login/logout`"
+log_paths: ["~/.devin/plans/plan-*.md"]    # sessions location unverified; --export writes ATIF transcript
+memory_paths: ["~/.devin/plans/"]
+
+config_files:
+  - {path: "~/.config/devin/config.json", scope: user, format: json, kind: settings}
+  - {path: ".devin/config.json", scope: project, format: json, kind: settings}          # only permissions, read_config_from, hooks allowed in project configs
+  - {path: ".devin/config.local.json", scope: project-local, format: json, kind: settings}
+  - {path: "~/.config/devin/mcp_config.json", scope: user, format: json, kind: mcp}
+  - {path: ".devin/mcp_config.json", scope: project, format: json, kind: mcp}
+  - {path: ".devin/mcp_config.local.json", scope: project-local, format: json, kind: mcp}
+  - {path: ".devin/hooks.v1.json", scope: project, format: json, kind: hooks}
+  - {path: ".claude/settings.json", scope: project, format: json, kind: hooks}     # read when read_config_from.claude (default true)
+  - {path: ".claude/settings.local.json", scope: project-local, format: json, kind: hooks}
+  - {path: "~/.claude/settings.json", scope: user, format: json, kind: hooks}
+  - {path: "/etc/devin/system.json", scope: managed, format: json, kind: settings}
+  - {path: "/Library/Application Support/Devin/system.json", scope: managed, format: json, kind: settings}
+  - {path: "C:\\ProgramData\\Devin\\system.json", scope: managed, format: json, kind: settings}
+  - {path: ".cursor/mcp.json", scope: project, format: json, kind: mcp}            # imported by default (read_config_from.cursor)
+  - {path: ".cursor/rules/", scope: project, format: markdown, kind: rules}
+  - {path: ".windsurf/rules/", scope: project, format: markdown, kind: rules}
+  - {path: "~/.claude.json", scope: user, format: json, kind: mcp}
+instruction_files: ["AGENTS.md", "AGENTS.local.md", "AGENT.md", ".windsurfrules", "CLAUDE.md", ".cursor/rules/*", ".windsurf/rules/*", ".devin/rules/*"]
+skills_paths: [".claude/skills/*/SKILL.md", ".github/skills/*/SKILL.md", "~/.copilot/skills/*/SKILL.md"]
+
+mcp:
+  files: [".devin/mcp_config.json", "~/.config/devin/mcp_config.json", ".devin/mcp_config.local.json", ".cursor/mcp.json", "~/.claude.json", ".mcp.json"]
+  servers_key: "mcpServers"
+  server_fields: {command: command, args: args, env: env, url: url, headers: headers, transport: transport, disabled: disabled, oauthClientId: oauthClientId, oauthClientSecret: oauthClientSecret, oauthResource: oauthResource}
+  project_servers_require_approval: false   # docs describe no approval step for project servers; tool calls prompt by default
+  notes: "Imports MCP from Cursor/Claude/Windsurf/OpenCode/Zed files by default (read_config_from, all true). ${env:VAR}/${file:/path} expansion."
+
+permissions:
+  config_keys:
+    allow: "permissions.allow"
+    deny: "permissions.deny"
+    ask: "permissions.ask"
+    mode: "--permission-mode / DEVIN_PERMISSION_MODE"
+  default_mode: "normal (reads auto; fetch/exec/edit prompt)"
+  auto_approve_values:
+    - {key: "--permission-mode / DEVIN_PERMISSION_MODE", value: "dangerous"}   # aliases yolo, bypass
+    - {key: "permissions.allow", value: "Exec(*)"}
+    - {key: "permissions.allow", value: "mcp__*"}
+    - {key: "permissions.allow", value: "Read(/**)"}
+    - {key: "permissions.allow", value: "Fetch(*)"}
+  cli_flags_auto_approve: ["--permission-mode dangerous", "--permission-mode yolo", "--permission-mode bypass", "--permission-mode autonomous (requires --sandbox)", "--permission-mode smart (model-judged)", "--respect-workspace-trust false"]
+  allow_rule_syntax: "Exec(npm run) | Read(src/**) | Write(.env*) | Fetch(domain:npmjs.org) | mcp__github__list_issues"
+  overbroad_patterns: ["Exec(*)", "exec", "mcp__*", "Read(/**)", "Write(**)", "Fetch(*)"]
+  notes: "Order deny > ask > allow; org (Team Settings) deny/ask not overridable by any mode. Smart mode never auto-approves installs, mutating git, rm/sudo, dotenv/key files."
+
+hooks:
+  supported: true
+  config_key: "hooks"
+  repo_scoped_allowed: true       # project hooks; trust behaviour not documented on hooks page
+  command_field: "command"        # {type: command|prompt, command, timeout}; events PreToolUse PostToolUse PermissionRequest UserPromptSubmit Stop PostCompaction SessionStart SessionEnd
+
+sandbox: {available: true, default_on: false, mechanism: "macOS Seatbelt; Linux bubblewrap+socat+seccomp; Windows unsupported", config: "--sandbox / DEVIN_SANDBOX; config sandbox.{allowed_domains,denied_domains,network_mode,excluded}; admin enforcement Optional|Required", source: https://docs.devin.ai/cli/sandbox.md}
+network: {domain_allowlist: true, config: "sandbox.allowed_domains / denied_domains / network_mode full|limited (user config only; sandbox sessions only)", default: "full, empty lists; doc marks feature unstable", source: https://docs.devin.ai/cli/sandbox.md}
+workspace_trust: {prompt_on_new_folder: true, notes: "--respect-workspace-trust defaults true; -p fails in untrusted dir unless --respect-workspace-trust false. Startup prompt reworked v3000.10.21. Project hooks/MCP/imports gating pre-trust not documented.", source: https://docs.devin.ai/cli/reference/commands.md}
+memory: {persistent: false, cross_project: false, agent_writable: null, notes: "Devin Local does not persist memories; rules/AGENTS.md/skills instead. Devin cloud has Knowledge/Secrets features (not analysed).", source: https://docs.devin.ai/desktop/devin-local.md}
+subagents: {supported: true, inherits_permissions: "session approval covers root agent + subagents; subagent_model config", notes: "agents/<name>.md", source: https://docs.devin.ai/cli/subagents.md}
+telemetry: {default_on: null, opt_out: "unverified (CLI telemetry page not found); desktop policy TelemetryLevel", training_default: "Devin (cloud) docs: model training ON by default; paid users can opt out in Data Controls (enables ZDR with model providers); Enterprise never trained without written consent.", source: https://docs.devin.ai/admin/security.md}
+headless:
+  command: "devin -p \"<prompt>\""
+  flags: ["--print/-p", "--prompt-file", "--permission-mode", "--model", "--sandbox", "--config", "--export", "--respect-workspace-trust"]
+  ci_integrations: []
+  model_override: "--model / DEVIN_MODEL; config agent.model (default swe-1-6-fast)"
+  local_model_support: "unverified: no BYOK / custom base URL documented; models routed via Cognition"
+
+security_policy: {security_md: https://docs.devin.ai/admin/security.md, bug_bounty: null, advisories: null}
+extra:
+  system_json_keys: [enterprise_host, account_id, proxy]
+  cloud_agent: "Devin cloud: Security Profiles (restrict network/MCP/git), AI Guardrails, customer-managed keys; Embrace The Red 2025 prompt-injection tests (third-party)."
+  contact: "security@cognition.ai; SOC 2 Type II since 2024-09; trust.cognition.ai"
+sources:
+  - {url: https://docs.devin.ai/cli/reference/permissions.md, accessed: "2026-10-15", note: "permissions"}
+  - {url: https://docs.devin.ai/cli/reference/configuration/config-file.md, accessed: "2026-10-15", note: "config files"}
+  - {url: https://docs.devin.ai/cli/reference/commands.md, accessed: "2026-10-15", note: "flags, trust"}
+  - {url: https://docs.devin.ai/cli/sandbox.md, accessed: "2026-10-15", note: "sandbox"}
+  - {url: https://docs.devin.ai/cli/extensibility/hooks/overview.md, accessed: "2026-10-15", note: "hooks"}
+  - {url: https://docs.devin.ai/cli/extensibility/mcp/configuration.md, accessed: "2026-10-15", note: "MCP"}
+  - {url: https://docs.devin.ai/cli/reference/configuration/read-config-from.md, accessed: "2026-10-15", note: "imports"}
+  - {url: https://docs.devin.ai/cli/enterprise/system-config.md, accessed: "2026-10-15", note: "system.json"}
+  - {url: https://docs.devin.ai/cli/changelog/stable.md, accessed: "2026-10-15", note: "version"}
+  - {url: https://docs.devin.ai/admin/security.md, accessed: "2026-10-15", note: "security/privacy"}

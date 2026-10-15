@@ -1,0 +1,4 @@
+expected: [HG-MCP-002]
+origin: hand
+family: mcp
+note: "remote https server with no auth header (OAuth at runtime): low finding by spec"

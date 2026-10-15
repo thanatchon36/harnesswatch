@@ -1,0 +1,4 @@
+expected: [HG-CI-002]
+origin: hand
+family: ci
+note: "trusted trigger but contents: write token for the agent"

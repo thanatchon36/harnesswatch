@@ -1,0 +1,5 @@
+# hooks are in-process TS factories, not parseable commands
+mcp_servers: [fs]
+auto_approve: true
+hooks: 0
+instruction_files: [AGENTS.md]

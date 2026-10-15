@@ -1,0 +1,24 @@
+id: HG-INJ-002
+title: Prompt-injection phrasing in an instruction file
+area: INJ
+severity: medium
+confidence: medium
+kind: vulnerability-pattern
+taxonomy: [T01, T05, T08]
+description: >
+  Scored heuristic over instruction/rules/skill files: instruction-override phrases ("ignore previous
+  instructions"), concealment ("do not tell the user"), fake authority headers, requests to read
+  credential files, exfiltration verbs next to URLs, pipe-to-shell commands, auto-approve flags,
+  tool-shadowing ("before using any tool…"), markdown-image exfil templates, long encoded blobs and
+  HTML comments that hide text. The rule fires when the weighted score reaches `min_score`;
+  severity scales with the score.
+remediation: >
+  Read the flagged lines. Legitimate project guidance rarely needs concealment, override or
+  exfiltration language. Remove it, or move genuinely needed commands into reviewed scripts. Consider
+  enforcing instruction-file policy with a deterministic checker (e.g. rulewarden).
+references:
+  - https://owasp.org/www-project-top-10-for-large-language-model-applications/
+  - https://genai.owasp.org/llmrisk/llm01-prompt-injection/
+params:
+  min_score: 5
+  severity_thresholds: {medium: 7, high: 10}

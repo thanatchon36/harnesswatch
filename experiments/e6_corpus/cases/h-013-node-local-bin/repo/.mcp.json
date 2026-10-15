@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "design-tokens": {"type": "stdio", "command": "node", "args": ["./node_modules/.bin/design-tokens-mcp", "--root", "."]}
+  }
+}

@@ -1,0 +1,2 @@
+audits: [secrets]
+chmod: {home/.claude/.credentials.json: "0600", home/.claude/projects/-w/s.jsonl: "0600", home/.claude: "0700"}

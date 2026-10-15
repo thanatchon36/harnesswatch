@@ -1,0 +1,3 @@
+[mcp_servers.docs]
+command = "npx"
+args = ["-y", "some-docs-mcp@latest"]

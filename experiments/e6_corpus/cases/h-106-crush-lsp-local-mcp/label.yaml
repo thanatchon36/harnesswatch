@@ -1,0 +1,4 @@
+expected: [HG-MCP-005]
+origin: hand
+family: repo
+note: "crush with LSP servers and one local MCP server"

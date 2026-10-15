@@ -1,0 +1,11 @@
+model = "gpt-5.1-codex"
+model_reasoning_effort = "medium"
+sandbox_mode = "workspace-write"
+approvals_reviewer = "auto_review"
+
+[sandbox_workspace_write]
+network_access = true
+
+[otel]
+environment = "dev"
+log_user_prompt = false

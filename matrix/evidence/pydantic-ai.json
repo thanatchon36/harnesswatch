@@ -1,0 +1,230 @@
+{
+  "harness": "pydantic-ai",
+  "version": "2.56.0",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Deferred tools: tools with requires_approval=True, ApprovalRequired, or ApprovalRequiredToolset pause the run and return DeferredToolRequests (or are resolved inline by a HandleDeferredToolCalls handler); build_results(approve_all=True) exists.",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/deferred-tools.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Core ships no shell/file tools; every tool is developer-registered and runs without approval unless marked.",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/tools.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Strong HITL primitive but opt-in per tool; nothing gated by default."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "LocalWorkspace runs model commands on the host as the user; sandboxes (Bubblewrap, Modal, E2B) are pydantic-ai-harness add-ons.",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/workspace.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "BubblewrapSandbox: host files read-only, private /tmp, no network, seccomp blocking socket syscalls; network=True disables the filter.",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/harness/bubblewrap-sandbox.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Shell allowed_commands is 'best-effort, not a security boundary' (first-token check; python/git/make can spawn anything).",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/harness/shell.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Good sandbox option but separate, opt-in package; default host execution."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "web_fetch tool has blocked/allowed domains and an SSRF private-IP/metadata blocklist, bypassed repeatedly (CVE-2026-25580, 46678, 48782, 107289, 107288).",
+          "source": "https://github.com/pydantic/pydantic-ai/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Bubblewrap sandbox has no network by default.",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/harness/bubblewrap-sandbox.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Egress controls exist but have had five bypass advisories."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "No repo-level config is auto-loaded; MCP config only via explicit --mcp-config/load_mcp_servers path.",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/cli.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (library; no workspace config auto-load)."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP config file: unknown keys such as 'disabled' and 'type' are ignored; ${VAR} expands against the full process environment; docs warn to load only trusted files.",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/mcp/client.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "MCP sampling enabled only if sampling_model is set or agent.set_mcp_sampling_model() is called.",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/mcp/client.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Explicit config only; no approval, allowlist or tool-description change detection."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "pydantic-ai-harness capabilities and third-party tools are plain Python packages; no marketplace or signing.",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/harness/index.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (no extension marketplace)."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "No credential store; provider keys come from environment variables.",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/models/overview.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "OTel include_content=False failed to redact retry prompts, exceptions, instructions and output template until fixed (GHSA-3gh4-cghq-f8v4, GHSA-4x9p-g9wm-8q7f).",
+          "source": "https://github.com/pydantic/pydantic-ai/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Shell capability supports environment scrubbing to keep host secrets out of spawned commands.",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/harness/shell.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Library defers storage to the app; redaction in telemetry had gaps."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "clai CLI and agent.run_sync suit CI; no official CI action.",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/cli.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (library)."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Memory capability (pydantic-ai-harness) is an opt-in Markdown notebook (MEMORY.md) with write/read/delete/search tools; namespace chosen by application code, model cannot select another user's namespace.",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/harness/memory.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Opt-in, agent-writable, namespaced by app; no default."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Subagents are code-defined agents invoked as tools; permissions are whatever the developer passes (deps, toolsets).",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/multi-agent-applications.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "No built-in isolation model."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Built-in OpenTelemetry GenAI instrumentation (InstrumentationSettings, Logfire); off unless instrument=True/instrument_all.",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/logfire.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Rich opt-in tracing; nothing recorded by default."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "Nothing is sent unless logfire/OTel is installed, configured and instrumentation enabled.",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/logfire.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "No telemetry by default."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Published on PyPI as pydantic-ai, pydantic-ai-slim, clai, pydantic-ai-harness; attestation/provenance status not checked.",
+          "source": "https://pypi.org/project/pydantic-ai/",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (Not verified)"
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "No managed-policy layer; configuration is code.",
+          "source": "https://github.com/pydantic/pydantic-ai/blob/main/docs/agent.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (library)."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "Org-level SECURITY.md directs reporters to private GitHub vulnerability reporting; 17 published GHSAs with CVEs 2026-02..2026-10; no bug bounty.",
+          "source": "https://api.github.com/advisories?affects=pydantic-ai&ecosystem=pip",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Active disclosure with CVEs; no bounty."
+    }
+  }
+}

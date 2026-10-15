@@ -1,0 +1,6 @@
+expected:
+- HG-MCP-002
+- HG-NET-001
+origin: generated
+family: opencode
+note: OpenCode config

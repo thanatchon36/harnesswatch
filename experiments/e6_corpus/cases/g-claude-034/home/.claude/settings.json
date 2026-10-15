@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "defaultMode": "plan",
+    "allow": [
+      "Bash(uv run pytest:*)",
+      "Bash(npm run lint)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(git push --force:*)",
+      "Read(./.env)",
+      "Read(~/.ssh/**)"
+    ]
+  },
+  "env": {
+    "ANTHROPIC_API_KEY": "{{SYNTH:anthropic-api-key}}"
+  },
+  "autoMemoryEnabled": true,
+  "enableAllProjectMcpServers": false,
+  "sandbox": {
+    "enabled": true,
+    "network": {
+      "allowedDomains": [
+        "registry.npmjs.org",
+        "pypi.org"
+      ]
+    }
+  }
+}

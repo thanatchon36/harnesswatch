@@ -1,0 +1,18 @@
+{
+  "inputs": [],
+  "servers": {
+    "search": {
+      "type": "stdio",
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "mcp/brave-search@sha256:3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "{{SYNTH:github-token}}"
+      }
+    }
+  }
+}

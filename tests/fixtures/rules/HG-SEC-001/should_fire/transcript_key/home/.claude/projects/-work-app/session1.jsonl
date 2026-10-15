@@ -1,0 +1,2 @@
+{"type":"user","message":{"content":"here is my key ANTHROPIC_API_KEY={{SYNTH:anthropic-api-key}} use it"}}
+{"type":"tool_result","content":"AWS_ACCESS_KEY_ID={{SYNTH:aws-access-key-id}}"}

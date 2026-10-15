@@ -1,0 +1,13 @@
+{
+  "$schema": "https://charm.land/crush.json",
+  "permissions": {
+    "allowed_tools": [
+      "ls",
+      "glob",
+      "fetch"
+    ]
+  },
+  "options": {
+    "disable_metrics": false
+  }
+}

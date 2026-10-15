@@ -1,0 +1,329 @@
+id,taxonomy_class,root_cause_class,kind,rationale
+INC-G5d-001,T08,RC3,vulnerability,Egress or URL validation flaw permits data to leave.
+G6-073,T01,RC1,design-weakness,"Untrusted content steers the agent; harness behaved as designed, no separate check failed."
+G6-074,T04,RC1,design-weakness,Tool descriptions treated as instructions.
+G6-023,T01,RC1,vulnerability,Injected @Docs content steers file write; no distinct check bypass described (low confidence).
+G6-075,T01,RC1,design-weakness,"Untrusted content steers the agent; harness behaved as designed, no separate check failed."
+G6-022,T08,RC9,vulnerability,Output rendering or fetch behaviour forms an exfiltration channel.
+G6-049,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G1-I035,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G2-I006,T08,RC9,vulnerability,Output rendering or fetch behaviour forms an exfiltration channel.
+G2-I007,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G6-056,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G6-057,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G6-054,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G6-055,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G2-I008,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G6-076,T01,RC1,design-weakness,Injected SQL-returned content steers privileged tool; instruction/data confusion with over-privileged credential.
+G6-051,T04,RC10,vulnerability,Untrusted MCP server metadata reaches a shell command in the client.
+G4-I040,T14,RC11,incident,Agent took destructive action beyond user intent without enforced guardrail.
+G6-071,T06,RC5,supply-chain,Compromised or malicious package in the harness supply chain.
+G2-I009,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G1-I042,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G5b-I17,T17,RC8,vulnerability,Sandbox or isolation boundary bypassed.
+G6-072,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G4-I041,T15,RC7,design-weakness,Vendor-side telemetry volume contradicts the user's opt-out.
+G1-I033,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G1-I034,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G4-I001,T04,RC3,vulnerability,MCP approval keyed to name; modified definition reused without re-approval.
+G4-I004,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G6-018,T04,RC3,vulnerability,Install deeplink consent dialog omits arguments.
+G6-019,T08,RC9,vulnerability,Output rendering or fetch behaviour forms an exfiltration channel.
+G4-I002,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G4-I003,T02,RC2,vulnerability,Agent writes IDE special files that the editor executes.
+G4-I036,T02,RC2,vulnerability,Agent can edit the settings file that holds its own allowlist.
+G6-046,T02,RC2,vulnerability,Agent can write project config that executes commands without approval.
+G4-I018,T02,RC2,vulnerability,Injected agent enables auto-approve through a workspace setting.
+G1-I032,T03,RC6,vulnerability,Permissive default or mode grants capability without approval.
+G4-I024,T01,RC1,design-weakness,"Untrusted content steers the agent; harness behaved as designed, no separate check failed."
+G4-I037,T01,RC1,vulnerability,"Untrusted content steers the agent; harness behaved as designed, no separate check failed."
+G4-I038,T08,RC9,vulnerability,Output rendering or fetch behaviour forms an exfiltration channel.
+G2-I010,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G6-084,T16,RC12,misuse,Adversary used legitimate agent capability; no product defect.
+G6-077,T06,RC5,supply-chain,Compromised or malicious package in the harness supply chain.
+G4-I029,T07,RC7,vulnerability,Search tool returns content it should withhold (original class was a guess; low confidence).
+G6-083,T01,RC1,design-weakness,"Untrusted content steers the agent; harness behaved as designed, no separate check failed."
+G1-I031,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G2-I011,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G2-I012,T09,RC10,vulnerability,Untrusted text interpolated into a CI shell step.
+G2-I013,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G2-I014,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G2-I015,T03,RC6,vulnerability,Permissive default or mode grants capability without approval.
+G6-050,T19,RC10,vulnerability,XSS in inspector UI leading to command execution; classic web flaw.
+G1-I029,T02,RC2,vulnerability,Repo-controlled git config value reaches a command in the harness.
+G1-I030,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G6-080,T02,RC6,design-weakness,Risky workspace behaviour enabled by default without trust gate.
+G4-I030,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G1-I036,T17,RC8,vulnerability,Sandbox or isolation boundary bypassed.
+G6-078,T06,RC5,supply-chain,Compromised or malicious package in the harness supply chain.
+G1-I027,T02,RC2,vulnerability,Package-manager plugin autoloaded from repository config executes code.
+G6-086,T04,RC5,supply-chain,Malicious or tampered MCP package.
+G6-061,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G4-I005,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G4-I006,T04,RC10,vulnerability,Untrusted MCP OAuth metadata leads to command execution in client.
+G4-I008,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G6-024,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G6-025,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G6-030,T08,RC9,vulnerability,Output rendering or fetch behaviour forms an exfiltration channel.
+G1-I026,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G1-I028,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G6-067,T08,RC9,vulnerability,Output rendering or fetch behaviour forms an exfiltration channel.
+G2-I018,T01,RC1,vulnerability,Low-detail VulDB-style record; classification low confidence.
+G4-I022,T01,RC1,vulnerability,"Untrusted content steers the agent; harness behaved as designed, no separate check failed."
+G6-088,T05,RC5,supply-chain,"Malicious or tampered extension, skill or plugin artifact."
+G4-I021,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+INC-G5d-003,T08,RC6,design-weakness,Agent sign-in flow can be pointed at attacker-controlled consent target.
+G5b-I18,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+INC-G5d-015,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+INC-G5d-014,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G4-I032,T08,RC6,design-weakness,Default browser allowlist includes an attacker-usable webhook host.
+INC-G5c-13,T01,RC1,design-weakness,"Untrusted content steers the agent; harness behaved as designed, no separate check failed."
+G4-I007,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G6-031,T04,RC3,vulnerability,MCP approval or identity check flawed.
+G6-032,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G6-033,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G6-034,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G5a-I02,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G6-064,T03,RC3,vulnerability,Sparse record; command injection in Copilot Chat extension (low confidence).
+G6-065,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G6-085,T16,RC12,misuse,Adversary used legitimate agent capability; no product defect.
+G2-I005,T08,RC3,vulnerability,Command classified safe permits DNS egress.
+G6-079,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G1-I024,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G1-I025,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G6-066,T02,RC2,vulnerability,Multi-root workspace case bypasses the trust protection of config files.
+G2-I016,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G6-081,T08,RC6,vulnerability,Default browser allowlist includes an attacker-usable webhook host.
+G6-087,T14,RC11,incident,Agent took destructive action beyond user intent without enforced guardrail.
+G6-053,T18,RC6,vulnerability,Host/Origin validation exists but is off by default.
+G6-052,T18,RC6,vulnerability,Host/Origin validation exists but is off by default.
+G1-I023,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G6-082,T02,RC2,vulnerability,Umbrella entry; injected agent writes IDE configuration that the base IDE honours.
+G5a-I06,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G6-058,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G6-059,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G6-060,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G6-047,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G6-048,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G5b-I19,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G7-I082,T02,RC2,vulnerability,Workspace folder name interpolated into a command.
+G1-I038,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G1-I039,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G4-I009,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G7-I105,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G1-I022,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+INC-G5d-002,T01,RC1,vulnerability,"Untrusted content steers the agent; harness behaved as designed, no separate check failed."
+G7-I074,T18,RC4,incident,Local or network control endpoint lacks authentication or origin validation.
+G3-I033,T18,RC4,incident,Operators exposed control panels without authentication; not adversary use of the tool.
+G3-I015,T18,RC3,design-weakness,Gateway URL parameter not validated before the token is sent.
+G3-I016,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G3-I017,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G3-I034,T05,RC5,supply-chain,"Malicious or tampered extension, skill or plugin artifact."
+G1-I019,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G1-I020,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G1-I021,T08,RC3,vulnerability,Egress or URL validation flaw permits data to leave.
+G7-I081,T05,RC5,supply-chain,"Malicious or tampered extension, skill or plugin artifact."
+G7-I098,T13,RC10,vulnerability,Shared server instance mixes responses between clients.
+G3-I018,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G1-I015,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G1-I016,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G1-I017,T17,RC8,vulnerability,Sandboxed write to settings file honoured by unsandboxed component.
+G1-I018,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G5b-I01,T08,RC3,vulnerability,Egress or URL validation flaw permits data to leave.
+G5b-I02,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G2-I004,T09,RC1,incident,Issue-title injection in CI triage agent chained to cache poisoning (duplicate of G7-I059).
+G7-I059,T09,RC1,vulnerability,Issue-title injection in CI triage agent (duplicate of G2-I004).
+G7-I070,T04,RC3,vulnerability,MCP approval or identity check flawed.
+G4-I010,T17,RC8,vulnerability,Sandbox or isolation boundary bypassed.
+G3-I030,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G3-I031,T18,RC3,vulnerability,Inbound sender allowlist matching flaw.
+G3-I032,T19,RC10,vulnerability,Path traversal in plugin install routine; conventional file-handling defect.
+G2-I003,T06,RC5,supply-chain,Compromised or malicious package in the harness supply chain.
+G5b-I20,T17,RC8,vulnerability,Interpreter sandbox permits outbound requests.
+INC-G5c-10,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+INC-G5c-11,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G5a-I03,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+INC-G5d-019,T01,RC1,vulnerability,"Untrusted content steers the agent; harness behaved as designed, no separate check failed."
+G7-I093,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G7-I069,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+INC-G5c-08,T17,RC8,design-weakness,Sandbox mode leaves DNS egress open as covert channel.
+G5a-I04,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G4-I019,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G4-I011,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+INC-G5d-004,T15,RC6,design-weakness,Audit logging omits security-relevant administrative actions.
+G3-I029,T18,RC3,vulnerability,Authorization or scope check flaw in control plane.
+G3-I028,T18,RC3,vulnerability,Authorization or scope check flaw in control plane.
+INC-G5c-05,T06,RC5,vulnerability,Build-time S3 ownership of the artifact bucket not verified.
+G1-I013,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G2-I019,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G3-I027,T18,RC3,vulnerability,Authorization or scope check flaw in control plane.
+G7-I112,T06,RC5,supply-chain,Compromised or malicious package in the harness supply chain.
+G3-I023,T18,RC3,vulnerability,Authorization or scope check flaw in control plane.
+G3-I026,T18,RC3,vulnerability,Authorization or scope check flaw in control plane.
+G5b-I21,T17,RC8,vulnerability,Sandbox or isolation boundary bypassed.
+G3-I022,T18,RC3,vulnerability,Authorization or scope check flaw in control plane.
+G3-I024,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G3-I025,T03,RC3,vulnerability,Incomplete env blocklist permits package-manager redirection.
+G7-I118,T09,RC10,vulnerability,Untrusted CI input reaches a shell step.
+G5b-I22,T17,RC8,vulnerability,Sandbox or isolation boundary bypassed.
+G5b-I23,T03,RC6,vulnerability,Insecure default exposes local file read.
+G5b-I24,T08,RC6,vulnerability,Insecure default permits SSRF.
+G5b-I25,T17,RC8,vulnerability,Sandbox or isolation boundary bypassed.
+G7-I106,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G1-I044,T06,RC7,incident,Vendor release leaked internal source or data.
+G7-I026,T06,RC7,incident,Vendor release leaked internal source or data.
+G7-I111,T06,RC5,supply-chain,Compromised or malicious package in the harness supply chain.
+G3-I020,T17,RC8,vulnerability,Sandbox or isolation boundary bypassed.
+G3-I021,T11,RC8,vulnerability,Heartbeat context inherits owner privilege and escapes sandbox policy.
+INC-G5c-09,T03,RC6,design-weakness,Default service identity has excess permissions.
+G5a-I01,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G1-I040,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G7-I027,T09,RC1,design-weakness,Untrusted PR/issue text drives a CI agent.
+G7-I088,T02,RC2,vulnerability,Injected HTML makes agent register a malicious local MCP server.
+G3-I019,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G1-I011,T02,RC2,vulnerability,Config loaded from user-writable system path.
+G4-I031,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G7-I091,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G1-I014,T17,RC8,vulnerability,Sandbox or isolation boundary bypassed.
+G4-I033,T03,RC3,vulnerability,Duplicate of G7-I091.
+G7-I113,T06,RC5,supply-chain,Compromised or malicious package in the harness supply chain.
+G1-I012,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G1-I041,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G1-I009,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G1-I010,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G4-I020,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+INC-G5c-12,T13,RC3,vulnerability,Tenant or user authorization check missing or flawed.
+G2-I002,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G7-I071,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G7-I072,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G7-I101,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G7-I090,T11,RC6,vulnerability,Sub-agents default to shell with auto-approve.
+G7-I103,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G7-I104,T04,RC5,vulnerability,Registry namespace ownership validation fails open.
+G2-I017,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G7-I025,T08,RC3,vulnerability,Egress or URL validation flaw permits data to leave.
+G7-I023,T09,RC2,vulnerability,Repo-controlled config honoured in CI agent run.
+G5b-I03,T08,RC3,vulnerability,Egress or URL validation flaw permits data to leave.
+G4-I012,T17,RC8,vulnerability,Sandbox or isolation boundary bypassed.
+G7-I100,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G4-I025,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G5a-I05,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G5a-I11,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G5b-I04,T08,RC3,vulnerability,Egress or URL validation flaw permits data to leave.
+G3-I005,T05,RC1,vulnerability,Skill-scanner pattern bypass.
+G3-I006,T01,RC1,vulnerability,Injection-scanner bypass.
+G3-I007,T17,RC8,vulnerability,Sandbox or isolation boundary bypassed.
+G3-I008,T02,RC2,vulnerability,"Plugin-enable flag compared incorrectly, so repository plugins load without consent."
+G7-I068,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G3-I009,T10,RC1,vulnerability,Persistent memory or context accepted attacker-influenced content.
+G3-I010,T07,RC7,vulnerability,Low-detail record on .env sanitisation (low confidence).
+G3-I011,T10,RC1,vulnerability,Memory-poisoning scanner bypass.
+G3-I012,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G4-I026,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G4-I013,T17,RC8,vulnerability,Sandbox or isolation boundary bypassed.
+G4-I014,T17,RC8,vulnerability,Sandbox or isolation boundary bypassed.
+G7-I094,T13,RC3,vulnerability,Tenant or user authorization check missing or flawed.
+G7-I114,T06,RC5,supply-chain,Compromised or malicious package in the harness supply chain.
+G3-I001,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G3-I002,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G3-I003,T07,RC7,vulnerability,Credential or sensitive data exposed by the harness itself.
+G3-I004,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G2-I022,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G2-I023,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G2-I024,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G2-I025,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G2-I026,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G2-I027,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G2-I028,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G2-I029,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G2-I030,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G2-I031,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G5b-I05,T13,RC3,vulnerability,Tenant or user authorization check missing or flawed.
+G1-I006,T08,RC6,vulnerability,Pre-approved domain usable as exfiltration host.
+INC-G5c-02,T19,RC10,vulnerability,Argument injection in SDK helper.
+G3-I013,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G3-I014,T07,RC7,vulnerability,Credential or sensitive data exposed by the harness itself.
+G2-I001,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G1-I005,T17,RC8,vulnerability,Sandbox or isolation boundary bypassed.
+G1-I008,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G7-I102,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G7-I035,T08,RC9,vulnerability,Output rendering or fetch behaviour forms an exfiltration channel.
+G4-I015,T12,RC8,vulnerability,Browser surface isolation bypassed.
+G7-I095,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G7-I099,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G5b-I06,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G7-I092,T15,RC7,incident,Entire workspace uploaded to vendor bucket.
+G4-I039,T15,RC7,incident,Entire workspace uploaded to vendor bucket.
+G4-I016,T17,RC8,vulnerability,Sandbox or isolation boundary bypassed.
+G4-I017,T17,RC8,vulnerability,Sandbox or isolation boundary bypassed.
+INC-G5c-04,T07,RC7,vulnerability,Credential or sensitive data exposed by the harness itself.
+G7-I054,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G4-I027,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G4-I034,T17,RC8,vulnerability,Sandbox or isolation boundary bypassed.
+G7-I107,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G7-I110,T11,RC3,vulnerability,Delegated agent inherits or is granted more authority than intended.
+INC-G5c-03,T19,RC10,vulnerability,Argument injection in SDK helper (follow-up).
+G2-I021,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G5a-I07,T13,RC3,vulnerability,Tenant or user authorization check missing or flawed.
+G4-I028,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G7-I116,T09,RC10,vulnerability,Untrusted CI input reaches a shell step.
+G2-I020,T09,RC10,vulnerability,Untrusted CI input reaches a shell step.
+G5b-I07,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G5b-I08,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G5b-I09,T07,RC7,vulnerability,Credential or sensitive data exposed by the harness itself.
+G7-I043,T01,RC1,vulnerability,Crafted fetched page triggers protocol handler (low confidence).
+G5b-I10,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+INC-G5d-005,T13,RC3,vulnerability,Tenant or user authorization check missing or flawed.
+INC-G5d-006,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G5a-I08,T13,RC3,vulnerability,Tenant or user authorization check missing or flawed.
+G7-I031,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G7-I032,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G7-I033,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G7-I034,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G7-I089,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G7-I039,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G7-I042,T08,RC3,vulnerability,Egress or URL validation flaw permits data to leave.
+G7-I044,T08,RC9,vulnerability,Output rendering or fetch behaviour forms an exfiltration channel.
+G4-I023,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G7-I117,T16,RC12,misuse,Adversary used legitimate agent capability; no product defect.
+G7-I029,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G7-I075,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G7-I076,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G7-I077,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G7-I078,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G7-I079,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+INC-G5c-01,T19,RC10,vulnerability,Argument injection via SDK option.
+G5b-I11,T08,RC3,vulnerability,Egress or URL validation flaw permits data to leave.
+G5b-I12,T08,RC3,vulnerability,Egress or URL validation flaw permits data to leave.
+G5b-I13,T07,RC7,vulnerability,Credential or sensitive data exposed by the harness itself.
+G5b-I14,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G7-I080,T05,RC5,supply-chain,"Malicious or tampered extension, skill or plugin artifact."
+G7-I087,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+INC-G5d-020,T01,RC1,vulnerability,"Untrusted content steers the agent; harness behaved as designed, no separate check failed."
+G1-I037,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G1-I001,T03,RC3,vulnerability,Sparse record; Desktop file-open command execution (low confidence).
+G4-I035,T02,RC6,vulnerability,Execution-sensitive files writable without prompt in default permission presets.
+G5a-I09,T13,RC3,vulnerability,Tenant or user authorization check missing or flawed.
+G7-I096,T04,RC3,vulnerability,MCP approval or identity check flawed.
+G1-I002,T03,RC3,vulnerability,Managed-settings policy not applied for one credential path.
+G7-I109,T18,RC4,vulnerability,Local or network control endpoint lacks authentication or origin validation.
+G7-I097,T04,RC3,vulnerability,MCP approval or identity check flawed.
+G5b-I15,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G5b-I16,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G1-I004,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G5a-I16,T19,RC10,vulnerability,Symlink race in default session storage location; conventional file-handling defect.
+G5a-I17,T07,RC7,vulnerability,Default session storage readable by other local users.
+INC-G5c-06,T19,RC10,vulnerability,Untrusted import data reaches generated code.
+INC-G5c-07,T19,RC10,vulnerability,Untrusted import data triggers outbound requests and file reads.
+G5a-I10,T19,RC10,vulnerability,"Conventional software defect (injection, deserialisation, XSS, DoS) not an agent-capability gate."
+G5a-I13,T04,RC3,vulnerability,MCP approval or identity check flawed.
+G5a-I14,T07,RC7,vulnerability,Credential or sensitive data exposed by the harness itself.
+G5a-I15,T07,RC7,vulnerability,Credential or sensitive data exposed by the harness itself.
+G1-I003,T05,RC5,vulnerability,Pin verification bypass lets attacker plugin install.
+G1-I007,T02,RC2,vulnerability,Workspace-resident executable found via search path.
+G5a-I12,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G7-I115,T06,RC5,supply-chain,Compromised or malicious package in the harness supply chain.
+G7-I108,T03,RC3,vulnerability,"Approval, allowlist or path check logic flaw lets action bypass policy."
+G7-I038,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G7-I040,T02,RC2,vulnerability,Workspace or agent-writable config is honoured or executed without consent.
+G7-I041,T04,RC3,vulnerability,MCP sandbox approvals stored in shared config.

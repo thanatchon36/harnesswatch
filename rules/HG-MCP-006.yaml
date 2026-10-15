@@ -1,0 +1,27 @@
+id: HG-MCP-006
+title: MCP servers or their tools are auto-approved without a per-server prompt
+area: MCP
+severity: high
+confidence: high
+kind: design-weakness
+taxonomy: [T02, T04, T03]
+description: >
+  Settings such as Claude Code `enableAllProjectMcpServers: true`, Gemini/Qwen `mcpServers.<name>.trust:
+  true`, Cline/Roo `autoApprove`/`alwaysAllow` lists, or Kiro `autoApprove: ["*"]` start project
+  servers or call their tools without asking. Set in a repository file this is critical: cloning and
+  opening the repo is enough to run attacker-chosen commands (the CurXecute / MCPoison / CVE-2025-59536
+  class).
+remediation: Remove the setting; approve servers individually (`enabledMcpjsonServers`) and keep tool approval on for tools with side effects.
+references:
+  - https://code.claude.com/docs/en/settings
+  - https://nvd.nist.gov/vuln/detail/CVE-2025-54136
+params:
+  settings:
+    claude-code: [{key: enableAllProjectMcpServers, value: true}, {key: "projects.*.enableAllProjectMcpServers", value: true}]
+    gemini-cli: [{key: "mcpServers.*.trust", value: true}]
+    qwen-code: [{key: "mcpServers.*.trust", value: true}]
+    qoder: [{key: "mcpServers.*.trust", value: true}, {key: mcp.enableAllProjectMcpServers, value: true}]
+    cline: [{key: "mcpServers.*.autoApprove", value: nonempty}]
+    roo-code: [{key: "mcpServers.*.alwaysAllow", value: nonempty}, {key: alwaysAllowMcp, value: true}]
+    kiro: [{key: "mcpServers.*.autoApprove", value: "*"}]
+    kilo-code: [{key: "permission.mcp", value: allow}]

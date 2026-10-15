@@ -1,0 +1,272 @@
+{
+  "harness": "openclaw",
+  "version": "2026.10.3",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Default exec security is `full` for gateway/node hosts and ask default `off`.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/docs/tools/exec-approvals.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Session permission modes read-only/guarded/workspace/full; `full` requires operator.admin.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/docs/gateway/permission-modes.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GHSA-3hcm-ggvf-rch5 exec allowlist bypass via command substitution in double quotes; GHSA-gv46-4xfq-jv58 (critical) RCE via node invoke approval bypass.",
+          "source": "https://github.com/openclaw/openclaw/security/advisories/GHSA-gv46-4xfq-jv58",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Capable model (deny/allowlist/full x ask off/on-miss/always, per-session modes, binding of executables, LLM reviewer) but the shipped default for host exec is security=full / ask=off."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "'Sandboxing is off by default'; Gateway process always stays on the host.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/docs/gateway/sandboxing.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GHSA-9p3r-hh9g-5cmg (critical): sandbox escape via TOCTOU in remote FS bridge readFile (<=2026.3.28).",
+          "source": "https://github.com/openclaw/openclaw/security/advisories/GHSA-9p3r-hh9g-5cmg",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Sandbox backends exist (Docker/Podman/SSH/OpenShell) but are off by default; Gateway always on host; several sandbox-escape advisories."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Secret egress proxy and traffic allowlist documented as default-off.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/docs/gateway/secrets.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GHSA-56f2-hvwg-5743 SSRF in image tool remote fetch; GHSA-wfp2-v9c7-fh79 SSRF via media URL hydration (2026-02).",
+          "source": "https://api.github.com/repos/openclaw/openclaw/security-advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Optional secret egress proxy with traffic allowlist (default-off); SSRF fixes (several advisories); no default egress restriction."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Gateway bind default loopback; auth required by default; non-loopback binds require auth; onboarding generates token.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/docs/gateway/config-gateway.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GHSA-8rh7-6779-cjqq (critical): CWD .env injection bypasses host-env policy and allows config takeover (<=2026.3.24).",
+          "source": "https://github.com/openclaw/openclaw/security/advisories/GHSA-8rh7-6779-cjqq",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "No repo-trust concept; trust is gateway auth + pairing + scopes. Advisories show cwd .env and config-takeover paths. Gateway auth required by default and loopback bind, which is a sound default."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "`openclaw mcp configure <server> --approval approve|prompt|auto`; Allow Always grants per exact server+tool.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/docs/tools/mcp.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "MCP defined in gateway config with per-server approval modes and durable per-tool grants; probe/doctor tooling; tool-change detection not documented."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "ClawHub is the public skills registry; `openclaw skills verify @owner/<slug>` prints trust envelope / Skill Card.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/docs/tools/skills.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Koi Security reported 341 malicious skills among 2,857 audited on ClawHub (campaign 'ClawHavoc', AMOS stealer); later counts higher; secondary reporting only.",
+          "source": "https://thehackernews.com/2026/02/researchers-find-341-malicious-clawhub.html",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GHSA-qrq5-wjgg-rvqw (critical): path traversal in plugin installation, fixed 2026.2.1.",
+          "source": "https://github.com/openclaw/openclaw/security/advisories/GHSA-qrq5-wjgg-rvqw",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "ClawHub public registry with `skills verify` trust envelope and Skill Cards, yet a large-scale malicious-skill campaign was found; plugin-install path traversal (critical) fixed."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Recommended permissions 700 on ~/.openclaw and 600 on openclaw.json; plaintext credentials remain agent-readable.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/docs/gateway/security/secrets-and-storage.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Jan 2026: researcher Jamieson O'Reilly reported hundreds of publicly exposed Clawdbot control servers leaking API keys, bot tokens, OAuth secrets and chat histories (secondary report).",
+          "source": "https://forklog.com/en/critical-vulnerabilities-found-in-clawdbot-ai-agent-for-cryptocurrency-theft/",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GHSA-g8p2-7wf7-98mq: Control UI trusted gatewayUrl query param and sent the stored gateway token to it (1-click RCE), clawdbot <= 2026.1.28, fixed 2026.1.29.",
+          "source": "https://github.com/openclaw/openclaw/security/advisories/GHSA-g8p2-7wf7-98mq",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Good guidance (700/600, SecretRefs, audit command) and honest warnings, but plaintext tokens in config/.env are common and the Jan 2026 exposures leaked keys at scale."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "`openclaw agent exec` is the recommended headless entry for CI; temporary state dir removed after run; --config pins config; --auth-env-only restricts credentials.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/docs/cli/agent.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "`agent exec` is a purpose-built CI entry point with ephemeral state, pinned config and --auth-env-only; but inherits ordinary config (host exec default full) and has no official CI action."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "MEMORY.md long-term memory and memory/YYYY-MM-DD.md daily notes in the workspace; memory-flush runs expose only read and append-only write.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/docs/concepts/memory.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "SECURITY.md: anyone who can operate an agent can make it do anything that agent can do; session ownership is not a boundary.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Persistent, cross-session, agent-writable memory files fed back into prompts; provenance records and flush restrictions mitigate; multi-user channels widen the poisoning surface."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "GHSA-g5cg-8x5w-7jpm (critical): heartbeat context inheritance bypasses sandbox via senderIsOwner escalation (<=2026.3.28).",
+          "source": "https://github.com/openclaw/openclaw/security/advisories/GHSA-g5cg-8x5w-7jpm",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Per-agent sandbox/tool policies and multi-agent isolation docs, but advisories show sub-run/heartbeat inheritance bypassing sandbox; shared-gateway users are not isolated."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Gateway keeps bounded metadata-only audit ledger; never stores prompts, bodies, tool args/results.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/docs/gateway/audit.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "OpenTelemetry and Prometheus docs exist.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/docs/gateway/opentelemetry.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Metadata-only durable audit ledger in the state DB, decision receipts, OTel and Prometheus exporters, log masking; content is deliberately not stored in the ledger."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "Automatic update checks send a daily request by default (version, OS, Node, arch); anonymous feature stats are opt-in/off by default.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/docs/gateway/telemetry.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Daily update-check request by default with documented fields and a way to disable; feature statistics opt-in; `openclaw telemetry show` shows the payload."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "npm dist-tags: latest 2026.10.3, extended-stable 2026.8.35, beta 2026.10.5-beta.3.",
+          "source": "https://registry.npmjs.org/openclaw",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "README: `npm install -g openclaw@latest --allow-scripts=openclaw`.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Installer scripts plus npm with explicit lifecycle-script contract, Docker/Nix, appcast updates, stable/beta/extended-stable dist-tags; no signature/checksum statement for install.sh found."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "gateway.roles / operator scopes (operator.read/write/admin/pairing) and trusted-proxy identityScopes.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/docs/gateway/config-gateway.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Repeated critical scope-escalation advisories (operator.pairing -> operator.admin) in March 2026.",
+          "source": "https://github.com/openclaw/openclaw/security/advisories/GHSA-hf68-49fm-59cq",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Operator scopes/roles, trusted-proxy auth, required creator-role sandbox policy and team-server docs give central control; no OS-level managed-settings file found."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "722 published repo security advisories (14 critical, 249 high, 390 medium, 69 low) at access time.",
+          "source": "https://api.github.com/repos/openclaw/openclaw/security-advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "SECURITY.md: private GHSA or security@openclaw.ai; no paid bug bounty.",
+          "source": "https://github.com/openclaw/openclaw/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Detailed SECURITY.md and trust page, private GHSA flow, and very high advisory volume with fixes (722 published, 39 with CVE ids); no paid bounty."
+    }
+  }
+}

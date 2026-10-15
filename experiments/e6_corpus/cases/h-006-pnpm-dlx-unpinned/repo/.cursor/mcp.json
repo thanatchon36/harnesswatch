@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "acme": {"command": "pnpm", "args": ["dlx", "@acme/mcp-server", "--stdio"]}
+  }
+}

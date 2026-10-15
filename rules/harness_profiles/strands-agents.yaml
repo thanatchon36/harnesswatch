@@ -1,0 +1,104 @@
+id: strands-agents
+tier: C
+analysed_on: '2026-10-15'
+config_files: []
+binaries:
+- strands
+name: Strands Agents (SDK + Strands harness)
+vendor: AWS (strands-agents org)
+license: Apache-2.0
+open_source: true
+status: analysed
+version_analysed: strands-agents 1.61.0; strands-harness 0.3.0
+homepage: https://strandsagents.com
+repo: https://github.com/strands-agents/harness-sdk
+packages:
+- ecosystem: pypi
+  name: strands-agents
+- ecosystem: pypi
+  name: strands-harness
+- ecosystem: npm
+  name: '@strands-agents/sdk'
+- ecosystem: npm
+  name: '@strands-agents/harness'
+- ecosystem: npm
+  name: '@strands-agents/cli'
+state_dirs:
+- ./.agent
+credential_files: []
+credential_storage: Delegated to AWS/provider credential chains
+log_paths:
+- ./.agent/sessions
+memory_paths:
+- ./.agent/memory
+- ./.agent/skills
+mcp:
+  files: []
+  servers_key: null
+  server_fields:
+    note: programmatic MCPClient; strands-mcp in repo is a docs MCP server, not config
+  project_servers_require_approval: null
+  notes: null
+permissions:
+  config_keys: {}
+  default_mode: 'harness interventions=None (off): every tool call runs; presets off/ask/smart; Cedar via CedarAuthorization'
+  auto_approve_values:
+  - key: interventions
+    value: null
+  - key: env BYPASS_TOOL_CONSENT
+    value: 'true'
+  cli_flags_auto_approve: []
+  allow_rule_syntax: Cedar policy files (.cedar)
+  overbroad_patterns:
+  - interventions="off"
+hooks:
+  supported: true
+  config_key: Agent(hooks=...) / plugins, code-only
+  repo_scoped_allowed: false
+sandbox:
+  available: true
+  default_on: false
+  mechanism: 'strands.sandbox: NotASandboxLocalEnvironment (default, host), docker.py, ssh.py; Monty sandbox for programmatic_tool_caller'
+  config: Agent(sandbox=...)
+  source: https://github.com/strands-agents/harness-sdk/blob/main/strands-py/src/strands/sandbox/not_a_sandbox_local_environment.py
+memory:
+  persistent: true
+  cross_project: false
+  agent_writable: true
+  notes: harness memory ./.agent/memory; FileSessionManager default dir fixed in 1.48.0
+  source: https://github.com/strands-agents/harness-sdk/blob/main/harness-py/src/strands_harness/defaults.py
+subagents:
+  supported: true
+  inherits_permissions: hooks and sandbox forwarded to children (agent.py comment)
+  notes: max depth 2
+  source: https://github.com/strands-agents/harness-sdk/blob/main/harness-py/src/strands_harness/defaults.py
+telemetry:
+  default_on: false
+  opt_out: OTEL_TRACES_EXPORTER unset/none
+  training_default: null
+  source: https://github.com/strands-agents/harness-sdk/blob/main/harness-py/src/strands_harness/telemetry.py
+headless:
+  command: strands (CLI, @strands-agents/cli)
+  model_override: OllamaModel/OpenAIModel/LiteLLMModel with host/base_url (strands/models/*)
+  local_model_support: Ollama and llama.cpp providers in strands/models
+security_policy:
+  security_md: https://github.com/strands-agents/harness-sdk/blob/main/SECURITY.md
+  bug_bounty: null
+  advisories: https://github.com/strands-agents/harness-sdk/security/advisories
+extra:
+  rename: strands-agents/sdk-python -> strands-agents/harness-sdk verified via GitHub API redirect
+  default_model: bedrock/global.anthropic.claude-opus-5
+  telemetry_env_vars:
+  - OTEL_TRACES_EXPORTER
+  - OTEL_EXPORTER_OTLP_ENDPOINT
+  - BYPASS_TOOL_CONSENT
+sources:
+- url: https://github.com/strands-agents/harness-sdk
+  accessed: '2026-10-15'
+  note: rename
+- url: https://github.com/strands-agents/harness-sdk/blob/main/harness-py/src/strands_harness/defaults.py
+  accessed: '2026-10-15'
+  note: defaults
+- url: https://github.com/strands-agents/harness-sdk/security/advisories
+  accessed: '2026-10-15'
+  note: GHSAs

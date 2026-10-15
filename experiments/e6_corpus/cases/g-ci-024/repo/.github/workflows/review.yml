@@ -1,0 +1,17 @@
+name: agent
+'on':
+  issue_comment:
+    types:
+    - created
+jobs:
+  agent:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+    steps:
+    - uses: actions/checkout@v5
+    - name: Claude headless
+      run: claude -p "Review this change and suggest fixes." --allowedTools 'Read,Grep'
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

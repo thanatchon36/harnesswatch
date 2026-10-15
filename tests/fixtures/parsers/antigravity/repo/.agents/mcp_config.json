@@ -1,0 +1,6 @@
+{
+  // workspace MCP servers
+  "mcpServers": {
+    "fs": {"command": "npx", "args": ["-y", "@modelcontextprotocol/server-filesystem", "."]}
+  }
+}

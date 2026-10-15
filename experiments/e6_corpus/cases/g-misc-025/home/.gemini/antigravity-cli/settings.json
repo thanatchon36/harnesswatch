@@ -1,0 +1,9 @@
+{
+  "toolPermission": "request-review",
+  "permissions": {
+    "allow": [
+      "command(npm test)",
+      "command(git status)"
+    ]
+  }
+}

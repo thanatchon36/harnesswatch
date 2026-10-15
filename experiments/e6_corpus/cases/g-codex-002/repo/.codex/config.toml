@@ -1,0 +1,14 @@
+model = "gpt-5.1"
+model_reasoning_effort = "low"
+approval_policy = "untrusted"
+sandbox_mode = "read-only"
+
+[sandbox_workspace_write]
+network_access = true
+
+[features]
+memories = true
+
+[otel]
+environment = "dev"
+log_user_prompt = false

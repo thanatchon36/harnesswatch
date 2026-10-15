@@ -1,0 +1,19 @@
+name: agent
+'on':
+  pull_request_target:
+    types:
+    - opened
+    - synchronize
+permissions:
+  contents: read
+  issues: read
+jobs:
+  agent:
+    runs-on: ubuntu-latest
+    if: contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association || github.event.issue.author_association)
+    steps:
+    - uses: actions/checkout@v5
+    - uses: google-github-actions/run-gemini-cli@v0
+      with:
+        prompt: Review this change and suggest fixes.
+        gemini_api_key: ${{ secrets.GEMINI_API_KEY }}

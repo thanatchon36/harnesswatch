@@ -1,0 +1,7 @@
+expected:
+- HG-MCP-002
+- HG-MEM-001
+- HG-NET-001
+origin: generated
+family: codex
+note: Codex config.toml

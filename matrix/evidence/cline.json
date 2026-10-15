@@ -1,0 +1,277 @@
+{
+  "harness": "cline",
+  "version": "VS Code 4.1.24 / CLI 3.0.71",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "CLI sets defaultToolAutoApprove = true; precedence is --auto-approve flag > global-settings.json toolAutoApprove > default",
+          "source": "https://github.com/cline/cline/blob/main/apps/cli/src/main.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "`cline --help`: 'Default to start in act mode with auto-approve enabled'; ACP mode defaults to false",
+          "source": "https://github.com/cline/cline/blob/main/docs/cli/cli-reference.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Command safety is decided by the model's requires_approval flag, 'Cline does not use a fixed allowlist'",
+          "source": "https://github.com/cline/cline/blob/main/docs/features/auto-approve.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "VS Code DEFAULT_AUTO_APPROVAL_SETTINGS: readFiles/editFiles/useBrowser/useMcp true, executeSafeCommands false, executeAllCommands true (legacy fields)",
+          "source": "https://github.com/cline/cline/blob/main/apps/vscode/src/shared/AutoApprovalSettings.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Mindgard: prompt injection made Cline run 'ping' (treated as safe, no approval) to exfiltrate keys via DNS; published 2025-11-18",
+          "source": "https://mindgard.ai/disclosures/cline-bot-ai-coding-agent-data-exfiltration-via-prompt-injection-and-dns",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "CLI ships with tool auto-approve ON by default and persists it in global-settings.json; VS Code has per-category toggles but legacy-named 'executeAllCommands' defaults true and approval of commands is model-flagged (requires_approval), not a rule list."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "No sandbox mechanism for agent tool execution found in source/docs; the 'sandbox' option applies only to plugin code isolation",
+          "source": "https://github.com/cline/cline/blob/main/docs/sdk/plugins.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No OS sandbox for tool execution in CLI or VS Code extension."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "No domain allowlist config found; ping/curl-type commands rely on model flagging",
+          "source": "https://github.com/cline/cline/blob/main/docs/features/auto-approve.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No egress controls; network reachable via shell and browser tool."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Hook search paths include <workspace>/.clinerules/hooks and <workspace>/.cline/hooks",
+          "source": "https://github.com/cline/cline/blob/main/sdk/packages/shared/src/storage/paths.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Project plugins in <repo>/.cline/plugins are available when working in that project (JS/TS modules executed by CLI/SDK)",
+          "source": "https://github.com/cline/cline/blob/main/docs/customization/plugins.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No 'trust' gate in apps/cli or sdk core for workspace config (grep of source); not tested at runtime",
+          "source": "https://github.com/cline/cline/blob/main/apps/cli/src/main.ts",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "Workspace hooks, plugins, rules and skills are discovered from the cwd with no folder-trust prompt in the CLI."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP settings file ~/.cline/data/settings/cline_mcp_settings.json, key mcpServers, fields command/args/env/url/headers/type/disabled/autoApprove",
+          "source": "https://github.com/cline/cline/blob/main/docs/mcp/mcp-overview.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Remote-config MCP controls (marketplace on/off, own servers allowed, org servers) supported only in VS Code and JetBrains, not CLI/Desktop",
+          "source": "https://github.com/cline/cline/blob/main/docs/enterprise-solutions/configuration/remote-configuration/overview.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Hub dashboard (GHSA-3cj3-hqcr-g934) allowed cross-origin WebSocket to upsert_mcp_server, injecting a stdio MCP server entry; affected cline<=3.0.24",
+          "source": "https://github.com/cline/cline/security/advisories/GHSA-3cj3-hqcr-g934",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "MCP is user-level only (no project MCP file), per-server autoApprove tool lists, OAuth for remote; no tool-description pinning; org MCP controls only in VS Code/JetBrains remote config."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "`cline plugin install` accepts file URL, git repo (clones + installs prod deps), npm package, local path",
+          "source": "https://github.com/cline/cline/blob/main/docs/customization/plugins.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Plugin tools still go through toolPolicies; sandbox mode opt-in",
+          "source": "https://github.com/cline/cline/blob/main/docs/sdk/plugins.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Plugins installable from npm/git/URL/local and executed as JS/TS; skills from repo dirs; no signing/vetting described."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "providers.json written with mode 0o600 inside 0o700 dir",
+          "source": "https://github.com/cline/cline/blob/main/sdk/packages/core/src/services/storage/provider-settings-manager.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": ".clineignore 'is not a security or access-control boundary — ignored files can still be read via explicit @ mentions or shell commands'",
+          "source": "https://github.com/cline/cline/blob/main/docs/customization/clineignore.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Provider keys plaintext in providers.json with 0600/0700 perms; .clineignore explicitly not an access boundary; MCP env plaintext."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "Headless CI usage documented as `cline --yolo \"...\"`; yolo disables spawn/team tools by default",
+          "source": "https://github.com/cline/cline/blob/main/apps/cli/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Clinejection: issue-triage workflow using claude-code-action with attacker-controlled issue title -> cache poisoning -> release token theft (Adnan Khan, disclosed 2026-02-09)",
+          "source": "https://adnanthekhan.com/posts/clinejection/",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "CLI --yolo / default auto-approve in headless; JSON mode; no official CI action hardening; the project's own CI was the Clinejection vector."
+    },
+    "D09": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (no built-in agent-writable memory store; rules/skills are user-authored files)."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "enableSpawnAgent/enableAgentTeams = !isYoloMode",
+          "source": "https://github.com/cline/cline/blob/main/apps/cli/src/main.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "subagentsEnabled default false (VS Code state key)",
+          "source": "https://github.com/cline/cline/blob/main/apps/vscode/src/shared/storage/state-keys.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Sub-agents/agent teams exist; --yolo disables them by default; VS Code subagentsEnabled defaults false; permission inheritance not documented."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Sessions under ~/.cline/data/sessions, `cline history export`",
+          "source": "https://github.com/cline/cline/blob/main/docs/cli/cli-reference.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "OpenTelemetry + prompt-storage docs for enterprise monitoring",
+          "source": "https://github.com/cline/cline/blob/main/docs/enterprise-solutions/monitoring/overview.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Local session store + checkpoints + enterprise OpenTelemetry export and prompt storage."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "'Telemetry is on by default in the VS Code and JetBrains extensions, Cline Desktop and the CLI'; set telemetryOptOut true in global-settings.json",
+          "source": "https://github.com/cline/cline/blob/main/docs/enterprise-solutions/monitoring/telemetry.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Telemetry on by default across products, documented opt-out (telemetryOptOut), excludes code/prompts except for Cline/ClinePass providers."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "GHSA-9ppg-jx86-fqw7: compromised npm token published cline@2.3.0 with postinstall installing openclaw (~8h, 2026-02-17); publishing moved to OIDC provenance",
+          "source": "https://github.com/cline/cline/security/advisories/GHSA-9ppg-jx86-fqw7",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "cli-publish.yml sets NPM_CONFIG_PROVENANCE=true with id-token: write",
+          "source": "https://github.com/cline/cline/blob/main/.github/workflows/cli-publish.yml",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "npm releases now published with provenance after the Feb 2026 token compromise; VSIX/marketplace signing and installer checksums not documented."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Remote config controls table: rules yes in VS Code & CLI; providers/MCP/telemetry VS Code/JetBrains only; 'Allow YOLO mode' listed No for all three",
+          "source": "https://github.com/cline/cline/blob/main/docs/enterprise-solutions/configuration/remote-configuration/overview.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "yoloModeAllowed:false disables YOLO toggle (enterprise doc)",
+          "source": "https://github.com/cline/cline/blob/main/docs/enterprise-solutions/configuration/infrastructure-configuration/control-other-cline-features/yolo-mode.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Hosted remote-config (admin console) can force rules, providers, MCP and yoloModeAllowed=false; coverage differs per product and CLI/Desktop are largely excluded."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md: Bugcrowd VDP + security@cline.bot",
+          "source": "https://github.com/cline/cline/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "3 published GHSAs: CVE-2026-59723 (Hub WS hijack), CVE-2026-44211 (Kanban WS hijack, critical 9.6), npm compromise advisory",
+          "source": "https://github.com/cline/cline/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "SECURITY.md with Bugcrowd VDP, GitHub advisories with CVEs, public post-incident advisory."
+    }
+  }
+}

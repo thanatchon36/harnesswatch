@@ -1,0 +1,2 @@
+symlinks: {home/bin/claude: home/.local/share/claude/versions/2.1.300}
+osv_cache: osv.json

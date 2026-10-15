@@ -1,0 +1,47 @@
+{
+  "general": {
+    "defaultApprovalMode": "auto_edit"
+  },
+  "tools": {
+    "allowed": [
+      "run_shell_command(git status)",
+      "glob",
+      "run_shell_command"
+    ],
+    "exclude": [
+      "run_shell_command(rm -rf)",
+      "run_shell_command(git push --force)",
+      "read_file(.env)"
+    ]
+  },
+  "telemetry": {
+    "enabled": true,
+    "target": "local",
+    "logPrompts": true
+  },
+  "security": {
+    "disableYoloMode": true
+  },
+  "hooks": {
+    "BeforeTool": [
+      {
+        "matcher": "run_shell_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "gofmt -w ./internal"
+          }
+        ]
+      }
+    ]
+  },
+  "mcpServers": {
+    "wiki": {
+      "httpUrl": "http://mcp.wiki.internal.example.com:8080/mcp",
+      "headers": {
+        "Authorization": "Bearer ${MCP_TOKEN}"
+      },
+      "trust": true
+    }
+  }
+}

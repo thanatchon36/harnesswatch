@@ -1,0 +1,8 @@
+{
+  // Kilo CLI project config
+  "permission": {"bash": "allow", "edit": "allow"},
+  "mcp": {
+    "fs": {"type": "local", "command": ["npx", "-y", "@modelcontextprotocol/server-filesystem", "."]}
+  },
+  "plugin": ["./.kilo/plugins/guard.ts"]
+}

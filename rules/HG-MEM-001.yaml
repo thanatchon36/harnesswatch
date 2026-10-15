@@ -1,0 +1,20 @@
+id: HG-MEM-001
+title: Persistent agent-writable memory enabled (or shared through version control)
+area: MEM
+severity: low
+confidence: medium
+kind: design-weakness
+taxonomy: [T10]
+description: >
+  Memory the agent can write to and that is replayed into later sessions lets a single successful
+  injection persist ("memory poisoning"). Shared/team memory that is committed and pushed spreads it
+  to colleagues.
+remediation: Review memory files periodically, keep memory project-scoped, and disable automatic memory sync to shared repositories.
+references:
+  - https://code.claude.com/docs/en/memory
+params:
+  settings:
+    claude-code: [{key: autoMemoryEnabled, value: true}]
+    codex-cli: [{key: features.memories, value: true}]
+    qwen-code: [{key: memory.enableTeamMemorySync, value: true}]
+    goose: [{key: extensions.memory.enabled, value: true}]

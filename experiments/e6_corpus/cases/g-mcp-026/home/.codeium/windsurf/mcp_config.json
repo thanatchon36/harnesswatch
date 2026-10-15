@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "gh-docker": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "ghcr.io/github/github-mcp-server"
+      ]
+    },
+    "time": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "mcp-server-time==0.6.2",
+        "mcp-server-time"
+      ],
+      "env": {
+        "LOG_LEVEL": "info",
+        "ALLOWED_DIRECTORIES": "/workspace/app"
+      }
+    }
+  }
+}

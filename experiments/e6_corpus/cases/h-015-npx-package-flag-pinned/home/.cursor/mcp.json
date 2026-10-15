@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "acme": {"command": "npx", "args": ["-y", "--package=@acme/mcp-tools@2.0.0", "acme-mcp"]}
+  }
+}

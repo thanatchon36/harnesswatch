@@ -1,0 +1,78 @@
+id: langgraph-platform
+name: LangGraph Platform (now LangSmith Deployment / Agent Server)
+vendor: LangChain
+tier: C
+license: "Mixed: langgraph framework MIT; langgraph-api (Agent Server runtime) Elastic-2.0 per PyPI; platform/self-host requires Enterprise license key"
+open_source: false   # runtime server is source-available (Elastic-2.0); framework is MIT
+status: docs-only
+version_analysed: "langgraph 1.2.15; langgraph-api 0.16.0; langgraph-cli 0.4.35"   # PyPI/GitHub as of 2026-10-15; hosted platform unversioned
+analysed_on: "2026-10-15"
+homepage: https://www.langchain.com/langsmith/deployment
+repo: https://github.com/langchain-ai/langgraph
+
+binaries: [langgraph]   # langgraph-cli (langgraph dev/build/up); not run on host
+packages:
+  - {ecosystem: pypi, name: langgraph}
+  - {ecosystem: pypi, name: langgraph-api}
+  - {ecosystem: pypi, name: langgraph-cli}
+  - {ecosystem: pypi, name: langgraph-sdk}
+  - {ecosystem: pypi, name: langgraph-checkpoint}
+  - {ecosystem: pypi, name: langgraph-checkpoint-sqlite}
+  - {ecosystem: pypi, name: langgraph-checkpoint-postgres}
+install_methods:
+  - {method: pip, command: "pip install -U langgraph-cli", checksum_verified: null, signed: null, source: https://pypi.org/project/langgraph-cli/}
+auto_update: {default: false, config: "customer-managed container images / Helm charts (self-hosted, hybrid); cloud updated by vendor", source: https://docs.langchain.com/langsmith/deploy-to-self-hosted-overview.md}
+
+state_dirs: []
+credential_files: [".env"]   # langgraph.json "env" key points at an env file; unverified default name
+credential_storage: "Deployment environment variables / secrets of the container or LangSmith deployment; advisory GHSA-jfj5-wrj9-63x4 states runtime encrypts assistant metadata/config/context at rest"
+log_paths: []
+memory_paths: []   # state in Postgres (checkpoints, store) and Redis; no filesystem path
+
+config_files:
+  - {path: "langgraph.json", scope: project, format: json, kind: settings}   # deployment config; keys such as auth.path, auth.allow_langsmith_api_keys, http, env, dependencies, graphs (names from docs; full schema not verified)
+
+instruction_files: []
+skills_paths: []
+
+mcp:
+  files: []
+  servers_key: null
+  server_fields: {}
+  project_servers_require_approval: null
+  notes: "MCP is an application-level concern in user graph code; docs say auth-derived values are added to run context so agents can act on user's behalf with MCP servers. Platform-level MCP governance not found."
+
+permissions:
+  config_keys: {auth_module: "langgraph.json: auth.path", langsmith_keys_with_custom_auth: "langgraph.json: auth.allow_langsmith_api_keys (Agent Server >= 0.14.0rc2)"}
+  default_mode: "LangSmith cloud: LangSmith API key (x-api-key). Self-hosted: no default authentication."
+  auto_approve_values: []
+  cli_flags_auto_approve: []
+  allow_rule_syntax: "Python @auth.authenticate / @auth.on / @auth.on.threads.create handlers returning filter dicts, True/None (allow), False (deny)"
+  overbroad_patterns: ["@auth.on.<resource>(actions=[...]) on langgraph-sdk <= 0.4.3 (applies to every action; CVE-2026-104873)", "assistants.read-only handlers without global fallback on langgraph-api < 0.10.0 (CVE-2026-55236)", "no @auth.authenticate on self-hosted deployment"]
+
+hooks: {supported: false}
+
+sandbox: {available: false, default_on: false, mechanism: "none for agent tools; deployment runs user code in a container (Kubernetes/Docker); no per-tool sandbox documented", config: null, source: https://docs.langchain.com/langsmith/deploy-to-self-hosted-overview.md}
+network: {domain_allowlist: false, config: null, default: "customer-controlled (VPC/Kubernetes); hybrid data plane egresses to LangChain control plane over HTTPS", source: https://docs.langchain.com/langsmith/hybrid}
+workspace_trust: {prompt_on_new_folder: null, notes: "N/A (server runtime)", source: null}
+memory: {persistent: true, cross_project: true, agent_writable: true, notes: "Threads/checkpoints (Postgres) and Store (namespaced, per-user scoping via auth namespace rewriting). Checkpoint/store CVEs listed in incidents.", source: https://docs.langchain.com/langsmith/auth}
+subagents: {supported: true, inherits_permissions: null, notes: "multi-agent via graphs; isolation is app-defined; per-run user context from auth", source: null}
+telemetry: {default_on: null, opt_out: "LANGSMITH_TRACING (unverified default for deployments); LANGSMITH_HIDE_INPUTS=true / LANGSMITH_HIDE_OUTPUTS=true; create_anonymizer", training_default: "not stated on pages read", source: https://docs.langchain.com/langsmith/data-purging-compliance}
+headless:
+  command: "langgraph dev"   # unverified in this pass (local dev server; not executed)
+  flags: []
+  ci_integrations: ["LangSmith deployments from GitHub (unverified)"]
+  model_override: "app code chooses model provider; platform is model-agnostic"
+  local_model_support: "yes via user code (any LangChain chat model incl. Ollama / OpenAI-compatible); platform does not constrain"
+
+security_policy: {security_md: null, bug_bounty: null, advisories: https://github.com/langchain-ai/langgraph/security/advisories}
+sources:
+  - {url: https://docs.langchain.com/langsmith/auth, accessed: "2026-10-15", note: "Agent Server auth"}
+  - {url: https://docs.langchain.com/langsmith/deploy-to-self-hosted-overview.md, accessed: "2026-10-15", note: "hosting options, license"}
+  - {url: https://docs.langchain.com/langsmith/data-purging-compliance, accessed: "2026-10-15", note: "retention/deletion"}
+  - {url: https://docs.langchain.com/langsmith/regions-faq, accessed: "2026-10-15", note: "regions, SOC2"}
+  - {url: https://github.com/advisories/GHSA-jfj5-wrj9-63x4, accessed: "2026-10-15", note: "langgraph-api authz"}
+  - {url: https://pypi.org/pypi/langgraph-api/json, accessed: "2026-10-15", note: "license Elastic-2.0, version 0.16.0"}
+extra:
+  rename: "LangGraph Platform -> LangSmith Deployment (Oct 2025, naming only); runtime = Agent Server (formerly LangGraph Server)"
+  hosting: [cloud, hybrid, self-hosted-full, self-hosted-standalone]

@@ -1,0 +1,6 @@
+expected:
+- HG-SEC-001
+- HG-SEC-002
+origin: generated
+family: state
+note: claude state

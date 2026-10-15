@@ -1,0 +1,67 @@
+id: openhands-sdk
+name: OpenHands Software Agent SDK (openhands-sdk / tools / workspace / agent-server)
+vendor: All Hands AI (OpenHands)
+tier: C
+license: MIT
+open_source: true
+status: analysed
+version_analysed: "1.54.0"
+analysed_on: "2026-10-15"
+homepage: https://docs.openhands.dev/sdk
+repo: https://github.com/OpenHands/software-agent-sdk
+runtime_kind: python-library
+binaries: [agent-server]
+packages:
+  - {ecosystem: pip, name: openhands-sdk}
+  - {ecosystem: pip, name: openhands-tools}
+  - {ecosystem: pip, name: openhands-workspace}
+  - {ecosystem: pip, name: openhands-agent-server}
+install_methods:
+  - {method: pip, command: "pip install openhands-sdk openhands-tools", checksum_verified: null, signed: null, source: https://github.com/OpenHands/software-agent-sdk}
+auto_update: {default: false, config: null, source: "library"}
+state_dirs: ["~/.openhands", "$OH_PERSISTENCE_DIR", "workspace/conversations"]
+credential_files: ["~/.openhands/profiles/*"]
+credential_storage: "LLM api_key and secrets are serialized into <persistence_dir>/base_state.json; encrypted only if a Cipher is configured (SDK logs a warning otherwise). Agent-server: OH_SECRET_KEY, falls back to first session API key."
+log_paths: ["<persistence_dir>/base_state.json", "<persistence_dir>/events/*", "<persistence_dir>/observations/*"]
+memory_paths: []
+config_files:
+  - {path: ".openhands/hooks.json", scope: project, format: json, kind: hooks}
+  - {path: "~/.openhands/hooks.json", scope: user, format: json, kind: hooks}
+  - {path: ".agents/skills/*", scope: project, format: markdown, kind: skills}
+  - {path: ".openhands/skills/*", scope: project, format: markdown, kind: skills}
+  - {path: "~/.openhands/skills/*", scope: user, format: markdown, kind: skills}
+instruction_files: ["AGENTS.md", "AGENT.md", "CLAUDE.md", "GEMINI.md", ".cursorrules"]   # always-active third-party skill files at working dir / git root, case-insensitive (skills/skill.py)
+skills_paths: [".agents/skills/", ".openhands/skills/", "~/.openhands/skills/", "~/.openhands/skills/installed/"]
+mcp:
+  files: []   # passed in code: Agent(mcp_config={"mcpServers": {...}})
+  servers_key: "mcpServers"
+  server_fields: {command: command, args: args, env: env, url: url, headers: headers, transport: transport}
+  project_servers_require_approval: false
+  notes: "FastMCP MCPConfig format given programmatically; OAuth supported (examples/01_standalone_sdk/08_mcp_with_oauth.py; agent-server mcp_oauth_store.py)."
+permissions:
+  config_keys: {mode: "conversation.set_confirmation_policy(...) / ConversationState.confirmation_policy"}
+  default_mode: "NeverConfirm (auto-execute everything). Opt in with AlwaysConfirm() or ConfirmRisky(threshold=HIGH, confirm_unknown=True) plus a SecurityAnalyzer (LLMSecurityAnalyzer, defense-in-depth rails, GraySwan)."
+  auto_approve_values:
+    - {key: "ConversationState.confirmation_policy", value: "NeverConfirm"}
+    - {key: "ConfirmRisky.confirm_unknown", value: false}
+  cli_flags_auto_approve: []
+  allow_rule_syntax: null
+  overbroad_patterns: ["NeverConfirm()", "ConfirmRisky(threshold=SecurityRisk.HIGH, confirm_unknown=False)", "LocalWorkspace (tools run on host)", "agent-server with no OH_SESSION_API_KEYS_0 / SESSION_API_KEY"]
+hooks: {supported: true, config_key: "pre_tool_use, post_tool_use, user_prompt_submit, session_start, session_end, stop", repo_scoped_allowed: true, command_field: "command"}
+sandbox: {available: true, default_on: false, mechanism: "Workspace abstraction: LocalWorkspace (host, default), DockerWorkspace, ApptainerWorkspace, remote agent-server (openhands-workspace), cloud", config: "Conversation(workspace=...)", source: "https://github.com/OpenHands/software-agent-sdk/tree/main/openhands-workspace"}
+network: {domain_allowlist: false, config: null, default: "unrestricted", source: null}
+workspace_trust: {prompt_on_new_folder: false, notes: "Project hooks (.openhands/hooks.json), skills and AGENTS.md are loaded by helper loaders when the application opts in; no consent prompt in the SDK.", source: "openhands-sdk/openhands/sdk/hooks/config.py"}
+memory: {persistent: false, cross_project: false, agent_writable: false, notes: "Conversation persistence only; repo/user skills act as instructions.", source: null}
+subagents: {supported: true, inherits_permissions: "subagent frontmatter permission_mode; default None = inherit parent (subagent/schema.py)", notes: null, source: null}
+telemetry: {default_on: false, opt_out: "Laminar tracing only initialised if LMNR_PROJECT_API_KEY set", training_default: null, source: "openhands-sdk/openhands/sdk/observability/laminar.py"}
+headless:
+  command: "python script.py (Conversation(agent, workspace).send_message(); run())  |  agent-server --port 8000"
+  flags: ["agent-server --host", "--port"]
+  ci_integrations: ["examples/03_github_workflows"]
+  model_override: "LLM(model=..., base_url=os.getenv('LLM_BASE_URL'), api_key=...) (litellm)"
+  local_model_support: "Ollama / OpenAI-compatible via litellm model strings (e.g. ollama/...) and base_url"
+security_policy: {security_md: null, bug_bounty: null, advisories: "https://github.com/OpenHands/software-agent-sdk/security/advisories"}
+sources:
+  - {url: "https://github.com/OpenHands/software-agent-sdk (HEAD 8efff8d)", accessed: "2026-10-15", note: "source read"}
+extra:
+  agent_server_auth: "session_api_keys empty => unauthenticated; default bind 127.0.0.1 when no key configured, 0.0.0.0 when a key is set (explicit wildcard without key logs a warning). CORS: localhost/127.0.0.1 always allowed."

@@ -1,0 +1,5 @@
+# goose has no hook mechanism
+mcp_servers: [fs]
+auto_approve: true
+hooks: 0
+instruction_files: [.goosehints]

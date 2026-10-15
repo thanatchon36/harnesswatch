@@ -1,0 +1,4 @@
+expected: [HG-HOOK-001, HG-HOOK-002]
+origin: hand
+family: hook
+note: "repo Copilot hook piping a download into a shell"

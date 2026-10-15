@@ -1,0 +1,4 @@
+expected: [HG-INJ-001]
+origin: hand
+family: instr
+note: "zero-width joiner hidden inside a Latin word"

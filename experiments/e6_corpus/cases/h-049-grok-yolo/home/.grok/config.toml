@@ -1,0 +1,4 @@
+model = "grok-code-fast-1"
+
+[ui]
+yolo = true

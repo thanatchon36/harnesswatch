@@ -1,0 +1,19 @@
+model = "gpt-5.1-codex"
+model_reasoning_effort = "low"
+approval_policy = "on-failure"
+sandbox_mode = "danger-full-access"
+approvals_reviewer = "auto_review"
+
+[features]
+memories = false
+
+[otel]
+environment = "dev"
+log_user_prompt = true
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["@playwright/mcp@latest", "--headless"]
+
+[mcp_servers.playwright.env]
+GITHUB_PERSONAL_ACCESS_TOKEN = "{{SYNTH:github-token}}"

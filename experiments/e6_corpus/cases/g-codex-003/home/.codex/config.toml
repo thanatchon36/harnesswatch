@@ -1,0 +1,13 @@
+model = "gpt-5.1"
+model_reasoning_effort = "medium"
+approval_policy = "untrusted"
+sandbox_mode = "workspace-write"
+
+[sandbox_workspace_write]
+network_access = true
+
+[features]
+memories = true
+
+[mcp_servers.context]
+url = "https://mcp.context.example.com/mcp"

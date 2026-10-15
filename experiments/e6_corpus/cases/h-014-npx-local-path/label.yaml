@@ -1,0 +1,4 @@
+expected: [HG-MCP-005]
+origin: hand
+family: mcp
+note: "npx on a workspace path, nothing fetched from the registry"

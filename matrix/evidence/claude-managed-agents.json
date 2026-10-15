@@ -1,0 +1,234 @@
+{
+  "harness": "claude-managed-agents",
+  "version": "beta, header managed-agents-2026-04-01 (memory stores: agent-memory-2026-07-22); toolset agent_toolset_20260401",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Permission policies: always_allow, always_ask, auto (server evaluates each call). Agent toolset defaults to always_allow; MCP toolsets default to always_ask.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/permission-policies",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Custom tools are executed by the caller's application and are not governed by permission policies.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/permission-policies",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Per-tool permission_policy (always_allow | always_ask | auto). Built-in agent toolset defaults to always_allow (bash runs unattended) while MCP toolsets default to always_ask; policy changes are configurable per tool."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Each session gets its own isolated sandbox (a fresh Linux container); sessions do not share filesystem state.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/environments",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Self-hosted sandboxes keep tool execution, files and network egress in customer infrastructure; tool inputs/outputs still flow to Anthropic's control plane.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/self-hosted-sandboxes",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Each session gets its own fresh Linux container in an Anthropic-managed cloud sandbox; self-hosted sandbox option moves execution to customer infrastructure."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "'Set networking explicitly in API requests; a create request that omits it gets unrestricted.' Console form starts with Limited.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/environments",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Warning: network access is per host, not per operation; an allowed host can be used to copy files out under prompt injection.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/environments",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Package manager hosts (github.com, registry.npmjs.org, pypi.org, ghcr.io, ...) are opened by allow_package_managers=true; Anthropic maintains and can change the list.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/environments",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "limited networking (allowed_hosts) is available and Console default is Limited, but an API create request that omits networking gets unrestricted; allowed-host access is per host not per operation (git push, uploads)."
+    },
+    "D04": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A: no local workspace or repo-level config is read; agents, environments and sessions are API objects."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "allow_mcp_servers defaults to false; session creation returns 400 if the agent declares an MCP server whose host is not in allowed_hosts.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/environments",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Vault credential matching an mcp_server_url is injected at runtime; with no match the connection is attempted unauthenticated.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/vaults",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "MCP tunnels and dreaming are in a more limited research preview within the beta.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "MCP tools default to always_ask; sessions fail if an agent declares an MCP server host not allowed by limited networking unless allow_mcp_servers=true; vault-held OAuth/bearer injected by URL match; MCP tunnels are research preview."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Skills are part of the agent definition (model, system prompt, tools, MCP servers, skills).",
+          "source": "https://platform.claude.com/docs/en/managed-agents/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "Skills are supported on agents but vetting/signing was not documented in pages read."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "environment_variable credentials: secret stored as opaque placeholder in sandbox, substituted at egress; agent never sees the value; secret fields are write-only and never returned.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/vaults",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Vaults and credentials are workspace-scoped: any API key with workspace access can reference them when creating a session; max 20 credentials per vault.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/vaults",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Substitution is outbound only: a token fetched by exchanging a stored secret (e.g. OAuth client-credentials) arrives in the sandbox unredacted.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/vaults",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Vaults store credentials write-only; environment_variable credentials are replaced by opaque placeholders in the sandbox and substituted at egress for allowed_hosts only, header-only injection available. Caveats: vaults are workspace-scoped (any API key in the workspace can reference them) and token exchanges return secrets unredacted."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "Scheduled deployments run agents on a cron schedule.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (managed server-side; headless by design). Scheduled deployments run recurring sessions."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Memory stores attach with read_write by default; prompt injection could write malicious content later read as trusted memory; use read_only for reference stores.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/memory",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Every memory mutation creates an immutable version; versions retained 30 days (recent versions of live memories kept); redact endpoint scrubs content.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/memory",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Memory stores are workspace-scoped, mounted at /mnt/memory/, attached read_write by default (docs warn about injection persisting), read_only supported and enforced at filesystem level, immutable versions for audit (30-day retention)."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "In multiagent sessions, vault credentials apply to every thread.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/vaults",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Each session has its own sandbox; multiagent threads in one session share vault credentials; subagent permission semantics not detailed in pages read."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Event history is persisted server-side and can be fetched in full; reads/writes of memory appear as agent.tool_use/tool_result events.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Webhooks exist for vault and credential lifecycle events (archived, deleted, refresh_failed).",
+          "source": "https://platform.claude.com/docs/en/managed-agents/vaults",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Event history persisted server-side and fetchable via API/SSE; memory version audit trail; webhooks for vault lifecycle. No customer-exportable audit-log product verified."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "'Managed Agents is not currently eligible for Zero Data Retention or HIPAA BAA coverage'; sessions can be deleted via API.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Stateful by design: conversation history, sandbox state and outputs stored server-side; not eligible for Zero Data Retention or HIPAA BAA; customer can delete sessions and uploaded files."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Docs install ant via curl of a GitHub release tarball piped to tar; no checksum step shown.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/self-hosted-sandboxes",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A: hosted service; clients are the standard Anthropic SDKs and the ant CLI (installed from GitHub release tarball; checksum guidance not verified)."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Vault/credential visibility is workspace-scoped; environment and agent configs are created by whoever holds an API key in the workspace.",
+          "source": "https://platform.claude.com/docs/en/managed-agents/vaults",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Controls are per workspace/API key (vault scoping, environment networking, tool policies); no organisation-enforced policy that overrides an agent author was verified."
+    },
+    "D15": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "Not verified for this product specifically; Anthropic advisories exist for the SDK repos (see claude-agent-sdk)."
+    }
+  }
+}

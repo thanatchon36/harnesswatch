@@ -1,0 +1,165 @@
+{
+  "harness": "deepagents",
+  "version": "deepagents 0.7.25 / deepagents-code 0.1.85",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "tier": "C",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "interrupt_on HITL and FilesystemPermission rules in create_deep_agent; default none",
+          "source": "https://github.com/langchain-ai/deepagents/blob/main/libs/deepagents/deepagents/graph.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "dcode non-interactive mode runs non-shell tools unattended; -y/--auto-approve and --yolo flags",
+          "source": "https://github.com/langchain-ai/deepagents/blob/main/libs/code/THREAT_MODEL.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GHSA-459r-276m-w72x: ACP always-allow bypass via unparseable segment",
+          "source": "https://github.com/langchain-ai/deepagents/security/advisories/GHSA-459r-276m-w72x",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Rich approval machinery (interactive manual/auto/YOLO, shell allow-list) but SDK default ungated, headless unattended, allow-list first-token bypass documented."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "FilesystemBackend virtual_mode is not a sandbox; LocalShellBackend unisolated; remote sandboxes via --sandbox",
+          "source": "https://github.com/langchain-ai/deepagents/blob/main/libs/deepagents/deepagents/backends/filesystem.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Isolation only via opt-in remote sandbox providers."
+    },
+    "D03": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "dcode trusts cwd; project artifacts read before approval; project hooks need workspace trust; project MCP needs trust list",
+          "source": "https://github.com/langchain-ai/deepagents/blob/main/libs/code/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Hooks and project MCP are trust-gated; AGENTS.md/artifact content is read pre-approval by design."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "Project .mcp.json requires approval; trust state in ~/.deepagents/.state/mcp_trust.json; env DEEPAGENTS_CODE_DANGEROUSLY_ENABLE_PROJECT_MCP_SERVERS",
+          "source": "https://github.com/langchain-ai/deepagents/blob/main/libs/code/THREAT_MODEL.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Approval + per-server allow/deny lists; no description-change detection verified."
+    },
+    "D06": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "API keys process-env only; never written to disk by CLI code (per own threat model)",
+          "source": "https://github.com/langchain-ai/deepagents/blob/main/libs/code/THREAT_MODEL.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Self-reported; not independently verified by test."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "Headless -n: no approvals for non-shell tools; shell off unless allow-list; GitHub Action does not forward --auto-approve",
+          "source": "https://github.com/langchain-ai/deepagents/blob/main/libs/code/THREAT_MODEL.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Unattended defaults for file mutations/network."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "dcode persistent memory / AGENTS.md; SDK memory= and store=",
+          "source": "https://github.com/langchain-ai/deepagents/blob/main/libs/deepagents/deepagents/graph.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "Poisoning controls not examined."
+    },
+    "D10": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D11": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D12": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D13": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "managed_config.toml admin policy, enforced keys such as startup.mode, shell.allow_list, [models].allowed",
+          "source": "https://github.com/langchain-ai/deepagents/blob/main/libs/code/THREAT_MODEL.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Managed policy exists; file ownership/mode not validated by CLI (documented assumption)."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "GHSA-459r-276m-w72x published 2026-10-13; fix 0.0.13 2026-10-12",
+          "source": "https://github.com/langchain-ai/deepagents/security/advisories/GHSA-459r-276m-w72x",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No root SECURITY.md (404)",
+          "source": "https://github.com/langchain-ai/deepagents/blob/main/SECURITY.md",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Advisory process works; policy file not found at root."
+    }
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "harness": "replit-agent",
+  "version": "cloud service (no client version)",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Agent has Plan mode (scope work, no changes) and Build mode (applies changes directly); checkpoints saved as Agent works; no per-command approval documented.",
+          "source": "https://docs.replit.com/help/agent-and-ai.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Mode choice and rollback but no tool-level permission model."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Agent works in Replit-hosted cloud workspace (not on user machine); isolation specifics not documented in pages read.",
+          "source": "https://docs.replit.com/llms.txt",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (unverified details)."
+    },
+    "D03": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (no egress-control docs found)."
+    },
+    "D04": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (SaaS; no local workspace trust concept)."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP client: curated/custom servers configured in UI; 'only connect servers you trust'. Replit MCP Server exposes Apps to external clients.",
+          "source": "https://docs.replit.com/chat/connect-through-mcp.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Documentation limited to trust advice."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Skills = folders of reusable instructions; integrations and MCP are separate extension routes.",
+          "source": "https://docs.replit.com/chat/agent-skills.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (vetting unverified)."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Documentation tells users to keep API keys in Replit Secrets and out of client code/local storage.",
+          "source": "https://docs.replit.com/learn/security-checklist.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Secrets store exists; protections for agent access to secrets not documented."
+    },
+    "D08": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (no headless/CI mode)."
+    },
+    "D09": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (unverified)."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Task system and build-in-parallel pages exist (not read).",
+          "source": "https://docs.replit.com/llms.txt",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (unverified)."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Enterprise audit logs (65+ events incl. Agent activity), SIEM streaming to Datadog/Splunk/S3/HTTP, Compliance API retrieves prompt text via GET /v1/compliance/messages.",
+          "source": "https://docs.replit.com/teams/identity-and-access-management/audit-logs.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Strong enterprise audit and prompt retrieval; Enterprise-only."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "Content used to improve models by default; opt-out only for Pro users; Enterprise content not used for training.",
+          "source": "https://docs.replit.com/legal-and-security-info/model-improvement.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Training on by default, opt-out limited to Pro."
+    },
+    "D13": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (SaaS)."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Enterprise admins: approved model providers per Workspace, security policies (Auto-Protect, required scans, block publishing at severity), SAML SSO, SCIM, audit logs.",
+          "source": "https://docs.replit.com/teams/modes-and-model-providers.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Org policy for models/security; no documented control over agent actions."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "Vulnerability reports by email security@replit.com; no bug bounty page found in docs index.",
+          "source": "https://docs.replit.com/legal-and-security-info/security.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Contact channel only."
+    }
+  }
+}

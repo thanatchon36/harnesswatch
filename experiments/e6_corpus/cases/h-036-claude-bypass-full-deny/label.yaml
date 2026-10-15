@@ -1,0 +1,4 @@
+expected: [HG-PERM-001]
+origin: hand
+family: perm
+note: "user bypass mode with complete deny list"

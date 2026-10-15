@@ -1,0 +1,14 @@
+| Root cause | Name | Incidents |
+|---|---|---|
+| RC3 | Validation, parsing or authorization logic flaw in a check that gates an agent capability | 104 |
+| RC2 | Workspace, repository or agent-written content executed or honoured before or without consent | 52 |
+| RC10 | Conventional implementation defect not gating an agent capability | 51 |
+| RC4 | Missing authentication or origin/Host validation on a local or network control endpoint | 24 |
+| RC8 | Isolation boundary escape or weak isolation fallback | 20 |
+| RC6 | Insecure default, missing safeguard or over-privileged mode by design | 20 |
+| RC1 | Untrusted content treated as instructions (no distinct control failure) | 17 |
+| RC7 | Unintended exposure, leakage or over-collection of secrets or data by the harness itself | 12 |
+| RC5 | Package, extension or update-channel compromise or integrity failure | 11 |
+| RC9 | Output-rendering or automatic-fetch feature acts as an exfiltration channel | 8 |
+| RC12 | Adversarial use of a legitimate capability (no product defect) | 3 |
+| RC11 | Autonomous action exceeding user intent without enforced guardrail | 1 |

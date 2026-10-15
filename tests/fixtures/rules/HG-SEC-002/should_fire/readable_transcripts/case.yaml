@@ -1,0 +1,2 @@
+audits: [secrets]
+chmod: {home/.codex/sessions/2026/10/01/rollout-1.jsonl: "0644", home/.codex: "0755"}

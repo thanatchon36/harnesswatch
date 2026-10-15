@@ -1,0 +1,4 @@
+mcp_servers: [fs]
+auto_approve: true
+hooks: 1
+instruction_files: [QWEN.md]

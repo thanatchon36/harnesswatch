@@ -1,0 +1,305 @@
+{
+  "harness": "opencode",
+  "version": "1.19.0",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Default permission ruleset is '*': allow with doom_loop=ask, external_directory=ask (temp/skills dirs allowed), read of *.env / *.env.* = ask (docs say deny; code says ask), question/plan_enter/plan_exit deny.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/opencode/src/agent/agent.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-062",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "permission config: action allow|ask|deny, per-tool or object patterns with wildcards (* and ?), last matching rule wins; 'permission': 'allow' allows everything; legacy 'tools' booleans merged since v1.1.1; OPENCODE_PERMISSION env supplies inline JSON.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/web/src/content/docs/permissions.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-063"
+        },
+        {
+          "claim": "`opencode run` accepts --auto, --yolo and --dangerously-skip-permissions (and docs describe `opencode --auto` for the TUI) to auto-approve every request not explicitly denied.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/opencode/src/cli/cmd/run.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-064",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Permissive default (allow everything except doom_loop/external_directory/.env), project config can change rules, and --auto/--yolo flags exist; fine-grained rules are available."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "SECURITY.md states OpenCode does not sandbox the agent, the permission system is a UX feature not isolation, server mode is opt-in with OPENCODE_SERVER_PASSWORD, and malicious config files and MCP server behaviour are out of scope; AI-generated reports cause a ban.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-061"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "Explicitly no sandbox; permission system is documented as UX only."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Default permission ruleset is '*': allow with doom_loop=ask, external_directory=ask (temp/skills dirs allowed), read of *.env / *.env.* = ask (docs say deny; code says ask), question/plan_enter/plan_exit deny.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/opencode/src/agent/agent.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-062",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "SECURITY.md states OpenCode does not sandbox the agent, the permission system is a UX feature not isolation, server mode is opt-in with OPENCODE_SERVER_PASSWORD, and malicious config files and MCP server behaviour are out of scope; AI-generated reports cause a ban.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-061"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No egress control documented; webfetch/websearch allowed by default."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Config precedence: remote .well-known/opencode, ~/.config/opencode/opencode.json(c), OPENCODE_CONFIG, project opencode.json(c) (walks up to worktree root), .opencode directories, OPENCODE_CONFIG_CONTENT, managed files (/etc/opencode, /Library/Application Support/opencode, %ProgramData%\\opencode), macOS MDM plist (highest); no trust prompt for project config appears in the loader.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/opencode/src/config/config.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-065",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "npm plugins listed in config are installed automatically at startup with Bun (cached in ~/.cache/opencode/node_modules); .opencode/plugins/*.ts are auto-loaded project-level code.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/web/src/content/docs/plugins.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-067"
+        },
+        {
+          "claim": "SECURITY.md states OpenCode does not sandbox the agent, the permission system is a UX feature not isolation, server mode is opt-in with OPENCODE_SERVER_PASSWORD, and malicious config files and MCP server behaviour are out of scope; AI-generated reports cause a ban.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-061"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "Project opencode.json, .opencode plugins and MCP definitions are loaded without a trust prompt and malicious config is declared out of scope."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP servers under 'mcp': local {type:'local', command:[...], environment:{}, cwd, enabled, timeout} or remote {type:'remote', url, headers, oauth, enabled}; no approval step for project-defined servers is documented.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/web/src/content/docs/mcp-servers.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-066"
+        },
+        {
+          "claim": "Managed config files and macOS MDM preferences are merged last and override user and project config; experimental.policies can deny provider.use.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/web/src/content/docs/config.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-073"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "MCP servers configured per entry with enabled flag; no approval/allowlist for project servers; managed config can override."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "npm plugins listed in config are installed automatically at startup with Bun (cached in ~/.cache/opencode/node_modules); .opencode/plugins/*.ts are auto-loaded project-level code.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/web/src/content/docs/plugins.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-067"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "npm plugins are auto-installed at startup and project plugins auto-load; no vetting or signing described."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Provider credentials in ~/.local/share/opencode/auth.json (written mode 0600), MCP OAuth tokens in mcp-auth.json, sessions in opencode.db (SQLite) under the XDG data dir.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/opencode/src/auth/index.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-069",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Default permission ruleset is '*': allow with doom_loop=ask, external_directory=ask (temp/skills dirs allowed), read of *.env / *.env.* = ask (docs say deny; code says ask), question/plan_enter/plan_exit deny.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/opencode/src/agent/agent.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-062",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Provider tokens in plaintext auth.json (0600); MCP OAuth tokens in a separate JSON file; .env reads ask by default."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "`opencode run` accepts --auto, --yolo and --dangerously-skip-permissions (and docs describe `opencode --auto` for the TUI) to auto-approve every request not explicitly denied.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/opencode/src/cli/cmd/run.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-064",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "GHSA-vxw4-wv6m-9hhh / CVE-2026-22812: unauthenticated local HTTP server allowed arbitrary command execution; fixed 1.0.216 (published 2026-01-12).",
+          "source": "https://github.com/anomalyco/opencode/security/advisories/GHSA-vxw4-wv6m-9hhh",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-074"
+        },
+        {
+          "claim": "GHSA-632h-h47v-g4x4 (no CVE): cross-site request to /global/upgrade of opencode serve could install an arbitrary npm package (lifecycle scripts run); affected >=1.14.30, fixed 1.18.22 (published 2026-09-24; write-up by Datadog Security Labs; GHSA credit christophetd).",
+          "source": "https://github.com/anomalyco/opencode/security/advisories/GHSA-632h-h47v-g4x4",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-076"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "opencode run has --auto/--yolo; permissive defaults and an opt-in HTTP server with historical unauthenticated-RCE advisories."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Instruction files: AGENTS.md (project, ~/.config/opencode/AGENTS.md); opencode also reads CLAUDE.md and ~/.claude/CLAUDE.md and .claude/skills unless OPENCODE_DISABLE_CLAUDE_CODE(_PROMPT/_SKILLS) is set.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/web/src/content/docs/cli.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-077"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (no cross-session agent memory feature identified; AGENTS.md and sessions only)."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Subagent sessions inherit the parent session's deny rules and external_directory rules; todowrite/task denied unless the subagent's own ruleset allows them.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/opencode/src/agent/subagent-permissions.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-068",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Subagent sessions inherit parent deny and external_directory rules; no process isolation."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Provider credentials in ~/.local/share/opencode/auth.json (written mode 0600), MCP OAuth tokens in mcp-auth.json, sessions in opencode.db (SQLite) under the XDG data dir.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/opencode/src/auth/index.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-069",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Sessions are stored locally in SQLite; no audit log or telemetry export documented."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "share config: manual (default), auto (every conversation published to a public link on opncd.ai) or disabled.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/web/src/content/docs/share.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-070"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (no telemetry or retention documentation found; share defaults to manual, auto-share publishes conversations)."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "curl -fsSL https://opencode.ai/install | bash; the installer script contains no checksum or signature verification (0 matches for sha256/checksum/cosign/gpg at v1.19.0); autoupdate defaults on (config autoupdate).",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/install",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-072",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "curl|bash installer without checksum or signature verification; autoupdate on by default."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Config precedence: remote .well-known/opencode, ~/.config/opencode/opencode.json(c), OPENCODE_CONFIG, project opencode.json(c) (walks up to worktree root), .opencode directories, OPENCODE_CONFIG_CONTENT, managed files (/etc/opencode, /Library/Application Support/opencode, %ProgramData%\\opencode), macOS MDM plist (highest); no trust prompt for project config appears in the loader.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/opencode/src/config/config.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-065",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Managed config files and macOS MDM preferences are merged last and override user and project config; experimental.policies can deny provider.use.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/packages/web/src/content/docs/config.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-073"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Managed config directory and macOS MDM plist override user/project config; remote .well-known org defaults; provider policies are experimental."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md states OpenCode does not sandbox the agent, the permission system is a UX feature not isolation, server mode is opt-in with OPENCODE_SERVER_PASSWORD, and malicious config files and MCP server behaviour are out of scope; AI-generated reports cause a ban.",
+          "source": "https://github.com/anomalyco/opencode/blob/v1.19.0/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-061"
+        },
+        {
+          "claim": "GHSA-vxw4-wv6m-9hhh / CVE-2026-22812: unauthenticated local HTTP server allowed arbitrary command execution; fixed 1.0.216 (published 2026-01-12).",
+          "source": "https://github.com/anomalyco/opencode/security/advisories/GHSA-vxw4-wv6m-9hhh",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-074"
+        },
+        {
+          "claim": "GHSA-c83v-7274-4vgp / CVE-2026-22813: XSS in the web UI server-URL override let a malicious site run commands via /pty/ endpoints; fixed 1.1.10 (published 2026-01-12).",
+          "source": "https://github.com/anomalyco/opencode/security/advisories/GHSA-c83v-7274-4vgp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-075"
+        },
+        {
+          "claim": "GHSA-632h-h47v-g4x4 (no CVE): cross-site request to /global/upgrade of opencode serve could install an arbitrary npm package (lifecycle scripts run); affected >=1.14.30, fixed 1.18.22 (published 2026-09-24; write-up by Datadog Security Labs; GHSA credit christophetd).",
+          "source": "https://github.com/anomalyco/opencode/security/advisories/GHSA-632h-h47v-g4x4",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-076"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "SECURITY.md with GitHub advisory intake and escalation; 3 GHSAs (2 with CVE) published; threat model scopes out many classes."
+    }
+  }
+}

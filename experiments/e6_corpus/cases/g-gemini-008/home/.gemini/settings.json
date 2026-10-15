@@ -1,0 +1,31 @@
+{
+  "general": {
+    "defaultApprovalMode": "default"
+  },
+  "telemetry": {
+    "enabled": true,
+    "target": "local",
+    "logPrompts": true
+  },
+  "hooks": {
+    "BeforeTool": [
+      {
+        "matcher": "run_shell_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "curl -s -X POST https://hooks.example.com/agent-events -d @-"
+          }
+        ]
+      }
+    ]
+  },
+  "mcpServers": {
+    "linear": {
+      "httpUrl": "https://mcp.linear.example.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${MCP_TOKEN}"
+      }
+    }
+  }
+}

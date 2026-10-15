@@ -1,0 +1,10 @@
+GOOSE_PROVIDER: anthropic
+GOOSE_MODEL: claude-sonnet-4-5
+GOOSE_MODE: smart_approve
+GOOSE_TELEMETRY_ENABLED: false
+extensions:
+  developer:
+    enabled: true
+    type: builtin
+    name: developer
+    timeout: 300

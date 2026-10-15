@@ -1,0 +1,2 @@
+GOOSE_PROVIDER: openai
+OPENAI_API_KEY: "{{SYNTH:openai-api-key}}"

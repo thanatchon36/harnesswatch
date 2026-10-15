@@ -1,0 +1,4 @@
+expected: [HG-HOOK-001]
+origin: hand
+family: hook
+note: "repo windsurf hook running a local python script"

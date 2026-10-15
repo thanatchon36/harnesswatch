@@ -1,0 +1,15 @@
+// Kilo Code configuration
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "anthropic/claude-sonnet-4-5",
+  "permission": "ask",
+  "agent": {
+    "migrator": {
+      "description": "Runs DB migrations",
+      "mode": "subagent",
+      "permission": {
+        "bash": "allow"
+      }
+    }
+  }
+}

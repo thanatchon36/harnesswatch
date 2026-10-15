@@ -1,0 +1,102 @@
+id: amp
+name: Amp
+vendor: "Amp Inc. (spun out of Sourcegraph, Dec 2025 - third-party-report; npm scope is still @sourcegraph)"
+tier: B
+license: "Proprietary (npm: SEE LICENSE IN LICENSE.md)"
+open_source: false
+status: docs-only
+version_analysed: "0.0.1792036844-g99022c"   # npm latest, published 2026-10-15; no semver, build-timestamp versions
+analysed_on: "2026-10-15"
+homepage: https://ampcode.com
+repo: null
+
+binaries: [amp]
+packages:
+  - {ecosystem: npm, name: "@sourcegraph/amp"}
+install_methods:
+  - {method: curl-installer, command: "curl -fsSL https://ampcode.com/install.sh | bash", checksum_verified: null, signed: null, source: "https://ampcode.com/install.sh (installer script exists and downloads from static.ampcode.com; exact command text on docs install widget not captured; checksum files are served from static.ampcode.com per security page)"}
+  - {method: npm, command: "npm install -g @sourcegraph/amp", source: "https://registry.npmjs.org/@sourcegraph/amp"}
+auto_update: {default: true, config: "amp.updates.mode = auto|warn|disabled; env AMP_SKIP_UPDATE_CHECK=1 disables all checks; amp.runner.autoUpdate.enabled", source: https://ampcode.com/docs/markdown/cli/settings}
+
+state_dirs: ["~/.config/amp", "~/.local/share/amp"]
+credential_files: ["~/.local/share/amp/secrets.json"]
+credential_storage: "plaintext JSON file ~/.local/share/amp/secrets.json (Linux/macOS), %USERPROFILE%\\.local\\share\\amp\\secrets.json (Windows); file mode not documented. AMP_API_KEY env (sgamp_ access token) for CI."
+log_paths: []        # threads are stored server-side on ampcode.com; local transcript path not documented (unverified)
+memory_paths: ["~/.config/amp/AGENTS.md", "~/.config/AGENTS.md", "AGENTS.md"]
+
+config_files:
+  - {path: "~/.config/amp/settings.json", scope: user, format: jsonc, kind: settings}
+  - {path: "~/.config/amp/settings.jsonc", scope: user, format: jsonc, kind: settings}
+  - {path: ".amp/settings.json", scope: project, format: jsonc, kind: settings}      # nearest, searched upward to repo root; also .amp/settings.jsonc
+  - {path: ".amp/settings.jsonc", scope: project, format: jsonc, kind: settings}
+  - {path: "/etc/ampcode/managed-settings.json", scope: managed, format: json, kind: settings}   # Linux
+  - {path: "/Library/Application Support/ampcode/managed-settings.json", scope: managed, format: json, kind: settings}   # macOS
+  - {path: "%ProgramData%\\ampcode\\managed-settings.json", scope: managed, format: json, kind: settings}   # Windows
+  - {path: ".amp/plugins/*", scope: project, format: markdown, kind: hooks}    # TS/JS plugins (code, not markdown); policy/permission hooks live here
+  - {path: "~/.config/amp/plugins/*", scope: user, format: markdown, kind: hooks}
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: "~/.config/amp/AGENTS.md", scope: user, format: markdown, kind: instructions}
+  - {path: "~/.config/AGENTS.md", scope: user, format: markdown, kind: instructions}
+  - {path: "/etc/ampcode/AGENTS.md", scope: managed, format: markdown, kind: instructions}
+  - {path: "/Library/Application Support/ampcode/AGENTS.md", scope: managed, format: markdown, kind: instructions}
+
+instruction_files: ["AGENTS.md", "AGENT.md", "CLAUDE.md"]   # AGENT.md / CLAUDE.md only when AGENTS.md is absent in a directory
+skills_paths: [".agents/skills/*/SKILL.md", "~/.agents/skills/*", "~/.config/agents/skills/*", "~/.config/amp/skills/*", ".claude/skills/*", "~/.claude/skills/*"]
+
+mcp:
+  files: ["~/.config/amp/settings.json", ".amp/settings.json", "skill mcp.json (bundled in skills)"]
+  servers_key: "amp.mcpServers"       # flat dotted key in settings (settings keys use the 'amp.' prefix)
+  server_fields: {command: command, args: args, env: env, url: url, headers: headers}
+  project_servers_require_approval: true   # workspace .amp/settings.json servers: amp mcp approve <name>; user settings and --mcp-config servers need none
+  notes: "${VAR_NAME} expansion in config. Remote MCP definitions are stored server-side (amp mcp remote). amp.mcpPermissions = ordered [{matches:{command,args}|{url}, action: allow|reject}], first match wins, default allow. Enterprise: MCP registry allowlist (blocks all if registry unreachable). Trusted-server local list key amp.mcpTrustedServers (named in managed-settings docs)."
+
+permissions:
+  config_keys:
+    mcp: "amp.mcpPermissions"
+    tools_disable: "amp.tools.disable"
+  default_mode: "no approval prompts: Amp runs tools without asking (docs: 'By default, Amp does not ask for approval before running tools')"
+  auto_approve_values: []     # nothing to enable: auto-run is the default
+  cli_flags_auto_approve: []
+  legacy_spellings_unverified:
+    - {key: "amp.dangerouslyAllowAll", value: true, note: "named in MISSION seed; NOT in current settings reference (2026-10-13) - legacy, unverified whether still honoured"}
+    - {key: "amp.commands.allowlist", value: ["*"], note: "2025 setting abused in Aug 2025 write-up (third-party-report); not in current reference"}
+    - {key: "amp.permissions", note: "2025 spelling; not in current reference - policy is now a plugin using the tool.call event"}
+  allow_rule_syntax: "plugin: amp.on('tool.call', ...) returns approve/reject (see docs customize/plugins#example-plugin-permissions)"
+  overbroad_patterns: ["amp.mcpPermissions {matches:{command:'*'}, action:'allow'}"]
+
+hooks:
+  supported: true
+  config_key: null            # no settings key: hooks are plugin files (.amp/plugins/*.ts, ~/.config/amp/plugins/*)
+  repo_scoped_allowed: true   # .amp/plugins/ in the project; no trust prompt documented
+  command_field: null
+
+sandbox: {available: false, default_on: false, mechanism: "none for local CLI; remote 'orbs' (e2b VMs) via --executor orb / amp -ox", config: null, source: https://ampcode.com/docs/markdown/cli}
+network: {domain_allowlist: false, config: null, default: "unrestricted; org firewalls must allow ampcode.com, auth.ampcode.com, production.ampworkers.com, static.ampcode.com", source: https://ampcode.com/security}
+workspace_trust: {prompt_on_new_folder: false, notes: "Only workspace MCP servers need explicit approval; project plugins and AGENTS.md load without a documented prompt (unverified).", source: https://ampcode.com/docs/markdown/customize/mcp}
+memory: {persistent: true, cross_project: true, agent_writable: true, notes: "AGENTS.md hierarchy + server-side threads; agent can edit AGENTS.md on request", source: https://ampcode.com/docs/markdown/customize/agents-md}
+subagents: {supported: true, inherits_permissions: "not documented", notes: "Oracle, Librarian, custom agents; orbs for remote isolation", source: https://ampcode.com/docs/markdown/tools}
+telemetry: {default_on: true, opt_out: "none documented; threads always sync to ampcode.com (no self-hosting)", training_default: "no training unless user opts in; Enterprise can never enable; Minimal Data Retention for provider retention", source: https://ampcode.com/security}
+headless:
+  command: "amp -x \"<prompt>\""
+  flags: ["-x/--execute", "--stream-json", "--mcp-config '<json>'", "--settings-file <path>", "--no-tui (runner)", "-ox (run in orb)", "--executor local|orb|runner:<id>"]
+  ci_integrations: []    # none found
+  model_override: "server-side Model Routing (personal/workspace 'Custom URL' connection: chat-completions|responses|anthropic-messages|google-genai; base URL must be reachable from Amp servers); CLI: amp config model-providers"
+  local_model_support: "unverified/likely no: inference is proxied by ampcode.com and custom base URLs must be reachable from Amp; localhost Ollama not documented. Ollama Cloud is listed as a gateway."
+  env: {api_key: AMP_API_KEY}
+
+security_policy: {security_md: null, bug_bounty: https://ampcode.com/security#bug-bounty-program, advisories: null, contact: "security@ampcode.com; disclosure@ampcode.com", trust_portal: https://trust.ampcode.com/}
+extra:
+  amp_url_setting: "amp.url / amp.proxy exist (named in managed-settings docs) but are not described in the reference"
+  plugin_runtime: "plugins execute arbitrary code in user env; precedence project > system > personal > workspace"
+sources:
+  - {url: https://ampcode.com/docs/markdown/cli/settings, accessed: "2026-10-15", note: "settings reference, lastModified 2026-10-13"}
+  - {url: https://ampcode.com/docs/markdown/tools, accessed: "2026-10-15", note: "no approval by default"}
+  - {url: https://ampcode.com/docs/markdown/customize/mcp, accessed: "2026-10-15", note: "workspace MCP trust"}
+  - {url: https://ampcode.com/docs/markdown/customize/plugins, accessed: "2026-10-15", note: "plugin locations"}
+  - {url: https://ampcode.com/docs/markdown/customize/agents-md, accessed: "2026-10-15"}
+  - {url: https://ampcode.com/docs/markdown/cli/execute-mode, accessed: "2026-10-15"}
+  - {url: https://ampcode.com/docs/markdown/customize/model-routing, accessed: "2026-10-15"}
+  - {url: https://ampcode.com/docs/markdown/enterprise/mcp-registry-allowlist, accessed: "2026-10-15"}
+  - {url: https://ampcode.com/security, accessed: "2026-10-15", note: "credentials path, bug bounty, data handling"}
+  - {url: https://registry.npmjs.org/@sourcegraph/amp, accessed: "2026-10-15", note: "version"}
+  - {url: https://embracethered.com/blog/posts/2025/amp-agents-that-modify-system-configuration-and-escape/, accessed: "2026-10-15", note: "Aug 2025 config-write RCE write-up"}

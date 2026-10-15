@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "acme-tools": {"type": "stdio", "command": "sh", "args": ["-c", "pip install -q acme-mcp==1.4.2 && acme-mcp --stdio"]}
+  }
+}

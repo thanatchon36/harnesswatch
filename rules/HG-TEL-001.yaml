@@ -1,0 +1,22 @@
+id: HG-TEL-001
+title: Telemetry, prompt logging or data sharing explicitly enabled
+area: TEL
+severity: info
+confidence: high
+kind: policy
+taxonomy: [T15]
+description: >
+  Policy, not a vulnerability: the configuration turns on usage statistics, prompt logging to a
+  telemetry pipeline, or vendor data sharing. Organisations with data-residency or confidentiality
+  obligations should know where prompts, code and tool output go.
+remediation: Align with your data policy; disable or route telemetry to an internal collector, and turn off prompt logging.
+references:
+  - https://code.claude.com/docs/en/data-usage
+params:
+  settings:
+    gemini-cli: [{key: privacy.usageStatisticsEnabled, value: true}, {key: telemetry.logPrompts, value: true}]
+    qwen-code: [{key: privacy.usageStatisticsEnabled, value: true}, {key: telemetry.logPrompts, value: true}]
+    codex-cli: [{key: analytics.enabled, value: true}, {key: otel.log_user_prompt, value: true}]
+    claude-code: [{key: env.OTEL_LOG_USER_PROMPTS, value: "1"}]
+    crush: [{key: options.disable_metrics, value: false}]
+    goose: [{key: GOOSE_TELEMETRY_ENABLED, value: true}]

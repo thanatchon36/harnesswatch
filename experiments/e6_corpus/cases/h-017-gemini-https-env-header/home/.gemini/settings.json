@@ -1,0 +1,6 @@
+{
+  "general": {"preferredEditor": "vim"},
+  "mcpServers": {
+    "exa": {"httpUrl": "https://mcp.exa.example.com/mcp", "headers": {"X-API-Key": "$EXA_API_KEY"}, "timeout": 30000}
+  }
+}

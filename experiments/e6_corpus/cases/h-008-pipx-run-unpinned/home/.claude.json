@@ -1,0 +1,7 @@
+{
+  "numStartups": 112,
+  "installMethod": "native",
+  "mcpServers": {
+    "sqlite": {"type": "stdio", "command": "pipx", "args": ["run", "mcp-server-sqlite", "--db-path", "/home/dev/data/app.db"]}
+  }
+}

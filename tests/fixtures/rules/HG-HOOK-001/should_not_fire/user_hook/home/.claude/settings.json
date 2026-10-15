@@ -1,0 +1,1 @@
+{ "hooks": { "Notification": [ { "hooks": [ { "type": "command", "command": "notify-send done" } ] } ] } }

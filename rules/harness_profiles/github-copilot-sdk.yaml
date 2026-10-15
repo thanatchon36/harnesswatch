@@ -1,0 +1,70 @@
+id: github-copilot-sdk
+name: GitHub Copilot SDK (Copilot CLI agent runtime embedded via JSON-RPC)
+vendor: GitHub (Microsoft)
+tier: C
+license: MIT
+open_source: true
+status: analysed
+version_analysed: "1.0.22"
+analysed_on: "2026-10-15"
+homepage: https://github.com/github/copilot-sdk
+repo: https://github.com/github/copilot-sdk
+runtime_kind: library-wrapping-closed-runtime   # SDKs are MIT; the Copilot CLI runtime they drive is bundled/separately installed and not in this repo
+binaries: [copilot]
+packages:
+  - {ecosystem: npm, name: "@github/copilot-sdk"}
+  - {ecosystem: pip, name: github-copilot-sdk}
+  - {ecosystem: nuget, name: GitHub.Copilot.SDK}
+  - {ecosystem: cargo, name: github-copilot-sdk}
+  - {ecosystem: go, name: github.com/github/copilot-sdk/go}
+  - {ecosystem: maven, name: com.github:copilot-sdk-java}
+install_methods:
+  - {method: npm, command: "npm install @github/copilot-sdk   # bundles the CLI for Node/Python/.NET", checksum_verified: null, signed: null, source: https://github.com/github/copilot-sdk/blob/main/README.md}
+auto_update: {default: false, config: null, source: "library; bundled CLI version pinned by SDK release (sdk-protocol-version.json)"}
+state_dirs: ["~/.copilot", "~/.copilot/session-state/"]
+credential_files: []
+credential_storage: "System keychain (CLI login) or env COPILOT_GITHUB_TOKEN / GH_TOKEN / GITHUB_TOKEN; BYOK apiKey passed in code."
+log_paths: ["~/.copilot/session-state/"]
+memory_paths: []
+config_files:
+  - {path: ".github/copilot/settings.json", scope: project, format: json, kind: settings}
+  - {path: ".github/copilot/settings.local.json", scope: project-local, format: json, kind: settings}
+  - {path: ".github/hooks", scope: project, format: json, kind: hooks}
+instruction_files: [".github/copilot-instructions.md", "*.instructions.md", "AGENTS.md"]   # AGENTS.md unverified for the SDK path
+skills_paths: ["<skillDirectories>/**/SKILL.md"]
+mcp:
+  files: []   # supplied in code: createSession({mcpServers: {...}})
+  servers_key: "mcpServers"
+  server_fields: {command: command, args: args, env: env, url: url, headers: headers, type: type, tools: tools}
+  project_servers_require_approval: null
+  notes: "type is 'local' (stdio) or 'http'/'sse'. tools: ['*'] exposes all tools, [] none, or a list. MCP tool calls surface as permission requests with kind 'mcp'."
+permissions:
+  config_keys: {handler: "createSession({onPermissionRequest})"}
+  default_mode: "No handler => requests are emitted as events and stay pending (nothing auto-runs). Request kinds: shell, write, read, mcp, custom-tool, url, memory, hook."
+  auto_approve_values:
+    - {key: "onPermissionRequest", value: "approveAll (PermissionHandler.approve_all in Python)"}
+    - {key: "tool definition skipPermission", value: true}
+  cli_flags_auto_approve: []
+  allow_rule_syntax: null
+  overbroad_patterns: ["onPermissionRequest: approveAll", "skipPermission: true", "mcpServers.*.tools: ['*']", "requireConnectionToken: false", "hostname: '0.0.0.0'", "copilot --headless --host 0.0.0.0"]
+hooks: {supported: true, config_key: "createSession({hooks}) callbacks + file hooks in .github/hooks (enableFileHooks)", repo_scoped_allowed: true, command_field: null}
+sandbox: {available: true, default_on: false, mechanism: "runtime-level file-hook sandbox rules and additionalDirectories read scoping; SDK offers no OS sandbox; isolation = run the CLI server in a container (docs/setup/backend-services.md)", config: null, source: "https://github.com/github/copilot-sdk/blob/main/docs/features/customization-locations.md"}
+network: {domain_allowlist: true, config: "managed network policy (client.rpc.managedSettings.resolve) for client-owned browsers", default: "unrestricted", source: "nodejs/README.md"}
+workspace_trust: {prompt_on_new_folder: true, notes: "Repository-defined customization directories (.github/copilot/settings.json) require folder trust covering the checkout root; remembered trust in the CLI.", source: "docs/features/customization-locations.md"}
+memory: {persistent: true, cross_project: null, agent_writable: true, notes: "Permission kind 'memory' for persistent session memory; session persistence in ~/.copilot/session-state/.", source: "docs/features/session-persistence.md"}
+subagents: {supported: true, inherits_permissions: "unverified", notes: "custom agents, fleet mode", source: "docs/features/custom-agents.md"}
+telemetry:
+  default_on: null
+  opt_out: "SDK OTel is opt-in via TelemetryConfig (otlpEndpoint/filePath, captureContent). Whether the bundled CLI sends product telemetry to GitHub is not documented in this repo: unverified."
+  training_default: null
+  source: https://github.com/github/copilot-sdk/blob/main/docs/observability/opentelemetry.md
+headless:
+  command: "copilot --headless --port 4321   # SDK spawns/connects via JSON-RPC (stdio default, or RuntimeConnection.forTcp/forUri)"
+  flags: ["--headless", "--port", "--host"]
+  ci_integrations: []
+  model_override: "createSession({model, provider:{type:'openai'|'azure'|'anthropic', baseUrl, apiKey, wireApi}})"
+  local_model_support: "BYOK: Ollama listed as provider type 'openai' with local baseUrl; apiKey optional for local providers (docs/auth/byok.md)"
+security_policy: {security_md: "https://github.com/github/copilot-sdk/blob/main/SECURITY.md", bug_bounty: null, advisories: "https://github.com/github/copilot-sdk/security/advisories"}
+sources:
+  - {url: "https://github.com/github/copilot-sdk (HEAD 5817ec0)", accessed: "2026-10-15", note: "README, nodejs/README.md, docs/"}
+  - {url: "https://registry.npmjs.org/@github%2fcopilot-sdk", accessed: "2026-10-15", note: "latest 1.0.22"}

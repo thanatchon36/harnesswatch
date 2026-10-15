@@ -1,0 +1,931 @@
+rater: rater2
+date: '2026-10-15'
+scores:
+  aider:
+    D01: {s: 1, f: [0, 1, 2], r: "Shell suggestions need explicit yes, but auto-test runs configured shell without prompt and no user allow/deny rules are documented."}
+    D02: {s: 0, f: [0], r: "No sandbox; commands run with user privileges."}
+    D03: {s: 1, f: [0], r: "Only a per-URL confirm on the fetch path, auto-yes under --yes-always; no allowlist."}
+    D04: {s: 0, f: [0], r: "Repo .aider.conf.yml and .env loaded from git root/cwd with no trust concept."}
+    D05: {s: null, r: "N/A (no MCP support documented)."}
+    D06: {s: null, r: "N/A (no extension mechanism documented)."}
+    D07: {s: 1, f: [0, 1], r: "History files in repo (gitignored); no keychain, redaction or secret-file read protection documented."}
+    D08: {s: 1, f: [0, "D01.0"], r: "Scripted mode via --message/--yes-always exists but no official CI action or untrusted-input guidance."}
+    D09: {s: null, r: "N/A (no persistent agent memory documented)."}
+    D10: {s: null, r: "N/A (no sub-agent feature documented)."}
+    D11: {s: 1, f: [0], r: "Local chat/LLM history files; no structured tool-call log or telemetry export."}
+    D12: {s: 1, f: [0], r: "Analytics opt-in with sampling, but retention not documented."}
+    D13: {s: 1, f: [0, 1], r: "curl|sh installer and PyPI without documented signature or checksum."}
+    D14: {s: null, r: "N/A (not documented; no facts)."}
+    D15: {s: 0, f: [0], r: "No SECURITY.md and no advisories found."}
+  amp:
+    D01: {s: 1, f: [0, 1], r: "Default runs tools without approval; permissions only via plugins."}
+    D02: {s: 1, f: [0, 1], r: "Remote orb execution is opt-in (--executor orb); no local sandbox."}
+    D03: {s: 0, f: [0], r: "No agent egress allowlist documented; only vendor domains listed for org firewalls."}
+    D04: {s: 1, f: [0, 1, 2], r: "Workspace MCP servers need approval but project plugins and guidance files load without a trust prompt."}
+    D05: {s: 2, f: [0, 1, 2, "D04.0", "D01.1"], r: "Workspace servers need approval, rule-based allow/reject and an enterprise registry allowlist exist; no change detection or pinning."}
+    D06: {s: 1, f: [0, 1, "D04.1"], r: "Project plugins in .amp/plugins run code without prompt; no vetting documented."}
+    D07: {s: 1, f: [0, 1, 2], r: "Plaintext secrets.json with unspecified mode; best-effort redaction and .env avoidance do not reach keychain/0600 for score 2."}
+    D08: {s: 1, f: [0, 1, "D01.0"], r: "Execution mode exists with no approvals by default and no official CI action."}
+    D09: {s: 2, f: [0, "D04.2"], r: "Guidance files are plain, user-editable, project/global, with AMP_IGNORE_GUIDANCE_FILES off switch; no confirmation or scanning."}
+    D10: {s: 1, f: [0], r: "Subagents exist; permission inheritance and restriction undocumented."}
+    D11: {s: 2, f: [0, 1], r: "Threads store structured tool calls with a data API export; audit log covers auth only, tool actions on request."}
+    D12: {s: 1, f: [0, 1, 2, 3], r: "No training by default and retention documented, but threads stored server-side and no content-free telemetry/opt-out documented."}
+    D13: {s: 2, f: [0, 1], r: "Checksum files published and auto-update can be disabled; no signatures or provenance."}
+    D14: {s: 2, f: [0, 1], r: "Managed settings with precedence and MCP registry allowlist; sandbox/telemetry coverage not documented."}
+    D15: {s: 1, f: [0, 1, 3], r: "Bug bounty and contact exist, but no published advisories (2025 bypass fixed without CVE)."}
+  antigravity:
+    D01: {s: 1, f: [0, 2, 4, "D04.4", "D04.5"], r: "Default request-review with deny>ask>allow, but repo hooks can return auto_approve and repo agents set commandExecutionPolicy; no central disable."}
+    D02: {s: 1, f: [0, 1, 3], r: "Sandbox exists but is off by default in CLI and IDE; on only under the app Default preset."}
+    D03: {s: 2, f: [0, 3, 4], r: "URL fetch asks by default and sandbox network allowlist exists; not default-deny for unsandboxed shell or centrally managed."}
+    D04: {s: 1, f: [0, 1, 3, 5], r: "CLI trust prompt gates hooks, but coverage of repo MCP/agents/plugins is not documented and hooks doc contradicts."}
+    D05: {s: 1, f: [0, 1, 3], r: "Unconfigured MCP tools default to Ask with per-tool patterns; no managed lists or change detection."}
+    D06: {s: 1, f: [0, 2], r: "Workspace plugins activate for the project without documented prompt; no vetting/signing documented."}
+    D07: {s: 1, f: [0, 1, 3, 5], r: "Keyring for CLI session, but file fallback and MCP OAuth tokens in plaintext (third-party: mode 0644) lower it."}
+    D08: {s: 1, f: [0, 1], r: "Headless soft-denies approvals in CI, but no official CI action with actor/permission guidance."}
+    D09: {s: 1, f: [0, 2], r: "Global rules files and knowledge items in app data; no confirmation or off switch documented."}
+    D10: {s: 1, f: [0, 2, 3], r: "Per-subagent policy exists but subagents inherit accept-edits; bypass propagation not documented."}
+    D11: {s: 1, f: [0], r: "Diagnostic logs and enterprise request logging; structured tool-call log not documented."}
+    D12: {s: 1, f: [0, 2], r: "Telemetry on by default and interactions used for Google ML with opt-out."}
+    D13: {s: 2, f: [0, 1, 2], r: "Installer verifies SHA-512 and auto-update can be disabled; no signatures or pinning."}
+    D14: {s: 1, f: [0, 2, "D05.2"], r: "Enterprise SSO/VPC-SC only; no managed settings file, admin tool-server policies narrow."}
+    D15: {s: 0, f: [0, 3], r: "No SECURITY.md/security.txt and no advisories; issues filed publicly (bounty page is third-party, cannot raise)."}
+  augment:
+    D01: {s: 1, f: [0, 1, 2], r: "Rule-based allow/deny with deny precedence, but default runs commands and tools automatically."}
+    D02: {s: null, r: "N/A (only unverified facts)."}
+    D03: {s: 1, f: [0], r: "Only coarse tool removal; no domain allowlist."}
+    D04: {s: 0, f: [0], r: "Project settings including hooks load automatically with no trust gate."}
+    D05: {s: 1, f: [0], r: "User-configured MCP servers; no approval, managed list or change detection documented."}
+    D06: {s: 1, f: [0], r: "Workspace skills load automatically; no vetting documented."}
+    D07: {s: 1, f: [0], r: "Token stored locally, mode/keychain not documented; no redaction."}
+    D08: {s: 1, f: [0, 1, "D01.2"], r: "--print mode with automatic tool execution; no official CI action guidance."}
+    D09: {s: 1, f: [0], r: "Workspace and global rules files; no off switch or confirmation documented."}
+    D10: {s: null, r: "N/A (no facts)."}
+    D11: {s: 1, f: [0], r: "Local log file only; no structured tool-call log or export."}
+    D12: {s: 1, f: [0, 1], r: "No training on customer code, but telemetry default and retention not documented."}
+    D13: {s: 1, f: [0, 1], r: "npm registry install without provenance; auto-update can be disabled."}
+    D14: {s: 2, f: [0, "D01.4"], r: "System-wide settings take highest precedence, but toolPermissions not enforced in the extension and coverage not documented."}
+    D15: {s: 1, f: [0, 1], r: "Security contact exists; zero published advisories."}
+  azure-ai-foundry-agent-service:
+    D01: {s: 1, f: [0, 1], r: "Tool-call guardrails (preview) can block, not on by default; no approval in the default loop."}
+    D02: {s: 3, f: [0, "D03.0"], r: "Provider-managed VM-isolated session sandbox with egress controls."}
+    D03: {s: 3, f: [0, 1], r: "Managed runtime with VNet and egress controls (preview)."}
+    D04: {s: null, r: "N/A (no facts; no workspace config loading)."}
+    D05: {s: 3, f: [0, 1], r: "Toolboxes give a curated, centrally governed MCP endpoint (platform allowlist)."}
+    D06: {s: null, r: "N/A (no facts)."}
+    D07: {s: 2, f: [0, 1], r: "Managed identity integration documented; not universal and no trace redaction."}
+    D08: {s: null, r: "N/A (no facts)."}
+    D09: {s: 1, f: [0], r: "Memory tool exists; scoping, visibility and off switch not documented."}
+    D10: {s: 1, f: [0], r: "Unpublished agents share one identity; separation needs manual publishing."}
+    D11: {s: 2, f: [0], r: "Built-in tracing with Application Insights; no enforceable admin audit documented."}
+    D12: {s: 1, f: [0], r: "BYO storage option, but retention and training terms not documented."}
+    D13: {s: null, r: "N/A (no facts)."}
+    D14: {s: 2, f: [0], r: "Entra Agent ID policy (Conditional Access, revoke) enforces identity; coverage of MCP/sandbox/telemetry not documented."}
+    D15: {s: null, r: "N/A (only a third-party CVE fact)."}
+  bedrock-agentcore:
+    D01: {s: 1, f: [0, 1, 2], r: "All tools allowed by default; Cedar policy via Gateway exists but is opt-in, no approval default."}
+    D02: {s: 2, f: [0, 1], r: "Per-session Firecracker microVM, but default public network and third-party DNS covert channel lower it from 3."}
+    D03: {s: 2, f: [0, 1, "D02.1"], r: "VPC mode available but default is public network; DNS channel reported."}
+    D04: {s: null, r: "N/A (no facts)."}
+    D05: {s: 3, f: [0, 1, "D01.2"], r: "Registry with approve workflow and Gateway policy act as a platform allowlist; credential refs via Token Vault."}
+    D06: {s: 2, f: [0, "D05.1"], r: "Registry has a review/approve workflow, but the harness does not validate skill content; no signing."}
+    D07: {s: 2, f: [0, 1], r: "Token Vault/OBO credential scoping documented; trace redaction gap (patched CVE) blocks 3."}
+    D08: {s: null, r: "N/A (no facts)."}
+    D09: {s: 2, f: [0], r: "Memory scoped by actor and session, disabled by default in CLI; no provenance scanning."}
+    D10: {s: 1, f: [0], r: "Unvalidated caller params allow redirecting requests and headers; no delegation scoping documented."}
+    D11: {s: 2, f: [0], r: "Automatic tracing and CloudWatch policy logs; admin-change audit not documented."}
+    D12: {s: 1, f: [0], r: "Content may be used to improve service; retention not documented."}
+    D13: {s: 1, f: [0], r: "Container image from ECR without documented signing or provenance."}
+    D14: {s: 2, f: [0, "D01.2"], r: "IAM and Cedar policy enforcement; coverage of telemetry/sandbox settings not documented."}
+    D15: {s: 1, f: [0, "D07.1"], r: "CVEs/GHSA published, but no security policy or contact is in the facts, so score 2 (policy plus advisories) is not met."}
+  claude-agent-sdk:
+    D01: {s: 1, f: [0, 1, 2, 3], r: "Rich primitives with deny precedence, but the unset default may be the classifier auto mode, which is not a human approval, so approval is not on by default."}
+    D02: {s: 1, f: [0, 1], r: "Sandbox option off by default; isolation is the caller's responsibility."}
+    D03: {s: 1, f: [0, 1], r: "Optional sandbox proxy allowlist with documented domain-fronting gap; no default SSRF protection."}
+    D04: {s: 0, f: [0, 1, 2], r: "All setting sources incl. project hooks/rules load by default; no trust gate documented for SDK."}
+    D05: {s: 1, f: [0, 2], r: "Per-tool allow/deny and interaction fall-through exist; approval default-on and auth handling not documented."}
+    D06: {s: 1, f: [0, 1], r: "Skills filter is not a sandbox; no registry vetting documented."}
+    D07: {s: 1, f: [0, 1], r: "Passes full environment to the subprocess; credential proxy only recommended (application responsibility)."}
+    D08: {s: 2, f: [0], r: "dontAsk mode denies prompting calls and tool allowlists are enforceable for unattended runs."}
+    D09: {s: 2, f: [0], r: "CLAUDE.md/auto-memory loaded via setting sources and can be excluded; no confirmation or scanning."}
+    D10: {s: 1, f: [0], r: "Subagents run in the parent's mode including bypass; no per-agent least privilege documented here."}
+    D11: {s: 2, f: [0], r: "Session mirror and OpenTelemetry propagation available one setting away."}
+    D12: {s: 1, f: [0], r: "Retention and training only by reference to terms; not stated in facts."}
+    D13: {s: 1, f: [0, 1], r: "No trusted publishing, provenance or signatures documented."}
+    D14: {s: 2, f: [0, 1], r: "Organization policies apply across users and override bypass for connector asks; coverage partial."}
+    D15: {s: 1, f: [0, 1], r: "GHSA/CVE published via HackerOne report, but no SECURITY.md/policy in repo."}
+  claude-code:
+    D01: {s: 1, f: [0, 1, 2, 3], r: "Default interactive mode is classifier-based auto, which runs shell and edits without asking the user, so score 2 (default asks) is not met despite deny-in-every-mode and managed bypass disable."}
+    D02: {s: 1, f: [0, 1], r: "Sandbox off by default and silently falls back to unsandboxed unless failIfUnavailable."}
+    D03: {s: 3, f: [0, 2], r: "WebFetch domain blocklist by default; sandboxed execution is default-deny via proxy allowlist lockable by managed settings (sandbox itself off, see D02)."}
+    D04: {s: 2, f: [0, 1, 3, 4], r: "Trust dialog gates hooks/MCP/settings interactively; -p skips it and runs repo hooks/env, no central folder pre-approval."}
+    D05: {s: 2, f: [0, 1, "D01.2"], r: "Per-server approval for .mcp.json, permission rules and managed allow/deny lists; no change detection documented, -p connects without asking."}
+    D06: {s: 1, f: [0, 1, 2], r: "Managed marketplace allowlist and SHA pins exist, but no vetting or signing of plugins documented."}
+    D07: {s: 2, f: [0, 1, 4, 5], r: "Keychain on macOS and verified 0600 file, documented retention and redaction on upload; no default secret-file read protection."}
+    D08: {s: 1, f: [0, 1, 2, 3], r: "Action checks actor write access, but -p trusts the folder and runs repo hooks/env and minimal token permissions are not documented."}
+    D09: {s: 2, f: [0, 1], r: "Auto memory is on by default but project-scoped plain files with a documented off switch."}
+    D10: {s: 2, f: [0], r: "Per-agent tools/permissionMode and optional worktree isolation; managed setting blocks agent bypass."}
+    D11: {s: 2, f: [0, 1], r: "Structured JSONL transcripts and opt-in OpenTelemetry; no enterprise audit log of admin changes."}
+    D12: {s: 2, f: [0, 1, 3, 4], r: "Metrics opt-out documented, retention documented, commercial not trained by default; admin enforcement of telemetry not shown."}
+    D13: {s: 2, f: [0, 1, 2, 3], r: "GPG-signed manifests, signed macOS/Windows binaries, trusted publishing and update controls; no provenance attestation or SBOM."}
+    D14: {s: 2, f: [0, 1, 2, 3, "D06.0", "D03.0", "D01.2"], r: "Managed settings with top precedence cover permissions, MCP, plugins and sandbox; telemetry enforcement not documented."}
+    D15: {s: 3, f: [0, 1], r: "SECURITY.md with HackerOne bounty and 35 published GHSAs mostly with CVEs."}
+  claude-managed-agents:
+    D01: {s: 1, f: [0, 1], r: "Agent toolset defaults to always_allow; only MCP toolsets ask by default."}
+    D02: {s: 3, f: [0, 1], r: "Fresh isolated container per session with configurable egress (provider-managed)."}
+    D03: {s: 2, f: [0, 1, 2], r: "Egress policy exists but omitted networking defaults to unrestricted and per-host gap documented."}
+    D04: {s: null, r: "N/A (no facts; no workspace config loading)."}
+    D05: {s: 3, f: [0, 1, "D01.0"], r: "MCP off by default, host allowlist enforced by the platform, MCP tools ask by default, vault credential injection."}
+    D06: {s: null, r: "N/A (skills are application-supplied in the agent definition; no built-in registry)."}
+    D07: {s: 2, f: [0, 1, 2], r: "Secrets substituted at egress and never returned, but workspace-wide scope and exchanged tokens unredacted."}
+    D08: {s: 1, f: [0, "D01.0"], r: "Scheduled unattended runs use always_allow defaults for the agent toolset."}
+    D09: {s: 2, f: [0, 1], r: "Memory stores are explicitly attached and versioned; read_write default and no central disable."}
+    D10: {s: 1, f: [0], r: "Vault credentials apply to every thread in multiagent sessions."}
+    D11: {s: 2, f: [0, 1], r: "Full server-side event history with tool events; no policy-enforced admin audit log documented."}
+    D12: {s: 1, f: [0], r: "No ZDR eligibility; retention and training terms not documented."}
+    D13: {s: 1, f: [0], r: "curl tarball install without checksum step."}
+    D14: {s: 1, f: [0], r: "Only workspace scoping; any API key holder configures agents."}
+    D15: {s: null, r: "N/A (no facts)."}
+  cline:
+    D01: {s: 1, f: [0, 1, 3], r: "CLI and extension default to auto-approve edits and commands; safety decided by model flag."}
+    D02: {s: 0, f: [0], r: "No sandbox for agent tool execution."}
+    D03: {s: 0, f: [0], r: "No domain allowlist; relies on model flagging."}
+    D04: {s: 0, f: [0, 1], r: "Workspace hooks and plugins are loaded; no trust gate documented."}
+    D05: {s: 1, f: [0, 1], r: "User-configured MCP with per-server autoApprove; remote controls only in IDE builds; no change detection."}
+    D06: {s: 1, f: [0, 1], r: "Plugins installed from arbitrary URLs/git/npm with deps; sandbox opt-in, no vetting."}
+    D07: {s: 1, f: [0, 1], r: "providers.json 0600, but no redaction and .clineignore is not a boundary."}
+    D08: {s: 1, f: [0], r: "Documented CI usage is --yolo; no actor/permission guidance."}
+    D09: {s: null, r: "N/A (no facts)."}
+    D10: {s: 1, f: [0, 1], r: "Subagents off by default and disabled under yolo, but per-agent restrictions undocumented."}
+    D11: {s: 2, f: [0, 1], r: "Local sessions with export and OpenTelemetry for enterprise monitoring."}
+    D12: {s: 1, f: [0], r: "Telemetry on by default with opt-out; retention not documented."}
+    D13: {s: 2, f: [0, 1], r: "npm publishing with OIDC provenance after a compromise; versions pinnable via npm."}
+    D14: {s: 2, f: [0, 1], r: "Remote config enforces rules and yolo toggle, with gaps (MCP/telemetry not in CLI)."}
+    D15: {s: 2, f: [0, 1], r: "SECURITY.md VDP and 3 GHSAs; bounty/advisory feed not documented."}
+  codex-cli:
+    D01: {s: 2, f: [0, 1, 2, 3], r: "on-request default runs only sandboxed (workspace, no network) actions unasked; yolo is a CLI flag; admin requirements can constrain; deny-in-every-mode not documented."}
+    D02: {s: 2, f: [0, 1], r: "OS sandbox on by default with workspace-only writes and no network; whether trusted repo config can weaken sandbox_mode is not documented."}
+    D03: {s: 2, f: [0, 1], r: "Network off by default with proxy allow/deny, but proxy skips web search and MCP traffic."}
+    D04: {s: 2, f: [0, 1, 2], r: "Project .codex layers and hooks load only after trust; hook-trust bypass flag, no central folder approval."}
+    D05: {s: 2, f: [0, 1, 2], r: "Per-tool enable/disable and admin MCP allowlist; no change detection or OAuth handling documented."}
+    D06: {s: 1, f: [0], r: "Admins can constrain marketplace sources; no vetting/signing documented."}
+    D07: {s: 1, f: [0], r: "Keyring option exists but default store not stated; auth.json file; no redaction."}
+    D08: {s: 2, f: [0, 1], r: "codex exec read-only by default; action has allow-users, allow-bots=false and drop-sudo; injection handling not documented."}
+    D09: {s: 1, f: [0], r: "Memories off by default but stored globally, not project-scoped."}
+    D10: {s: 1, f: [0], r: "Only an approval-reviewer subagent; inheritance and restriction undocumented."}
+    D11: {s: 2, f: [0], r: "Structured rollouts/history.jsonl and opt-in OTel export."}
+    D12: {s: 1, f: [0, 1], r: "Usage metrics default-on with opt-out; retention and training not documented."}
+    D13: {s: 2, f: [0], r: "Sigstore-signed Linux artifacts; installs via npm/Homebrew can be pinned."}
+    D14: {s: 2, f: [0, 1], r: "requirements.toml via MDM constrains permissions, sandbox, MCP, hooks and marketplaces; telemetry not covered."}
+    D15: {s: 3, f: [0, 1, 2], r: "SECURITY.md with Bugcrowd bounty and GHSA/CVE advisories."}
+  continue:
+    D01: {s: 2, f: [0, 1], r: "Edits and Bash ask by default, user permissions.yaml allow/deny, approve-all via --auto flag; no deny-in-every-mode or admin control."}
+    D02: {s: 0, f: [0], r: "No sandbox."}
+    D03: {s: 0, f: [0], r: "Fetch tool allowed by default with no domain controls."}
+    D04: {s: 0, f: [0, 1], r: "Workspace hooks and .continue/.env load with no trust gate."}
+    D05: {s: 0, f: [0], r: "Project MCP config files are picked up automatically with no allow/deny controls documented."}
+    D06: {s: null, r: "N/A (no facts on an extension mechanism)."}
+    D07: {s: 1, f: [0], r: "Secrets from env and workspace .env files; no keychain or redaction."}
+    D08: {s: 1, f: [0, 1], r: "Headless excludes ask tools by default, but the official action documents no permissions or actor checks."}
+    D09: {s: null, r: "N/A (no facts)."}
+    D10: {s: 1, f: [0], r: "Subagent hook events only; inheritance and restriction undocumented."}
+    D11: {s: 1, f: [0], r: "Local session JSON files; no telemetry export."}
+    D12: {s: null, r: "N/A (anonymous telemetry removed; no vendor service in final release)."}
+    D13: {s: 1, f: [0, 1], r: "npm registry only, unmaintained, no provenance."}
+    D14: {s: null, r: "N/A (no facts)."}
+    D15: {s: 1, f: [0], r: "SECURITY.md exists; no advisories documented."}
+  copilot-studio:
+    D01: {s: 1, f: [0, 1], r: "Data policies can block connectors, but no per-action approval primitive documented."}
+    D02: {s: 2, f: [0], r: "Tasks run in a platform sandbox by default; mechanism and egress isolation undocumented."}
+    D03: {s: 3, f: [0], r: "Connector endpoint filtering and Entra network egress controls on the managed platform."}
+    D04: {s: null, r: "N/A (no facts; no workspace config)."}
+    D05: {s: 2, f: [0, 1, 2], r: "Platform data policies gate MCP tools, but definitions change dynamically with no re-approval."}
+    D06: {s: 1, f: [0], r: "Skills with scripts uploadable and shared with no vetting or signing."}
+    D07: {s: 2, f: [0, 1], r: "End-user credentials and CMK by default; third-party token-forwarding finding limits it."}
+    D08: {s: null, r: "N/A (no facts)."}
+    D09: {s: 1, f: [0], r: "Memory in preview with no documented scoping or controls."}
+    D10: {s: 2, f: [0], r: "Each agent gets its own Entra Agent ID; connected agents preview, no audit of delegation documented."}
+    D11: {s: 3, f: [0, 1], r: "Purview audit of admin and user events, SIEM export, cannot be disabled; third-party logging gap was fixed."}
+    D12: {s: 1, f: [0], r: "Zero retention and residency options exist, but training-use default not documented."}
+    D13: {s: null, r: "N/A (no facts; hosted service)."}
+    D14: {s: 2, f: [0], r: "Power Platform data policies and Agent 365 control plane; sandbox/telemetry coverage not documented."}
+    D15: {s: 2, f: [0], r: "MSRC programme issues CVEs for the service; bounty applicability not documented."}
+  crewai:
+    D01: {s: 0, f: [1], r: "No per-tool approval primitive documented (human_input reviews task output only)."}
+    D02: {s: 0, f: [0, 1], r: "No built-in sandbox after CodeInterpreterTool removal."}
+    D03: {s: 0, f: [0], r: "No egress controls in core."}
+    D04: {s: null, r: "N/A (only unverified facts)."}
+    D05: {s: 1, f: [0], r: "MCP tool_filter exists; trust only, no approval hook or auth handling."}
+    D06: {s: null, r: "N/A (only unverified facts)."}
+    D07: {s: 1, f: [0], r: "Keys from env; telemetry excludes secrets."}
+    D08: {s: null, r: "N/A (only unverified facts)."}
+    D09: {s: 1, f: [0], r: "Agent-written memory in user data dir with no confirmation or off switch documented."}
+    D10: {s: null, r: "N/A (only unverified facts)."}
+    D11: {s: 2, f: [0], r: "Event bus with optional tracing and OTel integrations one setting away."}
+    D12: {s: 1, f: [0, 1], r: "Telemetry on by default with opt-out; retention not documented."}
+    D13: {s: null, r: "N/A (only unverified facts)."}
+    D14: {s: null, r: "N/A (only unverified facts)."}
+    D15: {s: 0, f: [0], r: "No SECURITY.md and no vendor advisories; CVEs came via CERT/CC."}
+  crush:
+    D01: {s: 1, f: [0, 1, 2], r: "Prompts exist, but project crush.json hooks can auto-approve and allowed_tools skip prompts."}
+    D02: {s: null, r: "N/A (only unverified facts)."}
+    D03: {s: null, r: "N/A (no facts)."}
+    D04: {s: 0, f: [0, 1], r: "Project crushrc and crush.json execute at load with no trust prompt."}
+    D05: {s: 1, f: [0], r: "Project servers start without approval, but enabled/disabled tool lists exist."}
+    D06: {s: 1, f: [0], r: "Skills from repo directories load automatically without prompt or vetting."}
+    D07: {s: 1, f: [0], r: "Logs and state in project dir; credential file mode not documented."}
+    D08: {s: 0, f: [0], r: "crush run auto-approves every permission request."}
+    D09: {s: 1, f: [0], r: "Context files auto-loaded from many locations; no off switch documented."}
+    D10: {s: null, r: "N/A (no facts)."}
+    D11: {s: 1, f: [0], r: "Local log and SQLite DB; no telemetry export."}
+    D12: {s: 1, f: [0], r: "Content-free metrics with opt-out, but retention not documented."}
+    D13: {s: 2, f: [0], r: "Cosign signatures, checksums and SBOMs; hardened publishing not documented."}
+    D14: {s: 0, f: [0], r: "System config has lowest priority and cannot enforce policy."}
+    D15: {s: 1, f: [0], r: "Security email; no advisories or bounty."}
+  cursor:
+    D01: {s: 1, f: [0, 1, 2], r: "Default Auto-review uses a classifier rather than asking the user before shell; deny beats allow in CLI."}
+    D02: {s: 1, f: [0, 1], r: "Sandbox on in default Auto-review on macOS/Linux, but write scope not documented and Windows uncovered."}
+    D03: {s: 1, f: [0], r: "Sandbox network allowlist with ~100 package domains by default; fetch-tool default not documented."}
+    D04: {s: 1, f: [0, 1, 2], r: "Project hooks need workspace trust, but Workspace Trust is disabled by default (third-party) and tasks run on open."}
+    D05: {s: 1, f: [0, 1, 2], r: "Tools prompt and admin allowlist exist, but no project-server approval or change detection."}
+    D06: {s: 1, f: [0], r: "Team marketplace and MDM extension allowlist; no vetting or signing documented."}
+    D07: {s: 1, f: [0], r: "API key in env; .cursorignore protection repeatedly bypassed; storage not documented."}
+    D08: {s: 1, f: [0, 1], r: "Print mode needs --force to write, but no CI hardening guidance."}
+    D09: {s: 1, f: [0], r: "User/Team rules; memory controls not documented."}
+    D10: {s: 1, f: [0, 1], r: "Subagent isolation undocumented; cloud agents never ask."}
+    D11: {s: 2, f: [0], r: "Enterprise audit logs with SIEM streaming; coverage of tool actions not documented."}
+    D12: {s: 1, f: [0, 1], r: "Privacy Mode enforceable, but default for new users and retention not stated."}
+    D13: {s: 1, f: [0], r: "curl|bash installer without signature or checksum documentation."}
+    D14: {s: 3, f: [0, 1, "D05.1", "D12.1"], r: "Team/Enterprise settings override local and cover auto-run, sandbox, network, MCP allowlist, extensions and Privacy Mode."}
+    D15: {s: 2, f: [0, 1], r: "Security contact and 29 CVE advisories; no bug bounty."}
+  deepagents:
+    D01: {s: 1, f: [0, 1], r: "interrupt_on HITL exists but none by default."}
+    D02: {s: 1, f: [0], r: "Remote sandboxes optional; local backends unisolated."}
+    D03: {s: null, r: "N/A (no facts)."}
+    D04: {s: 1, f: [0], r: "Trust gates for hooks and MCP, but project artifacts read before approval."}
+    D05: {s: 1, f: [0], r: "Project .mcp.json requires approval; auth handling not documented."}
+    D06: {s: null, r: "N/A (no facts)."}
+    D07: {s: 1, f: [0], r: "Keys from process env only."}
+    D08: {s: 2, f: [0], r: "Headless keeps shell off unless allow-listed and the action does not forward auto-approve."}
+    D09: {s: 1, f: [0], r: "Persistent memory exists; visibility and off switch not documented."}
+    D10: {s: null, r: "N/A (no facts)."}
+    D11: {s: null, r: "N/A (no facts)."}
+    D12: {s: null, r: "N/A (no facts)."}
+    D13: {s: null, r: "N/A (no facts)."}
+    D14: {s: 2, f: [0], r: "managed_config.toml enforces some keys (mode, shell allow list, models)."}
+    D15: {s: 1, f: [0, 1], r: "One GHSA published, but no SECURITY.md/policy."}
+  deepseek-harness:
+    D01: {s: 1, f: [0, 1, 2], r: "Default asks and fails closed, but control is coarse presets only; no user allow/deny rules documented."}
+    D02: {s: 2, f: [0, 1], r: "Sandbox on by default (workspace-write) on main platforms and fails closed; network not confined."}
+    D03: {s: 0, f: [0, 1], r: "Sandbox does not cover network; web_fetch has no allowlist."}
+    D04: {s: 0, f: [0, 1], r: "No repo settings layer, but project instructions and skills load by default with no trust concept."}
+    D05: {s: 1, f: [0], r: "No server enabled by default and env scrubbed; no managed policy or change detection."}
+    D06: {s: 1, f: [0, 2], r: "Plugins installed via pnpm with only advice to review; no vetting or signing."}
+    D07: {s: 1, f: [0, 1], r: "Plaintext credentials file accessible to agent; only web UI redaction."}
+    D08: {s: 1, f: [0, 1], r: "Headless defaults fail closed, but no official CI integration guidance."}
+    D09: {s: 1, f: [0], r: "Memory only via default-off MCP configs; scoping and controls undocumented."}
+    D10: {s: 1, f: [0, 1], r: "Delegated children pinned to approval never, but per-agent tool restriction undocumented."}
+    D11: {s: 2, f: [0, 1, "D12.1"], r: "Session audit log of approvals, JSONL sessions and OTel export."}
+    D12: {s: 1, f: [0, 1], r: "Session logs sent to DeepSeek by default with opt-out; OTel exports content."}
+    D13: {s: 1, f: [0], r: "npm registry install without documented provenance."}
+    D14: {s: null, r: "N/A (only unverified facts)."}
+    D15: {s: 0, f: [0], r: "No SECURITY.md and no advisories."}
+  devin:
+    D01: {s: 2, f: [0, 1], r: "Normal default asks with deny>ask>allow and org deny not overridable; admin disabling of bypass mode not documented."}
+    D02: {s: 1, f: [0], r: "Sandbox off by default (admin can require), research preview."}
+    D03: {s: 2, f: [0, "D05.0"], r: "Tool calls prompt and sandbox domain allow/deny with authoritative org allowlist; sandbox off by default."}
+    D04: {s: 2, f: [0, 1, 2], r: "Workspace trust on by default and -p fails in untrusted dirs; no central folder approval or env/plugin coverage documented."}
+    D05: {s: 1, f: [0], r: "Per-tool rules and team MCP settings, but no project-server approval."}
+    D06: {s: 1, f: [0], r: "Org switch disables plugins; no vetting or pinning documented."}
+    D07: {s: 1, f: [0], r: "OAuth tokens stored locally, mode/keychain unspecified."}
+    D08: {s: 1, f: [0], r: "-p blocked in untrusted dirs, but no official CI action guidance."}
+    D09: {s: null, r: "N/A (Devin Local persists no memories)."}
+    D10: {s: 1, f: [0], r: "Subagents share session approvals; no restriction documented."}
+    D11: {s: 2, f: [0], r: "Structured ATIF transcript export, hooks and admin analytics."}
+    D12: {s: 1, f: [0], r: "Training on by default for cloud with opt-out for paid users."}
+    D13: {s: 1, f: [0], r: "curl|bash installer without checksum or signature."}
+    D14: {s: 2, f: [0, "D06.0", "D05.0"], r: "Team settings enforce permissions, sandbox, plugins; telemetry not covered."}
+    D15: {s: 1, f: [0], r: "Security contact; no advisories or bounty."}
+  factory-droid:
+    D01: {s: 2, f: [0, 1, 2], r: "Exec read-only by default, block beats everything including skip flag; interactive default level and central bypass disable not documented."}
+    D02: {s: 1, f: [0, 1], r: "Strong sandbox with fail-closed, but opt-in via sandbox.enabled."}
+    D03: {s: 1, f: [0, 1], r: "Allowlist only when sandbox is enabled; fetch default not documented."}
+    D04: {s: 1, f: [0, 1], r: "Trust gates project permissionRules and apiKeyHelper is org-only, but no trust gate documented for project hooks/MCP."}
+    D05: {s: 2, f: [0, 1, 2, "D07.0"], r: "Per-tool approvals bound to config fingerprint and org allowlist; OAuth scopes display not documented."}
+    D06: {s: 1, f: [0], r: "Managed plugin/marketplace allowlists, but no vetting or signing documented."}
+    D07: {s: 1, f: [0, 1, 2], r: "Keyring for MCP OAuth and Droid Shield, but main credential storage and log retention not documented."}
+    D08: {s: 1, f: [0, 1, "D01.2"], r: "droid exec read-only by default and fails safely, but no official CI action guidance."}
+    D09: {s: 1, f: [0], r: "File-based AGENTS.md; no off switch documented."}
+    D10: {s: 2, f: [0], r: "Subagent autonomy configurable and clamped to org maximum."}
+    D11: {s: 3, f: [0, 1], r: "Org-pinned OTEL sink not overridable locally plus org audit events."}
+    D12: {s: 1, f: [0, 1, 2], r: "Telemetry per-user by default; retention and training not documented."}
+    D13: {s: 1, f: [0, 1], r: "curl|sh, brew and npm without checksum or provenance."}
+    D14: {s: 2, f: [0, 1, "D05.2", "D06.0", "D11.0"], r: "Authoritative system settings cover autonomy, hooks, MCP, plugins and OTEL; sandbox enforcement not documented."}
+    D15: {s: 0, f: [0], r: "Only compliance certifications; no security contact or policy documented."}
+  gemini-cli:
+    D01: {s: 2, f: [0, 1], r: "Default mode asks, user/admin policy rules, YOLO disable-able; deny-in-every-mode not documented."}
+    D02: {s: 1, f: [0], r: "Sandbox is opt-in."}
+    D03: {s: 1, f: [0], r: "Network controls only within opt-in sandbox."}
+    D04: {s: 2, f: [0, 1, 2], r: "Folder trust on by default in code gates settings/.env/extensions, headless needs explicit trust flag; no central folder pre-approval."}
+    D05: {s: 2, f: [0], r: "Per-tool include/exclude, allowed/excluded lists and admin-required servers; no change detection."}
+    D06: {s: 2, f: [0, 1], r: "Source allowlist, git-extension block and integrity checks; no signing."}
+    D07: {s: 1, f: [0], r: "OAuth credentials in a file with mode not documented; no redaction."}
+    D08: {s: 1, f: [0, 1], r: "Headless requires explicit trust, but official action's permissions/actor checks not documented."}
+    D09: {s: 1, f: [0], r: "save_memory writes to global GEMINI.md; no confirmation or off switch documented."}
+    D10: {s: null, r: "N/A (no facts)."}
+    D11: {s: 2, f: [0, 1], r: "Local chat session files and opt-in OpenTelemetry."}
+    D12: {s: 1, f: [0], r: "Usage statistics on by default with opt-out; retention not documented."}
+    D13: {s: 1, f: [0], r: "Unsigned release assets; registry installs without verified provenance."}
+    D14: {s: 2, f: [0, 1], r: "System settings and admin policy tier; coverage and precedence over MCP/plugins not fully documented."}
+    D15: {s: 3, f: [0, 1], r: "SECURITY.md with Google VRP bounty and GHSA/CVE disclosure."}
+  github-copilot-sdk:
+    D01: {s: 3, f: [0], r: "Permission handler gates every tool kind by default (pending if absent) and managed settings can require approval."}
+    D02: {s: 0, f: [0], r: "No sandbox; container is application responsibility."}
+    D03: {s: 1, f: [0], r: "Managed network policy only for client-owned browsers."}
+    D04: {s: 1, f: [0], r: "Folder trust covers repo customization dirs, but SDK inputs may be outside checkout; hooks/MCP coverage undocumented."}
+    D05: {s: 1, f: [0], r: "MCP tools allowlist and permission kind; auth handling not documented."}
+    D06: {s: 1, f: [0], r: "Skill install shows review flow; no registry vetting or signing."}
+    D07: {s: 2, f: [0], r: "CLI credentials in system keychain; env tokens alternative."}
+    D08: {s: 2, f: [0, "D01.0"], r: "Headless server loopback with connection token by default and permission handler enforceable."}
+    D09: {s: 1, f: [0], r: "Memory writes are a permission kind; scoping and off switch undocumented."}
+    D10: {s: null, r: "N/A (only unverified facts)."}
+    D11: {s: 2, f: [0], r: "OTel/JSONL telemetry config one setting away; content opt-in."}
+    D12: {s: null, r: "N/A (only unverified facts)."}
+    D13: {s: null, r: "N/A (only unverified facts)."}
+    D14: {s: 2, f: [0], r: "Managed settings with account/device policy and approval requirement."}
+    D15: {s: 1, f: [0], r: "SECURITY.md contact; no advisories or bounty scope."}
+  github-copilot:
+    D01: {s: 2, f: [0, 1], r: "CLI and VS Code ask by default, deny beats allow-all, yolo is a user flag; repo/agent-writable settings path to auto-approve not excluded in facts."}
+    D02: {s: 1, f: [0, 1], r: "CLI sandbox settings exist with default not stated; VS Code sandbox off by default."}
+    D03: {s: 2, f: [1, 2, "D02.0"], r: "CLI URLs require approval by default with allow/deny and a sandbox network policy; VS Code network filter off by default."}
+    D04: {s: 2, f: [0, 1], r: "CLI directory trust skips project MCP and VS Code Restricted Mode disables agents and MCP until trusted; no central folder approval or git-helper coverage (fsmonitor CVE fixed)."}
+    D05: {s: 2, f: [0, 1, "D01.0"], r: "Trust-gated project servers, per-tool prompts and registryOnly policy; no change detection, cloud agent auto-uses tools."}
+    D06: {s: 1, f: [0], r: "Plugins and marketplaces with a VS Code policy; no vetting or signing documented."}
+    D07: {s: 1, f: [0, 1], r: "Keychain with file fallback for MCP secrets only; no redaction or read protection documented."}
+    D08: {s: 2, f: [0, 1], r: "Headless takes explicit tool flags; cloud agent limits triggers to write-access users and filters hidden characters; PR-head config blocking not documented."}
+    D09: {s: 1, f: [0], r: "Cross-session store and personal instructions; no off switch documented."}
+    D10: {s: 1, f: [0], r: "Custom agents exist; permission inheritance undocumented."}
+    D11: {s: 1, f: [0], r: "Structured local events.jsonl but no telemetry export documented."}
+    D12: {s: null, r: "N/A (only third-party facts)."}
+    D13: {s: 1, f: [0, 1], r: "curl/npm/brew installs with signing undocumented; auto-update configurable."}
+    D14: {s: 2, f: [0, "D06.0"], r: "Enterprise can block yolo and set VS Code tool/MCP/agent policies; sandbox and telemetry coverage not documented."}
+    D15: {s: 3, f: [0, 1], r: "GitHub bug bounty and CVE-bearing GHSAs on the CLI repo."}
+  google-adk:
+    D01: {s: 1, f: [0, 1], r: "require_confirmation exists but defaults False; bash prefixes default to all."}
+    D02: {s: 1, f: [0], r: "Container/Vertex executors optional; default local executor runs on host."}
+    D03: {s: null, r: "N/A (no facts)."}
+    D04: {s: null, r: "N/A (library loads caller-supplied agents; only a local-server fact)."}
+    D05: {s: 1, f: [0], r: "MCP tool_filter and confirmation hook, off by default."}
+    D06: {s: null, r: "N/A (no facts)."}
+    D07: {s: null, r: "N/A (no facts)."}
+    D08: {s: null, r: "N/A (no facts)."}
+    D09: {s: 1, f: [0], r: "Memory service exists; scoping and controls undocumented."}
+    D10: {s: null, r: "N/A (no facts)."}
+    D11: {s: 2, f: [0], r: "Built-in OpenTelemetry tracing with span exporter."}
+    D12: {s: null, r: "N/A (only unverified facts)."}
+    D13: {s: null, r: "N/A (no facts)."}
+    D14: {s: null, r: "N/A (no facts)."}
+    D15: {s: 1, f: [0], r: "GHSA/CVE published; no policy in facts (SECURITY.md fact unverified)."}
+  goose:
+    D01: {s: 1, f: [0, 1, 2], r: "Autonomous mode by default; allow/ask/never lists exist."}
+    D02: {s: 0, f: [0], r: "No sandbox; README only recommends a VM or container."}
+    D03: {s: 0, f: [0], r: "No domain allowlist."}
+    D04: {s: null, r: "N/A (no control facts; only a vulnerability record)."}
+    D05: {s: 1, f: [0, 1, "D01.2"], r: "Extension command allowlist and malware check exist, but no project-server approval or change detection."}
+    D06: {s: 1, f: [0, "D05.1"], r: "Recipes embed extension commands; OSV check only for npm/PyPI."}
+    D07: {s: 1, f: [0], r: "Keyring recommended but plaintext secrets.yaml fallback; no redaction."}
+    D08: {s: 1, f: [0, "D01.1"], r: "Autonomous default and security prompt off in unattended runs."}
+    D09: {s: 1, f: [0], r: "Memory extension exists; controls undocumented."}
+    D10: {s: 1, f: [0], r: "Delegation extension exists; inheritance undocumented."}
+    D11: {s: 1, f: [0], r: "Local sessions DB and logs; no telemetry export."}
+    D12: {s: 1, f: [0], r: "Telemetry off by default and asked, but retention not documented."}
+    D13: {s: 1, f: [0], r: "Install script without documented checksum or signature."}
+    D14: {s: 1, f: [0], r: "Custom distributions only bake defaults."}
+    D15: {s: 2, f: [0, 1], r: "Private reporting via Security tab and a published GHSA; no bounty."}
+  grok-build:
+    D01: {s: 3, f: [0, 1, 2, 3], r: "Ask default, deny applies in every mode, default mode only from user config, root-owned requirements can disable bypass."}
+    D02: {s: 1, f: [0, 1], r: "Sandbox profiles off by default."}
+    D03: {s: 1, f: [0], r: "web_fetch off by default, but no sandbox network allowlist documented."}
+    D04: {s: 2, f: [0, 1, 2], r: "Folder trust gates hooks, MCP, LSP, config permissions/plugins and instructions; headless and central folder approval not documented."}
+    D05: {s: 2, f: [0, 1, 2, "D04.0"], r: "Trust-gated project MCP, permission rules and managed MCP allowlist; OAuth tokens in plain file, no change detection."}
+    D06: {s: 1, f: [0], r: "Per-plugin trust store; no vetting or signing documented."}
+    D07: {s: 1, f: [0, 1, "D12.0"], r: "Credentials under ~/.grok with mode not documented; telemetry scrubbing only."}
+    D08: {s: 1, f: [0, 1], r: "dontAsk and strict sandbox in CI example, but no actor/trigger checks documented."}
+    D09: {s: 1, f: [0], r: "Memory off by default; scope and controls when enabled undocumented."}
+    D10: {s: 1, f: [0, 1], r: "Subagents off by default; restriction model undocumented (worktree claim third-party)."}
+    D11: {s: 1, f: [0], r: "Local sessions and logs; no structured export documented."}
+    D12: {s: 1, f: [0, 1, 2], r: "Telemetry crates with scrubbing and team ZDR, but defaults/retention undocumented; third-party upload incident."}
+    D13: {s: 1, f: [0, 1, 2], r: "curl|bash and npm with postinstall; no signature/checksum; auto-update can be disabled."}
+    D14: {s: 3, f: [0, "D01.3", "D02.0", "D05.2"], r: "Root-owned requirements pins override all and cover bypass, sandbox, permission rules, MCP, marketplace and telemetry flags."}
+    D15: {s: 1, f: [0, 1], r: "HackerOne bounty and policy, but no published advisories."}
+  hermes-agent:
+    D01: {s: 1, f: [0, 1], r: "Default smart mode is a heuristic that runs shell without asking; deny globs survive yolo."}
+    D02: {s: 1, f: [0], r: "Default backend runs on host; confinement only with non-default backends."}
+    D03: {s: 1, f: [0, 1], r: "Proxy allowlist only for Docker backend, which defaults to host network."}
+    D04: {s: 1, f: [0, 1], r: "Project plugins off by default and hook consent per command, but script edits silently trusted; no folder gate."}
+    D05: {s: 1, f: [0, 1], r: "MCP trust approval surface and env stripping; no managed list or change detection."}
+    D06: {s: 1, f: [0], r: "Skills run arbitrary Python; guard is only a review aid."}
+    D07: {s: 1, f: [0, 1], r: "Credentials stripped from children, but storage not keychain/0600 (world-readable files fixed in 0.16.0)."}
+    D08: {s: 1, f: [0, 1], r: "Unattended modes deny by default, but no official CI integration guidance."}
+    D09: {s: 1, f: [0], r: "Agent-written memory with write approval off by default."}
+    D10: {s: 1, f: [0], r: "Delegated children inherit tool access."}
+    D11: {s: 1, f: [0], r: "Redacted local logs; no structured export."}
+    D12: {s: null, r: "N/A (only unverified facts)."}
+    D13: {s: 1, f: [0, 1], r: "curl|bash installer; only Termux APT repo signed."}
+    D14: {s: 2, f: [0], r: "Root-owned managed scope wins for pinned keys; coverage not documented."}
+    D15: {s: 2, f: [0, 1], r: "SECURITY.md and 10 advisories; no bounty."}
+  jules:
+    D01: {s: 1, f: [0], r: "Approval only at plan level, plans can be auto-approved."}
+    D02: {s: 2, f: [0], r: "Each task runs in a short-lived cloud VM by default; network unrestricted."}
+    D03: {s: 0, f: [0], r: "VM has internet access with no egress controls."}
+    D04: {s: 0, f: [0], r: "Repo AGENTS.md and setup script consumed with no trust step."}
+    D05: {s: 1, f: [0], r: "Curated MCP integrations configured by user; no managed policy."}
+    D06: {s: null, r: "N/A (no facts)."}
+    D07: {s: 1, f: [0], r: "Secret handling undocumented; only advice."}
+    D08: {s: 1, f: [0], r: "API/CLI runs produce PRs for review; no CI hardening guidance."}
+    D09: {s: null, r: "N/A (environment snapshot is not agent memory)."}
+    D10: {s: null, r: "N/A (no facts)."}
+    D11: {s: null, r: "N/A (no facts)."}
+    D12: {s: 1, f: [0], r: "No training on private repos; retention not documented."}
+    D13: {s: 1, f: [0], r: "npm registry only."}
+    D14: {s: 0, f: [0], r: "Enterprise accounts not supported."}
+    D15: {s: null, r: "N/A (no facts)."}
+  junie:
+    D01: {s: 1, f: [0, 1], r: "Commands ask by default, but the allowlist is first-match with no documented deny precedence and brave mode can be set in config.json."}
+    D02: {s: 1, f: [0], r: "srt sandbox optional, off by default, not hardened."}
+    D03: {s: 1, f: [0], r: "Sandbox network unrestricted by default; allowedDomains opt-in."}
+    D04: {s: 2, f: [0, 1], r: "Trust prompt gates project config, MCP and hooks; non-interactive trusts by design; no central folder approval."}
+    D05: {s: 1, f: [0, 1, 2], r: "Tool calls need approval but servers enabled by default; no managed list or change detection."}
+    D06: {s: 1, f: [0], r: "Extensions and skills exist; vetting not documented."}
+    D07: {s: 1, f: [0], r: "readSecretFile category and .aiignore restrict reads, but credential storage undocumented."}
+    D08: {s: 1, f: [0, 1], r: "Headless auto-trusts project config; action requests write scopes with no untrusted-input guidance."}
+    D09: {s: 1, f: [0], r: "Global and project guideline files imported automatically; no off switch documented."}
+    D10: {s: null, r: "N/A (only unverified facts)."}
+    D11: {s: 1, f: [0], r: "Per-session transcript and events.jsonl; no export documented."}
+    D12: {s: 1, f: [0], r: "Statistics toggle with default and retention not stated."}
+    D13: {s: 2, f: [0], r: "Installer verifies SHA-256; update channels and auto-update configurable."}
+    D14: {s: 1, f: [0, 1], r: "Config pinning toggles only; no admin-enforced policy."}
+    D15: {s: 2, f: [0, 1], r: "YouTrack security reporting and NVD CVEs; no bounty."}
+  kilo-code:
+    D01: {s: 1, f: [0, 1, 2, 3], r: "Base rule allows most tools and the bash allowlist includes write commands (cp, mv); permissions described as UX only."}
+    D02: {s: 1, f: [0, 1], r: "Sandbox off by default."}
+    D03: {s: 1, f: [0, "D02.0"], r: "Host allowlist only when the opt-in sandbox is enabled."}
+    D04: {s: 1, f: [0, 1], r: "Project config is partially sanitised and can be disabled by flag; no trust prompt."}
+    D05: {s: 1, f: [0, 1], r: "MCP via config; enterprise allowlist only a proposal."}
+    D06: {s: 1, f: [0], r: "npm plugins with no vetting; KILO_PURE disables all."}
+    D07: {s: 1, f: [0, 1], r: "auth.json 0600 and .env reads prompt, but no log retention documented."}
+    D08: {s: 1, f: [0], r: "Non-interactive auto-rejects without --auto; no official CI guidance."}
+    D09: {s: 1, f: [0], r: "Memory saves ask by default; scoping and central controls not documented."}
+    D10: {s: 1, f: [0], r: "Task permission rules exist; bypass propagation undocumented."}
+    D11: {s: 1, f: [0], r: "OTel export available; structured local tool-call logs not documented."}
+    D12: {s: 1, f: [0, 1], r: "Telemetry on by default with opt-out; retention not documented."}
+    D13: {s: 1, f: [0], r: "Registry and curl installs without signatures or provenance."}
+    D14: {s: 1, f: [0], r: "Managed config location exists; enforced coverage not documented."}
+    D15: {s: 1, f: [0, 1], r: "CVEs in NVD, but no policy or contact in facts."}
+  kimi-cli:
+    D01: {s: 2, f: [0, 1, "D04.1"], r: "Manual default with allow/deny/ask rules and no project config; no admin disable of auto/yolo."}
+    D02: {s: null, r: "N/A (only unverified facts)."}
+    D03: {s: null, r: "N/A (only unverified facts)."}
+    D04: {s: 2, f: [0, 1, 2], r: "Only user-level config and hooks; project MCP shown in trust prompt and disabled headless unless trusted; no central folder control."}
+    D05: {s: 1, f: [0, 1], r: "MCP tool calls blanket auto-approved in default mode."}
+    D06: {s: 1, f: [0], r: "Plugins installed from GitHub with pins but no vetting."}
+    D07: {s: 1, f: [0, 1, 2], r: "Credentials 0600 and sensitive-file asks, but api_key plaintext in config and no log retention."}
+    D08: {s: 1, f: [0, 1], r: "-p runs with no human approval under auto policy."}
+    D09: {s: null, r: "N/A (only unverified facts)."}
+    D10: {s: 1, f: [0], r: "Subagents isolated context only; permission restriction undocumented."}
+    D11: {s: 1, f: [0], r: "Local sessions and logs; no export."}
+    D12: {s: 1, f: [0], r: "Telemetry on by default with opt-out; retention not documented."}
+    D13: {s: 1, f: [0, 1], r: "curl|bash installer and auto-update on by default."}
+    D14: {s: null, r: "N/A (only unverified facts)."}
+    D15: {s: 1, f: [0, 1], r: "SECURITY.md with contact; zero advisories."}
+  kiro:
+    D01: {s: 2, f: [0, 1, 2], r: "Every command asks by default with allow/ask/deny rules; auto-approve via flags or settings; admin managed settings only deny/ask."}
+    D02: {s: 1, f: [0, 1], r: "Sandbox off by default and not covering file tools."}
+    D03: {s: 2, f: [0, 1, "D01.0"], r: "Fetch asks by default, sandbox network default-blocked with rules, admin can deny web tools; sandbox allowlist not centrally managed."}
+    D04: {s: 1, f: [0, 1, 2], r: "Trust gates agents, steering, MCP and skills, but hooks coverage and headless behaviour not documented."}
+    D05: {s: 2, f: [0, 1], r: "Trust-gated workspace MCP, per-tool disable and admin registry allowlist; no change detection."}
+    D06: {s: 1, f: [0], r: "Powers and skills; vetting not documented."}
+    D07: {s: 1, f: [0, 1], r: "Agent can reach credentials; token storage undocumented; deny rules only examples."}
+    D08: {s: 1, f: [0, 1, 2], r: "Headless treats ask as deny, but no official action."}
+    D09: {s: 1, f: [0, 1], r: "Global/workspace steering and knowledge base; no off switch documented."}
+    D10: {s: 1, f: [0], r: "Agent availability settings; inheritance undocumented."}
+    D11: {s: 1, f: [0], r: "Enterprise prompt logging to S3; structured local tool logs not documented."}
+    D12: {s: 1, f: [0, 1], r: "Free tiers opted in to content collection by default with opt-out."}
+    D13: {s: 2, f: [0, 1], r: "Installer verifies SHA-256 and auto-update can be disabled."}
+    D14: {s: 2, f: [0, 1], r: "MDM managed deny/ask rules and MCP registry toggle; client-side, gaps."}
+    D15: {s: 2, f: [0, 1], r: "AWS bulletins with CVEs and VDP; no bounty."}
+  langgraph-platform:
+    D01: {s: 0, f: [0], r: "Only application-defined API authorization; no tool-approval primitive documented (application responsibility)."}
+    D02: {s: null, r: "N/A (no facts)."}
+    D03: {s: 1, f: [0], r: "Only webhook loopback denial; no agent egress policy."}
+    D04: {s: null, r: "N/A (no facts)."}
+    D05: {s: null, r: "N/A (no facts)."}
+    D06: {s: null, r: "N/A (no facts)."}
+    D07: {s: 1, f: [0, 1], r: "Encryption at rest and optional trace hiding; no secret-manager integration."}
+    D08: {s: null, r: "N/A (no facts)."}
+    D09: {s: 2, f: [0], r: "Store scoped per user via namespaces; used only if the app enables it."}
+    D10: {s: null, r: "N/A (no facts)."}
+    D11: {s: 2, f: [0], r: "Built-in LangSmith tracing with configurable retention."}
+    D12: {s: 1, f: [0, 1], r: "Regions and retention documented, training default not stated."}
+    D13: {s: 1, f: [0], r: "No provenance or signing documented."}
+    D14: {s: 0, f: [0], r: "Self-hosted has no default auth or admin policy."}
+    D15: {s: 1, f: [0], r: "Regular GHSA/CVE issuance, but no SECURITY.md/policy."}
+  langgraph:
+    D01: {s: null, r: "N/A (only unverified facts)."}
+    D02: {s: null, r: "N/A (no facts)."}
+    D03: {s: null, r: "N/A (no facts)."}
+    D04: {s: null, r: "N/A (library loads caller-supplied objects; fact concerns server auth)."}
+    D05: {s: null, r: "N/A (no facts)."}
+    D06: {s: null, r: "N/A (no facts)."}
+    D07: {s: null, r: "N/A (library holds no credentials of its own; serializer fact only)."}
+    D08: {s: null, r: "N/A (no facts)."}
+    D09: {s: 1, f: [0], r: "Checkpointers and Store persist state; controls undocumented."}
+    D10: {s: null, r: "N/A (no facts)."}
+    D11: {s: null, r: "N/A (only unverified facts)."}
+    D12: {s: null, r: "N/A (no facts)."}
+    D13: {s: null, r: "N/A (no facts)."}
+    D14: {s: null, r: "N/A (no facts)."}
+    D15: {s: 1, f: [0, 1], r: "10+ GHSAs/CVEs, but no SECURITY.md (third-party)."}
+  manus:
+    D01: {s: null, r: "N/A (only third-party facts)."}
+    D02: {s: 2, f: [0, 1], r: "Per-task isolated cloud VM by default; root/sudo and secrets inside, egress not documented as controlled."}
+    D03: {s: null, r: "N/A (only third-party facts)."}
+    D04: {s: null, r: "N/A (no facts)."}
+    D05: {s: null, r: "N/A (no facts)."}
+    D06: {s: null, r: "N/A (no facts)."}
+    D07: {s: null, r: "N/A (only third-party facts)."}
+    D08: {s: null, r: "N/A (no facts)."}
+    D09: {s: null, r: "N/A (no facts)."}
+    D10: {s: null, r: "N/A (no facts)."}
+    D11: {s: null, r: "N/A (no facts)."}
+    D12: {s: 1, f: [0], r: "Certifications only; retention and training not documented."}
+    D13: {s: null, r: "N/A (no facts)."}
+    D14: {s: null, r: "N/A (no facts)."}
+    D15: {s: null, r: "N/A (only third-party facts)."}
+  microsoft-agent-framework:
+    D01: {s: 1, f: [0, 1], r: "Plain tools never require approval; the harness agent's default approval uses heuristic auto-approval rather than human confirmation."}
+    D02: {s: 1, f: [0], r: "Optional Hyperlight sandbox package; shell only if an executor is supplied."}
+    D03: {s: null, r: "N/A (no facts)."}
+    D04: {s: null, r: "N/A (no facts)."}
+    D05: {s: 1, f: [0, 1], r: "MCP approval_mode and allowed_tools hooks; defaults and auth handling not documented."}
+    D06: {s: null, r: "N/A (no facts)."}
+    D07: {s: null, r: "N/A (only a vulnerability record, no credential-control facts)."}
+    D08: {s: null, r: "N/A (no facts)."}
+    D09: {s: 1, f: [0], r: "Opt-in file-based durable memory; scoping and controls undocumented."}
+    D10: {s: null, r: "N/A (only unverified facts)."}
+    D11: {s: 2, f: [0], r: "Built-in OpenTelemetry module with sensitive data opt-in."}
+    D12: {s: 1, f: [0], r: "User-agent telemetry on by default with opt-out; retention not documented."}
+    D13: {s: null, r: "N/A (no facts)."}
+    D14: {s: null, r: "N/A (no facts)."}
+    D15: {s: 2, f: [0], r: "MSRC SECURITY.md and published GHSAs."}
+  mistral-vibe:
+    D01: {s: 1, f: [0, 1], r: "Default accept-edits agent auto-approves file writes without asking."}
+    D02: {s: null, r: "N/A (only unverified facts)."}
+    D03: {s: null, r: "N/A (only unverified facts)."}
+    D04: {s: 2, f: [0, 1, 2, "D08.2"], r: "Trust folders gate .vibe config, AGENTS.md and hooks; headless needs --trust; no central folder control."}
+    D05: {s: 1, f: [0], r: "MCP with disabled_tools globs and OAuth; no managed list or change detection."}
+    D06: {s: 1, f: [0], r: "Custom Python tools in user/project dirs; no vetting."}
+    D07: {s: 1, f: [0, 1], r: "Env file 0600 and OTel redaction by default, but log retention not documented."}
+    D08: {s: 1, f: [0, 1, 2], r: "Action runs -p without --trust, but no actor/permission guidance documented."}
+    D09: {s: null, r: "N/A (only unverified facts)."}
+    D10: {s: 1, f: [0], r: "Subagents inherit hooks; explore read-only, bypass propagation undocumented."}
+    D11: {s: 2, f: [0], r: "Logs, JSON export of session journal and opt-in OTel."}
+    D12: {s: 1, f: [0, 1], r: "Telemetry on by default with opt-out; retention not stated."}
+    D13: {s: 1, f: [0], r: "Update prompts can be disabled, but no signatures or checksums documented."}
+    D14: {s: null, r: "N/A (only unverified facts)."}
+    D15: {s: 1, f: [0, 1], r: "SECURITY.md contact; zero advisories."}
+  oh-my-pi:
+    D01: {s: 1, f: [0, 1, 2], r: "Default yolo auto-approves reads, writes and exec."}
+    D02: {s: 0, f: [0], r: "No process or filesystem containment."}
+    D03: {s: null, r: "N/A (only unverified facts)."}
+    D04: {s: 0, f: [0, 1], r: "Project settings and extensions load unconditionally."}
+    D05: {s: 1, f: [0, 1], r: "Imports project MCP configs from many files; user enable/disable lists exist."}
+    D06: {s: 1, f: [0, 1], r: "Marketplace plugins with hooks/MCP; exact allowlist opt-in, no vetting."}
+    D07: {s: 1, f: [0, 1], r: "Secret obfuscation off by default; OAuth credentials in agent.db."}
+    D08: {s: 1, f: [0, "D01.0"], r: "Print mode inherits yolo default."}
+    D09: {s: 1, f: [0], r: "Memory backend off by default; scope and controls when enabled undocumented."}
+    D10: {s: 1, f: [0], r: "Task subagents exist; restriction undocumented."}
+    D11: {s: 2, f: [0, "D12.1"], r: "JSONL sessions and opt-in OTLP export."}
+    D12: {s: 1, f: [0, 1], r: "Install-id and hostname sent in metadata; retention not documented."}
+    D13: {s: 2, f: [0, 1], r: "Installer checks SHA-256 and --ref pins a release; macOS signing."}
+    D14: {s: null, r: "N/A (only unverified facts)."}
+    D15: {s: 1, f: [0, 1], r: "SECURITY.md contact; zero advisories."}
+  openai-agentkit:
+    D01: {s: 2, f: [0, 1], r: "Connector/MCP approval required by default; no platform policy to enforce it."}
+    D02: {s: 0, f: [0], r: "No isolation documented; customer-run code is application responsibility."}
+    D03: {s: null, r: "N/A (no facts)."}
+    D04: {s: null, r: "N/A (no facts)."}
+    D05: {s: 2, f: [0, "D01.0", "D07.0"], r: "MCP approval on by default with OAuth authorization; servers not verified."}
+    D06: {s: null, r: "N/A (no facts)."}
+    D07: {s: 1, f: [0, 1], r: "OAuth tokens supplied by developer; safeguards are developer responsibility."}
+    D08: {s: null, r: "N/A (no facts)."}
+    D09: {s: null, r: "N/A (no facts)."}
+    D10: {s: null, r: "N/A (no facts)."}
+    D11: {s: 2, f: [0, 1], r: "Built-in traces and per-node preview."}
+    D12: {s: 1, f: [0], r: "30-day retention and ZDR documented; training default not stated."}
+    D13: {s: null, r: "N/A (no facts)."}
+    D14: {s: null, r: "N/A (no facts)."}
+    D15: {s: 1, f: [0, 1], r: "Security contact; no advisories for reported bypasses."}
+  openai-agents-sdk:
+    D01: {s: 1, f: [0, 1], r: "Approval callbacks exist but needs_approval defaults False."}
+    D02: {s: 1, f: [0], r: "Docker/hosted sandbox clients optional; local client has no confinement."}
+    D03: {s: null, r: "N/A (no facts)."}
+    D04: {s: null, r: "N/A (no facts)."}
+    D05: {s: 1, f: [0], r: "require_approval and tool_filter available, off by default."}
+    D06: {s: null, r: "N/A (no facts)."}
+    D07: {s: 1, f: [0, 1], r: "Keys from env; traces include sensitive data by default."}
+    D08: {s: null, r: "N/A (no facts)."}
+    D09: {s: null, r: "N/A (no facts)."}
+    D10: {s: 1, f: [0], r: "Handoff input filters scope context only; permission scoping not documented."}
+    D11: {s: 2, f: [0], r: "Built-in tracing of tool calls and handoffs."}
+    D12: {s: 1, f: [0, "D07.0"], r: "Tracing with sensitive data on by default to OpenAI, opt-out by env."}
+    D13: {s: null, r: "N/A (no facts)."}
+    D14: {s: null, r: "N/A (no facts)."}
+    D15: {s: 1, f: [0], r: "SECURITY.md CVD policy; no published GHSA."}
+  openclaw:
+    D01: {s: 1, f: [0, 1], r: "Default exec security full with ask off."}
+    D02: {s: 1, f: [0], r: "Sandboxing off by default."}
+    D03: {s: 1, f: [0], r: "Egress proxy and allowlist default-off."}
+    D04: {s: null, r: "N/A (facts concern gateway auth and a fixed vulnerability, not repo-config trust)."}
+    D05: {s: 1, f: [0], r: "Per server+tool approval modes; no managed list or change detection."}
+    D06: {s: 1, f: [0, 2], r: "Public registry with verify command, but no pinning or enforced vetting documented."}
+    D07: {s: 1, f: [0], r: "Recommended 600 permissions only; plaintext credentials agent-readable."}
+    D08: {s: 1, f: [0, "D01.0"], r: "CI exec entry with config pinning but permissive exec defaults."}
+    D09: {s: 1, f: [0, 1], r: "Workspace memory files; no off switch documented."}
+    D10: {s: null, r: "N/A (only a vulnerability record)."}
+    D11: {s: 2, f: [0, 1], r: "Bounded metadata audit ledger plus OpenTelemetry."}
+    D12: {s: 1, f: [0], r: "Content-free update checks by default and stats opt-in, but retention not documented."}
+    D13: {s: 1, f: [0, 1], r: "npm install with scripts; no provenance."}
+    D14: {s: 1, f: [0], r: "Operator scopes only; no admin-enforced settings layer."}
+    D15: {s: 2, f: [0, 1], r: "SECURITY.md and 722 advisories; no bounty."}
+  opencode:
+    D01: {s: 1, f: [0, 1, 2], r: "Default ruleset allows nearly everything without asking."}
+    D02: {s: 0, f: [0], r: "SECURITY.md states the agent is not sandboxed."}
+    D03: {s: 1, f: [0, 1], r: "Only coarse permission rules on tools; no domain or network policy."}
+    D04: {s: 0, f: [0, 1], r: "Project config and .opencode plugins auto-load with no trust prompt."}
+    D05: {s: 1, f: [0, "D01.1"], r: "Project servers start without approval; permission patterns can restrict tools."}
+    D06: {s: 0, f: [0], r: "npm plugins listed in config (including project config) are installed and run automatically at startup."}
+    D07: {s: 1, f: [0, 1], r: "auth.json 0600 and .env reads ask, but no log retention or redaction documented."}
+    D08: {s: 1, f: [0, "D01.0"], r: "opencode run uses the permissive default ruleset; no CI guidance."}
+    D09: {s: 1, f: [0], r: "Instruction files loaded; off switch only for Claude-compatible files."}
+    D10: {s: 2, f: [0], r: "Subagents inherit deny rules and have their own rulesets for task tools."}
+    D11: {s: 1, f: [0], r: "Local SQLite sessions; no telemetry export."}
+    D12: {s: 1, f: [0], r: "Sharing manual by default; retention not documented."}
+    D13: {s: 1, f: [0], r: "curl|bash without checksum and autoupdate on by default."}
+    D14: {s: 2, f: [0, 1], r: "Managed files and MDM plist override user and project config; sandbox/telemetry coverage not applicable or documented."}
+    D15: {s: 2, f: [0, 1, 2, 3], r: "SECURITY.md and GHSAs with CVEs; no bounty."}
+  openhands-sdk:
+    D01: {s: 1, f: [0, 1], r: "Confirmation policies exist but default NeverConfirm."}
+    D02: {s: 1, f: [0], r: "Default LocalWorkspace on host; Docker/remote optional."}
+    D03: {s: null, r: "N/A (only unverified facts)."}
+    D04: {s: 0, f: [0], r: "Loaders auto-read repo hooks.json (shell hooks), skills and instructions with no trust gate."}
+    D05: {s: 1, f: [0, "D01.0"], r: "MCP configured in code with OAuth; confirmation default off."}
+    D06: {s: 1, f: [0], r: "Skills/plugins marketplace modules without documented vetting."}
+    D07: {s: 1, f: [0], r: "Secrets masked in observations but stored plaintext unless a Cipher is set."}
+    D08: {s: 1, f: [0, "D01.0"], r: "Unattended defaults to NeverConfirm and agent-server is unsecured without keys."}
+    D09: {s: null, r: "N/A (only unverified facts)."}
+    D10: {s: 1, f: [0], r: "Per-subagent permission_mode exists but defaults to inheriting the parent."}
+    D11: {s: 2, f: [0], r: "Persisted events and opt-in Laminar tracing."}
+    D12: {s: null, r: "N/A (library with no telemetry unless a third-party tracing key is set)."}
+    D13: {s: null, r: "N/A (only unverified facts)."}
+    D14: {s: null, r: "N/A (only unverified facts)."}
+    D15: {s: 0, f: [0], r: "No SECURITY.md and no GHSAs for the SDK."}
+  openhands:
+    D01: {s: 1, f: [0, 1], r: "TUI asks by default, but control is coarse policies only, no allow/deny rules."}
+    D02: {s: 1, f: [0], r: "Docker options exist; default local option has full filesystem access."}
+    D03: {s: 0, f: [0], r: "No outbound policy."}
+    D04: {s: 0, f: [0], r: "Workspace hooks.json loaded on start with no trust."}
+    D05: {s: 1, f: [0], r: "User-managed MCP add/enable/disable; no managed policy."}
+    D06: {s: 1, f: [0], r: "Project plugin directories discovered without prompt."}
+    D07: {s: 1, f: [0, 1], r: "Agent JSON saved with secrets exposed; cipher utility optional."}
+    D08: {s: 0, f: [0, "D01.0"], r: "Headless switches to NeverConfirm and server unsecured by default, no guidance."}
+    D09: {s: 1, f: [0], r: "Project MEMORY.md; writer and off switch undocumented."}
+    D10: {s: 1, f: [0], r: "Delegate tool exists; restriction undocumented."}
+    D11: {s: 1, f: [0], r: "Local conversation persistence only."}
+    D12: {s: 1, f: [0], r: "Telemetry needs consent, but retention not documented."}
+    D13: {s: 1, f: [0], r: "curl installer without checksum."}
+    D14: {s: null, r: "N/A (no facts)."}
+    D15: {s: 1, f: [0, 1], r: "GHSA/CVE published but no policy in facts."}
+  pi:
+    D01: {s: 0, f: [0, 1], r: "No per-action approval; only coarse tool enable lists."}
+    D02: {s: 0, f: [0], r: "No sandbox; containerization left to the user."}
+    D03: {s: 0, f: [0], r: "No egress controls for agent tools."}
+    D04: {s: 2, f: [0, 1, "D08.0"], r: "Project trust (ask by default) gates settings, MCP, extensions and skills; headless skips them; AGENTS.md ungated."}
+    D05: {s: 1, f: [0], r: "Project servers after trust with per-tool exposure; no managed list or change detection."}
+    D06: {s: 1, f: [0], r: "Explicit installs with pinned versions and trust gating, but no vetting."}
+    D07: {s: 1, f: [0, 2], r: "auth.json 0600 but sessions may contain credentials with no redaction."}
+    D08: {s: 1, f: [0], r: "Headless skips protected project resources, but runs tools unattended with no CI guidance."}
+    D09: {s: null, r: "N/A (only unverified facts)."}
+    D10: {s: null, r: "N/A (only unverified facts)."}
+    D11: {s: 1, f: [0], r: "Local sessions only."}
+    D12: {s: 1, f: [0], r: "Install telemetry on by default with opt-out; retention not documented."}
+    D13: {s: 1, f: [0], r: "Pinned deps and npm --ignore-scripts, but no signature or checksum."}
+    D14: {s: null, r: "N/A (only unverified facts)."}
+    D15: {s: 2, f: [0, 1], r: "SECURITY.md and 4 GHSA/CVEs; no bounty."}
+  pydantic-ai:
+    D01: {s: 1, f: [0, 1], r: "Deferred-approval primitive exists, off unless marked."}
+    D02: {s: 1, f: [0, 1, 2], r: "Bubblewrap sandbox is an optional add-on; default local workspace on host."}
+    D03: {s: 2, f: [0, 1], r: "web_fetch has domain lists and SSRF blocklist by default (bypasses patched)."}
+    D04: {s: null, r: "N/A (no repo-level config auto-loaded)."}
+    D05: {s: 1, f: [0, "D01.0"], r: "Approval via deferred tools; MCP config expands full env."}
+    D06: {s: null, r: "N/A (no built-in marketplace or registry)."}
+    D07: {s: 1, f: [1, 2], r: "Keys from env; optional env scrubbing; OTel redaction gaps fixed."}
+    D08: {s: null, r: "N/A (only unverified facts)."}
+    D09: {s: 2, f: [0], r: "Opt-in Markdown memory with app-chosen namespace."}
+    D10: {s: null, r: "N/A (only unverified facts)."}
+    D11: {s: 2, f: [0], r: "Built-in OTel instrumentation one setting away."}
+    D12: {s: null, r: "N/A (library sends nothing unless instrumentation configured)."}
+    D13: {s: null, r: "N/A (only unverified facts)."}
+    D14: {s: null, r: "N/A (only unverified facts)."}
+    D15: {s: 2, f: [0], r: "SECURITY.md private reporting and 17 GHSAs with CVEs; no bounty."}
+  qoder:
+    D01: {s: 2, f: [0, 1, 2, "D14.0"], r: "Default asks for sensitive actions, deny-first rules, non-default modes only in trusted dirs; deny in bypass not documented."}
+    D02: {s: 1, f: [0, 1], r: "No CLI sandbox; IDE Experts Mode sandbox only."}
+    D03: {s: 1, f: [0, 1], r: "Desktop asks before internet; no egress allowlist."}
+    D04: {s: 1, f: [0, 1, "D05.1"], r: "Folder trust on by default for settings and memory, but project MCP/hook coverage not documented."}
+    D05: {s: 1, f: [0, 1], r: "Allowed/excluded lists exist, but project .mcp.json approval undocumented and trust:true skips confirmation."}
+    D06: {s: 1, f: [0, 1], r: "Marketplace with review advice only."}
+    D07: {s: 1, f: [0], r: "Credential storage undocumented."}
+    D08: {s: 1, f: [0, 1], r: "-p denies prompts, but action lacks actor/permission guidance."}
+    D09: {s: 2, f: [0, "D04.1"], r: "Trust-gated project memory and opt-in auto-memory with env toggles."}
+    D10: {s: 1, f: [0], r: "Subagent bypass downgraded only when disableYoloMode is set; no per-agent tool limits documented."}
+    D11: {s: 1, f: [0], r: "Session persistence only; no audit or OTel."}
+    D12: {s: 1, f: [0], r: "Usage and code statistics on by default; retention not documented."}
+    D13: {s: 1, f: [0], r: "curl|bash with auto-update on by default."}
+    D14: {s: 1, f: [0], r: "Managed permission rules and YOLO disable exist but delivery undocumented."}
+    D15: {s: null, r: "N/A (only unverified facts)."}
+  qwen-code:
+    D01: {s: 1, f: [0], r: "Default AUTO mode lets an LLM classifier approve actions without asking; deny > ask > allow rules exist."}
+    D02: {s: 1, f: [0], r: "Execution sandbox opt-in."}
+    D03: {s: 1, f: [0], r: "Network closed only within opt-in sandbox."}
+    D04: {s: 1, f: [0, 1], r: "Folder trust off by default; a few keys operator-only."}
+    D05: {s: 1, f: [0, 1], r: "Project servers honoured without approval when trust is off."}
+    D06: {s: 1, f: [0, 1, "D04.0"], r: "Project extensions honoured by default; hook URL limits operator-only."}
+    D07: {s: 1, f: [0], r: "Keys may be plaintext in settings.json."}
+    D08: {s: 1, f: [0, "D01.0"], r: "Official action and -p exist; headless defaults to classifier auto with no guidance."}
+    D09: {s: 1, f: [0], r: "Auto-memory with team memory secret-scanned; off switch not documented."}
+    D10: {s: null, r: "N/A (no facts)."}
+    D11: {s: 1, f: [0], r: "OTel opt-in; structured local tool logs not documented."}
+    D12: {s: 1, f: [0], r: "Usage statistics on by default with opt-out; retention not documented."}
+    D13: {s: 1, f: [0], r: "curl|bash, npm, brew without verification."}
+    D14: {s: 2, f: [0, 1], r: "System settings and operator-only keys; coverage gaps."}
+    D15: {s: 1, f: [0], r: "Security portal; no advisories."}
+  raven-evermind:
+    D01: {s: 1, f: [0, 1], r: "Default smart mode uses a model reviewer rather than human approval; builtin deny holds in every mode."}
+    D02: {s: 1, f: [0, 1], r: "microVM sandbox opt-in; default runs on host."}
+    D03: {s: 2, f: [0], r: "Fetches have SSRF guard with redirect re-validation and DNS pinning; sandbox network allowlist optional."}
+    D04: {s: null, r: "N/A (no repository-scoped config is read)."}
+    D05: {s: 2, f: [0], r: "Unknown MCP tools default to ask; auth options documented."}
+    D06: {s: 1, f: [0], r: "SkillHub, plugin market and self-evolving skills without vetting."}
+    D07: {s: 0, f: [0], r: "Provider api_key stored in a config file the source calls world-readable."}
+    D08: {s: 2, f: [0, "D01.1"], r: "Unattended runs fail closed on ask-tier calls; DAG confirm fail-open documented."}
+    D09: {s: 1, f: [0], r: "Cross-session agent memory with self-adopted improvements; no controls documented."}
+    D10: {s: 1, f: [0], r: "Ask tier and mode not carried to third-party backends; ACP client prefers allow."}
+    D11: {s: 2, f: [0], r: "Built-in tracing with permission decisions and trajectory store."}
+    D12: {s: null, r: "N/A (no telemetry code; local only)."}
+    D13: {s: 1, f: [0], r: "curl|bash installer; no signature or provenance for the package."}
+    D14: {s: null, r: "N/A (only unverified facts)."}
+    D15: {s: 1, f: [0], r: "SECURITY.md private reporting; no advisories."}
+  replit-agent:
+    D01: {s: 0, f: [0], r: "Build mode applies changes directly with no per-action approval."}
+    D02: {s: null, r: "N/A (only unverified facts)."}
+    D03: {s: null, r: "N/A (no facts)."}
+    D04: {s: null, r: "N/A (no facts)."}
+    D05: {s: 1, f: [0], r: "User-configured MCP with trust advice only."}
+    D06: {s: 1, f: [0], r: "Skills and integrations without documented vetting."}
+    D07: {s: 1, f: [0], r: "Secrets store advised; storage and redaction details undocumented."}
+    D08: {s: null, r: "N/A (no facts)."}
+    D09: {s: null, r: "N/A (no facts)."}
+    D10: {s: null, r: "N/A (only unverified facts)."}
+    D11: {s: 3, f: [0], r: "Enterprise audit log of agent and admin events with SIEM streaming and compliance API."}
+    D12: {s: 0, f: [0], r: "Content used for training by default with opt-out only for Pro; no opt-out on the default free plan."}
+    D13: {s: null, r: "N/A (no facts; hosted service)."}
+    D14: {s: 2, f: [0], r: "Enterprise policies for models, scans and publishing; permissions/MCP not covered."}
+    D15: {s: 1, f: [0], r: "Security email; no bounty or advisories."}
+  roo-code:
+    D01: {s: 1, f: [0, 1, 2], r: "CLI auto-approves actions by default; allow/deny command lists."}
+    D02: {s: 0, f: [0], r: "No sandbox."}
+    D03: {s: 0, f: [0], r: "No network policy."}
+    D04: {s: 0, f: [0, "D05.0"], r: "Repo .roo config and MCP load without a trust gate; only write-protection patterns."}
+    D05: {s: 1, f: [0], r: "Project MCP auto-connected; per-tool alwaysAllow lists only."}
+    D06: {s: 1, f: [0], r: "Project custom modes and skills load without prompt."}
+    D07: {s: null, r: "N/A (only a vulnerability record)."}
+    D08: {s: 0, f: [0], r: "CLI print mode auto-approves by default with no guidance."}
+    D09: {s: null, r: "N/A (no facts)."}
+    D10: {s: 1, f: [0], r: "Subtask auto-approval setting only."}
+    D11: {s: 1, f: [0], r: "Local task storage and CLI history."}
+    D12: {s: 1, f: [0], r: "Telemetry on by default with opt-out."}
+    D13: {s: 1, f: [0, 1], r: "curl|sh installer; archived."}
+    D14: {s: 1, f: [0], r: "Settings import path only; no enforcement."}
+    D15: {s: 2, f: [0, 1], r: "SECURITY.md and 11 GHSAs."}
+  smolagents:
+    D01: {s: 0, f: [0], r: "No approval step; only interpreter import allowlist."}
+    D02: {s: 1, f: [0, 1], r: "Remote sandbox executors opt-in; local interpreter not secure."}
+    D03: {s: 0, f: [0, 1], r: "No egress control."}
+    D04: {s: null, r: "N/A (only unverified facts)."}
+    D05: {s: 1, f: [0], r: "trust_remote_code gate for stdio MCP; no per-call approval."}
+    D06: {s: 1, f: [0], r: "Hub tools require trust_remote_code opt-in; no vetting."}
+    D07: {s: 1, f: [0], r: "Keys from env or CLI argument."}
+    D08: {s: null, r: "N/A (only unverified facts)."}
+    D09: {s: null, r: "N/A (no persistent memory)."}
+    D10: {s: 1, f: [0], r: "Managed agents share the process."}
+    D11: {s: 1, f: [0], r: "OTel requires third-party instrumentor."}
+    D12: {s: null, r: "N/A (no telemetry in library)."}
+    D13: {s: null, r: "N/A (only unverified facts)."}
+    D14: {s: null, r: "N/A (only unverified facts)."}
+    D15: {s: 2, f: [0], r: "SECURITY.md and GHSAs/CVEs; no bounty."}
+  strands-agents:
+    D01: {s: 1, f: [0], r: "Intervention presets exist but default off."}
+    D02: {s: 1, f: [0], r: "Default runs on host; Docker/SSH optional."}
+    D03: {s: null, r: "N/A (no facts)."}
+    D04: {s: null, r: "N/A (no facts)."}
+    D05: {s: null, r: "N/A (no facts)."}
+    D06: {s: null, r: "N/A (no facts)."}
+    D07: {s: null, r: "N/A (only vulnerability records)."}
+    D08: {s: null, r: "N/A (no facts)."}
+    D09: {s: 1, f: [0, 1], r: "Project memory and session dirs; controls undocumented."}
+    D10: {s: 1, f: [0], r: "Subagents receive forwarded hooks and sandbox; per-agent tool limits undocumented."}
+    D11: {s: 2, f: [0], r: "OTEL tracing one setting away."}
+    D12: {s: null, r: "N/A (no exporter unless configured)."}
+    D13: {s: null, r: "N/A (no facts)."}
+    D14: {s: null, r: "N/A (no facts)."}
+    D15: {s: 2, f: [0], r: "SECURITY.md and two GHSAs."}
+  trae:
+    D01: {s: 1, f: [0, 1], r: "Default mode not stated; auto-run bypasses all checks and MCP auto-run toggle exists."}
+    D02: {s: 1, f: [0], r: "Sandbox exists but default state undocumented and allowlisted prefixes run outside."}
+    D03: {s: 1, f: [0], r: "Network allowed to all by default; allow/deny opt-in."}
+    D04: {s: 1, f: [0], r: "Project MCP needs a confirmed toggle; no trust gate documented for hooks."}
+    D05: {s: 1, f: [0, 1], r: "Project MCP opt-in and per-tool rules, but no managed list or change detection."}
+    D06: {s: 1, f: [0], r: "Plugin marketplace without documented vetting."}
+    D07: {s: null, r: "N/A (no facts)."}
+    D08: {s: null, r: "N/A (only unverified facts)."}
+    D09: {s: 1, f: [0], r: "Global and project rules/memories; no off switch documented."}
+    D10: {s: null, r: "N/A (only unverified facts)."}
+    D11: {s: null, r: "N/A (only unverified facts)."}
+    D12: {s: 1, f: [0, 1, 2], r: "Chat content used for training unless Privacy mode."}
+    D13: {s: null, r: "N/A (no facts)."}
+    D14: {s: null, r: "N/A (only unverified facts)."}
+    D15: {s: null, r: "N/A (only unverified facts)."}
+  trueforge:
+    D01: {s: 2, f: [0], r: "Approval pauses before write/destructive tools by default; unlabeled tools run."}
+    D02: {s: 2, f: [0, "D03.0"], r: "Code runs in a provisioned sandbox with credentials outside; egress unrestricted by default."}
+    D03: {s: 2, f: [0], r: "Domain allowlists exist but sandbox egress unrestricted by default."}
+    D04: {s: null, r: "N/A (only unverified facts; server product)."}
+    D05: {s: 2, f: [0, "D01.0"], r: "Per-tool approval default for write tools with header/OAuth auth."}
+    D06: {s: 1, f: [0], r: "Git-backed skills registered in settings; no vetting."}
+    D07: {s: 2, f: [0], r: "Credentials kept out of sandbox and redacted in API/UI; no at-rest encryption."}
+    D08: {s: 1, f: [0], r: "Standalone/Helm defaults lack auth and use well-known secrets."}
+    D09: {s: null, r: "N/A (only unverified facts)."}
+    D10: {s: null, r: "N/A (only unverified facts)."}
+    D11: {s: 2, f: [0], r: "Sessions record tool calls and subagents in the database."}
+    D12: {s: null, r: "N/A (self-hosted; Sentry off by default)."}
+    D13: {s: 2, f: [0], r: "npm publish with SLSA provenance."}
+    D14: {s: 2, f: [0], r: "OIDC roles with admin-only settings."}
+    D15: {s: 1, f: [0], r: "SECURITY.md; no advisories."}
+  vertex-ai-agent-engine:
+    D01: {s: 1, f: [0, 1], r: "IAM and governance policies exist; no default tool approval primitive."}
+    D02: {s: 3, f: [0], r: "Managed shell/computer-use sandboxes with VPC-SC and CMEK."}
+    D03: {s: 3, f: [0], r: "Agent Gateway enforces VPC-SC perimeter for new gateways."}
+    D04: {s: null, r: "N/A (no facts)."}
+    D05: {s: 2, f: [0], r: "Agent Gateway, Registry and Model Armor GA; tool allowlist enforcement not explicit."}
+    D06: {s: null, r: "N/A (no facts)."}
+    D07: {s: 1, f: [2, 3, 0], r: "Service account/Agent Identity integration, but third-party report of excessive default permissions lowers it."}
+    D08: {s: null, r: "N/A (no facts)."}
+    D09: {s: 1, f: [0], r: "Memory Bank GA; scoping and controls undocumented."}
+    D10: {s: null, r: "N/A (no facts)."}
+    D11: {s: 2, f: [0], r: "Agent Observability GA."}
+    D12: {s: null, r: "N/A (no facts)."}
+    D13: {s: null, r: "N/A (no facts)."}
+    D14: {s: 2, f: [0, "D01.1"], r: "IAM roles and allow/deny at project/org level."}
+    D15: {s: 1, f: [0], r: "SDK GHSAs/CVEs published; policy not in facts."}
+  warp:
+    D01: {s: 1, f: [0, 1, 2], r: "Agent decides on edits in GUI and CLI default profile always allows; auto-approve bypasses denylist."}
+    D02: {s: 1, f: [0], r: "--sandboxed flag opt-in."}
+    D03: {s: 0, f: [0], r: "Only a command denylist; no egress control."}
+    D04: {s: 1, f: [0], r: "Third-party file MCP off by default, but Warp-native config spawned without trust."}
+    D05: {s: 1, f: [0, 1], r: "Profile MCP allow/deny lists; no project approval or change detection."}
+    D06: {s: 1, f: [0], r: "User skills directory; no vetting."}
+    D07: {s: 1, f: [0, 1], r: "Secret redaction exists; credential storage not documented."}
+    D08: {s: 0, f: [0], r: "Default CLI profile never asks for permission."}
+    D09: {s: 1, f: [0], r: "Rules/knowledge toggles; scope undocumented."}
+    D10: {s: 1, f: [0], r: "run_agents profile field only."}
+    D11: {s: 1, f: [0], r: "Agent commands excluded from history by default; no structured log."}
+    D12: {s: 1, f: [0], r: "Telemetry and crash reporting on by default with opt-out."}
+    D13: {s: 1, f: [0], r: "Autoupdate with no signature documentation."}
+    D14: {s: 1, f: [0, 1], r: "Admin denylist and managed endpoints only."}
+    D15: {s: 2, f: [0, 1], r: "SECURITY.md and 10 GHSAs."}
+  windsurf:
+    D01: {s: 1, f: [0, 1], r: "Deny wins and admin can cap level, but default auto-execution level not documented."}
+    D02: {s: 1, f: [0], r: "Optional sandbox for Devin Local only."}
+    D03: {s: 1, f: [0], r: "Sandbox domain lists with default network full."}
+    D04: {s: 2, f: [0, 1], r: "Restricted Mode disables agents and hooks until trusted; no central folder approval."}
+    D05: {s: 1, f: [0], r: "Admin MCP allowlist, but no project approval or per-tool permissions documented."}
+    D06: {s: 1, f: [0], r: "Publisher allowlist and admin marketplace; no vetting."}
+    D07: {s: null, r: "N/A (no facts)."}
+    D08: {s: null, r: "N/A (headless is a separate product, Devin CLI)."}
+    D09: {s: 1, f: [0], r: "Agent-written workspace memories; no confirmation or off switch documented."}
+    D10: {s: 1, f: [0], r: "Subagents share session approvals."}
+    D11: {s: 2, f: [0, 1], r: "Analytics, redacted transcripts and audit hooks."}
+    D12: {s: 1, f: [0], r: "Admin telemetry level policy, but retention/training not documented."}
+    D13: {s: 1, f: [0], r: "Update mode policy; no signature documentation."}
+    D14: {s: 2, f: [0, "D01.0", "D05.0", "D06.0", "D12.0"], r: "MDM policies override local for execution level, MCP, extensions, telemetry; sandbox not covered."}
+    D15: {s: 1, f: [0, 1], r: "CVD with safe harbour, but no vendor advisories."}

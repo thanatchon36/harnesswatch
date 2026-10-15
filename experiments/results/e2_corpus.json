@@ -1,0 +1,445 @@
+{
+  "experiment": "E2",
+  "research_question": "RQ4",
+  "query_date": "2026-10-15",
+  "api": "GitHub REST code search (search/code) + contents API, via authenticated gh CLI",
+  "sampling": {
+    "per_target_cap": 60,
+    "pages_per_query": 3,
+    "per_page": 100,
+    "one_file_per_repo_per_target": true,
+    "shuffle_seed": 20261015,
+    "max_file_bytes": 200000
+  },
+  "queries": {
+    ".claude/settings.json": "filename:settings.json path:.claude",
+    ".mcp.json": "filename:.mcp.json",
+    ".cursor/mcp.json": "filename:mcp.json path:.cursor",
+    ".vscode/mcp.json": "filename:mcp.json path:.vscode",
+    "opencode.json": "filename:opencode.json",
+    ".kiro/settings/mcp.json": "filename:mcp.json path:.kiro/settings",
+    ".gemini/settings.json": "filename:settings.json path:.gemini",
+    ".codex/config.toml": "filename:config.toml path:.codex",
+    "AGENTS.md": "filename:AGENTS.md",
+    "CLAUDE.md": "filename:CLAUDE.md",
+    ".github/copilot-instructions.md": "filename:copilot-instructions.md path:.github",
+    ".windsurf/rules": "path:.windsurf/rules",
+    ".agents/mcp_config.json": "filename:mcp_config.json path:.agents",
+    ".grok/config.toml": "filename:config.toml path:.grok",
+    "workflow:claude-code-action": "\"claude-code-action\" path:.github/workflows",
+    "workflow:codex exec": "\"codex exec\" path:.github/workflows",
+    "workflow:gemini -p": "\"gemini -p\" path:.github/workflows"
+  },
+  "status": "ok",
+  "per_target": {
+    ".claude/settings.json": {
+      "sampled": 60,
+      "fetched": 60,
+      "audited_files": 60,
+      "rule_file_findings": 39
+    },
+    ".mcp.json": {
+      "sampled": 60,
+      "fetched": 60,
+      "audited_files": 60,
+      "rule_file_findings": 87
+    },
+    ".cursor/mcp.json": {
+      "sampled": 60,
+      "fetched": 60,
+      "audited_files": 60,
+      "rule_file_findings": 73
+    },
+    ".vscode/mcp.json": {
+      "sampled": 60,
+      "fetched": 60,
+      "audited_files": 60,
+      "rule_file_findings": 81
+    },
+    "opencode.json": {
+      "sampled": 60,
+      "fetched": 60,
+      "audited_files": 60,
+      "rule_file_findings": 44
+    },
+    ".kiro/settings/mcp.json": {
+      "sampled": 60,
+      "fetched": 60,
+      "audited_files": 60,
+      "rule_file_findings": 96
+    },
+    ".gemini/settings.json": {
+      "sampled": 60,
+      "fetched": 60,
+      "audited_files": 60,
+      "rule_file_findings": 61
+    },
+    ".codex/config.toml": {
+      "sampled": 60,
+      "fetched": 60,
+      "audited_files": 60,
+      "rule_file_findings": 61
+    },
+    "AGENTS.md": {
+      "sampled": 60,
+      "fetched": 60,
+      "audited_files": 60,
+      "rule_file_findings": 0
+    },
+    "CLAUDE.md": {
+      "sampled": 60,
+      "fetched": 60,
+      "audited_files": 60,
+      "rule_file_findings": 3
+    },
+    ".github/copilot-instructions.md": {
+      "sampled": 60,
+      "fetched": 60,
+      "audited_files": 60,
+      "rule_file_findings": 0
+    },
+    ".windsurf/rules": {
+      "sampled": 60,
+      "fetched": 60,
+      "audited_files": 60,
+      "rule_file_findings": 0
+    },
+    ".agents/mcp_config.json": {
+      "sampled": 60,
+      "fetched": 60,
+      "audited_files": 60,
+      "rule_file_findings": 92
+    },
+    ".grok/config.toml": {
+      "sampled": 60,
+      "fetched": 60,
+      "audited_files": 60,
+      "rule_file_findings": 56
+    },
+    "workflow:claude-code-action": {
+      "sampled": 60,
+      "fetched": 60,
+      "audited_files": 60,
+      "rule_file_findings": 72
+    },
+    "workflow:codex exec": {
+      "sampled": 60,
+      "fetched": 60,
+      "audited_files": 60,
+      "rule_file_findings": 36
+    },
+    "workflow:gemini -p": {
+      "sampled": 57,
+      "fetched": 57,
+      "audited_files": 57,
+      "rule_file_findings": 54
+    }
+  },
+  "total_sampled": 1017,
+  "total_fetched": 1017,
+  "audit_errors": 0,
+  "prevalence": {
+    "repos_audited": 1010,
+    "files_audited": 1017,
+    "rules": [
+      {
+        "rule_id": "HG-MCP-005",
+        "title": "MCP server declared in a repository config",
+        "repos": 311,
+        "repo_rate": 0.3079207920792079,
+        "repo_ci95": [
+          0.2802,
+          0.3371
+        ],
+        "files": 316,
+        "file_rate": 0.3107177974434612,
+        "file_ci95": [
+          0.283,
+          0.3398
+        ]
+      },
+      {
+        "rule_id": "HG-MCP-001",
+        "title": "MCP server fetched from a registry at launch without a version pin",
+        "repos": 170,
+        "repo_rate": 0.16831683168316833,
+        "repo_ci95": [
+          0.1465,
+          0.1926
+        ],
+        "files": 173,
+        "file_rate": 0.17010816125860373,
+        "file_ci95": [
+          0.1483,
+          0.1944
+        ]
+      },
+      {
+        "rule_id": "HG-CI-002",
+        "title": "Agent CI job runs with a write-scoped GITHUB_TOKEN",
+        "repos": 112,
+        "repo_rate": 0.11089108910891089,
+        "repo_ci95": [
+          0.093,
+          0.1317
+        ],
+        "files": 112,
+        "file_rate": 0.11012782694198624,
+        "file_ci95": [
+          0.0923,
+          0.1309
+        ]
+      },
+      {
+        "rule_id": "HG-MCP-002",
+        "title": "Remote MCP server over plaintext HTTP, wildcard host, or without authentication",
+        "repos": 86,
+        "repo_rate": 0.08514851485148515,
+        "repo_ci95": [
+          0.0695,
+          0.104
+        ],
+        "files": 86,
+        "file_rate": 0.08456243854473942,
+        "file_ci95": [
+          0.069,
+          0.1033
+        ]
+      },
+      {
+        "rule_id": "HG-CI-001",
+        "title": "Headless agent in a workflow triggered by untrusted input (\"pwn request\")",
+        "repos": 50,
+        "repo_rate": 0.04950495049504951,
+        "repo_ci95": [
+          0.0378,
+          0.0647
+        ],
+        "files": 50,
+        "file_rate": 0.049164208456243856,
+        "file_ci95": [
+          0.0375,
+          0.0642
+        ]
+      },
+      {
+        "rule_id": "HG-HOOK-001",
+        "title": "Repository config defines hooks that execute shell commands",
+        "repos": 43,
+        "repo_rate": 0.04257425742574258,
+        "repo_ci95": [
+          0.0318,
+          0.0569
+        ],
+        "files": 43,
+        "file_rate": 0.04228121927236971,
+        "file_ci95": [
+          0.0315,
+          0.0565
+        ]
+      },
+      {
+        "rule_id": "HG-MCP-003",
+        "title": "Literal secret in an MCP server's env, headers or arguments",
+        "repos": 21,
+        "repo_rate": 0.020792079207920793,
+        "repo_ci95": [
+          0.0136,
+          0.0316
+        ],
+        "files": 21,
+        "file_rate": 0.02064896755162242,
+        "file_ci95": [
+          0.0135,
+          0.0314
+        ]
+      },
+      {
+        "rule_id": "HG-SEC-003",
+        "title": "Credential stored in plaintext in a harness config file",
+        "repos": 14,
+        "repo_rate": 0.013861386138613862,
+        "repo_ci95": [
+          0.0083,
+          0.0231
+        ],
+        "files": 14,
+        "file_rate": 0.01376597836774828,
+        "file_ci95": [
+          0.0082,
+          0.023
+        ]
+      },
+      {
+        "rule_id": "HG-PERM-001",
+        "title": "Approve-everything (YOLO / bypass / full-auto) mode enabled in config",
+        "repos": 12,
+        "repo_rate": 0.011881188118811881,
+        "repo_ci95": [
+          0.0068,
+          0.0207
+        ],
+        "files": 12,
+        "file_rate": 0.011799410029498525,
+        "file_ci95": [
+          0.0068,
+          0.0205
+        ]
+      },
+      {
+        "rule_id": "HG-PERM-003",
+        "title": "Unrestricted execution without a deny list for destructive or credential-reading commands",
+        "repos": 12,
+        "repo_rate": 0.011881188118811881,
+        "repo_ci95": [
+          0.0068,
+          0.0207
+        ],
+        "files": 12,
+        "file_rate": 0.011799410029498525,
+        "file_ci95": [
+          0.0068,
+          0.0205
+        ]
+      },
+      {
+        "rule_id": "HG-NET-001",
+        "title": "Unrestricted network egress for agent tools where the harness supports restriction",
+        "repos": 5,
+        "repo_rate": 0.0049504950495049506,
+        "repo_ci95": [
+          0.0021,
+          0.0115
+        ],
+        "files": 5,
+        "file_rate": 0.004916420845624385,
+        "file_ci95": [
+          0.0021,
+          0.0115
+        ]
+      },
+      {
+        "rule_id": "HG-MCP-006",
+        "title": "MCP servers or their tools are auto-approved without a per-server prompt",
+        "repos": 3,
+        "repo_rate": 0.0029702970297029703,
+        "repo_ci95": [
+          0.001,
+          0.0087
+        ],
+        "files": 3,
+        "file_rate": 0.0029498525073746312,
+        "file_ci95": [
+          0.001,
+          0.0086
+        ]
+      },
+      {
+        "rule_id": "HG-INJ-002",
+        "title": "Prompt-injection phrasing in an instruction file",
+        "repos": 2,
+        "repo_rate": 0.0019801980198019802,
+        "repo_ci95": [
+          0.0005,
+          0.0072
+        ],
+        "files": 2,
+        "file_rate": 0.0019665683382497543,
+        "file_ci95": [
+          0.0005,
+          0.0071
+        ]
+      },
+      {
+        "rule_id": "HG-SUB-001",
+        "title": "Sub-agent or delegated agent configured with bypass permissions",
+        "repos": 2,
+        "repo_rate": 0.0019801980198019802,
+        "repo_ci95": [
+          0.0005,
+          0.0072
+        ],
+        "files": 2,
+        "file_rate": 0.0019665683382497543,
+        "file_ci95": [
+          0.0005,
+          0.0071
+        ]
+      },
+      {
+        "rule_id": "HG-HOOK-002",
+        "title": "Hook command fetches or sends data over the network, or runs code fetched at runtime",
+        "repos": 1,
+        "repo_rate": 0.0009900990099009901,
+        "repo_ci95": [
+          0.0002,
+          0.0056
+        ],
+        "files": 1,
+        "file_rate": 0.0009832841691248771,
+        "file_ci95": [
+          0.0002,
+          0.0055
+        ]
+      },
+      {
+        "rule_id": "HG-INJ-001",
+        "title": "Hidden or confusable Unicode in an instruction file",
+        "repos": 1,
+        "repo_rate": 0.0009900990099009901,
+        "repo_ci95": [
+          0.0002,
+          0.0056
+        ],
+        "files": 1,
+        "file_rate": 0.0009832841691248771,
+        "file_ci95": [
+          0.0002,
+          0.0055
+        ]
+      },
+      {
+        "rule_id": "HG-MEM-001",
+        "title": "Persistent agent-writable memory enabled (or shared through version control)",
+        "repos": 1,
+        "repo_rate": 0.0009900990099009901,
+        "repo_ci95": [
+          0.0002,
+          0.0056
+        ],
+        "files": 1,
+        "file_rate": 0.0009832841691248771,
+        "file_ci95": [
+          0.0002,
+          0.0055
+        ]
+      },
+      {
+        "rule_id": "HG-PERM-002",
+        "title": "Over-broad tool allowlist",
+        "repos": 1,
+        "repo_rate": 0.0009900990099009901,
+        "repo_ci95": [
+          0.0002,
+          0.0056
+        ],
+        "files": 1,
+        "file_rate": 0.0009832841691248771,
+        "file_ci95": [
+          0.0002,
+          0.0055
+        ]
+      }
+    ]
+  },
+  "redaction_note": "Secret-related rules (e.g. HG-MCP-003) are reported as counts only; no matched text is retained.",
+  "limitations": [
+    "Code search returns a relevance-ranked, index-limited subset (max 1,000 hits per query, we read 300); the sample is not random over GitHub and favours popular, recently indexed and well-formed files.",
+    "The code-search index lags pushes and omits forks, large files and some repos, so freshness varies; results describe the index on the query date only.",
+    "A repository can be sampled via several targets; its sampled files are audited together, so repo rates are over repositories with at least one sampled file.",
+    "Rates are per sampled repository and are not weighted by usage; static rules flag risky configuration, not exploitation.",
+    "User-level (home) config is not observable in public repos; only project-level files.",
+    "Files over 200 kB and unreadable files were skipped; one file per repo per target."
+  ],
+  "dedup_skipped": 0
+}

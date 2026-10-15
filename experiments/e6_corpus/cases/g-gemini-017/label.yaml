@@ -1,0 +1,8 @@
+expected:
+- HG-HOOK-002
+- HG-PERM-001
+- HG-PERM-003
+- HG-TEL-001
+origin: generated
+family: gemini
+note: Gemini settings

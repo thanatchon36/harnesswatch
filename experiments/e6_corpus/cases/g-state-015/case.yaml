@@ -1,0 +1,2 @@
+chmod:
+  home/.gemini/oauth_creds.json: '0644'

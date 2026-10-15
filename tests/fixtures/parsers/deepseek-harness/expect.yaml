@@ -1,0 +1,3 @@
+# config lives under $DSH_HOME (an env-var root the loader does not resolve) and MCP servers are Cordis plugin rows, not a name->server map; only AGENTS.md is discoverable
+expect: none
+instruction_files: [AGENTS.md]

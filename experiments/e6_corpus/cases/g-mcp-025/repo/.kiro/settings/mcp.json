@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "context": {
+      "url": "https://mcp.context.example.com/mcp"
+    },
+    "linear": {
+      "url": "https://mcp.linear.example.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${MCP_TOKEN}"
+      }
+    },
+    "postgres": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "mcp/postgres:latest",
+        "postgresql://db:5432/app"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  }
+}

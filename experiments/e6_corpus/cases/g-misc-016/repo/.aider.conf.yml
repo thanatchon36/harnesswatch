@@ -1,0 +1,5 @@
+model: sonnet
+auto-commits: false
+dark-mode: true
+test-cmd: pytest -q
+openai-api-key: {{SYNTH:openai-api-key}}

@@ -1,0 +1,12 @@
+name: agent
+'on':
+  schedule:
+  - cron: 0 6 * * 1
+jobs:
+  agent:
+    runs-on: ubuntu-latest
+    permissions: read-all
+    steps:
+    - uses: actions/checkout@v5
+    - name: Claude headless
+      run: claude -p "Review this change and suggest fixes." --allowedTools 'Read,Grep'

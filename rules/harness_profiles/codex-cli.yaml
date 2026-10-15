@@ -1,0 +1,122 @@
+id: codex-cli
+name: Codex CLI
+vendor: OpenAI
+tier: A
+license: Apache-2.0
+open_source: true
+status: analysed
+version_analysed: "0.162.1"       # rust-v0.162.1 (2026-10-09); source read at main bb64b89 (2026-10-15, slightly ahead)
+analysed_on: "2026-10-15"
+homepage: https://developers.openai.com/codex
+repo: https://github.com/openai/codex     # Codex cloud / web / desktop app are closed-source hosted products
+
+binaries: [codex]
+packages:
+  - {ecosystem: npm, name: "@openai/codex"}
+install_methods:
+  - {method: curl-installer, command: "curl -fsSL https://chatgpt.com/codex/install.sh | sh", checksum_verified: null, signed: null, source: https://github.com/openai/codex/blob/main/README.md}   # downloads from releases.openai.com, GitHub Releases fallback; Linux release artifacts carry .sigstore signatures (release workflow)
+  - {method: npm, command: "npm install -g @openai/codex", checksum_verified: null, signed: null, source: https://github.com/openai/codex/blob/main/README.md}
+  - {method: homebrew, command: "brew install --cask codex", checksum_verified: null, signed: null, source: https://github.com/openai/codex/blob/main/README.md}
+auto_update: {default: true, config: "check_for_update_on_startup (config.toml); update prompt in TUI", source: https://github.com/openai/codex/blob/main/codex-rs/core/config.schema.json}
+
+state_dirs: ["~/.codex", "$CODEX_HOME"]
+credential_files: ["~/.codex/auth.json"]       # when cli_auth_credentials_store is file/auto-fallback
+credential_storage: "cli_auth_credentials_store = file | keyring | auto | ephemeral (OS keyring when available); mcp_oauth_credentials_store = auto | file | keyring; API key via OPENAI_API_KEY"
+log_paths: ["~/.codex/sessions/**/rollout-*.jsonl", "~/.codex/archived_sessions/**", "~/.codex/history.jsonl", "~/.codex/log/*"]
+memory_paths: ["~/.codex/memories/**", "~/.codex/AGENTS.md", "~/.codex/AGENTS.override.md"]
+
+config_files:
+  - {path: "/etc/codex/requirements.toml", scope: managed, format: toml, kind: settings}      # admin-enforced constraints; also %ProgramData%\OpenAI\Codex\requirements.toml and MDM key com.openai.codex:requirements_toml_base64
+  - {path: "/etc/codex/config.toml", scope: managed, format: toml, kind: settings}            # system defaults (lowest layer)
+  - {path: "~/.codex/config.toml", scope: user, format: toml, kind: settings}
+  - {path: "~/.codex/*.config.toml", scope: user, format: toml, kind: settings}               # --profile <name> layer
+  - {path: "~/.codex/hooks.json", scope: user, format: json, kind: hooks}
+  - {path: "~/.codex/rules/*.rules", scope: user, format: ini, kind: rules}                   # execpolicy rules (Starlark-like); format approximate
+  - {path: "~/.codex/AGENTS.md", scope: user, format: markdown, kind: instructions}
+  - {path: ".codex/config.toml", scope: project, format: toml, kind: settings}                # trusted projects only
+  - {path: ".codex/hooks.json", scope: project, format: json, kind: hooks}
+  - {path: ".codex/rules/*.rules", scope: project, format: ini, kind: rules}
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: "AGENTS.override.md", scope: project-local, format: markdown, kind: instructions}
+  - {path: ".agents/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+
+instruction_files: ["AGENTS.md", "AGENTS.override.md"]       # fallback names via project_doc_fallback_filenames; size cap project_doc_max_bytes
+skills_paths: [".agents/skills/*/SKILL.md", "~/.agents/skills/*/SKILL.md"]   # docs/skills: repo (cwd..repo root) and $HOME/.agents/skills, plus admin and system locations
+
+mcp:
+  files: ["~/.codex/config.toml", ".codex/config.toml"]
+  servers_key: "mcp_servers"          # TOML table [mcp_servers.<name>]
+  server_fields:
+    command: command
+    args: args
+    env: env                          # table; env_vars = list of names forwarded from host env
+    url: url
+    headers: http_headers             # env_http_headers maps header -> env var; bearer_token_env_var
+    type: null                        # transport inferred (command => stdio, url => streamable HTTP)
+    cwd: cwd
+    enabled: enabled
+    required: required                # codex exec fails if a required server cannot start
+    tool_filters: [enabled_tools, disabled_tools]
+  project_servers_require_approval: true     # project .codex/config.toml only loads when project is trusted (trust_level = "trusted" in ~/.codex/config.toml); CVE-2025-61260 affected <= 0.23.0
+  managed_policy_keys: ["requirements.toml: mcp_servers allowlist"]
+  notes: "`codex mcp add <name> --env K=V -- <cmd>`; destructive-annotated MCP tools always require approval; OAuth via `codex mcp login`."
+
+permissions:
+  config_keys:
+    mode: "approval_policy"           # on-request (default) | never | { granular = { sandbox_approval, rules, skill_approval, request_permissions, mcp_elicitations... } }; 'untrusted' retired; 'on-failure' alias of on-request
+    sandbox: "sandbox_mode"           # read-only | workspace-write | danger-full-access
+    network: "sandbox_workspace_write.network_access"
+    writable_roots: "sandbox_workspace_write.writable_roots"
+    profile: "default_permissions"    # permission profiles ([permissions.<name>] extends = ":workspace"), >= 0.138
+    reviewer: "approvals_reviewer"    # user | auto_review (legacy guardian_subagent)
+    trust: "projects.\"<abs path>\".trust_level"   # trusted | untrusted
+  default_mode: "approval_policy=on-request + sandbox_mode=workspace-write (version-controlled folder) or read-only (untrusted/non-git); codex exec defaults to read-only"
+  auto_approve_values:
+    - {key: "approval_policy", value: "never", note: "never asks; still bounded by sandbox_mode"}
+    - {key: "sandbox_mode", value: "danger-full-access", note: "no sandbox"}
+    - {key: "sandbox_workspace_write.network_access", value: true, note: "network on inside workspace-write"}
+    - {key: "approvals_reviewer", value: "auto_review", note: "approvals routed to a reviewer subagent"}
+    - {key: "projects.<path>.trust_level", value: "trusted", note: "enables project config/hooks/rules"}
+  cli_flags_auto_approve: ["--dangerously-bypass-approvals-and-sandbox", "--yolo", "-a never", "--ask-for-approval never", "--sandbox danger-full-access", "--approve-for-me (alias --not-so-yolo; auto-review + workspace-write)", "--dangerously-bypass-hook-trust"]
+  removed_flags: ["--full-auto (no longer supported; MISSION seed is stale)"]
+  allow_rule_syntax: "execpolicy rules in rules/*.rules next to a config layer: prefix_rule(pattern=[\"git\", \"status\"], decision=\"allow\")  # prefix_rule confirmed in docs (rules); exact example form not verified; TUI writes ~/.codex/rules/default.rules"
+  overbroad_patterns: ["prefix_rule(pattern=[\"\"], decision=\"allow\")", "web_search = \"live\"", "features.network_proxy.domains = { \"*\" = \"allow\" }"]
+
+hooks:
+  supported: true
+  config_key: "hooks"                 # [hooks] tables in config.toml or hooks.json next to a config layer
+  repo_scoped_allowed: true           # .codex/hooks.json / [hooks] in project config; loaded only if project trusted AND each non-managed hook hash is reviewed/trusted
+  command_field: "command"
+  events: [SessionStart, SessionEnd, UserPromptSubmit, PreToolUse, PermissionRequest, PostToolUse, PreCompact, PostCompact, Stop, SubagentStart, SubagentStop, Interrupt]
+  managed_controls: ["requirements.toml allow_managed_hooks_only = true"]
+
+sandbox: {available: true, default_on: true, mechanism: "Seatbelt (macOS); bubblewrap (Linux/WSL2; first bwrap on PATH, vendored build available); restricted-token sandbox (Windows)", config: "sandbox_mode / default_permissions; features.network_proxy for domain rules", source: https://developers.openai.com/codex/sandboxing}
+network: {domain_allowlist: true, config: "[features.network_proxy] enabled=true, domains={ \"host\" = \"allow\"|\"deny\" }; proxy covers command traffic only (not web search, MCP, connectors, model traffic)", default: "network off in workspace-write; web_search = cached", source: https://developers.openai.com/codex/agent-approvals-security}
+workspace_trust: {prompt_on_new_folder: true, notes: "Project .codex layers (config, hooks, rules) are ignored unless ~/.codex/config.toml marks the project trusted; project config cannot set model_provider(s), openai_base_url, chatgpt_base_url, notify, profile(s), otel; non-managed hooks need hash-based trust", source: https://developers.openai.com/codex/config-advanced}
+memory: {persistent: true, cross_project: true, agent_writable: true, notes: "Off by default (features.memories); files under ~/.codex/memories/", source: https://developers.openai.com/codex/memories}
+subagents: {supported: true, inherits_permissions: null, notes: "SubagentStart/Stop hooks; auto_review reviewer subagent; permission inheritance not verified", source: https://github.com/openai/codex/blob/main/codex-rs/core/config.schema.json}
+telemetry: {default_on: true, opt_out: "[analytics] enabled = false ; OTel is opt-in via [otel] (log_user_prompt=false default)", training_default: null, source: https://developers.openai.com/codex/config-advanced}
+headless:
+  command: "codex exec"
+  flags: ["--sandbox read-only|workspace-write|danger-full-access", "--json", "--output-schema FILE", "-o/--output-last-message FILE", "--ephemeral", "--ignore-user-config", "--ignore-rules", "--skip-git-repo-check", "-m/--model", "--oss", "--local-provider ollama|lmstudio", "-p/--profile", "-C/--cd", "--add-dir", "-c key=value", "--strict-config", "--approve-for-me", "--dangerously-bypass-approvals-and-sandbox/--yolo"]
+  ci_integrations: ["openai/codex-action (safety-strategy drop-sudo|unprivileged-user|read-only; allow-users; allow-bots=false)"]
+  model_override: "-m MODEL; -c model_provider=\"x\"; [model_providers.x] base_url, env_key, wire_api=\"responses\" in ~/.codex/config.toml (project config may not set providers); openai_base_url"
+  local_model_support: "Yes: `codex exec --oss --local-provider ollama -m <model>` or oss_provider=\"ollama\" (built-in provider at http://localhost:11434/v1, Responses API only; wire_api=\"chat\" removed). Custom: [model_providers.local_ollama] name=\"Ollama\" base_url=\"http://localhost:11434/v1\". Needs Ollama /v1/responses support (assumed; not verified by test)."
+
+security_policy: {security_md: https://github.com/openai/codex/blob/main/SECURITY.md, bug_bounty: https://bugcrowd.com/engagements/openai, advisories: https://github.com/openai/codex/security/advisories}
+sources:
+  - {url: https://developers.openai.com/codex/config-basic, accessed: "2026-10-15", note: "config layers"}
+  - {url: https://developers.openai.com/codex/config-advanced, accessed: "2026-10-15", note: "project config, providers, telemetry"}
+  - {url: https://developers.openai.com/codex/config-reference, accessed: "2026-10-15", note: "keys"}
+  - {url: https://developers.openai.com/codex/agent-approvals-security, accessed: "2026-10-15", note: "sandbox/approvals/network"}
+  - {url: https://developers.openai.com/codex/noninteractive, accessed: "2026-10-15", note: "codex exec"}
+  - {url: https://developers.openai.com/codex/hooks, accessed: "2026-10-15", note: "hook trust"}
+  - {url: https://developers.openai.com/codex/mcp, accessed: "2026-10-15", note: "mcp_servers"}
+  - {url: https://developers.openai.com/codex/enterprise/managed-configuration, accessed: "2026-10-15", note: "requirements.toml"}
+  - {url: https://github.com/openai/codex/blob/main/codex-rs/core/config.schema.json, accessed: "2026-10-15", note: "schema"}
+  - {url: https://github.com/openai/codex/blob/main/codex-rs/utils/cli/src/shared_options.rs, accessed: "2026-10-15", note: "CLI flags"}
+  - {url: https://github.com/openai/codex/blob/main/codex-rs/protocol/src/protocol.rs, accessed: "2026-10-15", note: "AskForApproval enum"}
+  - {url: https://github.com/advisories/GHSA-xrxf-jgv3-qmrm, accessed: "2026-10-15", note: "CVE-2025-61260"}
+extra:
+  closed_products: "Codex cloud/web tasks, the ChatGPT desktop app and ChatGPT Work are closed hosted products (docs-level only)"
+  stale_in_mission: "`--full-auto` removed; `approval_policy = \"untrusted\"` retired; `profiles.<name>` tables in config.toml and top-level `profile` replaced by ~/.codex/<name>.config.toml files selected with --profile"

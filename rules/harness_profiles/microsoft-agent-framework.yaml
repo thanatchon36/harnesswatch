@@ -1,0 +1,106 @@
+id: microsoft-agent-framework
+tier: C
+analysed_on: '2026-10-15'
+config_files: []
+binaries: []
+name: Microsoft Agent Framework (incl. harness layer)
+vendor: Microsoft
+license: MIT
+open_source: true
+status: analysed
+version_analysed: python agent-framework-core 1.21.0; dotnet 1.25.0
+homepage: https://learn.microsoft.com/agent-framework/
+repo: https://github.com/microsoft/agent-framework
+packages:
+- ecosystem: pypi
+  name: agent-framework
+- ecosystem: pypi
+  name: agent-framework-core
+- ecosystem: pypi
+  name: agent-framework-hyperlight
+- ecosystem: nuget
+  name: Microsoft.Agents.AI
+- ecosystem: nuget
+  name: Microsoft.Agents.AI.Workflows.Declarative
+- ecosystem: nuget
+  name: Microsoft.Agents.AI.Foundry.Hosting
+state_dirs: []
+credential_files: []
+credential_storage: Delegated to Azure credentials (AzureCliCredential etc.); not examined
+log_paths: []
+memory_paths: []
+mcp:
+  files: []
+  servers_key: null
+  server_fields:
+    note: 'programmatic: MCPStdioTool/MCPStreamableHTTPTool/MCPWebsocketTool(approval_mode=, allowed_tools=); declarative workflows: InvokeMcpTool action'
+  project_servers_require_approval: null
+  notes: approval_mode always_require|never_require|per-tool dict
+permissions:
+  config_keys: {}
+  default_mode: approval_mode=never_require for plain tools; harness agent enables tool approval with standing rules + heuristic auto-approval
+  auto_approve_values:
+  - key: approval_mode
+    value: never_require
+  cli_flags_auto_approve: []
+  allow_rule_syntax: 'ALWAYS_APPROVE scopes: tool | tool_with_arguments'
+  overbroad_patterns:
+  - approval_mode="never_require"
+  - always-approve scope 'tool'
+hooks:
+  supported: true
+  config_key: middleware (AgentMiddleware/FunctionMiddleware), code-only
+  repo_scoped_allowed: false
+sandbox:
+  available: true
+  default_on: false
+  mechanism: agent-framework-hyperlight CodeAct; harness shell tool requires builder-provided shell_executor
+  config: create_harness_agent(shell_executor=...)
+  source: https://github.com/microsoft/agent-framework/blob/main/python/packages/hyperlight/README.md
+subagents:
+  supported: true
+  notes: harness background agents (_background_agents.py); not examined
+  source: https://github.com/microsoft/agent-framework/blob/main/python/packages/core/agent_framework/_harness/_background_agents.py
+memory:
+  persistent: true
+  cross_project: null
+  agent_writable: true
+  notes: MemoryContextProvider file-based when memory_store provided
+  source: https://github.com/microsoft/agent-framework/blob/main/python/samples/02-agents/harness/README.md
+telemetry:
+  default_on: true
+  opt_out: AGENT_FRAMEWORK_USER_AGENT_DISABLED=true; ENABLE_SENSITIVE_DATA gates content in OTel
+  training_default: null
+  source: https://github.com/microsoft/agent-framework/blob/main/python/packages/core/agent_framework/_telemetry.py
+headless:
+  command: null
+  model_override: OpenAI/Ollama/Foundry Local client packages (agent_framework.ollama, .openai) with custom base URL
+  local_model_support: Ollama package present in repo (python/packages/ollama)
+security_policy:
+  security_md: https://github.com/microsoft/agent-framework/blob/main/SECURITY.md
+  bug_bounty: https://aka.ms/security.md/msrc/create-report
+  advisories: https://github.com/microsoft/agent-framework/security/advisories
+extra:
+  ga: python-1.0.0 and dotnet-1.0.0 published 2026-04-02
+  harness_layer: create_harness_agent (Python core/_harness), HarnessAgent (.NET)
+  advisories:
+  - GHSA-q7g7-7c7x-frcq
+  - GHSA-9f26-7mqc-9vc4
+  - GHSA-r2mq-wgc9-vgh3
+  telemetry_env_vars:
+  - AGENT_FRAMEWORK_USER_AGENT_DISABLED
+  - ENABLE_SENSITIVE_DATA
+  - AGENT_FRAMEWORK_FEATURE_MASK_DISABLED
+sources:
+- url: https://github.com/microsoft/agent-framework/releases
+  accessed: '2026-10-15'
+  note: 1.0 date
+- url: https://github.com/microsoft/agent-framework/blob/main/python/samples/02-agents/harness/README.md
+  accessed: '2026-10-15'
+  note: harness layer
+- url: https://github.com/microsoft/agent-framework/blob/main/python/packages/core/agent_framework/_tools.py
+  accessed: '2026-10-15'
+  note: approval default
+- url: https://github.com/microsoft/agent-framework/security/advisories
+  accessed: '2026-10-15'
+  note: GHSAs

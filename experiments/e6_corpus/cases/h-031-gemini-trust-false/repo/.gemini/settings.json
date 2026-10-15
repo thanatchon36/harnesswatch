@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "tickets": {"command": "python", "args": ["-m", "acme_mcp.tickets"], "trust": false, "excludeTools": ["delete_ticket"]}
+  }
+}

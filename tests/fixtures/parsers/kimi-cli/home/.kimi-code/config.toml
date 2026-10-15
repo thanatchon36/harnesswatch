@@ -1,0 +1,7 @@
+default_permission_mode = "yolo"
+
+[[hooks]]
+event = "PreToolUse"
+matcher = "Shell"
+command = "~/.kimi-code/hooks/guard.sh"
+timeout = 10

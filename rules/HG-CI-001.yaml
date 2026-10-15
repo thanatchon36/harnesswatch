@@ -1,0 +1,57 @@
+id: HG-CI-001
+title: Headless agent in a workflow triggered by untrusted input ("pwn request")
+area: CI
+severity: high
+confidence: high
+kind: vulnerability-pattern
+taxonomy: [T09, T01, T08]
+description: >
+  A coding agent running non-interactively in CI on events that outsiders control (issue and PR
+  comments, pull_request_target, issues) reads attacker-written text. If the job also exposes
+  repository secrets, runs with auto-approve, or interpolates event text into the prompt, a crafted
+  issue/PR can steer the agent to leak secrets or push code. Critical when secrets plus auto-approve
+  or interpolation are present without an author-association/actor gate; medium when gated.
+remediation: >
+  Gate the job on `github.event.comment.author_association` (OWNER/MEMBER/COLLABORATOR) or an actor
+  allowlist; never pass event text via `${{ }}` interpolation (use environment variables); do not
+  expose deployment secrets to agent jobs; keep tool allowlists narrow instead of bypass modes; prefer
+  `pull_request` over `pull_request_target`.
+references:
+  - https://securitylab.github.com/resources/github-actions-preventing-pwn-requests/
+  - https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions
+params:
+  agent_actions:
+    - anthropics/claude-code-action
+    - anthropics/claude-code-base-action
+    - openai/codex-action
+    - google-github-actions/run-gemini-cli
+    - qwenlm/qwen-code-action
+    - continuedev/continue
+    - block/goose
+  agent_commands:          # display name -> regex over `run:` scripts
+    claude -p: '\bclaude\b[^\n]*(?:\s-p\b|--print\b)'
+    codex exec: '\bcodex\s+exec\b'
+    gemini -p: '\bgemini\b[^\n]*(?:\s-p\b|--prompt\b)'
+    qwen -p: '\bqwen\b[^\n]*(?:\s-p\b|--prompt\b)'
+    opencode run: '\bopencode\s+run\b'
+    goose run: '\bgoose\s+run\b'
+    aider --message: '\baider\b[^\n]*(?:--message\b|-m\s)'
+    copilot -p: '\bcopilot\b[^\n]*(?:\s-p\b|--prompt\b)'
+    cursor agent -p: '\b(?:cursor-agent|agent)\b[^\n]*(?:\s-p\b|--print\b)'
+    amp -x: '\bamp\b[^\n]*(?:\s-x\b|--execute\b)'
+    droid exec: '\bdroid\s+exec\b'
+    crush run: '\bcrush\s+run\b'
+    cn -p: '\bcn\b[^\n]*(?:\s-p\b|--print\b)'
+    kimi --print: '\bkimi\b[^\n]*(?:\s-p\b|--print\b)'
+    vibe --prompt: '\bvibe\b[^\n]*(?:\s-p\b|--prompt\b)'
+    devin -p: '\bdevin\b[^\n]*(?:\s-p\b|--print\b)'
+  # regexes; matched against the serialised step + job env
+  auto_approve_markers:
+    - '--dangerously-skip-permissions'
+    - 'bypassPermissions'
+    - '--yolo\b'
+    - '--full-auto\b'
+    - '--dangerously-bypass-approvals-and-sandbox'
+    - '--allow-all-tools\b'
+    - '--yes-always\b'
+    - '(?:allowed_tools|allowedTools|--allowedTools)[:= ]+["'']?Bash(?:\(\*\))?(?![(\w])'

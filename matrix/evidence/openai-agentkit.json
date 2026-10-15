@@ -1,0 +1,168 @@
+{
+  "harness": "openai-agentkit",
+  "version": "Agent Builder: scheduled shutdown 2026-11-30; ChatKit (chatkit-python/js Apache-2.0); openai-guardrails-python (MIT)",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Approval is required before any data is sent to a connector or remote MCP server by default; require_approval accepts 'always', 'never' or a never.tool_names object.",
+          "source": "https://developers.openai.com/api/docs/guides/tools-connectors-mcp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Safety guide: 'always enable tool approvals so end users can review and confirm every operation'; in Agent Builder use the human approval node.",
+          "source": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Guardrails provide input checks (PII redaction, jailbreak detection) described as 'not foolproof'.",
+          "source": "https://developers.openai.com/api/docs/guides/agent-builder-safety",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "MCP/connector tool calls require approval by default (require_approval='always' semantics); Agent Builder offers a human-approval node; Guardrails are optional and documented as not foolproof."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Agent Builder workflows can be deployed via ChatKit using a workflow ID or as downloaded Agents SDK code that the customer runs.",
+          "source": "https://developers.openai.com/api/docs/guides/agent-builder",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A for the hosted visual builder; code execution is via Responses API tools or the customer-run Agents SDK export."
+    },
+    "D03": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "Not documented in the pages read."
+    },
+    "D04": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (no local workspace)."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "OpenAI does not verify remote MCP servers; servers can change tool behaviour unexpectedly; prompt injection via server outputs is a documented risk.",
+          "source": "https://developers.openai.com/api/docs/guides/tools-connectors-mcp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "connector_id is deprecated for models released after September 1, 2026; use server_url or tunnel_id.",
+          "source": "https://developers.openai.com/api/docs/guides/tools-connectors-mcp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Remote MCP servers need per-call approval by default and docs warn OpenAI does not verify them; Connector Registry governance details not verified; connector_id deprecated for models released after 2026-09-01."
+    },
+    "D06": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "Not applicable / not verified."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Connectors require an OAuth access token supplied in the authorization field.",
+          "source": "https://developers.openai.com/api/docs/guides/tools-connectors-mcp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Guardrails docs: developers must implement safeguards against storing sensitive content; OpenAI disclaims liability for developer logging/retention.",
+          "source": "https://openai.github.io/openai-guardrails-python/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Connectors take an OAuth access token passed in each request (customer holds tokens); no vault-style secret isolation documented; Guardrails docs tell developers to avoid persisting blocked content."
+    },
+    "D08": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "Not applicable (hosted builder)."
+    },
+    "D09": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "Not documented for Agent Builder in pages read."
+    },
+    "D10": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "Not documented in pages read."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Agent Builder: Preview shows per-node execution; Evaluate runs trace graders against selected traces.",
+          "source": "https://developers.openai.com/api/docs/guides/agent-builder",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "With store=true, API data is logged for 30 days unless Zero Data Retention is enabled.",
+          "source": "https://developers.openai.com/api/docs/guides/tools-connectors-mcp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Preview runs show per-node execution; Evaluate runs trace graders on traces; API data with store=true is logged for 30 days."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "With store=true, API data is logged for 30 days unless ZDR enabled; MCP servers' own retention policies apply.",
+          "source": "https://developers.openai.com/api/docs/guides/tools-connectors-mcp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "30-day application-state retention with ZDR option; MCP third-party servers apply their own retention."
+    },
+    "D13": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "SDK/UI toolkits are open source (ChatKit Apache-2.0, openai-guardrails-python MIT); packaging provenance not verified."
+    },
+    "D14": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "Not verified; org-level connector governance in the Connector Registry was not documented in pages that could be fetched (openai.com announcement returned 403)."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "OpenAI asks that malicious MCP servers be reported to security@openai.com.",
+          "source": "https://developers.openai.com/api/docs/guides/tools-connectors-mcp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Third-party reports: HiddenLayer (Oct 2025) and Zenity Labs (Nov 2025) reported AgentKit Guardrails can be bypassed via prompt injection; no CVE/OpenAI advisory found.",
+          "source": "https://www.helpnetsecurity.com/2025/11/03/zenity-openai-runtime-protection/",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "No GitHub security advisories found for openai-guardrails-python, chatkit-python, chatkit-js, openai-agents-python/js (empty lists); MCP-server abuse reports go to security@openai.com; third-party research (HiddenLayer, Zenity) reported Guardrails bypasses without CVEs."
+    }
+  }
+}

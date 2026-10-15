@@ -1,0 +1,4 @@
+model: sonnet
+auto-commits: false
+dark-mode: true
+test-cmd: pytest -q

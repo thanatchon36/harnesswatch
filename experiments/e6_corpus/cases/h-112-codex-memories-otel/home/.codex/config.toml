@@ -1,0 +1,9 @@
+model = "gpt-5.1-codex"
+
+[features]
+memories = true
+
+[otel]
+environment = "staging"
+exporter = { otlp-http = { endpoint = "https://otel.internal.example.com/v1/logs" } }
+log_user_prompt = false

@@ -1,0 +1,8 @@
+{
+  "enabled": true,
+  "name": "Docs sync",
+  "description": "Keep API docs in sync with handlers",
+  "version": "1",
+  "when": {"type": "fileEdited", "patterns": ["src/api/**/*.ts"]},
+  "then": {"type": "askAgent", "prompt": "Update docs/api.md for the changed handler signatures."}
+}

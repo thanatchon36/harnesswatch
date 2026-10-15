@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "deny": ["Bash(rm -rf:*)", "Bash(git push --force:*)", "Bash(git push -f:*)", "Read(./.env)", "Read(./.env.*)", "Read(~/.ssh/**)", "Read(~/.aws/**)"]
+  },
+  "skipDangerousModePermissionPrompt": true
+}

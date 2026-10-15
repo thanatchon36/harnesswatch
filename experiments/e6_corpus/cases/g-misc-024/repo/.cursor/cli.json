@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "permissions": {
+    "allow": [
+      "Shell(ls)",
+      "Shell(npm test)",
+      "Write(src/**)"
+    ],
+    "deny": [
+      "Shell(rm)",
+      "Shell(git push --force)",
+      "Read(.env*)",
+      "Read(~/.ssh/**)"
+    ]
+  }
+}

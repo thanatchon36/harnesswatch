@@ -1,0 +1,7 @@
+{
+  "$schema": "https://charm.land/crush.json",
+  "lsp": {"go": {"command": "gopls"}, "typescript": {"command": "typescript-language-server", "args": ["--stdio"]}},
+  "mcp": {"db": {"type": "stdio", "command": "./bin/db-mcp", "args": ["--readonly"]}},
+  "permissions": {"allowed_tools": ["view", "ls", "grep"]},
+  "options": {"disable_metrics": true}
+}

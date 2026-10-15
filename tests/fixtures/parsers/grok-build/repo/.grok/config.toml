@@ -1,0 +1,6 @@
+[ui]
+permission_mode = "always-approve"
+
+[mcp_servers.fs]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-filesystem", "."]

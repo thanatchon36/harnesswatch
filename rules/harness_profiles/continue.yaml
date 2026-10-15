@@ -1,0 +1,106 @@
+id: continue
+name: Continue (VS Code / JetBrains / `cn` CLI)
+vendor: Continue Dev, Inc.
+tier: A
+license: Apache-2.0              # verified LICENSE + GitHub API
+open_source: true
+status: analysed                 # source read at 5522c6f (2026-07-20); not executed
+version_analysed: "final releases v2.0.0-vscode / v2.1.0-vscode (2026-06-19); npm @continuedev/cli 1.5.47 (2026-06-18); repo HEAD 5522c6f"
+analysed_on: "2026-10-15"
+homepage: https://continue.dev
+repo: https://github.com/continuedev/continue
+lifecycle: {archived: false, maintained: false, statement: "README: 'The continuedev/continue repository is no longer actively maintained and is read-only for all users.' Final 2.0.0 release removed anonymous telemetry and authentication.", source: https://github.com/continuedev/continue/blob/main/README.md}
+
+binaries: [cn]
+packages:
+  - {ecosystem: npm, name: "@continuedev/cli"}
+  - {ecosystem: vscode-marketplace, name: "Continue.continue"}
+  - {ecosystem: openvsx, name: "Continue/continue"}
+install_methods:
+  - {method: npm, command: "npm i -g @continuedev/cli", checksum_verified: null, signed: null, source: https://www.npmjs.com/package/@continuedev/cli}
+auto_update: {default: null, config: "unverified", source: null}
+
+state_dirs: ["~/.continue"]       # CONTINUE_GLOBAL_DIR overrides
+credential_files: ["~/.continue/auth.json", "~/.continue/.env", ".continue/.env"]
+credential_storage: "Secrets referenced as ${{ secrets.NAME }}; resolved from Continue hub (auth removed in 2.0.0 per README) then process.env, ~/.continue/.env, <ws>/.continue/.env, <ws>/.env (spec/mcp.md). ~/.continue/auth.json holds login tokens (plaintext JSON; mode unverified)."
+log_paths: ["~/.continue/sessions/*.json", "~/.continue/logs/*", "~/.continue/dev_data/**"]
+memory_paths: []
+
+config_files:
+  - {path: "~/.continue/config.yaml", scope: user, format: yaml, kind: settings}
+  - {path: "~/.continue/permissions.yaml", scope: user, format: yaml, kind: settings}      # allow/ask/exclude lists (cn)
+  - {path: "~/.continue/settings.json", scope: user, format: json, kind: hooks}
+  - {path: ".continue/settings.json", scope: project, format: json, kind: hooks}           # cn loads project hooks
+  - {path: ".continue/settings.local.json", scope: project-local, format: json, kind: hooks}
+  - {path: "~/.claude/settings.json", scope: user, format: json, kind: hooks}              # cn also reads Claude Code hook files
+  - {path: ".claude/settings.json", scope: project, format: json, kind: hooks}
+  - {path: ".claude/settings.local.json", scope: project-local, format: json, kind: hooks}
+  - {path: ".continue/mcpServers/*.yaml", scope: project, format: yaml, kind: mcp}        # also *.json (Claude/Cursor/Cline format accepted)
+  - {path: ".continue/mcpServers/*.json", scope: project, format: json, kind: mcp}
+  - {path: ".continue/rules/*.md", scope: project, format: markdown, kind: rules}
+  - {path: "~/.continue/rules/*.md", scope: user, format: markdown, kind: rules}
+  - {path: ".continue/checks/*.md", scope: project, format: markdown, kind: rules}         # PR checks run in CI
+  - {path: ".continue/agents/*", scope: project, format: yaml, kind: agents}
+  - {path: ".continue/prompts/*", scope: project, format: markdown, kind: skills}
+  - {path: ".continue/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+  - {path: ".continue/environment.json", scope: project, format: json, kind: settings}     # devbox environment install (runEnvironmentInstallSafe)
+
+instruction_files: [".continue/rules/*.md", "~/.continue/rules/*.md"]
+skills_paths: [".continue/skills/*/SKILL.md"]
+
+mcp:
+  files: ["~/.continue/config.yaml", ".continue/mcpServers/*.yaml", ".continue/mcpServers/*.json"]
+  servers_key: "mcpServers"          # YAML LIST of objects with `name`, not a map
+  server_fields:
+    command: command
+    args: args
+    env: env
+    url: url
+    headers: null                 # docs list only name,type,command,args,env,url; remote headers field unverified
+    type: type                    # sse | stdio | streamable-http
+  project_servers_require_approval: false     # per docs: files dropped into .continue/mcpServers/ are 'automatically picked up' (IDE); CLI path unverified
+  notes: "Block files need name/version/schema: v1 header. env values may use ${{ secrets.X }}."
+
+permissions:
+  config_keys:
+    allow: "allow"            # top-level list in ~/.continue/permissions.yaml
+    ask: "ask"
+    deny: "exclude"
+  default_mode: "Read-only tools (Read,List,Search,Fetch,Diff,...) allow; Edit/MultiEdit/Write/Bash = ask; headless: 'ask' tools are EXCLUDED (not run)"
+  auto_approve_values:
+    - {key: "allow", value: "*"}      # permissions.yaml
+    - {key: "allow", value: "Bash"}
+    - {key: "allow", value: "Bash(*)"}
+  cli_flags_auto_approve: ["--auto", "--allow \"*\"", "--allow Bash", "--allow Write"]
+  allow_rule_syntax: "Tool(glob) e.g. Write(**/*.ts), Bash(npm install*)"
+  overbroad_patterns: ["*", "Bash", "Bash(*)", "Write(*)"]
+  notes: "Precedence: --auto/--readonly > CLI flags > permissions.yaml > defaults. --auto/--readonly ignore all other rules."
+
+hooks:
+  supported: true
+  config_key: "hooks"               # Claude Code-compatible schema (PreToolUse, PostToolUse, PermissionRequest, SessionStart, ... 17 events)
+  repo_scoped_allowed: true         # .continue/settings.json, .claude/settings.json in project; no trust prompt found
+  command_field: "command"
+
+sandbox: {available: false, default_on: false, mechanism: null, config: null, source: https://github.com/continuedev/continue}
+network: {domain_allowlist: false, config: null, default: unrestricted}
+workspace_trust: {prompt_on_new_folder: false, notes: "cn reads .continue/ and .claude/ hooks files and .continue/.env from cwd with no trust prompt found in source (hookConfig.ts, CLIPlatformClient.ts). IDE extension relies on VS Code workspace trust (unverified).", source: https://github.com/continuedev/continue/blob/main/extensions/cli/src/hooks/hookConfig.ts}
+memory: {persistent: false, cross_project: false, agent_writable: false, notes: "none; rules files only", source: https://github.com/continuedev/continue}
+subagents: {supported: true, inherits_permissions: "hook events SubagentStart/SubagentStop exist; permission inheritance unverified", notes: "", source: https://github.com/continuedev/continue/blob/main/extensions/cli/src/hooks/types.ts}
+telemetry: {default_on: false, opt_out: "anonymous telemetry removed in 2.0.0 (README); CLI has OTLP metrics export if configured (telemetryService.ts)", training_default: null, source: https://github.com/continuedev/continue/blob/main/README.md}
+headless:
+  command: "cn -p \"<prompt>\" --allow Write --allow Edit"
+  flags: ["-p", "--format json", "--silent", "--allow <Tool>", "--ask", "--exclude", "--auto", "--readonly", "--config <file>", "--rule", "--agent", "--resume"]
+  ci_integrations: ["continuedev/continue/actions/general-review (composite action in repo)"]
+  model_override: "--config ./cfg.yaml pointing to models[] with provider/apiBase"
+  local_model_support: "yes: config.yaml models: [{name, provider: ollama|openai, model, apiBase: http://localhost:11434}] (docs customize/model-providers/top-level/ollama.mdx); cn --config path.yaml"
+
+security_policy: {security_md: https://github.com/continuedev/continue/blob/main/SECURITY.md, bug_bounty: null, advisories: "none published (GHSA API empty)"}
+extra:
+sources:
+  - {url: https://github.com/continuedev/continue/blob/main/README.md, accessed: "2026-10-15", note: "no longer maintained"}
+  - {url: https://github.com/continuedev/continue/blob/main/docs/cli/tool-permissions.mdx, accessed: "2026-10-15"}
+  - {url: https://github.com/continuedev/continue/blob/main/docs/cli/headless-mode.mdx, accessed: "2026-10-15"}
+  - {url: https://github.com/continuedev/continue/blob/main/docs/customize/deep-dives/mcp.mdx, accessed: "2026-10-15"}
+  - {url: https://github.com/continuedev/continue/blob/main/extensions/cli/src/hooks/hookConfig.ts, accessed: "2026-10-15"}
+  - {url: https://registry.npmjs.org/@continuedev/cli, accessed: "2026-10-15"}

@@ -1,0 +1,4 @@
+expected: [HG-NET-001]
+origin: hand
+family: net
+note: "sandbox network explicitly opened"

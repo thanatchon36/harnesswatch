@@ -1,0 +1,10 @@
+{
+  "$schema": "https://charm.land/crush.json",
+  "permissions": {
+    "allowed_tools": [
+      "ls",
+      "view",
+      "fetch"
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+expected: [HG-MCP-001]
+origin: hand
+family: mcp
+note: "pipx run without version, user ~/.claude.json"

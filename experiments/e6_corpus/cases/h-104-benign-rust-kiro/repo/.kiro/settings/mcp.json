@@ -1,0 +1,1 @@
+{"mcpServers": {"docs": {"url": "https://docs-mcp.example.com/mcp", "headers": {"Authorization": "Bearer ${DOCS_MCP_TOKEN}"}, "autoApprove": ["search"]}}}

@@ -1,0 +1,4 @@
+expected: [HG-MCP-001]
+origin: hand
+family: mcp
+note: "uv tool run without version in codex config"

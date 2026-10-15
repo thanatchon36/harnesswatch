@@ -1,0 +1,75 @@
+id: bedrock-agentcore
+name: Amazon Bedrock AgentCore (incl. managed Harness)
+vendor: Amazon Web Services
+tier: C
+license: "Proprietary hosted; bedrock-agentcore SDK and starter toolkit Apache-2.0"
+open_source: false
+status: docs-only
+version_analysed: null
+analysed_on: "2026-10-15"
+homepage: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html
+repo: https://github.com/aws/bedrock-agentcore-sdk-python
+
+binaries: [agentcore]
+packages:
+  - {ecosystem: pypi, name: "bedrock-agentcore"}
+  - {ecosystem: pypi, name: "bedrock-agentcore-starter-toolkit"}
+install_methods: []
+auto_update: {default: null, config: null, source: null}
+
+state_dirs: []
+credential_files: []
+credential_storage: "AgentCore Identity Token Vault (API key and OAuth2 credential providers, Secrets Manager-backed); harness execution role via IAM"
+log_paths: []
+memory_paths: []
+
+config_files:
+  - {path: "app/<agent>/harness.json", scope: project, format: json, kind: settings}   # AgentCore CLI harness definition (tools, memory, model)
+  - {path: "agentcore/*.json", scope: project, format: json, kind: settings}            # unverified layout
+
+mcp:
+  files: ["app/<agent>/harness.json"]
+  servers_key: "tools[] with type remote_mcp -> config.remoteMcp {url, headers}"
+  server_fields: {url: url, headers: headers, type: type, name: name}
+  project_servers_require_approval: false
+  notes: "headers may be plaintext ('Authorization': 'Bearer <token>') or '${arn:aws:bedrock-agentcore:...:token-vault/default/apikeycredentialprovider/<name>}' references. Prefer AgentCore Gateway + Identity."
+
+permissions:
+  config_keys:
+    allow: "harness allowedTools (patterns: '*', 'shell', '@builtin', '@server/tool')"
+    mode: "InvokeHarness IAM: bedrock-agentcore:InvokeHarness + bedrock-agentcore:InvokeAgentRuntime"
+  default_mode: "allowedTools omitted => all tools allowed, including shell and file_operations"
+  auto_approve_values:
+    - {key: "allowedTools", value: "*"}
+  cli_flags_auto_approve: []
+  allow_rule_syntax: '"@git/read_*"'
+  overbroad_patterns: ['"allowedTools": ["*"]', 'omitted allowedTools', '"bedrock-agentcore:*"', '"sts:AssumeRole" on harness execution role']
+
+hooks:
+  supported: true
+  config_key: "lifecycle hooks (Lambda, SNS, EventBridge targets) on harness"
+  repo_scoped_allowed: true
+  command_field: null
+
+sandbox: {available: true, default_on: true, mechanism: "Firecracker microVM per harness session (AgentCore Runtime); Code Interpreter and Browser sandboxes", config: "environment.agentCoreRuntimeEnvironment.networkConfiguration.networkMode = PUBLIC|VPC", source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-security.html}
+network: {domain_allowlist: false, config: "VPC mode + security groups / Route 53 Resolver DNS Firewall", default: "harness sessions run on the public network", source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-security.html}
+workspace_trust: {prompt_on_new_folder: false, notes: "cloud service; skills sources (S3/Git) are treated as trusted input", source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-security.html}
+memory: {persistent: true, cross_project: false, agent_writable: true, notes: "AgentCore Memory scoped by actorId+sessionId; service API default managed memory, CLI default disabled", source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-memory.html}
+subagents: {supported: null, inherits_permissions: null, notes: "each session in its own microVM", source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-security.html}
+telemetry: {default_on: true, opt_out: null, training_default: "AgentCore may use and store content to improve the service for the customer's own use", source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html}
+headless:
+  command: "agentcore invoke --harness <name> \"<prompt>\"  (or aws bedrock-agentcore InvokeHarness)"
+  flags: ["--bearer-token", "--tools"]
+  ci_integrations: []
+  model_override: "model field of InvokeHarness incl. additionalParams/apiBase/modelId (unvalidated by service); providers: Bedrock, OpenAI, Gemini, LiteLLM-compatible"
+  local_model_support: "LiteLLM-compatible provider with apiBase (must be reachable from the microVM); local Ollama not applicable to hosted runtime"
+
+security_policy: {security_md: null, bug_bounty: null, advisories: "https://github.com/aws/bedrock-agentcore-sdk-python/security/advisories"}
+sources:
+  - {url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html, accessed: "2026-10-15", note: "AgentCore harness is GA"}
+  - {url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-security.html, accessed: "2026-10-15", note: "shared responsibility, IAM, network"}
+  - {url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-tools.html, accessed: "2026-10-15", note: "allowedTools"}
+  - {url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html, accessed: "2026-10-15", note: "Policy"}
+  - {url: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html, accessed: "2026-10-15", note: "service list"}
+extra:
+  seed_name_check: "MISSION.md 'AWS Bedrock AgentCore Harness' is real: managed harness (CreateHarness/InvokeHarness), GA, powered by Strands Agents."

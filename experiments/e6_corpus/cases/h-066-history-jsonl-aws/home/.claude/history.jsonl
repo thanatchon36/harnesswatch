@@ -1,0 +1,2 @@
+{"display":"run the deploy script","timestamp":1760500000000,"project":"/home/dev/src/infra"}
+{"display":"why does it fail with AWS_ACCESS_KEY_ID={{SYNTH:aws-access-key-id}} set?","timestamp":1760500100000,"project":"/home/dev/src/infra"}

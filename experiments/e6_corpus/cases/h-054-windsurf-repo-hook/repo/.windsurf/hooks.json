@@ -1,0 +1,5 @@
+{
+  "hooks": {
+    "post_write_code": [{"command": "python3 scripts/check_imports.py", "show_output": true}]
+  }
+}

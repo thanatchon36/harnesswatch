@@ -1,0 +1,75 @@
+id: replit-agent
+name: "Replit Agent (cloud; now surfaced as Chat / Agent with Free, Power and Max modes, Plan and Build modes)"
+vendor: Replit
+tier: B
+license: Proprietary (SaaS)
+open_source: false
+status: docs-only
+version_analysed: null              # cloud service, no versioned client
+analysed_on: "2026-10-15"
+homepage: https://replit.com
+repo: null
+
+binaries: []                        # no agent CLI found in docs index (docs.replit.com/llms.txt searched 2026-10-15)
+packages: []
+install_methods: []
+auto_update: {default: true, config: "SaaS (server-side)", source: https://docs.replit.com}
+
+state_dirs: []                      # runs in Replit-hosted workspace; local file layout unverified
+credential_files: []
+credential_storage: "Replit Secrets pane (server-side store; documented as the place for API keys). Encryption details: unverified (only third-party mention)"
+log_paths: []
+memory_paths: []
+
+config_files:
+  # Docs describe UI-driven configuration (Agent modes, Skills, MCP, Advanced settings). No repo-level agent
+  # config/rules/MCP file was confirmed in the current docs. Legacy Replit project files (.replit, replit.nix, replit.md) are NOT
+  # confirmed for Agent in the docs read -> intentionally omitted (unverified).
+  - {path: "Settings > Advanced (account admin, Enterprise): Security, Agent modes and model providers, Audit Logs", scope: managed, format: ini, kind: settings}   # UI only, not a file
+
+instruction_files: []               # unverified (replit.md suspected, not confirmed)
+skills_paths: []                    # Skills = "a folder of reusable instructions and supporting files" selected from prompt box; path unverified
+
+mcp:
+  files: []
+  servers_key: null
+  server_fields: {}
+  project_servers_require_approval: null
+  notes: "Two directions: Replit as MCP client (curated or custom MCP servers; docs: 'Only connect servers you trust') and Replit MCP Server (external clients create/inspect Replit Apps). Configured in UI; no file format documented."
+
+permissions:
+  config_keys: {}
+  default_mode: "Build mode applies changes directly; Plan mode scopes work without changing the project (docs/help)"
+  auto_approve_values: []
+  cli_flags_auto_approve: []
+  allow_rule_syntax: null
+  overbroad_patterns: []
+  notes: "No per-command approval, allow/deny rules or sandbox policy documented for Agent. Safety rests on checkpoints/rollback, Plan mode, and (since the July 2025 incident) dev/prod database separation (Production databases: point-in-time restore 7 days Core / 28 days Pro)."
+
+hooks: {supported: false}
+
+sandbox: {available: true, default_on: true, mechanism: "agent runs inside Replit-hosted cloud workspace (not the user's machine); isolation details unverified", config: null, source: null}
+network: {domain_allowlist: null, config: null, default: "unverified", source: null}
+workspace_trust: {prompt_on_new_folder: null, notes: "N/A for SaaS; Import of external project exists", source: https://docs.replit.com/chat/import-a-project.md}
+memory: {persistent: null, cross_project: null, agent_writable: null, notes: "unverified", source: null}
+subagents: {supported: null, notes: "Task system / build-in-parallel pages exist (not read)", source: https://docs.replit.com/llms.txt}
+telemetry: {default_on: true, opt_out: "Settings > Personalization > Model Improvement opt-out (Pro plan only)", training_default: "content (prompts, context, responses) used to develop and improve models unless Pro user opts out; Enterprise: customer content not used for training", source: https://docs.replit.com/legal-and-security-info/model-improvement.md}
+headless:
+  command: null
+  flags: []
+  ci_integrations: []
+  model_override: "Enterprise admins choose approved providers/models (OpenAI, Anthropic, Google, DeepSeek, Kimi, Z.ai) in Advanced settings"
+  local_model_support: "No (hosted SaaS) -> bench cell N/A (no access / not runnable locally)"
+
+security_policy: {security_md: https://docs.replit.com/legal-and-security-info/security.md, bug_bounty: null, advisories: null}   # disclosure by email security@replit.com; no bounty page found
+sources:
+  - {url: https://docs.replit.com/llms.txt, accessed: "2026-10-15", note: "docs index"}
+  - {url: https://docs.replit.com/legal-and-security-info/security.md, accessed: "2026-10-15", note: "disclosure email"}
+  - {url: https://docs.replit.com/legal-and-security-info/model-improvement.md, accessed: "2026-10-15", note: "training opt-out"}
+  - {url: https://docs.replit.com/teams/identity-and-access-management/audit-logs.md, accessed: "2026-10-15", note: "enterprise audit logs"}
+  - {url: https://docs.replit.com/teams/modes-and-model-providers.md, accessed: "2026-10-15", note: "enterprise model policy"}
+  - {url: https://docs.replit.com/teams/security.md, accessed: "2026-10-15", note: "security center/policies"}
+  - {url: https://docs.replit.com/chat/connect-through-mcp.md, accessed: "2026-10-15", note: "MCP"}
+  - {url: https://docs.replit.com/help/agent-and-ai.md, accessed: "2026-10-15", note: "modes, checkpoints"}
+  - {url: https://docs.replit.com/help/database.md, accessed: "2026-10-15", note: "production DB restore windows"}
+  - {url: https://fortune.com/2025/07/23/ai-coding-tool-replit-wiped-database-called-it-a-catastrophic-failure/, accessed: "2026-10-15", note: "July 2025 incident"}

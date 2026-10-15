@@ -1,0 +1,14 @@
+id: HG-MCP-002
+title: Remote MCP server over plaintext HTTP, wildcard host, or without authentication
+area: MCP
+severity: medium
+confidence: medium
+kind: vulnerability-pattern
+taxonomy: [T04, T08]
+description: >
+  Remote MCP servers reached over `http://` (non-loopback) expose tool calls, results and tokens to
+  the network path; a wildcard/0.0.0.0 host indicates a misconfigured binding. A remote server without
+  an auth header is reported as low (OAuth may still be negotiated at runtime).
+remediation: Use HTTPS with authentication (OAuth 2.1 or a token from an environment variable), and only to hosts you trust.
+references:
+  - https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization

@@ -1,0 +1,72 @@
+id: claude-managed-agents
+name: Claude Managed Agents
+vendor: Anthropic
+tier: C
+license: Proprietary (hosted service, beta)
+open_source: false
+status: docs-only
+version_analysed: null            # beta; header managed-agents-2026-04-01
+analysed_on: "2026-10-15"
+homepage: https://platform.claude.com/docs/en/managed-agents/overview
+repo: null
+
+binaries: [ant]                   # Anthropic CLI used for `ant apply` and self-hosted workers (github.com/anthropics/anthropic-cli)
+packages:
+  - {ecosystem: pypi, name: "anthropic"}
+  - {ecosystem: npm, name: "@anthropic-ai/sdk"}
+install_methods:
+  - {method: github-release-tarball, command: "curl -fsSL https://github.com/anthropics/anthropic-cli/releases/download/v${VERSION}/ant_${VERSION}_${OS}_${ARCH}.tar.gz | sudo tar -xz -C /usr/local/bin ant", checksum_verified: false, signed: null, source: https://platform.claude.com/docs/en/managed-agents/self-hosted-sandboxes}
+auto_update: {default: null, config: null, source: null}
+
+state_dirs: []
+credential_files: []
+credential_storage: "Server-side vaults (write-only secret fields). Sandbox gets opaque placeholders for environment_variable credentials; real value substituted at egress for allowed_hosts."
+log_paths: []
+memory_paths: ["/mnt/memory/<store-slug>/ (inside the session sandbox)"]
+
+config_files: []                  # API objects: agent, environment, session, vault, memory_store. `ant apply <file>.yaml|.md` consumes local declarative files.
+
+mcp:
+  files: []
+  servers_key: "mcp_servers (agent object) / mcp_toolset entries in agent.tools"
+  server_fields: {url: url, type: type, name: name}
+  project_servers_require_approval: true   # MCP toolsets default permission_policy=always_ask
+  notes: "MCP credentials via vault (mcp_oauth | static_bearer) matched by mcp_server_url; with limited networking, agent MCP hosts must be in allowed_hosts or allow_mcp_servers=true."
+
+permissions:
+  config_keys:
+    mode: "tools[].default_config.permission_policy.type and tools[].configs[].permission_policy.type"
+    allow: "tools[].configs[].enabled"
+    deny: "tools[].configs[].enabled=false / default_config.enabled=false"
+  default_mode: "agent_toolset_20260401 -> always_allow; mcp_toolset -> always_ask"
+  auto_approve_values:
+    - {key: "permission_policy.type", value: "always_allow"}
+  cli_flags_auto_approve: []
+  allow_rule_syntax: '{"type":"agent_toolset_20260401","default_config":{"permission_policy":{"type":"always_ask"}}}'
+  overbroad_patterns: ['"permission_policy": {"type": "always_allow"} on bash', '"networking": {"type": "unrestricted"}']
+
+hooks: {supported: false}
+
+sandbox: {available: true, default_on: true, mechanism: "fresh Linux container per session (Anthropic-managed cloud) or customer-run self-hosted worker", config: "environment.config.type = cloud | self_hosted", source: https://platform.claude.com/docs/en/managed-agents/environments}
+network: {domain_allowlist: true, config: "environment.config.networking {type: limited|unrestricted, allowed_hosts, allow_package_managers, allow_mcp_servers}", default: "API create omitting networking => unrestricted; Console form starts Limited", source: https://platform.claude.com/docs/en/managed-agents/environments}
+workspace_trust: {prompt_on_new_folder: false, notes: "no local workspace", source: null}
+memory: {persistent: true, cross_project: true, agent_writable: true, notes: "memory stores attached read_write by default; read_only enforced at filesystem level; immutable versions retained 30 days; header agent-memory-2026-07-22", source: https://platform.claude.com/docs/en/managed-agents/memory}
+subagents: {supported: true, inherits_permissions: "multiagent threads share the session's vault credentials", notes: "multiagent orchestration page not read in full", source: https://platform.claude.com/docs/en/managed-agents/vaults}
+telemetry: {default_on: null, opt_out: null, training_default: null, source: https://platform.claude.com/docs/en/managed-agents/overview}
+headless:
+  command: "POST /v1/sessions then POST /v1/sessions/{id}/events (header anthropic-beta: managed-agents-2026-04-01); CLI: ant beta:sessions create"
+  flags: []
+  ci_integrations: []
+  model_override: "agent.model (Claude models only)"
+  local_model_support: "none (hosted Claude models only; self-hosted sandbox moves tool execution, not the model)"
+
+security_policy: {security_md: null, bug_bounty: null, advisories: null}
+sources:
+  - {url: https://platform.claude.com/docs/en/managed-agents/overview, accessed: "2026-10-15", note: "beta status, ZDR/BAA ineligibility"}
+  - {url: https://platform.claude.com/docs/en/managed-agents/environments, accessed: "2026-10-15", note: "networking defaults"}
+  - {url: https://platform.claude.com/docs/en/managed-agents/permission-policies, accessed: "2026-10-15", note: "policy defaults"}
+  - {url: https://platform.claude.com/docs/en/managed-agents/vaults, accessed: "2026-10-15", note: "credential handling"}
+  - {url: https://platform.claude.com/docs/en/managed-agents/memory, accessed: "2026-10-15", note: "memory stores"}
+  - {url: https://platform.claude.com/docs/en/managed-agents/self-hosted-sandboxes, accessed: "2026-10-15", note: "self-hosted"}
+extra:
+  note: "Distinct from the Claude Agent SDK. Not eligible for Zero Data Retention or HIPAA BAA (stateful)."

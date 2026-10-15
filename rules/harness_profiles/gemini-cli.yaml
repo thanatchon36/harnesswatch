@@ -1,0 +1,126 @@
+id: gemini-cli
+name: Gemini CLI
+vendor: Google
+tier: A
+license: Apache-2.0
+open_source: true
+status: analysed
+version_analysed: "0.64.0"      # v0.64.0 (2026-10-13); source read at main 06d3298
+analysed_on: "2026-10-15"
+homepage: https://geminicli.com
+repo: https://github.com/google-gemini/gemini-cli
+lifecycle: "Consumer access (Google AI Pro/Ultra, Gemini Code Assist for individuals) stopped 2026-06-18 per Google Developers Blog (2026-05-19); enterprise Code Assist Standard/Enterprise and paid API keys continue; successor is Antigravity CLI (agy), closed. Repo still releasing weekly."
+
+binaries: [gemini]
+packages:
+  - {ecosystem: npm, name: "@google/gemini-cli"}
+install_methods:
+  - {method: npm, command: "npm install -g @google/gemini-cli", checksum_verified: null, signed: null, source: https://github.com/google-gemini/gemini-cli/blob/main/README.md}
+  - {method: npx, command: "npx @google/gemini-cli", checksum_verified: null, signed: null, source: https://github.com/google-gemini/gemini-cli/blob/main/README.md}
+  - {method: homebrew, command: "brew install gemini-cli", checksum_verified: null, signed: null, source: https://github.com/google-gemini/gemini-cli/blob/main/README.md}
+  - {method: github-release, command: "gemini-cli-bundle.zip; darwin zips are named -unsigned", checksum_verified: null, signed: false, source: https://github.com/google-gemini/gemini-cli/releases/tag/v0.64.0}
+auto_update: {default: true, config: "general.enableAutoUpdate / general.enableAutoUpdateNotification (settings.json)", source: https://github.com/google-gemini/gemini-cli/blob/main/schemas/settings.schema.json}
+
+state_dirs: ["~/.gemini"]
+credential_files: ["~/.gemini/oauth_creds.json"]      # Google login cache; API keys via GEMINI_API_KEY / GOOGLE_API_KEY env or .env files
+credential_storage: "OAuth cache file ~/.gemini/oauth_creds.json; MCP OAuth tokens via hybrid keychain/file store; env vars and .env (~/.gemini/.env, project .env only if folder trusted)"
+log_paths: ["~/.gemini/tmp/*/chats/*", "~/.gemini/tmp/*/logs.json", "~/.gemini/history/**"]       # chats path documented; others unverified
+memory_paths: ["~/.gemini/GEMINI.md", "GEMINI.md"]
+
+config_files:
+  - {path: "/etc/gemini-cli/settings.json", scope: managed, format: json, kind: settings}                          # Linux; macOS /Library/Application Support/GeminiCli/settings.json; Windows C:\ProgramData\gemini-cli\settings.json; GEMINI_CLI_SYSTEM_SETTINGS_PATH
+  - {path: "/etc/gemini-cli/policies/*.toml", scope: managed, format: toml, kind: rules}                           # admin policy tier (macOS /Library/Application Support/GeminiCli/policies)
+  - {path: "~/.gemini/settings.json", scope: user, format: json, kind: settings}
+  - {path: "~/.gemini/policies/*.toml", scope: user, format: toml, kind: rules}
+  - {path: "~/.gemini/trustedFolders.json", scope: user, format: json, kind: settings}                              # folder-trust decisions (GEMINI_CLI_TRUSTED_FOLDERS_PATH)
+  - {path: "~/.gemini/GEMINI.md", scope: user, format: markdown, kind: instructions}
+  - {path: "~/.gemini/.env", scope: user, format: env, kind: settings}
+  - {path: "~/.gemini/extensions/*/gemini-extension.json", scope: user, format: json, kind: skills}
+  - {path: "~/.gemini/skills/*/SKILL.md", scope: user, format: markdown, kind: skills}
+  - {path: "~/.gemini/commands/*.toml", scope: user, format: toml, kind: skills}
+  - {path: ".gemini/settings.json", scope: project, format: json, kind: settings}                                  # ignored when folder untrusted
+  - {path: ".gemini/commands/*.toml", scope: project, format: toml, kind: skills}
+  - {path: ".gemini/skills/*/SKILL.md", scope: project, format: markdown, kind: skills}
+  - {path: ".env", scope: project, format: env, kind: settings}                                                    # ignored when folder untrusted
+  - {path: "GEMINI.md", scope: project, format: markdown, kind: instructions}
+  - {path: ".geminiignore", scope: project, format: ini, kind: ignore}
+
+instruction_files: ["GEMINI.md", "~/.gemini/GEMINI.md", "context.fileName override (e.g. AGENTS.md)"]
+skills_paths: [".gemini/skills/*/SKILL.md", "~/.gemini/skills/*/SKILL.md"]       # .agents/skills alias unverified
+
+mcp:
+  files: ["~/.gemini/settings.json", ".gemini/settings.json", "/etc/gemini-cli/settings.json", "extensions' gemini-extension.json"]
+  servers_key: "mcpServers"
+  server_fields:
+    command: command
+    args: args
+    env: env
+    url: url               # SSE or HTTP with `type`; httpUrl = streamable HTTP; tcp = websocket
+    headers: headers
+    type: type             # stdio | sse | http
+    httpUrl: httpUrl
+    cwd: cwd
+    trust: trust           # true bypasses tool-call confirmations for that server
+    include_tools: includeTools
+    exclude_tools: excludeTools
+    oauth: oauth
+  project_servers_require_approval: true      # only via folder trust: untrusted folder ignores .gemini/settings.json entirely; there is no per-server approval prompt
+  policy_keys: ["mcp.allowed", "mcp.excluded", "admin.mcp (required servers)"]
+  notes: "trust:true on a server skips confirmation for its tools - flag in linter."
+
+permissions:
+  config_keys:
+    mode: "general.defaultApprovalMode"           # default | auto_edit | plan  (yolo selectable by flag; docs list yolo)
+    allow: "tools.allowed"                        # e.g. ["run_shell_command(git status)"] bypass confirmation
+    confirm: "tools.confirmationRequired"
+    deny: "tools.exclude"
+    disable_yolo: "security.disableYoloMode"
+    disable_always_allow: "security.disableAlwaysAllow"
+    policy_paths: "policyPaths / adminPolicyPaths"
+  default_mode: "default"
+  auto_approve_values:
+    - {key: "general.defaultApprovalMode", value: "yolo", note: "accepted by config parser; blocked by security.disableYoloMode"}
+    - {key: "general.defaultApprovalMode", value: "auto_edit"}
+    - {key: "tools.allowed", value: "run_shell_command", note: "bare tool name allows every shell command"}
+    - {key: "security.enablePermanentToolApproval", value: true}
+    - {key: "security.autoAddToPolicyByDefault", value: true}
+    - {key: "mcpServers.<name>.trust", value: true}
+  cli_flags_auto_approve: ["--yolo", "-y", "--approval-mode yolo", "--approval-mode auto_edit", "--skip-trust"]
+  allow_rule_syntax: "\"tools\": { \"allowed\": [\"run_shell_command(git status)\"] }   |   policy TOML: [[rule]] toolName=\"run_shell_command\" commandPrefix=\"rm -rf\" decision=\"deny\" priority=100"
+  overbroad_patterns: ["run_shell_command", "run_shell_command(*)", "write_file", "replace", "web_fetch"]
+
+hooks:
+  supported: true
+  config_key: "hooks"                  # plus hooksConfig.enabled (default true) / hooksConfig.disabled
+  repo_scoped_allowed: true            # .gemini/settings.json hooks; project hooks fingerprinted - changed hooks treated as new/untrusted and warned
+  command_field: "command"
+  notes: "Env GEMINI_PROJECT_DIR (CLAUDE_PROJECT_DIR alias). Events not enumerated here (see docs/hooks/reference.md)."
+
+sandbox: {available: true, default_on: false, mechanism: "macOS Seatbelt (sandbox-exec; default profile permissive-open), Docker/Podman container (ghcr.io/google/gemini-cli), runsc (gVisor), lxc; experimental security.toolSandboxing", config: "tools.sandbox / GEMINI_SANDBOX / -s ; tools.sandboxNetworkAccess (default false); SEATBELT_PROFILE", source: https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/sandbox.md}
+network: {domain_allowlist: false, config: "tools.sandboxNetworkAccess only (boolean)", default: "no egress control outside the opt-in sandbox; web_fetch/google_search tools require confirmation by default", source: https://github.com/google-gemini/gemini-cli/blob/main/schemas/settings.schema.json}
+workspace_trust: {prompt_on_new_folder: true, notes: "security.folderTrust.enabled defaults to true in code (docs/cli/trusted-folders.md still says disabled by default - stale). Untrusted: workspace settings, .env, extensions management, auto-acceptance, auto memory loading disabled. Headless: FatalUntrustedWorkspaceError unless --skip-trust or GEMINI_CLI_TRUST_WORKSPACE=true (since 0.39.1, GHSA-wpqr-6v78-jr5g). Admin policy 'Workspace' tier is disabled.", source: https://github.com/google-gemini/gemini-cli/blob/main/packages/cli/src/config/trustedFolders.ts}
+memory: {persistent: true, cross_project: true, agent_writable: true, notes: "save_memory tool appends to ~/.gemini/GEMINI.md (global); project GEMINI.md user-authored; auto-memory feature (docs/cli/auto-memory.md)", source: https://github.com/google-gemini/gemini-cli/blob/main/docs/tools/memory.md}
+subagents: {supported: true, inherits_permissions: null, notes: "agents settings key and subagent hooks exist; permission inheritance not verified", source: https://github.com/google-gemini/gemini-cli/blob/main/schemas/settings.schema.json}
+telemetry: {default_on: true, opt_out: "privacy.usageStatisticsEnabled=false (usage statistics default true); OpenTelemetry (telemetry.enabled) is opt-in, telemetry.logPrompts opt-in", training_default: "per Google terms for the auth method (unverified here)", source: https://github.com/google-gemini/gemini-cli/blob/main/schemas/settings.schema.json}
+headless:
+  command: "gemini -p"
+  flags: ["-p/--prompt", "--output-format json|stream-json|text", "--approval-mode default|auto_edit|yolo|plan", "--yolo/-y", "--skip-trust", "-m/--model", "-s/--sandbox", "--policy / --admin-policy", "--allowed-mcp-server-names", "--include-directories"]
+  ci_integrations: ["google-github-actions/run-gemini-cli (trust guidance: docs/trust-guidance.md)"]
+  model_override: "-m / GEMINI_MODEL; GOOGLE_GEMINI_BASE_URL and GOOGLE_VERTEX_BASE_URL override the endpoint but speak the Gemini API wire format"
+  local_model_support: "No native OpenAI/Anthropic/Ollama provider. GOOGLE_GEMINI_BASE_URL could point at a Gemini-API-compatible shim (e.g. LiteLLM) - not verified; treat Ollama as unsupported without a shim."
+
+security_policy: {security_md: https://github.com/google-gemini/gemini-cli/blob/main/SECURITY.md, bug_bounty: https://g.co/vulnz, advisories: https://github.com/google-gemini/gemini-cli/security/advisories}
+sources:
+  - {url: https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/, accessed: "2026-10-15", note: "consumer end date 2026-06-18"}
+  - {url: https://github.com/google-gemini/gemini-cli/blob/main/schemas/settings.schema.json, accessed: "2026-10-15", note: "settings schema"}
+  - {url: https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/trusted-folders.md, accessed: "2026-10-15", note: "trusted folders (stale default claim)"}
+  - {url: https://github.com/google-gemini/gemini-cli/blob/main/packages/cli/src/config/trustedFolders.ts, accessed: "2026-10-15", note: "default true"}
+  - {url: https://github.com/google-gemini/gemini-cli/blob/main/packages/core/src/utils/trust.ts, accessed: "2026-10-15", note: "env trust overrides"}
+  - {url: https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/policy-engine.md, accessed: "2026-10-15", note: "policy engine"}
+  - {url: https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/sandbox.md, accessed: "2026-10-15", note: "sandbox"}
+  - {url: https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/enterprise.md, accessed: "2026-10-15", note: "system settings paths"}
+  - {url: https://github.com/google-gemini/gemini-cli/blob/main/docs/hooks/index.md, accessed: "2026-10-15", note: "hook fingerprinting"}
+  - {url: https://github.com/google-gemini/gemini-cli/security/advisories/GHSA-wpqr-6v78-jr5g, accessed: "2026-10-15", note: "CVE-2026-12537"}
+extra:
+  mission_check: "MISSION claim 'consumer service ended 2026-06-18' is correct for individual accounts (AI Pro/Ultra, free Code Assist for individuals); enterprise/API use continues and the repo is active."
+  doc_inconsistency: "GHSA text names GEMINI_TRUST_WORKSPACE; code and docs use GEMINI_CLI_TRUST_WORKSPACE."

@@ -1,0 +1,315 @@
+{
+  "harness": "kiro",
+  "version": "IDE 1.3.0 / CLI 2.31.0",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Every command requires approval by default; defaults allow only fs_read ./**, read-only git and system commands",
+          "source": "https://kiro.dev/docs/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "permissions.yaml capability rules (allow/ask/deny); headless treats ask as deny",
+          "source": "https://kiro.dev/docs/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Auto-approve spellings: --trust-all-tools, mcpServers.autoApprove ['*'], kiroAgent.trustedCommands '*', Autopilot",
+          "source": "https://kiro.dev/docs/privacy-and-security/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Trusted-command matching is string-prefix; chains not analysed (legacy IDE)",
+          "source": "https://kiro.dev/docs/privacy-and-security/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CVE-2026-9255: tool authorization bypass via piped stdin, fixed CLI 1.28.0",
+          "source": "https://nvd.nist.gov/vuln/detail/CVE-2026-9255",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Granular capability model with safe defaults and per-user rule storage; historical bypass CVE and broad auto-approve spellings."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Local command sandbox (Seatbelt/bubblewrap/Windows admin setup), off by default, IDE 1.3+/CLI 2.31+ V3 only",
+          "source": "https://kiro.dev/docs/sandbox",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Sandbox 'is not a guarantee of isolation'; harness and built-in file tools not covered",
+          "source": "https://kiro.dev/docs/sandbox",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "New opt-in sandbox, off by default."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "sandbox_network: DEFAULT_BLOCKED (default when enabled) / COMMON_DEPENDENCIES / DEFAULT_ALLOWED; first-match rules",
+          "source": "https://kiro.dev/docs/sandbox",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "web_fetch/web_search capabilities admin-deniable",
+          "source": "https://kiro.dev/docs/enterprise/governance/permissions/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Network allowlist only inside the opt-in sandbox; web_fetch controllable by permission rules."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Untrusted workspace: custom agents, steering, MCP config, skills not loaded; asks before every shell/MCP call; trust state stored outside workspace",
+          "source": "https://kiro.dev/docs/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CVE-2026-18656/18657: Windows executable resolved from project dir 'bypasses workspace trust protections' (fixed IDE 1.0.228, CLI 2.10.0)",
+          "source": "https://aws.amazon.com/security/security-bulletins/2026-074-aws/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CVE-2026-10591: file write to .vscode/tasks.json auto-executed on folder open (fixed 0.11)",
+          "source": "https://aws.amazon.com/security/security-bulletins/2026-037-aws/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Strong trust model documented, per-user permission storage; but three trust-related CVEs in 2026."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "Workspace/user mcp.json; autoApprove, disabledTools, ${VAR} expansion only for approved vars",
+          "source": "https://kiro.dev/docs/mcp/configuration/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Admin MCP on/off and registry URL allowlist, fail-closed; client-side enforced; only IAM Identity Center/API-key users",
+          "source": "https://kiro.dev/docs/enterprise/governance/mcp/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Intezer/Kodem: hidden web text made Kiro rewrite mcp.json without approval (fixed in 0.11.x)",
+          "source": "https://thehackernews.com/2026/07/aws-kiro-flaw-let-poisoned-web-page.html",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Registry allowlist and workspace-trust gating; admin controls bypassable by local admins and not applied to Builder ID users."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Powers (installed under ~/.kiro/powers/installed) and skills exist; writes to powers dirs always prompt",
+          "source": "https://kiro.dev/docs/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Vetting/signing not read",
+          "source": "https://kiro.dev/docs/permissions",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (marketplace vetting not read)"
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Agent can reach env vars, AWS credentials and config files; guidance to use temporary credentials",
+          "source": "https://kiro.dev/docs/privacy-and-security/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "deny rule examples for *.env/*.pem; token storage not documented",
+          "source": "https://kiro.dev/docs/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Protective rules available but not default; credential storage undocumented."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "kiro-cli chat --no-interactive with KIRO_API_KEY; ask=deny in headless; --trust-tools exact ids",
+          "source": "https://kiro.dev/docs/cli/headless/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "--trust-all-tools also approves hook confirmations",
+          "source": "https://kiro.dev/docs/cli/headless/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No dedicated GitHub Action documented; sample workflow only",
+          "source": "https://kiro.dev/docs/cli/headless/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Deny-by-default headless with scoped trust; no hardened CI integration."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Steering files global and workspace; untrusted-workspace writes to .kiro/steering prompt",
+          "source": "https://kiro.dev/docs/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CLI V3 knowledge base enabled",
+          "source": "https://kiro.dev/docs/reference/settings/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Persistent steering/knowledge, user-visible files, write prompts when untrusted."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "subagent capability and trustedAgents/availableAgents settings",
+          "source": "https://kiro.dev/docs/custom-agents/configuration-reference/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Isolation model not documented",
+          "source": "https://kiro.dev/docs/custom-agents/configuration-reference/",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (isolation unverified)"
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Enterprise prompt logging and daily usage reports to customer S3",
+          "source": "https://kiro.dev/docs/privacy-and-security/data-protection/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Local transcript paths not documented",
+          "source": "https://kiro.dev/docs/cli/headless/",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Enterprise logging to customer S3; local logging undocumented."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "Free/individual tiers opted in by default to telemetry and content collection; Enterprise opted out",
+          "source": "https://kiro.dev/docs/privacy-and-security/data-protection/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Free tier inputs stored up to 60 days; content may be used for service improvement unless opted out",
+          "source": "https://kiro.dev/docs/privacy-and-security/data-protection/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Opt-in-by-default collection for individual tiers, opt-out available; enterprise protected."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Install script verifies sha256 from manifest; no signature statement; auto-update setting app.disableAutoupdates",
+          "source": "https://cli.kiro.dev/install",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Update setting",
+          "source": "https://kiro.dev/docs/reference/settings/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Checksum from same origin; no signing/SBOM documented."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "managed-settings.json (deny/ask only) deployed via MDM, read by IDE and CLI; client-side enforced",
+          "source": "https://kiro.dev/docs/enterprise/governance/permissions/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "MCP registry and toggle via Kiro Profile",
+          "source": "https://kiro.dev/docs/enterprise/governance/mcp/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "True admin policy file with deny/ask precedence; documented as circumventable by local admins."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "AWS security bulletins with CVEs: 2026-035, 2026-037, 2026-074",
+          "source": "https://aws.amazon.com/security/security-bulletins/2026-074-aws/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "AWS VDP on HackerOne, aws-security@amazon.com, no monetary bounty stated",
+          "source": "https://aws.amazon.com/security/vulnerability-reporting/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Published bulletins with CVEs and fixed versions, coordinated disclosure, safe harbor (no monetary bounty stated)."
+    }
+  }
+}

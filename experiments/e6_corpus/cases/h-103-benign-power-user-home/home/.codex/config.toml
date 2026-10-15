@@ -1,0 +1,9 @@
+model = "gpt-5.1-codex"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[analytics]
+enabled = false
+
+[projects."/home/dev/src/app"]
+trust_level = "trusted"

@@ -1,0 +1,303 @@
+{
+  "harness": "claude-agent-sdk",
+  "version": "claude-agent-sdk 0.2.167 (PyPI, bundles Claude Code CLI 2.1.300); @anthropic-ai/claude-agent-sdk 0.3.300 (npm, GitHub release tag v0.3.300)",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Python ClaudeAgentOptions.permission_mode accepts default|acceptEdits|plan|bypassPermissions|dontAsk|auto; allowed_tools is an auto-approve list (does not restrict availability).",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/blob/main/src/claude_agent_sdk/types.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Permission evaluation order: hooks, deny rules, ask rules, permission mode, allow rules, canUseTool callback; deny rules apply even in bypassPermissions.",
+          "source": "https://code.claude.com/docs/en/agent-sdk/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "allowed_tools does not constrain bypassPermissions: allowed_tools=['Read'] with bypassPermissions still approves Bash/Write/Edit; auto-approved tools never reach can_use_tool.",
+          "source": "https://code.claude.com/docs/en/agent-sdk/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "If permission_mode is unset, the starting mode comes from settings permissions.defaultMode or the built-in default 'which can be auto mode'; before TS SDK v0.3.286 omitting permissionMode equalled 'default'.",
+          "source": "https://code.claude.com/docs/en/agent-sdk/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Python SDK emits CanUseToolShadowedWarning when can_use_tool is shadowed by bypassPermissions or whole-tool allowed_tools entries.",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/blob/main/src/claude_agent_sdk/types.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "In the Python control-protocol handler, a can_use_tool request with no callback registered raises Exception('canUseTool callback is not provided').",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/blob/main/src/claude_agent_sdk/_internal/query.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Per-call approval via can_use_tool callback and permission_mode; documented 6-step evaluation order (hooks, deny, ask, mode, allow, callback). Gaps: bypassPermissions and bare allowed_tools entries silently skip the callback, and the SDK start mode depends on CLI settings (docs say built-in default may be auto mode)."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "SandboxSettings.enabled default False; autoAllowBashIfSandboxed default True; allowUnsandboxedCommands default True; enableWeakerNestedSandbox reduces security.",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/blob/main/src/claude_agent_sdk/types.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Docs state the agent runs inside the caller's isolation boundary; recommends sandbox-runtime, Docker hardening flags, gVisor or Firecracker for stronger isolation.",
+          "source": "https://code.claude.com/docs/en/agent-sdk/secure-deployment",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Bash sandbox (bubblewrap/Seatbelt via sandbox settings) exists but is off by default; SDK itself runs the CLI as an unsandboxed subprocess with the caller's privileges."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Docs: sandbox-runtime proxy allowlists domains by client-supplied hostname with no TLS inspection; domain fronting may bypass; recommends TLS-terminating proxy and --network none + Unix socket proxy pattern.",
+          "source": "https://code.claude.com/docs/en/agent-sdk/secure-deployment",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "ANTHROPIC_BASE_URL and HTTP_PROXY/HTTPS_PROXY are honoured by the SDK/CLI for routing.",
+          "source": "https://code.claude.com/docs/en/agent-sdk/secure-deployment",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Domain allowlisting only exists through the optional sandbox network config / WebFetch rules; no default egress restriction; docs warn allowlist proxies do not inspect TLS (domain fronting)."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "ClaudeAgentOptions.setting_sources docs: 'When None, all sources are loaded (matches CLI defaults). Pass [] to disable filesystem settings (SDK isolation mode).'",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/blob/main/src/claude_agent_sdk/types.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "_build_command only appends --setting-sources=... when an effective list is set; skills option defaults it to ['user','project'].",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/blob/main/src/claude_agent_sdk/_internal/transport/subprocess_cli.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Docs: allow/deny rules in .claude/settings.json 'are read when the project setting source is enabled, which it is for default query() options'.",
+          "source": "https://code.claude.com/docs/en/agent-sdk/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Whether the interactive workspace-trust dialog applies to SDK sessions is not documented in the pages read.",
+          "source": "https://code.claude.com/docs/en/agent-sdk/permissions",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "With setting_sources=None the SDK passes no --setting-sources flag so the CLI loads user, project and local settings; project .claude/settings.json (permissions allow, hooks) therefore applies by default in SDK sessions. Pass setting_sources=[] for isolation."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "Allow rules accept globs only after a literal mcp__<server>__ prefix; unanchored allowed_tools=['*'] or ['mcp__*'] is ignored with a warning; deny supports '*' and 'mcp__*'.",
+          "source": "https://code.claude.com/docs/en/agent-sdk/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "McpServerConfig union: McpStdioServerConfig | McpSSEServerConfig | McpHttpServerConfig | McpSdkServerConfig; mcp_servers accepts dict, str or Path.",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/blob/main/src/claude_agent_sdk/types.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "MCP tools whose server sets _meta['anthropic/requiresUserInteraction'] always fall through to the callback (CLI >= 2.1.199).",
+          "source": "https://code.claude.com/docs/en/agent-sdk/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "MCP servers are passed programmatically (stdio/SSE/HTTP/SDK in-process); deny rules support mcp__* globs and allow rules require a literal mcp__<server>__ prefix; strict-mcp option exists; project .mcp.json approval behaviour in SDK mode not verified."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "skills option: 'This is a context filter, not a sandbox: unlisted skills are hidden'; skill names are validated against --allowedTools injection.",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/blob/main/src/claude_agent_sdk/types.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Changelog: skill names from skills=[...] were passed unchecked into --allowedTools and now validated (delimiter-carrying names rejected).",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/blob/main/CHANGELOG.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Skills/plugins loaded from local dirs and setting sources; the skills option is documented as a context filter, not a sandbox; no marketplace vetting in the SDK layer."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Subprocess env = os.environ (except CLAUDECODE) + CLAUDE_CODE_ENTRYPOINT=sdk-py + options.env + CLAUDE_AGENT_SDK_VERSION.",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/blob/main/src/claude_agent_sdk/_internal/transport/subprocess_cli.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Docs recommend a credential-injecting proxy outside the agent boundary; warn that mounted .env, ~/.aws, ~/.git-credentials etc. expose credentials.",
+          "source": "https://code.claude.com/docs/en/agent-sdk/secure-deployment",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "SDK stores no credentials itself but spawns the CLI with the caller's full inherited environment (minus CLAUDECODE) plus options.env; secrets in env are visible to the agent's Bash tool unless sandboxed or proxied."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "dontAsk mode: any call that would prompt is denied without calling canUseTool; recommended 'for a headless agent'.",
+          "source": "https://code.claude.com/docs/en/agent-sdk/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Repo ships check_workflow_hardening.py and egress-firewall.yaml for its own CI workflows (auto permission mode, network allow list).",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/blob/main/CHANGELOG.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Headless use is the SDK's purpose; dontAsk mode gives a fixed deny-by-default surface; docs include hardening guidance; no CI action shipped from this repo (claude-code-action is separate and out of scope here)."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "setting_sources docs: 'Must include \"project\" to load CLAUDE.md files'; SystemPromptPreset exclude_dynamic_sections strips working directory and auto-memory sections.",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/blob/main/src/claude_agent_sdk/types.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Memory/CLAUDE.md come from the bundled CLI: CLAUDE.md requires project setting source; auto-memory is mentioned in the system prompt preset; SDK layer provides no memory controls beyond setting_sources."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Subagent inheritance: runs in parent's permission mode; 'Claude Code never applies a bypassPermissions value' on an AgentDefinition; a subagent runs in bypass only when the parent does.",
+          "source": "https://code.claude.com/docs/en/agent-sdk/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Subagents run in the parent permission mode; a bypassPermissions value on AgentDefinition is never applied unless the parent is itself in bypass (CLI >= 2.1.267). No worktree/container isolation is provided by the SDK."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "options.session_store appends --session-mirror; OpenTelemetry traceparent propagated to the CLI when opentelemetry-api is installed.",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/blob/main/src/claude_agent_sdk/_internal/transport/subprocess_cli.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Transcripts are written by the CLI (session JSONL), SDK adds session_store mirroring, OTEL trace-context propagation and hook events; no tamper-evident audit log."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "README License section: governed by Anthropic Commercial Terms of Service; retention/training statements link to Commercial Terms and Privacy Policy.",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (SDK layer): telemetry/retention are properties of the bundled Claude Code CLI and the Anthropic API plan, not of the SDK library; README only points to Commercial Terms and Privacy Policy."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Bundled CLI version constant __cli_version__ = '2.1.300'.",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/blob/main/src/claude_agent_sdk/_cli_version.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Changelog: build scripts validate CLAUDE_CLI_VERSION; .bat/.cmd CLI scripts are refused on Windows (BatBadBut class).",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/blob/main/CHANGELOG.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "PyPI wheels bundle a pinned CLI (_cli_version 2.1.300) and build scripts were hardened against CLI-version injection; no signature/provenance verification was performed in this study; npm shim on Windows is refused by the Python SDK."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Docs: 'Organizations can set policies that apply across all users' for Claude Code permissions; connector tools set to ask by the organization fall through to the callback even in bypassPermissions.",
+          "source": "https://code.claude.com/docs/en/agent-sdk/secure-deployment",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Organization-set 'ask' connector tools reach canUseTool with reason 'Your organization requires approval for this tool' even in bypassPermissions.",
+          "source": "https://code.claude.com/docs/en/agent-sdk/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Managed (organization) Claude Code policy can apply to SDK sessions because the CLI honours it, and settings can be injected via options.settings; precise precedence for SDK sessions was not independently tested."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "GHSA-h4mw-j7qp-8mwm / CVE-2026-96620: argument injection via resume option; affected < 0.2.121, patched 0.2.121; published 2026-09-12; reporter hackerone.com/moamenmahmood.",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python/security/advisories/GHSA-h4mw-j7qp-8mwm",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Repo SECURITY.md at root returns 404 via the contents API.",
+          "source": "https://github.com/anthropics/claude-agent-sdk-python",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Published GHSA with CVE for the Python SDK (critical, CVSS v4 9.2); credit to a HackerOne reporter indicates an intake program; no SECURITY.md found at repo root (HTTP 404); TypeScript repo exposed no advisories via API."
+    }
+  }
+}

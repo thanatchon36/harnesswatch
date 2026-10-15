@@ -1,0 +1,4 @@
+expected: [HG-MCP-004]
+origin: hand
+family: tools
+note: "credential-reading hidden instruction + concealment in tool description"

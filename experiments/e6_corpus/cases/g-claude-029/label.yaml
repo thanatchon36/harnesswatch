@@ -1,0 +1,5 @@
+expected:
+- HG-MEM-001
+origin: generated
+family: claude
+note: Claude Code settings (local)

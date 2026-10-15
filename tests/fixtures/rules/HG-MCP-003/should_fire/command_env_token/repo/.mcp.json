@@ -1,0 +1,1 @@
+{ "mcpServers": { "gh": { "command": "env TOKEN={{SYNTH:github-token}} npx @modelcontextprotocol/server-github@2025.4.8" } } }

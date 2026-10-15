@@ -1,0 +1,35 @@
+{
+  "mcpServers": {
+    "browser": {
+      "url": "http://0.0.0.0:8931/sse",
+      "autoApprove": [
+        "get_issue",
+        "list_issues"
+      ]
+    },
+    "gh-docker": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "ghcr.io/github/github-mcp-server"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    },
+    "jira": {
+      "command": "/opt/acme/bin/jira-mcp",
+      "args": [
+        "--stdio"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      },
+      "disabled": true
+    }
+  }
+}

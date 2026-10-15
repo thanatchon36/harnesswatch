@@ -1,0 +1,296 @@
+{
+  "harness": "factory-droid",
+  "version": "0.242.0",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Autonomy Level off/low/medium/high sets the highest-risk work Droid runs without approval; Off allows only read tools and policy-allowed commands.",
+          "source": "https://docs.factory.com/autonomy-and-safety/auto-run",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "permissionRules decisions allow|ask|block: block beats ask beats allow; blocks have no approval path, even under --skip-permissions-unsafe.",
+          "source": "https://docs.factory.com/autonomy-and-safety/auto-run",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "droid exec is read-only by default; --auto low|medium|high opts into edits/commands; --skip-permissions-unsafe skips all prompts and cannot be combined with --auto.",
+          "source": "https://docs.factory.com/droid-exec/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Legacy commandAllowlist/commandDenylist/commandBlocklist remain respected (deprecated).",
+          "source": "https://docs.factory.com/droid-cli/settings",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Four-level autonomy (off default for interactive via settings) plus ordered allow/ask/block permissionRules with tests; blocks hold even under --skip-permissions-unsafe; org can cap max autonomy."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Sandbox: macOS Seatbelt, Linux/WSL2 bubblewrap with seccomp; network via HTTP/SOCKS filtering proxy; modes per-command (default) or whole-process; enabled by setting sandbox.enabled true; if isolation is unavailable it blocks rather than running unsandboxed.",
+          "source": "https://docs.factory.com/autonomy-and-safety/sandbox",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Defaults when enabled: reads allowed everywhere except denyRead; writes only CWD plus allowWrite; network denied except Factory and WorkOS domains.",
+          "source": "https://docs.factory.com/autonomy-and-safety/sandbox",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "OS-level sandbox (Seatbelt / bubblewrap+seccomp, filtering proxy) with per-command or whole-process mode, but opt-in (sandbox.enabled) and documented as defense in depth, not a hard boundary."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "sandbox.network.allowedDomains (plus allowUnixSockets, allowLocalBinding, httpProxyPort/socksProxyPort) governs egress when sandbox is enabled.",
+          "source": "https://docs.factory.com/enterprise/hierarchical-settings-and-org-control",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Org-managed settings can disable built-in network tools (web search) and set per-tool autonomy thresholds; read only from org-managed settings.",
+          "source": "https://docs.factory.com/enterprise/hierarchical-settings-and-org-control",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "sandbox.network.allowedDomains allowlist with proxy when sandbox enabled; org-managed network policy and built-in network tool controls; off unless sandbox is on."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Project and folder permissionRules require workspace trust; untrusted project/folder rules are excluded.",
+          "source": "https://docs.factory.com/autonomy-and-safety/permission-rules",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "apiKeyHelper (runs a shell command) is honoured only from org-managed settings; stripped from user, project and folder settings so an untrusted repo cannot execute commands.",
+          "source": "https://docs.factory.com/model-independence/byok",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Project hooks (.factory/hooks.json) and project MCP (.factory/mcp.json) are loaded from the repo; no folder-trust gate is documented for them.",
+          "source": "https://docs.factory.com/harness/hooks",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Project/folder permission rules require workspace trust and apiKeyHelper is stripped from project settings; documentation of trust gating for project hooks and .factory/mcp.json is not found (unverified)."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP approvals persist per tool, bound to a fingerprint of the server transport config; a re-pointed server must be re-approved; droid mcp permissions manages them.",
+          "source": "https://docs.factory.com/harness/mcp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "MCP config locations: ~/.factory/mcp.json (user), .factory/mcp.json in project root and in ancestor folders; servers added via CLI always go to user config.",
+          "source": "https://docs.factory.com/harness/mcp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Org-level mcpPolicy: MCP access is allowlist-only.",
+          "source": "https://docs.factory.com/enterprise/hierarchical-settings-and-org-control",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Org mcpPolicy is allowlist-only; user approvals are bound to a fingerprint of command/URL so re-pointing a server re-prompts; project mcp.json committed to repo."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Org-managed settings include strictEnabledPlugins and strictKnownMarketplaces; internal plugin marketplaces are supported; plugins can ship hooks, skills, droids, MCP servers.",
+          "source": "https://docs.factory.com/enterprise/hierarchical-settings-and-org-control",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Plugins/marketplaces with org controls (strictEnabledPlugins, strictKnownMarketplaces, internal marketplaces); plugin hooks run; vetting beyond org allowlist not documented."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "MCP OAuth tokens are stored in the system keyring (or fallback file); project mcp.json should not contain secrets.",
+          "source": "https://docs.factory.com/harness/mcp",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Droid Shield (enableDroidShield) detects secrets to prevent exposure in git commits and pushes.",
+          "source": "https://docs.factory.com/droid-cli/settings",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Org-managed custom models must reference ${VAR} env vars, static apiKey values are rejected.",
+          "source": "https://docs.factory.com/enterprise/hierarchical-settings-and-org-control",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "OAuth tokens in OS keyring with file fallback; Droid Shield scans commits/pushes for secrets; org-managed models reject static apiKey values."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "droid exec fails with non-zero exit and no partial changes when an action exceeds the current autonomy level.",
+          "source": "https://docs.factory.com/droid-exec/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "FACTORY_API_KEY authenticates headless runs; --output-format text|json|stream-jsonrpc.",
+          "source": "https://docs.factory.com/droid-exec/overview",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "droid exec is read-only by default, fails fast when an action exceeds the autonomy level, and docs steer CI to the lowest --auto level; FACTORY_API_KEY for service accounts."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "AGENTS.md gives Droid durable project instructions; custom droids and skills are file based.",
+          "source": "https://docs.factory.com/harness/agents-md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "AGENTS.md project instructions; no autonomous cross-session memory store documented in pages read."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Task-launched subagents inherit the parent's Autonomy Level or use the subagent autonomy setting (inherit|off|low|medium|high), always clamped to the org maximum.",
+          "source": "https://docs.factory.com/autonomy-and-safety/auto-run",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Custom droids (subagents) inherit session autonomy by default but are clamped to the org Maximum Autonomy Level; subagent autonomy can be set separately."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Org-pinned OTEL sink cannot be redirected by local OTEL_* variables; message content export is off by default and under org control; spans never go to Factory.",
+          "source": "https://docs.factory.com/enterprise/telemetry/privacy",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Organization-level audit events record who did what in the Factory org.",
+          "source": "https://docs.factory.com/enterprise/compliance-audit-and-monitoring",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "OpenTelemetry metrics/spans to customer collector, org-pinned sink, organization audit log, local session JSONL."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "telemetry.granularity defaults to user (per-user identity); aggregate strips user.id, email, commit and PR identifiers at source.",
+          "source": "https://docs.factory.com/enterprise/telemetry/privacy",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "cloudSessionSync mirrors every CLI session to Factory web when true; it is an org first-wins scalar; user-level default not stated in the page read.",
+          "source": "https://docs.factory.com/droid-cli/settings",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Airgapped deployments: Factory never receives runtime data.",
+          "source": "https://docs.factory.com/enterprise/privacy-and-data-flows",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "OTLP metrics flow to Factory by default in connected deployments (per-user identity unless telemetry.granularity=aggregate); cloudSessionSync setting mirrors sessions to Factory web; airgapped mode sends nothing."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Install: curl -fsSL https://app.factory.ai/cli | sh; brew install --cask droid; npm install -g droid.",
+          "source": "https://docs.factory.com/droid-cli/quickstart",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "npm package droid 0.242.0 published 2026-10-15, license field UNLICENSED.",
+          "source": "https://registry.npmjs.org/droid",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Install via curl|sh, Homebrew cask or npm; npm package 'droid' is UNLICENSED/closed; checksum or signature verification not documented in pages read; auto-update behaviour not verified."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "System-managed settings.json at /etc/factory/settings.json (Linux/WSL), /Library/Application Support/Factory/settings.json (macOS), C:\\Program Files\\Factory\\settings.json (Windows) is authoritative for org settings; users cannot weaken it.",
+          "source": "https://docs.factory.com/enterprise/hierarchical-settings-and-org-control",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "allowManagedHooksOnly drops user and project hooks; maxAutonomyLevel caps autonomy.",
+          "source": "https://docs.factory.com/enterprise/hierarchical-settings-and-org-control",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Hierarchical org-managed settings, system-managed settings.json (/etc/factory, /Library/Application Support/Factory, C:\\Program Files\\Factory) that users cannot override; max autonomy, managed hooks, allowManagedHooksOnly, model/MCP policy."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "Compliance: SOC 2 Type II, ISO 27001, ISO 42001; Trust Center at trust.factory.com.",
+          "source": "https://docs.factory.com/enterprise/compliance-audit-and-monitoring",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No public bug bounty or vulnerability-disclosure policy found in the pages and repos checked.",
+          "source": "https://github.com/Factory-AI/factory",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Trust Center and SOC 2 Type II / ISO 27001 / ISO 42001 claims; no security.txt, SECURITY.md, bug bounty or advisory feed found; the public Factory-AI/factory repo is docs-only with 0 security advisories."
+    }
+  }
+}

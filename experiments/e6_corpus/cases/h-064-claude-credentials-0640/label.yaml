@@ -1,0 +1,4 @@
+expected: [HG-SEC-002]
+origin: hand
+family: sec
+note: "group-readable credential file"

@@ -1,0 +1,5 @@
+{"type": "tool_result", "content": "commit 3f9c2a1e8b7d6c5f4a3b2c1d0e9f8a7b6c5d4e3f\nAuthor: Dev <dev@example.com>\n\n    fix: handle 429"}
+{"type": "user", "message": {"role": "user", "content": "add a retry to the HTTP client"}}
+{"type": "usage", "input_tokens": 15320, "output_tokens": 812, "cache_read_input_tokens": 90211}
+{"type": "tool_result", "content": "===== 142 passed, 3 skipped in 4.21s ====="}
+{"type": "tool_result", "content": "$ cat .env\nexport GH_TOKEN={{SYNTH:github-token}}\nDEBUG=1"}

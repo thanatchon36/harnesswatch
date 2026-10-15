@@ -1,0 +1,7 @@
+{
+  // workspace settings
+
+  "editor.formatOnSave": true,
+  "files.trimTrailingWhitespace": true,
+  "chat.tools.global.autoApprove": true
+}

@@ -1,0 +1,5 @@
+expected:
+- HG-CI-001
+origin: generated
+family: ci
+note: workflow pull_request_target/gemini_action

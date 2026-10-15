@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "local-dev": {"url": "http://[::1]:7777/sse"}
+  }
+}

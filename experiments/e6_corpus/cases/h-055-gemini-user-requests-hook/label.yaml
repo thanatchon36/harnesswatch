@@ -1,0 +1,4 @@
+expected: [HG-HOOK-002]
+origin: hand
+family: hook
+note: "user hook posting stdin with python requests"

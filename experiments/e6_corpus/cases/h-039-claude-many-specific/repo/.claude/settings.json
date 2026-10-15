@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run test)",
+      "Bash(npm run lint:*)",
+      "Bash(npx tsc --noEmit)",
+      "Read(./**)",
+      "Edit(./src/**)",
+      "WebFetch(domain:github.com)",
+      "mcp__linear__list_issues"
+    ],
+    "ask": ["Bash(git push:*)"],
+    "deny": ["Read(./.env)"]
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "harness": "openhands-sdk",
+  "version": "1.54.0",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "ConfirmationPolicy classes: AlwaysConfirm, NeverConfirm, ConfirmRisky(threshold=HIGH, confirm_unknown=True); ConversationState.confirmation_policy defaults to NeverConfirm.",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/security/confirmation_policy.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "SecurityAnalyzer options: LLM analyzer, defense-in-depth rails, GraySwan; per-action SecurityRisk.",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/security/analyzer.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Capable policy/analyzer framework, default is auto-execute."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Conversation(workspace=) defaults to LocalWorkspace (host); DockerWorkspace/Apptainer/remote agent-server available in openhands-workspace.",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/conversation/conversation.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Container workspaces opt-in."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "No egress control in SDK.",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/workspace/base.py",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "None found."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Helper loaders read .openhands/hooks.json, .agents/skills, .openhands/skills and AGENTS.md/CLAUDE.md/.cursorrules from the working dir/git root as always-active context; hooks.json command hooks execute shell commands.",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/hooks/config.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Repo-controlled hooks/skills with no consent step in the SDK."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "mcp_config in FastMCP mcpServers format given in code; OAuth supported.",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/mcp/config.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "No approval/allowlist beyond confirmation policy."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Skills/plugins/marketplace modules with installed-skills dir ~/.openhands/skills/installed.",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/skills/installed.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Not vetted/signed (not verified)."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "SecretRegistry masks secrets in observations; conversation state secrets encrypted only if a Cipher is configured, else SDK warns and stores them in base_state.json.",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/conversation/state.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Opt-in encryption."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "agent-server: empty session_api_keys means unsecured; binds 127.0.0.1 without a key, 0.0.0.0 when a key is set; CORS allows localhost.",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-agent-server/openhands/agent_server/config.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Safe bind default when unauthenticated."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "No agent memory store in SDK.",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/context/memory.py",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Subagent definitions carry permission_mode; None = inherit parent.",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/subagent/schema.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Inherits by default; per-subagent override."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Conversation events/observations persisted under persistence_dir; Laminar tracing opt-in via LMNR_PROJECT_API_KEY.",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/observability/laminar.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Local event log by default."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "No telemetry unless Laminar key set.",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/openhands-sdk/openhands/sdk/observability/laminar.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "None by default."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "PyPI openhands-sdk; provenance not checked.",
+          "source": "https://pypi.org/project/openhands-sdk/",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (Not verified)"
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "No managed policy in SDK.",
+          "source": "https://github.com/OpenHands/software-agent-sdk/blob/main/README.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "No SECURITY.md in repo and no GHSAs for the SDK (the OpenHands app has e.g. GHSA-7h8w-hj9j-8rjw).",
+          "source": "https://api.github.com/repos/OpenHands/software-agent-sdk/security-advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Disclosure path unclear for SDK."
+    }
+  }
+}

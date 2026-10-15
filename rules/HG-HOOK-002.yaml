@@ -1,0 +1,16 @@
+id: HG-HOOK-002
+title: Hook command fetches or sends data over the network, or runs code fetched at runtime
+area: HOOK
+severity: medium
+confidence: medium
+kind: vulnerability-pattern
+taxonomy: [T02, T06, T08]
+description: >
+  A hook that pipes a download into a shell, calls curl/wget/nc, or uses an inline interpreter to
+  reach the network turns every agent event into remote code execution or an exfiltration channel.
+  High when defined in a repository file.
+remediation: Vendor the hook script into the repository, pin its dependencies, and avoid network calls in hooks.
+references:
+  - https://code.claude.com/docs/en/hooks
+params:
+  network_pattern: '\b(?:curl|wget|nc|ncat|netcat|socat|Invoke-WebRequest|iwr|irm)\b|https?://|\b(?:python3?|node|ruby|perl)\s+-[ce]\b[^\n]*(?:urllib|requests|http|fetch|socket)|/dev/tcp/'

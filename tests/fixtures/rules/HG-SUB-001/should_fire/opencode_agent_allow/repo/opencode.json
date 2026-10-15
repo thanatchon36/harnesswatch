@@ -1,0 +1,1 @@
+{ "agent": { "runner": { "mode": "subagent", "permission": { "bash": "allow" } } } }

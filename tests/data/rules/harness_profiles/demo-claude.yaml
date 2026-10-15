@@ -1,0 +1,4 @@
+id: demo-claude
+name: Demo Claude
+binaries: [demo-claude-binary-not-installed]
+instruction_files: [CLAUDE.md]

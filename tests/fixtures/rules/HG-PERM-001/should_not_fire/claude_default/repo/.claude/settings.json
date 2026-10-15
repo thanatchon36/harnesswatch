@@ -1,0 +1,1 @@
+{ "permissions": { "defaultMode": "default", "allow": ["Bash(npm run test)"] } }

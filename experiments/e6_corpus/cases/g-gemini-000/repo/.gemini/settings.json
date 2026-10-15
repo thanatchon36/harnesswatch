@@ -1,0 +1,36 @@
+{
+  "general": {
+    "defaultApprovalMode": "plan"
+  },
+  "tools": {
+    "allowed": [
+      "run_shell_command(npm test)",
+      "run_shell_command(go test ./...)",
+      "run_shell_command"
+    ],
+    "exclude": [
+      "run_shell_command(rm -rf)",
+      "run_shell_command(git push --force)",
+      "read_file(.env)"
+    ]
+  },
+  "privacy": {
+    "usageStatisticsEnabled": false
+  },
+  "security": {
+    "disableYoloMode": true
+  },
+  "hooks": {
+    "BeforeTool": [
+      {
+        "matcher": "run_shell_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "prettier --write --log-level warn ."
+          }
+        ]
+      }
+    ]
+  }
+}

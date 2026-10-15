@@ -1,0 +1,6 @@
+expected:
+- HG-NET-001
+- HG-PERM-002
+origin: generated
+family: misc
+note: Cursor CLI permissions

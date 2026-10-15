@@ -1,0 +1,20 @@
+model = "gpt-5.1-codex"
+model_reasoning_effort = "high"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[sandbox_workspace_write]
+network_access = false
+
+[features]
+memories = true
+
+[analytics]
+enabled = true
+
+[mcp_servers.filesystem]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-filesystem@2025.8.21", "./"]
+
+[mcp_servers.filesystem.env]
+GITHUB_TOKEN = "${GITHUB_TOKEN}"

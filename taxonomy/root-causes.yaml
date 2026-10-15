@@ -1,0 +1,424 @@
+# Final root-cause classes (generated in Phase 2).
+schema_version: 1
+title: Final root-cause classes for harness incidents (RQ3)
+status: final for Phase 2; 2026-10-15
+unit: 'One root cause per incident row: the failed engineering control that, had it held, would have prevented the
+  harm.'
+procedure:
+- Apply the questions in order and stop at the first yes. Two raters following the order on the same facts get the
+  same class.
+- Q1 Is the row kind = misuse (adversary operates the harness, no defect)? -> RC12.
+- Q2 Is the harm caused by a malicious/tampered/hijacked artifact or failed artifact-integrity check? -> RC5.
+- Q3 No adversary, and the agent took a destructive action beyond intent? -> RC11.
+- Q4 Was a sandbox/container/interpreter/browser isolation boundary crossed or silently weakened? -> RC8.
+- Q5 Did a protection exist (or is a standard safeguard absent) and the issue is its permissive/off default or an
+  over-privileged mode, fixed by changing a default or list? -> RC6.
+- Q6 Was untrusted or agent-written workspace content executed/applied as configuration, or a trust gate bypassed?
+  -> RC2.
+- Q7 Does the endpoint lack authentication, Origin or Host validation? -> RC4.
+- Q8 Is a deterministic check that gates an agent capability (approval, allowlist, path, URL, scope, tenant) logically
+  wrong? -> RC3.
+- Q9 Is it an ordinary code defect (deserialization, injection from non-model input, XSS, race, DoS) not gating
+  an agent capability? -> RC10.
+- Q10 Did the harness itself expose or send data (permissions, logs, wrong-origin token, upload, leaked release)?
+  -> RC7.
+- Q11 Did a rendering/auto-fetch feature carry attacker-chosen data out without an explicit permitted tool call?
+  -> RC9.
+- Q12 Otherwise, injected content steered an agent that behaved as designed -> RC1.
+kind_rule:
+  vulnerability: A defect fixed in code or configuration logic by the vendor, or assigned a CVE/GHSA as a bug.
+  design-weakness: Behaviour that works as specified or by default but is unsafe; fixed by changing a default, adding
+    a control or documenting; usually no CVE. Policy choices (telemetry defaults) are recorded here and not counted
+    as vulnerabilities.
+  supply-chain: Compromise or tampering of a package, extension or update channel.
+  misuse: Adversary operates the harness as a tool; no defect.
+  incident: Operational event (exposure, release error, destructive agent run) that is not a single defect.
+changes:
+- Kept RC1-RC9 ids with tightened definitions.
+- RC6 widened to include missing safeguards and takes precedence over RC2/RC3/RC4 when a protection exists but is
+  off by default.
+- RC9 narrowed to rendering/auto-fetch side-effect channels.
+- NEW RC10 conventional implementation defect, RC11 autonomous action exceeding intent, RC12 adversarial use.
+- Re-classification changed the draft root cause on 97 of 328 rows and the draft taxonomy class on 128 rows (see
+  movement matrices).
+draft_to_final_root_cause:
+  RC1:
+    RC1: 20
+    RC10: 11
+    RC2: 5
+    RC3: 2
+  RC2:
+    RC2: 36
+    RC3: 1
+    RC8: 2
+  RC3:
+    RC10: 26
+    RC2: 8
+    RC3: 87
+    RC4: 1
+    RC5: 1
+    RC6: 1
+    RC8: 1
+  RC4:
+    RC10: 1
+    RC3: 1
+    RC4: 22
+    RC8: 1
+  RC5:
+    RC2: 1
+    RC5: 16
+  RC6:
+    RC10: 5
+    RC11: 2
+    RC12: 2
+    RC2: 1
+    RC4: 1
+    RC6: 12
+    RC7: 1
+  RC7:
+    RC10: 4
+    RC3: 2
+    RC7: 14
+    RC9: 1
+  RC8:
+    RC3: 1
+    RC8: 17
+  RC9:
+    RC1: 2
+    RC10: 6
+    RC3: 3
+    RC6: 2
+    RC9: 7
+  blank:
+    RC12: 1
+draft_to_final_taxonomy_class:
+  T01:
+    T01: 15
+    T02: 4
+    T03: 4
+    T11: 1
+    T19: 6
+  T02:
+    T02: 40
+    T17: 2
+    T18: 4
+    T19: 2
+  T03:
+    T02: 6
+    T03: 57
+    T17: 15
+    T18: 15
+    T19: 11
+  T04:
+    T03: 1
+    T04: 13
+    T13: 1
+    T18: 6
+    T19: 2
+  T05:
+    T02: 2
+    T05: 6
+    T19: 3
+  T06:
+    T03: 1
+    T06: 12
+  T07:
+    T03: 3
+    T07: 10
+    T08: 1
+    T15: 2
+    T18: 4
+    T19: 6
+  T08:
+    T03: 1
+    T08: 22
+    T17: 2
+    T18: 3
+    T19: 8
+  T09:
+    T09: 8
+    T18: 1
+  T10:
+    T10: 2
+    T19: 1
+  T11:
+    T11: 2
+  T12:
+    T12: 1
+  T13:
+    T13: 7
+    T18: 1
+    T19: 1
+  T14:
+    T14: 1
+    T19: 4
+  T15:
+    T15: 1
+  T16:
+    T16: 3
+  blank:
+    T14: 1
+    T15: 1
+  unmapped:
+    T19: 2
+classes:
+- id: RC1
+  name: Untrusted content treated as instructions (no distinct control failure)
+  definition: The model followed attacker-authored text that reached its context (repo files, tool results, issues,
+    web pages, hidden Unicode) and used capabilities it legitimately held; every deterministic control behaved as
+    designed. Includes bypasses of model-based or regex-based injection filters, because those are not deterministic
+    boundaries.
+  decision_rule: 'Answer yes to all: (a) attacker-controlled text is the trigger; (b) the resulting action was within
+    the permissions the harness had granted at that moment; (c) no step 1-10 root cause applies. If the action was
+    only possible because a check was wrong, the root cause is RC3, not RC1.'
+  boundaries: 'Prevents mis-labelling every injection incident RC1: injection is the vector in many RC2/RC3/RC9
+    incidents but is the root cause only when no other defect or default is needed.'
+  draft_ids:
+  - RC1
+  incident_count: 22
+  taxonomy_classes:
+    T01: 15
+    T04: 1
+    T05: 1
+    T09: 3
+    T10: 2
+  examples:
+  - G6-073
+  - G6-074
+  - G6-023
+  - G6-075
+  - G6-076
+  notes: 'Mitigation lives outside the model: reduce capability (D01, D02, D03), not detection.'
+- id: RC2
+  name: Workspace, repository or agent-written content executed or honoured before or without consent
+  definition: Content from the working tree or written by the agent (hooks, MCP definitions, IDE tasks, workspace
+    settings, git configuration, project plugins, env files, executables found via search path, folder or branch
+    names interpolated into commands) is executed or applied as trusted configuration although the product promises
+    a trust or approval step, or the trust step is bypassed or covers too few config classes.
+  decision_rule: 'Yes if the code path is: untrusted or agent-writable file -> harness or IDE reads it as configuration
+    or executes it -> effect, and the missing/bypassed guard is a trust or consent gate. If the trust gate exists
+    but is disabled by default, RC6 wins.'
+  boundaries: 'Distinguish from RC3: RC2 concerns configuration provenance and consent; RC3 concerns validation
+    of a requested tool action.'
+  draft_ids:
+  - RC2
+  incident_count: 51
+  taxonomy_classes:
+    T02: 50
+    T09: 1
+  examples:
+  - G2-I007
+  - G2-I008
+  - G4-I002
+  - G4-I003
+  - G4-I036
+  notes: 'Absorbs draft cases where prompt injection writes a config file: the write-then-execute chain is RC2.'
+- id: RC3
+  name: Validation, parsing or authorization logic flaw in a check that gates an agent capability
+  definition: 'A deterministic check that decides whether a command, path, URL, domain, tool call, scope, tenant
+    or approval is allowed is logically wrong or incomplete: prefix/regex allowlists, shell metacharacters, parameter
+    expansion, symlink and prefix path checks, TOCTOU, IPv6/URL normalisation, approval keyed to the wrong identity,
+    scope self-escalation, missing authorization decorators.'
+  decision_rule: Yes if a fix would change the check's logic (parser, comparison, canonicalisation, scope rule)
+    rather than a default or the existence of a gate. The check must gate an agent or user-facing capability; otherwise
+    RC10.
+  boundaries: 'Versus RC6: vendor fix changes logic -> RC3; vendor fix changes a default or list content -> RC6.
+    Versus RC10: a gate on an agent capability -> RC3; ordinary code defect elsewhere -> RC10.'
+  draft_ids:
+  - RC3
+  incident_count: 97
+  taxonomy_classes:
+    T03: 63
+    T04: 8
+    T08: 10
+    T11: 1
+    T13: 7
+    T18: 8
+  examples:
+  - INC-G5d-001
+  - G6-056
+  - G6-057
+  - G2-I009
+  - G1-I042
+  notes: Largest class in the set.
+- id: RC4
+  name: Missing authentication or origin/Host validation on a local or network control endpoint
+  definition: A service of the harness (HTTP, WebSocket, gateway, webhook, local bridge, MCP-over-HTTP server) can
+    be driven by any caller that can reach it, including a web page in the user's browser (DNS rebinding, cross-site
+    WebSocket hijacking) or an internet scanner, because no authentication, Origin or Host check exists on that
+    route.
+  decision_rule: Yes if the endpoint has no authentication/Origin/Host control at all on the affected route, or
+    an exposed deployment has none. If such a control exists but is off by default, RC6.
+  boundaries: Paired one-to-one with T18 in most cases; authorization scope flaws inside an authenticated control
+    plane are RC3.
+  draft_ids:
+  - RC4
+  incident_count: 24
+  taxonomy_classes:
+    T18: 24
+  examples:
+  - G6-049
+  - G1-I035
+  - G6-061
+  - G1-I038
+  - G1-I039
+- id: RC5
+  name: Package, extension or update-channel compromise or integrity failure
+  definition: A malicious, tampered or hijacked artifact (npm/PyPI package, extension, skill, MCP server, installer,
+    update) reaches users, or integrity verification of such an artifact (pin, ownership check, signature) fails.
+  decision_rule: Yes if the harm arises from artifact provenance rather than from a bug in harness logic. Accidental
+    leaks in a legitimate release are RC7.
+  boundaries: Self-propagating worms and typosquats are RC5.
+  draft_ids:
+  - RC5
+  incident_count: 17
+  taxonomy_classes:
+    T04: 2
+    T05: 5
+    T06: 10
+  examples:
+  - G6-071
+  - G6-077
+  - G6-078
+  - G6-086
+  - G6-088
+- id: RC6
+  name: Insecure default, missing safeguard or over-privileged mode by design
+  definition: A protection exists or could reasonably exist, but the shipped default is permissive, off, absent
+    or over-privileged (default allowlists with exfiltration-capable hosts, auto-approve for risky tools, trust
+    prompt disabled, over-privileged service identity, no audit log), and the issue is removed by changing the default,
+    list or presence of the safeguard rather than fixing logic.
+  decision_rule: Yes if the vendor's fix or documented mitigation is a changed default/list/mode, or the product
+    is working as specified and the specification is the weakness. RC6 takes precedence over RC2, RC3 and RC4 when
+    a protection exists but ships off or permissive.
+  boundaries: Policy choices (telemetry defaults) are labelled kind = design-weakness; they are RC6 only when a
+    security safeguard is absent, otherwise RC7.
+  draft_ids:
+  - RC6
+  incident_count: 15
+  taxonomy_classes:
+    T02: 2
+    T03: 4
+    T08: 5
+    T11: 1
+    T15: 1
+    T18: 2
+  examples:
+  - G1-I032
+  - G2-I015
+  - G6-080
+  - INC-G5d-003
+  - G4-I032
+  notes: Mostly kind = design-weakness; CVE-bearing cases remain vulnerability.
+- id: RC7
+  name: Unintended exposure, leakage or over-collection of secrets or data by the harness itself
+  definition: 'The harness exposes or sends data it should not: credentials in files with wrong permissions, secrets
+    in traces or logs, tokens sent to the wrong origin, cross-user disclosure of tool output, whole-workspace uploads,
+    release artifacts containing source or maps. No attacker-steered agent action is needed.'
+  decision_rule: Yes if the data leaves the intended trust scope through harness behaviour. If an attacker-steered
+    agent carries the data out through a feature, RC9.
+  boundaries: 'Versus RC9: RC7 = harness leaks by itself; RC9 = attacker induces the feature to carry data.'
+  draft_ids:
+  - RC7
+  incident_count: 15
+  taxonomy_classes:
+    T06: 2
+    T07: 10
+    T15: 3
+  examples:
+  - G4-I041
+  - G4-I029
+  - G1-I044
+  - G7-I026
+  - G3-I010
+- id: RC8
+  name: Isolation boundary escape or weak isolation fallback
+  definition: Code or an agent running inside a sandbox, container, restricted interpreter or browser sandbox crosses
+    its boundary, or isolation silently degrades (missing runtime fallback, writes that an unsandboxed component
+    later honours, DNS/network leakage).
+  decision_rule: Yes if a documented containment boundary is the failed control. Writes to config that a later unsandboxed
+    helper honours count as RC8 when the writer is sandboxed.
+  boundaries: 'Versus RC2: RC2 when no sandbox is claimed for the step.'
+  draft_ids:
+  - RC8
+  incident_count: 21
+  taxonomy_classes:
+    T11: 1
+    T12: 1
+    T17: 19
+  examples:
+  - G5b-I17
+  - G1-I036
+  - G1-I017
+  - G4-I010
+  - G5b-I20
+- id: RC9
+  name: Output-rendering or automatic-fetch feature acts as an exfiltration channel
+  definition: A rendering or fetching feature that runs without per-action approval (Markdown/mermaid images, link
+    previews, schema reference resolution, camo proxies, protocol handlers) carries attacker-chosen data out or
+    reaches attacker-chosen hosts.
+  decision_rule: Yes if the egress is a side-effect of rendering/fetching, not an explicit tool call the agent was
+    permitted to make. Explicit permitted tool calls are RC1; filters whose logic is wrong are RC3; permissive default
+    host lists are RC6.
+  boundaries: 'Narrowed from the draft RC9 (''output-rendering or tool-based exfiltration''): tool-based egress
+    is no longer RC9.'
+  draft_ids:
+  - RC9
+  incident_count: 8
+  taxonomy_classes:
+    T08: 8
+  examples:
+  - G6-022
+  - G2-I006
+  - G6-019
+  - G4-I038
+  - G6-030
+- id: RC10
+  name: Conventional implementation defect not gating an agent capability
+  definition: 'Ordinary software flaws in harness, SDK or UI code: unsafe deserialization, SQL/argument/command
+    injection from non-model inputs, XSS, race conditions in files, privilege escalation via paths, DoS and resource
+    exhaustion, SSRF in non-agent code paths.'
+  decision_rule: Yes if the same bug would exist in a non-agent program of the same kind and the code does not decide
+    what the agent may do.
+  boundaries: 'New in Phase 2: draft agents spread these cases over RC1/RC3/RC7/RC4.'
+  draft_ids: none (new in Phase 2)
+  incident_count: 53
+  taxonomy_classes:
+    T04: 2
+    T09: 4
+    T13: 1
+    T19: 46
+  examples:
+  - G6-054
+  - G6-055
+  - G6-051
+  - G2-I012
+  - G6-050
+- id: RC11
+  name: Autonomous action exceeding user intent without enforced guardrail
+  definition: Without any attacker, the agent performs a destructive or out-of-scope action (data deletion, ignoring
+    a stated freeze) that no deterministic guardrail prevented.
+  decision_rule: Yes only if there is no adversary and no software defect; the missing control is a blast-radius
+    limit.
+  boundaries: New in Phase 2; draft agents used RC6.
+  draft_ids: none (new in Phase 2)
+  incident_count: 2
+  taxonomy_classes:
+    T14: 2
+  examples:
+  - G4-I040
+  - G6-087
+- id: RC12
+  name: Adversarial use of a legitimate capability (no product defect)
+  definition: Attackers operate the harness or its model access as designed to conduct operations.
+  decision_rule: Yes only when kind = misuse.
+  boundaries: New in Phase 2; not an engineering failure of the harness.
+  draft_ids: none (new in Phase 2)
+  incident_count: 3
+  taxonomy_classes:
+    T16: 3
+  examples:
+  - G6-084
+  - G6-085
+  - G7-I117
+  notes: Kept so that every incident row has a defined root cause.

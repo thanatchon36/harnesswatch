@@ -1,0 +1,235 @@
+{
+  "harness": "roo-code",
+  "version": "3.54.0 (final); CLI 0.1.17",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Auto-approve keys: autoApprovalEnabled, alwaysAllowReadOnly/Write/Execute/Mcp/ModeSwitch/Subtasks, allowedCommands, deniedCommands",
+          "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/packages/types/src/global-settings.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "roo-cline.allowedCommands default ['git log','git diff','git show'], deniedCommands default []",
+          "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/src/package.json",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CLI README: 'By default, the CLI auto-approves actions'; -a/--require-approval opts into prompts",
+          "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/apps/cli/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GHSA-2rm5-cvcm-7592 / CVE-2025-58370, GHSA-hwm7-w97p-4h8p / CVE-2025-65946, GHSA-p278-52x9-cffx / CVE-2025-54377, GHSA-wrh9-463x-7wvv / CVE-2025-57771: command allow-list validation bypasses (fixed 3.26.0, 3.26.7, 3.23.19, 3.25.5)",
+          "source": "https://github.com/RooCodeInc/Roo-Code/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Extension asks by default with granular alwaysAllow* toggles and command allow/deny lists, but a long CVE record shows command-validation bypasses; CLI auto-approves by default."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "No sandbox mechanism in extension or CLI",
+          "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No sandbox."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "No domain allowlist or network policy found",
+          "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No egress control."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "PROTECTED_PATTERNS include .roomodes, .roorules*, .roo/**, .vscode/**, AGENTS.md, .rooignore",
+          "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/src/core/protect/RooProtectedController.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GHSA-3765-5vjr-qjgm / CVE-2025-53536: auto-approved writes to .vscode/settings.json -> RCE (fixed 3.22.6); GHSA-4pqh-4ggm-jfmm / CVE-2025-58372 via .code-workspace (fixed 3.26.0)",
+          "source": "https://github.com/RooCodeInc/Roo-Code/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "No folder-trust prompt; project .roo/mcp.json auto-connects; mitigated by a protected-file list (.roo/**, .vscode/**, .roomodes, AGENTS.md) needing separate opt-in for auto-writes."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "McpHub watches .roo/mcp.json and connects servers; alwaysAllow supports '*' wildcard; no approval prompt in McpHub.ts",
+          "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/src/services/mcp/McpHub.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GHSA-5x8h-m52g-5v54 / CVE-2025-53098: agent writes .roo/mcp.json with auto-approved writes -> arbitrary command (fixed 3.20.3)",
+          "source": "https://github.com/RooCodeInc/Roo-Code/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GHSA-wr2q-46pg-f228 / CVE-2025-53097: info leakage via JSON schema (fixed 3.20.3)",
+          "source": "https://github.com/RooCodeInc/Roo-Code/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Per-server alwaysAllow lists (wildcard '*' allowed) and disabledTools; project .roo/mcp.json spawned without approval."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Custom modes via .roomodes / custom_modes.yaml; skills from .roo/skills",
+          "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/src/services/skills/SkillsManager.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Marketplace for modes/MCP; custom modes (.roomodes) and skills from repo; no signing."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "GHSA-p76r-7mc3-qh7c / CVE-2025-58373: symlink bypass of .rooignore -> file disclosure (fixed 3.26.0)",
+          "source": "https://github.com/RooCodeInc/Roo-Code/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "SecretStorage for keys in extension; .rooignore symlink bypass CVE; CLI keys via flags/env."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "CLI --print, --output-format stream-json; default auto-approve",
+          "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/apps/cli/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GHSA-xr6r-vj48-29f6 / CVE-2025-58371: command injection in the project's GitHub Actions workflow (fixed in commit a0384f3)",
+          "source": "https://github.com/RooCodeInc/Roo-Code/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "CLI auto-approves by default, --print mode; no CI action."
+    },
+    "D09": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (no built-in persistent agent memory)."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "alwaysAllowSubtasks setting",
+          "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/packages/types/src/global-settings.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Subtasks gated by alwaysAllowSubtasks; inheritance not documented."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Tasks stored under extension globalStorage; CLI ~/.roo/cli-history.json",
+          "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/apps/cli/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Local task history only."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "PRIVACY.md: telemetry enabled by default, opt out in settings",
+          "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/PRIVACY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "PostHog telemetry default on with documented opt-out; no code/prompts claimed."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "install.sh piped from raw.githubusercontent.com",
+          "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/apps/cli/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Repo archived; README: extension shut down on May 15",
+          "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "curl|sh installer for CLI with no documented checksum; product discontinued/repo archived (no more patches)."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "roo-cline.autoImportSettingsPath config key exists",
+          "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/src/package.json",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "unverified (settings import path exists; org policy features not confirmed in this repo)."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md",
+          "source": "https://github.com/RooCodeInc/Roo-Code/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "11 published GHSAs 2025-06..2025-11",
+          "source": "https://github.com/RooCodeInc/Roo-Code/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "SECURITY.md (48h ack, 30-day target) and 11 GHSAs with CVEs; but project now discontinued."
+    }
+  }
+}

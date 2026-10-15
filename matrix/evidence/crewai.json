@@ -1,0 +1,206 @@
+{
+  "harness": "crewai",
+  "version": "1.15.28",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Task(human_input=True) reviews task output, not individual tool calls; no per-tool approval primitive found in source.",
+          "source": "https://github.com/crewAIInc/crewAI/blob/main/docs/edge/en/concepts/tasks.mdx",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Agent.allow_code_execution and code_execution_mode are deprecated no-ops: CodeInterpreterTool is no longer available; docs point to E2B/Modal.",
+          "source": "https://github.com/crewAIInc/crewAI/blob/main/lib/crewai/src/crewai/agent/core.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Only output-level human review; tool calls are unattended."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "No built-in sandbox after CodeInterpreterTool removal.",
+          "source": "https://github.com/crewAIInc/crewAI/blob/main/lib/crewai/src/crewai/agent/core.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CERT/CC VU#221883: CodeInterpreterTool fell back to a weak sandbox when Docker was unreachable (CVE-2026-2275 RCE) plus CVE-2026-2285/2286/2287.",
+          "source": "https://kb.cert.org/vuls/id/221883",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No sandbox; historical sandbox-fallback RCE."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "No egress controls in core; SSRF CVE-2026-2286 (CERT/CC) from insecure defaults.",
+          "source": "https://kb.cert.org/vuls/id/221883",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "None."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "crewai run executes the project's Python; no trust model.",
+          "source": "https://github.com/crewAIInc/crewAI/blob/main/docs/edge/en/quickstart.mdx",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (library)."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP via Agent(mcps=...) classes MCPServerStdio/HTTP/SSE with tool_filter; docs: only connect to fully trusted servers; tool-metadata prompt injection described, no mitigation beyond trust.",
+          "source": "https://github.com/crewAIInc/crewAI/blob/main/docs/edge/en/mcp/security.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Tool filtering only."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "crewai-tools package and CrewAI AMP tool repository; skills directory in lib/crewai.",
+          "source": "https://github.com/crewAIInc/crewAI/blob/main/lib/crewai-tools",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (Not assessed)"
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Keys via .env/env; telemetry excludes secrets and env vars by design.",
+          "source": "https://github.com/crewAIInc/crewAI/blob/main/docs/edge/en/telemetry.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Env-based; no storage controls."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "Library; no official CI hardening guidance found.",
+          "source": "https://github.com/crewAIInc/crewAI/blob/main/README.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Unified Memory (LanceDB) under appdirs user_data_dir('<cwd name>','CrewAI'); agent-written; CREWAI_STORAGE_DIR overrides.",
+          "source": "https://github.com/crewAIInc/crewAI/blob/main/lib/crewai-core/src/crewai_core/paths.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Persistent per-project memory, no review UI."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "allow_delegation lets agents delegate to coworkers in-process, sharing credentials and tools.",
+          "source": "https://github.com/crewAIInc/crewAI/blob/main/docs/edge/en/concepts/agents.mdx",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No isolation."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Event bus, optional AMP tracing (CREWAI_TRACING_ENABLED) and OTel integrations.",
+          "source": "https://github.com/crewAIInc/crewAI/blob/main/lib/crewai/src/crewai/events/listeners/tracing/utils.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Opt-in tracing."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "Anonymous OTel telemetry is ON by default to https://telemetry.crewai.com:4319/v1/traces (versions, crew/agent counts, agent roles, tool names, LLM model names, task-failure exception class, execution environment incl. detected AI coding assistant, project_id).",
+          "source": "https://github.com/crewAIInc/crewAI/blob/main/lib/crewai/src/crewai/telemetry/constants.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Opt-out: CREWAI_DISABLE_TELEMETRY or OTEL_SDK_DISABLED (true/1/yes/on); CREWAI_DISABLE_TRACKING also read in source. share_crew=True adds goals, backstories, task descriptions and I/O.",
+          "source": "https://github.com/crewAIInc/crewAI/blob/main/docs/edge/en/telemetry.mdx",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Default-on vendor telemetry with documented env opt-out; content only on opt-in."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "PyPI crewai; provenance not checked.",
+          "source": "https://pypi.org/project/crewai/",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (Not verified)"
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "No managed policy; CrewAI AMP enterprise features out of scope.",
+          "source": "https://github.com/crewAIInc/crewAI/blob/main/README.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "No SECURITY.md in repo and no GitHub advisories; CERT/CC VU#221883 (published 2026-03-30, revised 2026-05-20) says vendor addressed some but not all of 4 CVEs.",
+          "source": "https://kb.cert.org/vuls/id/221883",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Weak disclosure channel; partial remediation."
+    }
+  }
+}

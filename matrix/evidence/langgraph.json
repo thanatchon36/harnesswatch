@@ -1,0 +1,132 @@
+{
+  "harness": "langgraph",
+  "version": "1.2.15",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "tier": "C",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "No default tool-approval layer; interrupt()/Command resume for HITL (needs checkpointer)",
+          "source": "https://github.com/langchain-ai/langgraph/blob/main/.github/THREAT_MODEL.md",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "HITL is a primitive the builder must wire; nothing gated by default."
+    },
+    "D02": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D03": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Platform/API server auth advisories: GHSA-fvww-7h3r-vfhp, GHSA-4hm6-w6qq-w73v",
+          "source": "https://github.com/langchain-ai/langgraph/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Custom-auth handlers are builder responsibility and had enforcement bugs."
+    },
+    "D05": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D06": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "JsonPlusSerializer msgpack permissive by default unless LANGGRAPH_STRICT_MSGPACK=true",
+          "source": "https://github.com/langchain-ai/langgraph/blob/main/libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Checkpoint store is a code-execution trust boundary; strict mode opt-in."
+    },
+    "D08": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Checkpointers and Store provide persistence; store namespace advisory CVE-2026-71433",
+          "source": "https://github.com/langchain-ai/langgraph/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Persistence is core but opt-in; cross-namespace flaws existed."
+    },
+    "D10": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "LangSmith tracing via LANGSMITH_TRACING env (opt-in; not source-verified here)",
+          "source": "https://docs.langchain.com/langsmith/trace-with-langgraph",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "Not verified."
+    },
+    "D12": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D13": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D14": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (not assessed or not applicable to a library/runtime)"
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "10+ GHSAs/CVEs 2025-2026 with credited reporters",
+          "source": "https://github.com/langchain-ai/langgraph/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "No root SECURITY.md (404)",
+          "source": "https://github.com/langchain-ai/langgraph/blob/main/SECURITY.md",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Active advisory publication; root SECURITY.md not found."
+    }
+  }
+}

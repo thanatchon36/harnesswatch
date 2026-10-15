@@ -1,0 +1,7 @@
+expected:
+- HG-MCP-001
+- HG-MCP-002
+- HG-MCP-005
+origin: generated
+family: mcp
+note: MCP servers in claude-mcp-json

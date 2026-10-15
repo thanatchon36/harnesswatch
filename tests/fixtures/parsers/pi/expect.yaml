@@ -1,0 +1,5 @@
+# pi extensions are in-process TypeScript, not command hooks
+mcp_servers: [fs]
+auto_approve: true
+hooks: 0
+instruction_files: [AGENTS.md]

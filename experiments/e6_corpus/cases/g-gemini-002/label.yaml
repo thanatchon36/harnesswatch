@@ -1,0 +1,7 @@
+expected:
+- HG-HOOK-002
+- HG-MCP-001
+- HG-TEL-001
+origin: generated
+family: gemini
+note: Qwen settings

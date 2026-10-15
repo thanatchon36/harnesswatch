@@ -1,0 +1,96 @@
+id: goose
+name: goose (Linux Foundation AAIF; formerly block/goose)
+vendor: Agentic AI Foundation (AAIF), originated by Block
+tier: A
+license: Apache-2.0              # verified LICENSE + GitHub API
+open_source: true
+status: analysed                 # source read at dd17bf2 (2026-10-15); not executed
+version_analysed: "v1.54.0 (2026-10-08); source workspace version 1.55.0 (dev)"
+analysed_on: "2026-10-15"
+homepage: https://goose-docs.ai
+repo: https://github.com/aaif-goose/goose      # block/goose redirects
+
+binaries: [goose]
+packages:
+  - {ecosystem: cargo, name: "goose-cli"}      # workspace crates; crates.io publication unverified
+  - {ecosystem: github-release, name: "aaif-goose/goose"}
+install_methods:
+  - {method: curl-installer, command: "curl -fsSL https://github.com/aaif-goose/goose/releases/download/stable/download_cli.sh | bash", checksum_verified: null, signed: null, source: https://github.com/aaif-goose/goose/blob/main/README.md}
+  - {method: desktop-app, command: "download from goose-docs.ai", checksum_verified: null, signed: null}
+auto_update: {default: null, config: "`goose update`; docs guides/updating-goose.md", source: https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/updating-goose.md}
+
+state_dirs: ["~/.config/goose", "~/.local/share/goose", "~/.local/state/goose"]     # Windows %APPDATA%\Block\goose\{config,data}; GOOSE_PATH_ROOT overrides all
+credential_files: ["~/.config/goose/secrets.yaml"]          # only when keyring unavailable / GOOSE_DISABLE_KEYRING set
+credential_storage: "System keyring when available (recommended); otherwise plaintext secrets.yaml. Provider env vars (e.g. OPENAI_API_KEY) take precedence. API keys in config.yaml are ignored. Extension envs: `envs:` (plaintext in config.yaml) vs `env_keys:` (names stored via keyring)."
+log_paths: ["~/.local/share/goose/sessions/sessions.db", "~/.local/state/goose/logs/**", "~/.config/goose/history.txt"]
+memory_paths: []   # builtin `memory` extension exists; on-disk location unverified
+
+config_files:
+  - {path: "~/.config/goose/config.yaml", scope: user, format: yaml, kind: settings}
+  - {path: "~/.config/goose/permission.yaml", scope: user, format: yaml, kind: settings}
+  - {path: "~/.config/goose/permissions/tool_permissions.json", scope: user, format: json, kind: settings}
+  - {path: "~/.config/goose/secrets.yaml", scope: user, format: yaml, kind: settings}
+  - {path: "~/.config/goose/.goosehints", scope: user, format: markdown, kind: instructions}
+  - {path: ".goosehints", scope: project, format: markdown, kind: instructions}      # any directory in hierarchy; nested loaded when files accessed
+  - {path: "AGENTS.md", scope: project, format: markdown, kind: instructions}
+  - {path: "*.yaml recipe files (goose run --recipe)", scope: project, format: yaml, kind: skills}
+  - {path: "~/.config/goose/prompts/", scope: user, format: markdown, kind: settings}
+
+instruction_files: [".goosehints", "AGENTS.md", "~/.config/goose/.goosehints", "CONTEXT_FILE_NAMES (config key, list)"]
+skills_paths: []
+
+mcp:
+  files: ["~/.config/goose/config.yaml", "recipe.yaml (extensions: block)"]
+  servers_key: "extensions"          # map name -> entry; type builtin|platform|stdio|streamable_http (SSE unsupported)
+  server_fields:
+    command: cmd
+    args: args
+    env: envs                # literal env; env_keys = names whose values come from keyring
+    url: uri
+    headers: headers
+    type: type
+    enabled: enabled
+    timeout: timeout
+    available_tools: available_tools
+  project_servers_require_approval: null    # no project-level extensions file found; recipes carry extensions blocks and can be launched via `goose run --recipe` / deeplinks
+  notes: "GOOSE_ALLOWLIST=<URL of YAML> restricts installable extensions (id + command); stdio extension commands are checked against OSV MAL-* advisories (extension_malware_check.rs, OSV_ENDPOINT overridable). Allowlist is install-time only."
+
+permissions:
+  config_keys:
+    mode: "GOOSE_MODE"                      # config.yaml key or env var; auto|approve|smart_approve|chat
+    tool_permissions: "permission.yaml / permissions/tool_permissions.json: lists always_allow[], ask_before[], never_allow[] of tool names (config/permission.rs)"
+    max_turns: "GOOSE_MAX_TURNS (default 1000)"
+    injection_detection: "SECURITY_PROMPT_ENABLED (default false), SECURITY_PROMPT_THRESHOLD (0.8), SECURITY_PROMPT_CLASSIFIER_ENABLED"
+  default_mode: "auto (GooseMode #[default] Auto; docs: 'Autonomous Mode is applied by default') => tool calls NOT confirmed out of the box"
+  auto_approve_values:
+    - {key: "GOOSE_MODE", value: "auto"}
+  cli_flags_auto_approve: []
+  allow_rule_syntax: "permission.yaml: always_allow: [tool_name], ask_before: [..], never_allow: [..] (no globs found)"
+  overbroad_patterns: []
+  notes: "Mode set per session; `/mode approve|smart_approve|auto|chat` in session."
+
+hooks: {supported: false, config_key: null, repo_scoped_allowed: false, command_field: null}
+sandbox: {available: false, default_on: false, mechanism: "none for developer extension (README recommends VM/container)", config: null, source: https://github.com/aaif-goose/goose/blob/main/README.md}
+network: {domain_allowlist: false, config: null, default: unrestricted}
+workspace_trust: {prompt_on_new_folder: false, notes: ".goosehints/AGENTS.md read from cwd and parents; goose review runs git in repo (GHSA-r5pp-p5r8-466r: attacker .git/config core.fsmonitor => command execution before any model call; fixed 1.44.0)", source: https://github.com/aaif-goose/goose/security/advisories/GHSA-r5pp-p5r8-466r}
+memory: {persistent: true, cross_project: true, agent_writable: true, notes: "builtin `memory` extension (config shows bundled, enabled)", source: https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/config-files.md}
+subagents: {supported: true, inherits_permissions: "summon platform extension (delegate/load tools); recipe with explicit extensions list excludes summon unless listed", notes: "", source: https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/recipes/recipe-reference.md}
+telemetry: {default_on: false, opt_out: "GOOSE_TELEMETRY_ENABLED=false; first-run opt-in prompt", training_default: null, source: https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/usage-data.md}
+headless:
+  command: "goose run -t \"<prompt>\" --no-session -q --output-format json"
+  flags: ["-t/--text", "-i/--instructions <file|->", "--recipe", "--no-session", "-q/--quiet", "--output-format text|json|stream-json", "--provider", "--model", "--max-turns", "--with-extension", "--with-builtin"]
+  ci_integrations: ["goose GitHub Action: unverified"]
+  model_override: "GOOSE_PROVIDER/GOOSE_MODEL env or config.yaml active_provider + providers.<id>.model; --provider/--model"
+  local_model_support: "yes: Ollama provider (OLLAMA_HOST, default localhost) `GOOSE_PROVIDER=ollama GOOSE_MODEL=qwen3 OLLAMA_HOST=127.0.0.1:11434`; OpenAI-compatible: provider openai with OPENAI_HOST (root URL, no path) + OPENAI_BASE_PATH (e.g. v1/chat/completions) + OPENAI_API_KEY (providers.md)."
+
+security_policy: {security_md: https://github.com/aaif-goose/goose/blob/main/SECURITY.md, bug_bounty: null, advisories: https://github.com/aaif-goose/goose/security/advisories}
+extra:
+  remote_server: "`goose serve --host 0.0.0.0 --tls` with GOOSE_SERVER__SECRET_KEY shared secret (docs guides/remote-goose-server.md)"
+  readme_caution: "README CAUTION block documents prompt-injection risk and recommends VM/container"
+sources:
+  - {url: https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/config-files.md, accessed: "2026-10-15"}
+  - {url: https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/managing-tools/goose-permissions.md, accessed: "2026-10-15"}
+  - {url: https://github.com/aaif-goose/goose/blob/main/crates/goose-provider-types/src/goose_mode.rs, accessed: "2026-10-15", note: "#[default] Auto"}
+  - {url: https://github.com/aaif-goose/goose/blob/main/documentation/docs/getting-started/providers.md, accessed: "2026-10-15"}
+  - {url: https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/allowlist.md, accessed: "2026-10-15"}
+  - {url: https://github.com/aaif-goose/goose/security/advisories, accessed: "2026-10-15"}

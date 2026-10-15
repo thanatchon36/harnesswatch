@@ -1,0 +1,6 @@
+{
+  // shared editor settings
+  "editor.formatOnSave": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "chat.tools.terminal.autoApprove": {"pnpm test": true, "pnpm lint": true, "rm": false, "curl": false}
+}

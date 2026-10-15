@@ -1,0 +1,15 @@
+id: HG-MCP-005
+title: MCP server declared in a repository config
+area: MCP
+severity: low
+confidence: high
+kind: design-weakness
+taxonomy: [T02, T04]
+description: >
+  A committed `.mcp.json`, `.cursor/mcp.json`, `.vscode/mcp.json`, `.kiro/settings/mcp.json`, … asks
+  every cloner's harness to start a local process. Most harnesses prompt once per server, but approval
+  fatigue, "enable all" settings and headless modes (which may not prompt) make this an execution path
+  controlled by whoever can change the file. Informational unless combined with HG-MCP-001/006.
+remediation: Document each server, pin it (HG-MCP-001), protect the file with CODEOWNERS, and prefer user-level MCP config for personal tooling.
+references:
+  - https://code.claude.com/docs/en/mcp

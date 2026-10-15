@@ -1,0 +1,4 @@
+expected: [HG-SUP-001]
+origin: hand
+family: sup
+note: "opencode installed by its unverified curl installer"

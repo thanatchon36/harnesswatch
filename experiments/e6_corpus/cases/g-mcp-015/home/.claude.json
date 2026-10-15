@@ -1,0 +1,23 @@
+{
+  "numStartups": 41,
+  "installMethod": "native",
+  "autoUpdates": true,
+  "mcpServers": {
+    "context": {
+      "type": "http",
+      "url": "https://mcp.context.example.com/mcp"
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest",
+        "--headless"
+      ],
+      "env": {
+        "LOG_LEVEL": "info",
+        "ALLOWED_DIRECTORIES": "/workspace/app"
+      }
+    }
+  }
+}

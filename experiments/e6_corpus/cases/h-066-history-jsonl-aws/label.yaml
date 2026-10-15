@@ -1,0 +1,4 @@
+expected: [HG-SEC-001]
+origin: hand
+family: sec
+note: "prompt history with a pasted AWS key id"

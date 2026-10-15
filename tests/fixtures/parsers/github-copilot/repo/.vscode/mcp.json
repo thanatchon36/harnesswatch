@@ -1,0 +1,6 @@
+{
+  // VS Code MCP config uses "servers", not "mcpServers"
+  "servers": {
+    "fs": {"type": "stdio", "command": "npx", "args": ["-y", "@modelcontextprotocol/server-filesystem", "."]}
+  }
+}

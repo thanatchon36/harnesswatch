@@ -1,0 +1,4 @@
+expected: []
+origin: hand
+family: sec
+note: "gateway URL, model ids and an apiKeyHelper; no literal credential"

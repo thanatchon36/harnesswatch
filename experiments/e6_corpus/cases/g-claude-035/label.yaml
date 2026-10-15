@@ -1,0 +1,7 @@
+expected:
+- HG-HOOK-001
+- HG-HOOK-002
+- HG-NET-001
+origin: generated
+family: claude
+note: Claude Code settings (local)

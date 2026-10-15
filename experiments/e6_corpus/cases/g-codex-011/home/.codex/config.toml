@@ -1,0 +1,9 @@
+model = "gpt-5.1"
+model_reasoning_effort = "medium"
+sandbox_mode = "danger-full-access"
+
+[sandbox_workspace_write]
+network_access = true
+
+[features]
+memories = true

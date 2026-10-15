@@ -1,0 +1,130 @@
+id: trae
+name: "TRAE (ByteDance; TraeCode and TraeWork merged into the all-new TRAE with Agent window + IDE window, SOLO mode); open-source sibling trae-agent"
+vendor: ByteDance
+tier: B
+license: "Proprietary (IDE/desktop; a Code OSS fork per third-party report). trae-agent: MIT (verified via GitHub API)"
+open_source: false              # IDE closed. bytedance/trae-agent is MIT -> see extra.trae_agent
+status: docs-only
+version_analysed: null          # docs changelog: TRAE v3.6.0 released 2026-10-08 (Agent window); not installed/executed
+analysed_on: "2026-10-15"
+homepage: https://www.trae.ai
+repo: null                      # IDE closed; research agent at https://github.com/bytedance/trae-agent
+
+binaries: []                    # no official CLI for the IDE found (searched docs + web). `trae-cli` is the entry point of the separate open-source trae-agent (pip/uv), not the IDE
+packages: []
+install_methods:
+  - {method: desktop-installer, command: "download from TRAE Download Center (trae.ai)", checksum_verified: null, signed: null, source: https://docs.trae.ai/ide/traework-to-traecode-data-migration}
+auto_update: {default: null, config: null, source: null}     # unverified
+
+state_dirs: ["~/.trae", "%USERPROFILE%/.trae", ".trae"]
+credential_files: []
+credential_storage: "unverified"
+log_paths: []                   # MCP server logs viewable in Settings > MCP (path unverified)
+memory_paths: ["~/.trae/user_rules/*", ".trae/rules/*"]       # 'Rules & Memories' settings page; auto-memories file location unverified
+
+config_files:
+  - {path: "~/.trae/user_rules/*", scope: user, format: markdown, kind: rules}
+  - {path: ".trae/rules/*", scope: project, format: markdown, kind: rules}     # frontmatter alwaysApply/description/globs; up to 3 nesting levels (search-summary of docs)
+  - {path: ".trae/mcp.json", scope: project, format: json, kind: mcp}          # requires enabling "Project MCP" toggle in Settings > MCP with confirmation popup
+  - {path: "~/.trae/hooks.json", scope: user, format: json, kind: hooks}       # Windows %userprofile%/.trae/hooks.json
+  - {path: ".trae/hooks.json", scope: project, format: json, kind: hooks}      # docs: $PROJECT_FOLDER/.trae/hooks.json
+  - {path: "~/.claude/settings.json", scope: user, format: json, kind: hooks}  # TRAE can read Claude Code hooks when enabled
+  - {path: ".claude/settings.json", scope: project, format: json, kind: hooks}
+  - {path: ".claude/settings.local.json", scope: project-local, format: json, kind: hooks}
+  - {path: "~/.trae/permission/global.json", scope: user, format: json, kind: settings}   # custom permission mode + resourceAuthorization + commandRules/mcpRules
+  - {path: "~/.trae/sandbox.json", scope: user, format: json, kind: settings}             # sandbox filesystem/network; Windows %USERPROFILE%\.trae\sandbox.json
+  - {path: ".trae/.ignore", scope: project, format: ignore, kind: ignore}                 # indexing ignore (gitignore syntax)
+  # global MCP servers: stored via Settings > MCP UI (Raw Config pastes into an app-level mcp.json; path unverified)
+  # enterprise / managed policy: not found in docs -> unverified
+
+instruction_files: [".trae/rules/*"]       # AGENTS.md / CLAUDE.md support not confirmed
+skills_paths: []                           # docs have 'Skills' page; path unverified
+
+mcp:
+  files: [".trae/mcp.json"]
+  servers_key: "mcpServers"
+  server_fields: {command: command, args: args, env: env, url: url, headers: headers}
+  project_servers_require_approval: true   # Project MCP is opt-in toggle + confirmation; additionally "all external MCP server connections require explicit authorization the first time"
+  notes: "Transports: stdio, SSE, Streamable HTTP. stdio command must not contain spaces. Only ${workspaceFolder} variable supported. Timeouts: stdio via env.START_MCP_TIMEOUT_MS, HTTP via headers. 'Automatically Run MCP' toggle (Settings > Conversation > Auto-Run) lets agent call MCP tools without confirmation; permission mode customProfiles.*.approval.sceneRules.mcpToolApproval and approval.mcpRules (mcpserver__mcptool / mcpserver__*) give per-tool control."
+
+permissions:
+  config_keys:
+    profile: "customProfiles.defaultCustomProfile"
+    sandbox: "customProfiles.defaultCustomProfile.shellSandbox.enable"
+    on_restrict: "customProfiles.defaultCustomProfile.shellSandbox.onRestrict"
+    reviewer: "customProfiles.defaultCustomProfile.approval.reviewer"
+    scene_rules: "customProfiles.defaultCustomProfile.approval.sceneRules"
+    command_rules: "customProfiles.defaultCustomProfile.approval.commandRules"
+    mcp_rules: "customProfiles.defaultCustomProfile.approval.mcpRules"
+    fs_default: "customProfiles.defaultCustomProfile.filesystem.default"
+    net_default: "customProfiles.defaultCustomProfile.network.default"
+    resource_fs: "resourceAuthorization.filesystem.{readWrite,readOnly}"
+    resource_net: "resourceAuthorization.network.{allow,deny}"
+  default_mode: "unverified (three presets: Manual Approval, Automatic Approval [LLM Guardian; not available in the US], Full Access; plus Custom)"
+  auto_approve_values:
+    - {key: "UI: Settings > Permission Approval > Permission Mode", value: "Full Access"}
+    - {key: "UI: Settings > Conversation > Auto-Run > command execution mode", value: "Auto-Run / Always Run"}   # docs: runs OUTSIDE the sandbox and 'bypasses all security checks'
+    - {key: "UI: Settings > Conversation > Auto-Run > Automatically Run MCP", value: true}
+    - {key: "customProfiles.*.shellSandbox.enable", value: false}
+    - {key: "customProfiles.*.approval.sceneRules.commandAstDangerChecker", value: false}
+    - {key: "customProfiles.*.approval.sceneRules.mcpToolApproval", value: false}
+    - {key: "customProfiles.*.approval.sceneRules.deleteToolApproval", value: false}
+    - {key: "customProfiles.*.approval.reviewer", value: "llm/custom model (non-'user' reviewer)"}
+    - {key: "customProfiles.*.approval.commandRules", value: "rule with execEnv=host + approval allow, or pattern '*'"}
+    - {key: "sandbox.json network.default", value: "allow"}      # shipped default
+  cli_flags_auto_approve: []
+  allow_rule_syntax: "commandRules entries match command prefixes such as 'git status', 'git add *' or regex 'r/rm\\s+-rf/'; mcpRules keys 'mcpserver__mcptool' or 'mcpserver__*' (exact value schema unverified: code blocks partly lost in scraped docs)"
+  overbroad_patterns: ["*", "mcpserver__*"]
+
+hooks:
+  supported: true
+  config_key: "hooks"            # in hooks.json: {"version":1,"hooks":{"<EventName>":[{"matcher":"...","loop_limit":5,"hooks":[{"type":"command","command":"...","timeout":30}]}]}}
+  repo_scoped_allowed: true      # .trae/hooks.json in project; also imports .claude/settings*.json hooks when enabled
+  command_field: "command"
+  events: [SessionStart, UserPromptSubmit, PreToolUse, PostToolUse, Stop, Notification]
+  notes: "Execution mode per hook config: 'Run in Sandbox' vs 'Run Automatically Locally' (outside sandbox, higher risk). Shell: bash (macOS/Linux), PowerShell (Windows)."
+
+sandbox: {available: true, default_on: null, mechanism: "macOS, Windows (incl. WSL2), Linux (Debian 10+/Ubuntu 20.04+, via Remote SSH + bubblewrap). Project dir writable except .trae/.vscode/.git; root read-only; allowlisted command prefixes bypass sandbox", config: "~/.trae/sandbox.json {filesystem:{readWrite,readOnly}, network:{default,allow,deny}} and permission/global.json", source: https://docs.trae.ai/ide/sandbox}
+network: {domain_allowlist: true, config: "sandbox.json network.default/allow/deny (deny wins; domains, wildcards, IP, CIDR, ports); permission/global.json resourceAuthorization.network", default: "allow all networks by default", source: https://docs.trae.ai/ide/permission-and-approval}
+workspace_trust: {prompt_on_new_folder: null, notes: "No VS Code-style workspace trust statement found for repo .trae/hooks.json / .trae/rules. Project MCP is gated by an explicit toggle; hooks gating unverified.", source: https://docs.trae.ai/ide/add-mcp-servers}
+memory: {persistent: true, cross_project: true, agent_writable: null, notes: "Settings 'Rules & Memories'; cloud agents store rules/memory/MCP/hooks/context server-side", source: https://docs.trae.ai/ide/data-storage-policy-for-remote-agents}
+subagents: {supported: true, inherits_permissions: null, notes: "docs have Subagents page (not read in depth)", source: https://docs.trae.ai/ide/subagents}
+telemetry: {default_on: true, opt_out: "Settings > Account > Privacy Mode (only effective while logged in); IDE telemetry toggle only covers VS Code-framework telemetry per ByteDance statement to The Register (2025-07)", training_default: "chat interactions incl. code snippets and AI outputs MAY be used for analytics/improvement/model training unless Privacy mode enabled; codebase files never used per docs; codebase indexing temporarily uploads plaintext for embeddings then deletes", source: https://docs.trae.ai/ide/privacy-mode}
+headless:
+  command: null                  # none for the IDE; cloud/scheduled 'Automation' tasks exist inside the product
+  flags: []
+  ci_integrations: []
+  model_override: "IDE: custom models in Settings > Models. trae-agent: --model-base-url / <PROVIDER>_BASE_URL"
+  local_model_support: "IDE: unverified. trae-agent: yes (Ollama and OpenAI-compatible via provider config, see extra.trae_agent)."
+
+security_policy: {security_md: null, bug_bounty: null, advisories: null}    # not located for TRAE; bytedance/trae-agent has no SECURITY.md or GHSA advisories (gh api 2026-10-15)
+sources:
+  - {url: https://docs.trae.ai/ide/sandbox, accessed: "2026-10-15", note: "sandbox, sandbox.json (SPA; text extracted from embedded page data)"}
+  - {url: https://docs.trae.ai/ide/permission-and-approval, accessed: "2026-10-15", note: "permission modes, global.json"}
+  - {url: https://docs.trae.ai/ide/custom-global-permission-configuration-reference, accessed: "2026-10-15", note: "commandRules/mcpRules"}
+  - {url: https://docs.trae.ai/ide/auto-run-and-security, accessed: "2026-10-15", note: "auto-run"}
+  - {url: https://docs.trae.ai/ide/add-mcp-servers, accessed: "2026-10-15", note: ".trae/mcp.json"}
+  - {url: https://docs.trae.ai/ide/hook-configuration-reference, accessed: "2026-10-15", note: "hooks.json"}
+  - {url: https://docs.trae.ai/ide/rules, accessed: "2026-10-15", note: "rules dirs"}
+  - {url: https://docs.trae.ai/ide/privacy-mode, accessed: "2026-10-15", note: "privacy"}
+  - {url: https://docs.trae.ai/ide/changelog, accessed: "2026-10-15", note: "v3.6.0 2026-10-08"}
+  - {url: https://docs.trae.ai/ide/traework-to-traecode-data-migration, accessed: "2026-10-15", note: "TraeCode+TraeWork merged"}
+  - {url: https://docs.trae.ai/ide/data-storage-policy-for-remote-agents, accessed: "2026-10-15", note: "cloud agent data"}
+  - {url: https://www.theregister.com/2025/07/28/bytedance_trae_telemetry/, accessed: "2026-10-15", note: "telemetry report (third-party)"}
+  - {url: https://github.com/bytedance/trae-agent, accessed: "2026-10-15", note: "source read via gh api"}
+extra:
+  trae_agent:
+    repo: https://github.com/bytedance/trae-agent
+    license: MIT
+    version: "0.1.0 (pyproject; no tags/releases); last push 2026-02-05, HEAD e839e559ac61bdd0e057c375dd1dee391fee797d"
+    binaries: [trae-cli]       # pyproject [project.scripts] trae-cli = trae_agent.cli:main ; commands: run, interactive, show_config, tools
+    install: "git clone + uv sync --all-extras (Python 3.12+); not on PyPI as verified (unverified)"
+    config_files:
+      - {path: "trae_config.yaml", scope: project, format: yaml, note: "DEFAULT is relative to CWD (--config-file default 'trae_config.yaml'); legacy trae_config.json fallback. Holds model_providers.*.api_key, mcp_servers (command/args/env/cwd/url/http_url/headers/tcp/timeout/trust), allow_mcp_servers, agents.trae_agent.tools, lakeview"}
+    mcp: {servers_key: "mcp_servers", allow_key: "allow_mcp_servers", note: "servers are only started if their name is in allow_mcp_servers (source: trae_agent/agent/trae_agent.py discover_mcp_tools)"}
+    permission_model: "NONE. bash tool = persistent /bin/bash session with 120 s timeout, no approval prompt, no allowlist; isolation only via --docker-image/--docker-container-id/--dockerfile-path/--docker-image-file"
+    trajectory: "trajectories/trajectory_YYYYMMDD_HHMMSS.json in CWD by default (full LLM I/O and tool calls); --trajectory-file overrides"
+    env: "<PROVIDER>_API_KEY and <PROVIDER>_BASE_URL (provider upper-cased); precedence CLI > ENV > config"
+    providers: [anthropic, openai, azure, google, doubao, openrouter, ollama]
+    local_model: "trae-cli run '<task>' --provider ollama --model <m> --model-base-url http://host:11434 (ollama_client.py present; exact base-URL form unverified) or any OpenAI-compatible via provider openai + base_url"
+    lakeview: "enable_lakeview default true: step summaries are produced by an extra LLM call to the configured lakeview model (data flows to that provider)"

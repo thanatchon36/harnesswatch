@@ -1,0 +1,5 @@
+{"result": {"tools": [
+  {"name": "read_file", "description": "Read the complete contents of a file from the file system. Handles various text encodings. Only works within allowed directories.", "inputSchema": {"type": "object", "properties": {"path": {"type": "string"}}, "required": ["path"]}},
+  {"name": "list_directory", "description": "Get a detailed listing of all files and directories in a specified path. Results distinguish files and directories with [FILE] and [DIR] prefixes.", "inputSchema": {"type": "object", "properties": {"path": {"type": "string"}}}},
+  {"name": "search_files", "description": "Recursively search for files and directories matching a pattern. Use exclude patterns to skip node_modules.", "inputSchema": {"type": "object", "properties": {"path": {"type": "string"}, "pattern": {"type": "string"}}}}
+]}}

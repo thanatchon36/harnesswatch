@@ -1,0 +1,13 @@
+model = "gpt-5.1"
+model_reasoning_effort = "high"
+approval_policy = "on-failure"
+
+[sandbox_workspace_write]
+network_access = false
+
+[mcp_servers.search]
+command = "docker"
+args = ["run", "-i", "--rm", "mcp/brave-search@sha256:3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a3f9a"]
+
+[mcp_servers.search.env]
+GITHUB_PERSONAL_ACCESS_TOKEN = "{{SYNTH:github-token}}"

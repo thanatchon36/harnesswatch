@@ -1,0 +1,6 @@
+{
+  "amp.notifications.enabled": true,
+  "amp.mcpServers": {
+    "github": {"command": "npx", "args": ["-y", "@acme/github-mcp@3.1.0", "--token", "{{SYNTH:github-token}}"]}
+  }
+}

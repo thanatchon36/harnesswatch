@@ -1,0 +1,267 @@
+{
+  "harness": "junie",
+  "version": "3800.1",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Most terminal commands, code execution and MCP calls need approval by default; Action Allowlist ~/.junie/allowlist.json (first match wins, chained/substituted commands checked)",
+          "source": "https://junie.jetbrains.com/docs/action-allowlist-junie-cli.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Brave mode: --brave / Ctrl+B / config.json brave:true approves everything",
+          "source": "https://junie.jetbrains.com/docs/junie-cli.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CVE-2025-59458 improper command validation (before 252.284.x)",
+          "source": "https://nvd.nist.gov/vuln/detail/CVE-2025-59458",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Good default and expressive allowlist; brave mode and history of validation CVEs."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Optional srt-based sandbox (--sandbox), off by default, macOS/Linux, not for MCP servers/hooks, 'not hardened isolation'",
+          "source": "https://junie.jetbrains.com/docs/junie-cli.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Opt-in sandbox only."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Sandbox network unrestricted by default; allowedDomains when network.unrestricted=false",
+          "source": "https://junie.jetbrains.com/docs/junie-cli.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Allowlist exists only in the opt-in sandbox; default unrestricted."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Interactive trust prompt; untrusted projects do not load project config, MCP, hooks",
+          "source": "https://junie.jetbrains.com/docs/junie-headless.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Non-interactive runs are trusted by design and load project MCP, hooks, agents, skills",
+          "source": "https://junie.jetbrains.com/docs/junie-headless.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CVE-2026-41153 command execution via malicious project file, fixed in 252.549.29",
+          "source": "https://nvd.nist.gov/vuln/detail/CVE-2026-41153",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Trust gating interactively; headless bypass is documented and a project-file CVE occurred."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "mcp.json user/project; servers enabled by default; tool calls need approval; allowlist category mcpTools",
+          "source": "https://junie.jetbrains.com/docs/junie-cli-mcp-configuration.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "MCP servers not sandboxed",
+          "source": "https://junie.jetbrains.com/docs/junie-cli.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GitHub Action: MCP servers opt-in via allowed_mcp_servers",
+          "source": "https://junie.jetbrains.com/docs/junie-on-github.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Tool-call approval only; no central allowlist or change detection documented."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Extensions and agent skills exist (junie-cli-extensions.html, agent-skills.html) ",
+          "source": "https://junie.jetbrains.com/docs/junie-cli.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Vetting not read",
+          "source": "https://junie.jetbrains.com/docs/junie-cli.html",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (extension vetting not read)"
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "readSecretFile allowlist category and .aiignore restrict content access (names remain visible); brave mode can read .aiignore files",
+          "source": "https://junie.jetbrains.com/docs/junie-ide-plugin.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Credential storage undocumented",
+          "source": "https://junie.jetbrains.com/docs/byok.html",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Some secret-read protection; storage unverified."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "junie --auth token headless; GitHub Action requests contents/pull-requests/issues write, trigger phrase, only 'write permission' actor check documented, no untrusted-input guidance",
+          "source": "https://junie.jetbrains.com/docs/junie-on-github.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Headless runs auto-trust project config",
+          "source": "https://junie.jetbrains.com/docs/junie-headless.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "CI path loads repo config and docs lack untrusted-input guidance."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Guidelines AGENTS.md/.junie files global and project; imports other agents' memory on first open; no autonomous writes documented",
+          "source": "https://junie.jetbrains.com/docs/guidelines-and-memory.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "User-visible file-based memory."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Subagents with transcripts; permission inheritance not read",
+          "source": "https://junie.jetbrains.com/docs/junie-cli.html",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (unverified)"
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Per-session transcript.md and events.jsonl",
+          "source": "https://junie.jetbrains.com/docs/junie-cli.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Local structured session logs; no enterprise audit documented."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "JUNIE_SHARE_ANONYMOUS_STATISTICS toggle; default not stated",
+          "source": "https://junie.jetbrains.com/docs/environment-variables.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "IDE data policy referenced but not read",
+          "source": "https://junie.jetbrains.com/docs/junie-ide-plugin.html",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": null,
+      "rationale": "N/A (default not verified)"
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "install.sh calculates SHA-256; npm/brew channels; auto-update config; update channels eap/nightly",
+          "source": "https://github.com/JetBrains/junie",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Signature/SBOM not stated",
+          "source": "https://github.com/JetBrains/junie",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Checksum present; no signing statement."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "--config-location / JUNIE_CONFIG_LOCATION / default-locations toggles allow pinning config, but no admin-enforced policy file documented",
+          "source": "https://junie.jetbrains.com/docs/junie-cli-configuration.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "JetBrains Enterprise sign-in mentioned",
+          "source": "https://junie.jetbrains.com/docs/junie-cli.html",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Config relocation knobs, no enforced policy."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "No formal bug bounty; report via YouTrack 'Security Problem'; 24h acknowledgement",
+          "source": "https://www.jetbrains.com/legal/docs/terms/coordinated-disclosure/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "NVD CVEs: CVE-2025-58335, CVE-2025-59458, CVE-2026-41153",
+          "source": "https://nvd.nist.gov/vuln/detail/CVE-2026-41153",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Coordinated disclosure policy, published fixed-issues page and CVEs; discretionary rewards."
+    }
+  }
+}

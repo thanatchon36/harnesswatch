@@ -1,0 +1,4 @@
+model: sonnet
+yes-always: true
+auto-commits: true
+lint-cmd: "python: ruff check --fix"

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "figma": {
+      "serverUrl": "http://127.0.0.1:3845/mcp"
+    },
+    "linear": {
+      "serverUrl": "https://mcp.linear.example.com/mcp",
+      "headers": {
+        "Authorization": "Bearer {{SYNTH:high-entropy}}"
+      }
+    }
+  }
+}

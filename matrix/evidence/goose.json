@@ -1,0 +1,212 @@
+{
+  "harness": "goose",
+  "version": "1.54.0",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "GooseMode enum default Auto; values auto, approve, smart_approve, chat",
+          "source": "https://github.com/aaif-goose/goose/blob/main/crates/goose-provider-types/src/goose_mode.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Docs: 'Autonomous Mode is applied by default'",
+          "source": "https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/managing-tools/goose-permissions.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "PermissionConfig always_allow / ask_before / never_allow lists",
+          "source": "https://github.com/aaif-goose/goose/blob/main/crates/goose/src/config/permission.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Four modes (auto/approve/smart_approve/chat) and per-tool always_allow/ask_before/never_allow, but the shipped default is autonomous (no approvals)."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "README CAUTION block recommends dedicated VM or container",
+          "source": "https://github.com/aaif-goose/goose/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No sandbox; README recommends running in a VM/container."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "No domain allowlist in config docs",
+          "source": "https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/config-files.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No egress control."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "GHSA-r5pp-p5r8-466r / CVE-2026-72718: goose review runs git without stripping attacker .git/config; <1.44.0; published 2026-07-24",
+          "source": "https://github.com/aaif-goose/goose/security/advisories/GHSA-r5pp-p5r8-466r",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 0,
+      "rationale": "No trust prompt; .goosehints/AGENTS.md read from cwd and parents; goose review executed repo git config (core.fsmonitor) before any model call (CVE-2026-72718)."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "GOOSE_ALLOWLIST: only listed extension commands can be installed",
+          "source": "https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/allowlist.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "OsvChecker.deny_if_malicious fails on MAL-* advisories for npm/PyPI extension commands",
+          "source": "https://github.com/aaif-goose/goose/blob/main/crates/goose/src/agents/extension_malware_check.rs",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Extension install allowlist via GOOSE_ALLOWLIST URL plus OSV malware (MAL-*) check before launching stdio extensions; no project-level MCP file; no tool-description pinning."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Recipe schema extensions array with type/name/cmd/envs",
+          "source": "https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/recipes/recipe-reference.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Recipes carry extension blocks and can be shared via deeplinks/GitHub repo; no signing."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Keyring recommended; secrets.yaml plaintext when keyring unavailable or GOOSE_DISABLE_KEYRING set",
+          "source": "https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/config-files.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "System keyring by default, plaintext secrets.yaml fallback (headless/CI); API keys in config.yaml ignored."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "SECURITY_PROMPT_ENABLED default false; GOOSE_MAX_TURNS default 1000",
+          "source": "https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/config-files.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "`goose run` headless inherits GOOSE_MODE (default auto); --max-turns default 1000; optional prompt-injection detector off by default."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "memory builtin extension in example config",
+          "source": "https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/config-files.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Builtin memory extension; location/scope unverified."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "summon platform extension note",
+          "source": "https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/recipes/recipe-reference.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Summon extension provides delegate/load; recipe-scoped extension lists."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "sessions.db under ~/.local/share/goose/sessions; logs under ~/.local/state/goose/logs",
+          "source": "https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/logs.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "SQLite session store and logs locally."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "GOOSE_TELEMETRY_ENABLED default false; asked on first use",
+          "source": "https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/usage-data.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Anonymous usage data opt-in, default false."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "download_cli.sh install",
+          "source": "https://github.com/aaif-goose/goose/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "curl|bash installer from GitHub release; desktop app; checksum/signing not verified."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "custom-distributions guide exists",
+          "source": "https://github.com/aaif-goose/goose/blob/main/documentation/docs/guides/custom-distributions.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "GOOSE_ALLOWLIST and custom distributions (CUSTOM_DISTROS.md); no managed-settings file documented."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "README: privately report in Security tab; AAIF escalation contact",
+          "source": "https://github.com/aaif-goose/goose/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "GHSA-r5pp-p5r8-466r fixed in 1.44.0, published 2026-07-24",
+          "source": "https://github.com/aaif-goose/goose/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "SECURITY.md/README disclosure via GitHub private reporting; one GHSA with CVE; AAIF governance contact."
+    }
+  }
+}

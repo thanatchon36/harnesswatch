@@ -1,0 +1,177 @@
+{
+  "harness": "vertex-ai-agent-engine",
+  "version": "Agent Runtime (renamed 2026-04-22); Agent Identity GA claim on 2026-04-22, API in Preview per 2026-06-18 note",
+  "analysed_on": "2026-10-15",
+  "status": "docs-only",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Semantic governance policies support VPC Service Controls (Preview) (2026-09-25).",
+          "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Admins can write IAM allow/deny policies naming an agent's principal; agent identity defaults include roles/aiplatform.agentDefaultAccess and agentContextEditor.",
+          "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-identity",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Approval/HITL is delegated to the agent framework (ADK etc.); the platform provides IAM allow/deny for agent identities and (Preview) semantic governance policies; no platform-level per-tool approval default."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Computer Use and Shell sandboxes are generally available (2026-09-09); sandboxes gain VPC Service Controls, private service connectivity, CMEK and pause/resume.",
+          "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Agent Sandbox (computer use and shell sandboxes GA 2026-09-09) with VPC-SC, PSC, CMEK and pause/resume; agent code itself runs in a managed runtime (bring-your-own-container supported)."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Agent Gateway now enforces VPC Service Controls perimeter rules for agent communications (2026-09-09); applies to gateways created after 2026-09-08 using the agent connectivity template.",
+          "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Access doc states 'VPC Service Controls isn't supported with Agent Gateway' while the 2026-09-09 release note says the gateway enforces VPC-SC rules; the docs are mutually inconsistent or version-dependent.",
+          "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/manage-agent-access",
+          "label": "unverified",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Agent Gateway enforces VPC-SC perimeter rules (gateways created after 2026-09-08, requires ALL_TRAFFIC egress mode); Model Armor for Agent Gateway GA. VPC-SC not supported with Agent Gateway per access doc (conflicting notes)."
+    },
+    "D04": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (cloud-deployed; no local workspace trust)."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "Agent Gateway, Agent Observability and Agent Registry are GA (2026-06-18); Model Armor for Agent Gateway GA (2026-06-24).",
+          "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Agent Gateway, Agent Registry (GA 2026-06-18) and Model Armor on the gateway provide central tool governance and prompt/response screening."
+    },
+    "D06": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "Not assessed."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Unit 42 (2026-03-31): default P4SA service agent for Agent Engine/ADK deployments had excessive default permissions; credentials retrievable from metadata service gave read access to project Cloud Storage buckets and Google-owned Artifact Registry images.",
+          "source": "https://unit42.paloaltonetworks.com/double-agents-vertex-ai/",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Unit 42: Google updated docs and the ADK deployment workflow; recommended BYOSA and least-privilege OAuth scopes; default scopes are broad and cannot be edited.",
+          "source": "https://unit42.paloaltonetworks.com/double-agents-vertex-ai/",
+          "label": "third-party-report",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Agents run under either Agent Identity (preview) or a service account (Reasoning Engine Service Agent or custom); 'Deployed agents have access to all resources that their service account has permission to access'; service agent is hidden in the console by default.",
+          "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/manage-agent-access",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Agent Identity API replaces the legacy IAM Connectors API (2026-06-18) and is in Preview.",
+          "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Default service-agent identity (P4SA / Reasoning Engine Service Agent) historically carried excessive permissions and non-editable broad OAuth scopes; Agent Identity (SPIFFE, no key material) is the recommended alternative but its API is still Preview; Secret Manager recommended for API keys."
+    },
+    "D08": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (managed runtime)."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Memory Bank and Sessions global and multi-regional endpoints GA (2026-06-17); IngestEvents GA (2026-07-08); memory profiles GA (2026-07-15).",
+          "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Memory Bank (renamed Agent Platform Memory Bank) GA with multi-regional endpoints, IngestEvents and memory profiles GA (Jun-Jul 2026); scoping/poisoning controls not verified."
+    },
+    "D10": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "Not verified."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Agent Observability is generally available (2026-06-18).",
+          "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Agent Observability GA (2026-06-18); Cloud Audit Logs applies as for other Google Cloud services (not separately verified)."
+    },
+    "D12": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "Not verified (Google Cloud data governance terms not read)."
+    },
+    "D13": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (managed; Python SDK google-cloud-aiplatform on PyPI)."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "A role can be granted to all Agent Runtime agents in a project or organization using a principalSet.",
+          "source": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/scale/runtime/agent-identity",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Enterprise controls via IAM (allow/deny, principalSet for all Agent Runtime agents in a project/org), VPC Service Controls, CMEK, Model Armor; organisation-wide semantic policies in Preview."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "GHSA-qv8j-hgpc-vrq8 / CVE-2026-2472 (stored XSS in Vertex AI SDK, >=1.98.0 <1.131.0) and GHSA-wh2j-26j7-9728 / CVE-2026-2473 (predictable bucket naming, >=1.21.0 <1.133.0), published 2026-02-20.",
+          "source": "https://github.com/advisories/GHSA-wh2j-26j7-9728",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Google issued GHSA/CVEs for the Vertex AI Python SDK (CVE-2026-2472 stored XSS, CVE-2026-2473 predictable bucket naming); Agent Engine design weakness handled via documentation changes rather than CVE."
+    }
+  }
+}

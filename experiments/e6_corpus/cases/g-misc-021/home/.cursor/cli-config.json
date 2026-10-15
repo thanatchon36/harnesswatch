@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "permissions": {
+    "allow": [
+      "Read(src/**)",
+      "Shell(npm test)",
+      "Shell(ls)",
+      "Shell(*)"
+    ]
+  }
+}

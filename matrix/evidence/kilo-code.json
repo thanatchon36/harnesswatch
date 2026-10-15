@@ -1,0 +1,242 @@
+{
+  "harness": "kilo-code",
+  "version": "7.8.10",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "Base permission ruleset '*': allow with doom_loop ask, external_directory ask, read *.env/*.env.* ask",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/opencode/src/agent/agent.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Default bash rule '*': ask plus allowlist of read-only/benign commands (incl. printenv, cp, mv, touch, mkdir, tar)",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/opencode/src/kilocode/agent/index.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "`kilo run --auto` auto-approves permissions not explicitly denied; hidden --yolo / --dangerously-skip-permissions",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/opencode/src/cli/cmd/run.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "SECURITY.md: 'Kilo CLI does not sandbox the agent. The permission system exists as a UX feature'",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Granular allow/ask/deny with glob rules (last match wins), bash defaults to ask with a benign allowlist, .env reads prompt even under broad allow; but base ruleset is '*': allow for other tools and --auto exists."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "sandbox.enabled default false; network default deny; allowed_hosts/writable_paths global-only; unenforceable policy refuses tool run",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/getting-started/settings/sandboxing.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "kilo-sandbox package has bubblewrap.ts and seatbelt.ts backends",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-sandbox/src/backend.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "bubblewrap/Seatbelt sandbox exists, opt-in (default off), no Windows, fails closed; project config cannot weaken it."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "sandbox.allowed_hosts host:port allowlist for sandboxed HTTP(S) proxy traffic",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/getting-started/settings/sandboxing.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Domain allowlist exists but only when sandbox enabled; MCP calls unavailable under network restriction; provider traffic exempt."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Project config untrusted for {env:}/{file:} substitution; mergeProject sanitises MCP headers",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/opencode/src/config/config.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "KILO_DISABLE_PROJECT_CONFIG flag",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/core/src/flag/flag.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "No trust prompt, but project config is parsed as untrusted ({env:} rejected, {file:} confined to project root, MCP entries with variable headers dropped) and project config cannot loosen sandbox; KILO_DISABLE_PROJECT_CONFIG available."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "MCP configured under 'mcp' with type local/remote, command array, environment, headers",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/automate/mcp/using-in-cli.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Enterprise MCP controls: 'Proposal - no matching organization MCP allowlist implementation exists yet'",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/contributing/features/enterprise-mcp-controls.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "MCP tools are covered by the same permission system ({server}_{tool} globs); project MCP entries load without approval; org MCP allowlist is only a proposal."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "KILO_PURE=1 skips all external plugins; npm plugins cached under ~/.cache/opencode/packages",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/automate/extending/plugins.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Plugins (npm/local) and skills, marketplace; KILO_PURE=1 disables external plugins; plugin hooks run as trusted host code."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "auth.json written with mode 0o600",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/opencode/src/auth/index.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Sensitive-file rule: .env/.env.* reads prompt even with read: allow",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/customize/agent-permissions.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "auth.json written 0600; .env reads always prompt unless explicitly overridden; {env:} substitution available; plaintext keys otherwise possible."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "Without --auto, a non-interactive run auto-rejects any permission request and exits 1",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/code-with-ai/platforms/cli.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Non-interactive `kilo run` auto-rejects permission requests and exits 1 unless --auto is passed (safe default); GitHub/GitLab review integrations documented."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "kilo_memory_recall / kilo_memory_save default ask",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/opencode/src/kilocode/agent/index.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "kilo-memory save/recall exist, default permission ask; storage scope unverified."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "permission.task rules; readOnlyBash '*': deny with explicit allowlist",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/customize/agent-permissions.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "task permission gates which subagents run; built-in read-only agents have bash deny ceiling."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "OpenTelemetry export via OTEL_EXPORTER_OTLP_ENDPOINT",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/code-with-ai/platforms/cli.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Local SQLite session store and logs; optional OTLP export."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "'Kilo telemetry is enabled by default and can be disabled with experimental.openTelemetry = false'",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-docs/pages/code-with-ai/platforms/cli.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "Kilo CLI privacy policy dated March 7th, 2025: no code/prompt storage claimed",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/PRIVACY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Telemetry enabled by default with documented opt-out (experimental.openTelemetry=false)."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Install channels in README: npm, curl installer, pnpm, bun, Homebrew, AUR",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/README.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "npm, curl|bash, brew, AUR channels; signing/provenance not verified; auto-update on (KILO_DISABLE_AUTOUPDATE)."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "managedConfigDir() per OS and ai.opencode.managed plist",
+          "source": "https://github.com/Kilo-Org/kilocode/blob/main/packages/opencode/src/config/managed.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Managed config dir (/etc/kilo, /Library/Application Support/kilo, %ProgramData%\\kilo), macOS MDM plist and cloud org config treated as trusted sources."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "CVE-2026-8765: path traversal in File Diff API endpoint, kilocode <=7.0.47, published 2026-05-17 (NVD)",
+          "source": "https://nvd.nist.gov/vuln/detail/CVE-2026-8765",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        },
+        {
+          "claim": "CVE-2025-11445: injection in ClineProvider (legacy Kilo Code <=4.86.0), published 2025-10-08 (NVD)",
+          "source": "https://nvd.nist.gov/vuln/detail/CVE-2025-11445",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "SECURITY.md exists (copy of OpenCode's, bans AI-generated reports); no GHSA published; two NVD CVEs filed by third party (path traversal, prompt-handler injection) with vendor non-response noted."
+    }
+  }
+}

@@ -1,0 +1,4 @@
+# aider has no MCP and no hooks; config is YAML flags
+mcp_servers: []
+auto_approve: true
+hooks: 0

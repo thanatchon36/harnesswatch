@@ -1,0 +1,90 @@
+id: langgraph
+tier: C
+analysed_on: '2026-10-15'
+config_files:
+- path: langgraph.json
+  scope: project
+  format: json
+  kind: settings
+  note: langgraph-cli / Platform deployment config (auth.path, env, dependencies); not source-verified in this pass
+binaries:
+- langgraph
+name: LangGraph
+vendor: LangChain
+license: MIT
+open_source: true
+status: analysed
+version_analysed: 1.2.15
+homepage: https://docs.langchain.com/oss/python/langgraph/overview
+repo: https://github.com/langchain-ai/langgraph
+packages:
+- ecosystem: pypi
+  name: langgraph
+- ecosystem: pypi
+  name: langgraph-checkpoint
+- ecosystem: pypi
+  name: langgraph-checkpoint-sqlite
+- ecosystem: pypi
+  name: langgraph-checkpoint-postgres
+- ecosystem: pypi
+  name: langgraph-sdk
+- ecosystem: pypi
+  name: langgraph-cli
+- ecosystem: pypi
+  name: langgraph-prebuilt
+state_dirs: []
+credential_files: []
+credential_storage: Provider keys via environment; LangSmith key LANGSMITH_API_KEY
+log_paths: []
+memory_paths: []
+mcp:
+  files: []
+  servers_key: null
+  server_fields:
+    note: MCP via langchain-mcp-adapters (separate package, not examined)
+  project_servers_require_approval: null
+  notes: null
+permissions:
+  config_keys: {}
+  default_mode: 'none: tools run unless graph uses interrupt()/interrupt_before'
+  auto_approve_values: []
+  cli_flags_auto_approve: []
+  allow_rule_syntax: null
+  overbroad_patterns: []
+hooks:
+  supported: false
+  config_key: null
+  repo_scoped_allowed: false
+memory:
+  persistent: true
+  cross_project: null
+  agent_writable: true
+  notes: checkpointers (InMemorySaver/SQLite/Postgres) and Store; serde is a code-exec boundary
+  source: https://github.com/langchain-ai/langgraph/blob/main/libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py
+telemetry:
+  default_on: null
+  opt_out: LangSmith tracing off unless LANGSMITH_TRACING set (unverified)
+  training_default: null
+  source: null
+headless:
+  command: null
+  model_override: any LangChain chat model with base_url (e.g. ChatOpenAI(base_url=...), ChatOllama)
+  local_model_support: via LangChain integrations (not examined)
+security_policy:
+  security_md: null
+  bug_bounty: null
+  advisories: https://github.com/langchain-ai/langgraph/security/advisories
+extra:
+  hardening_env:
+    LANGGRAPH_STRICT_MSGPACK: true restricts checkpoint deserialization to allow-list (default permissive)
+  threat_model: https://github.com/langchain-ai/langgraph/blob/main/.github/THREAT_MODEL.md
+sources:
+- url: https://github.com/langchain-ai/langgraph/blob/main/libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py
+  accessed: '2026-10-15'
+  note: serde
+- url: https://github.com/langchain-ai/langgraph/security/advisories
+  accessed: '2026-10-15'
+  note: GHSAs
+- url: https://github.com/langchain-ai/langgraph/releases
+  accessed: '2026-10-15'
+  note: releases

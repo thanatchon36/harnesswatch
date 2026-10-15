@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "On save",
+  "description": "Runs when a source file is saved",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "src/**/*.ts"
+    ]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "make check-generated"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "anthropic/claude-sonnet-4-5",
+  "permission": {
+    "edit": "allow",
+    "bash": "ask"
+  },
+  "agent": {
+    "reviewer": {
+      "description": "Reviews diffs",
+      "mode": "subagent",
+      "permission": {
+        "edit": "deny",
+        "bash": "ask"
+      }
+    }
+  },
+  "mcp": {
+    "internal-docs": {
+      "type": "local",
+      "command": [
+        "node",
+        "./tools/mcp/docs-server.js"
+      ]
+    }
+  }
+}

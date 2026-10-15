@@ -1,0 +1,569 @@
+{
+  "both_na": 186,
+  "disagreements": [
+    {
+      "diff": 1,
+      "dimension": "D05",
+      "harness": "amp",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "dimension": "D09",
+      "harness": "amp",
+      "rater1": null,
+      "rater2": 2
+    },
+    {
+      "diff": 1,
+      "dimension": "D12",
+      "harness": "amp",
+      "rater1": 2,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D03",
+      "harness": "augment",
+      "rater1": 0,
+      "rater2": 1
+    },
+    {
+      "dimension": "D09",
+      "harness": "augment",
+      "rater1": null,
+      "rater2": 1
+    },
+    {
+      "diff": 2,
+      "dimension": "D05",
+      "harness": "azure-ai-foundry-agent-service",
+      "rater1": 1,
+      "rater2": 3
+    },
+    {
+      "diff": 1,
+      "dimension": "D02",
+      "harness": "bedrock-agentcore",
+      "rater1": 3,
+      "rater2": 2
+    },
+    {
+      "diff": 1,
+      "dimension": "D05",
+      "harness": "bedrock-agentcore",
+      "rater1": 2,
+      "rater2": 3
+    },
+    {
+      "diff": 1,
+      "dimension": "D06",
+      "harness": "bedrock-agentcore",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "diff": 1,
+      "dimension": "D04",
+      "harness": "claude-agent-sdk",
+      "rater1": 1,
+      "rater2": 0
+    },
+    {
+      "dimension": "D06",
+      "harness": "claude-agent-sdk",
+      "rater1": null,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D09",
+      "harness": "claude-agent-sdk",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "dimension": "D12",
+      "harness": "claude-agent-sdk",
+      "rater1": null,
+      "rater2": 1
+    },
+    {
+      "diff": 2,
+      "dimension": "D03",
+      "harness": "claude-code",
+      "rater1": 1,
+      "rater2": 3
+    },
+    {
+      "diff": 1,
+      "dimension": "D05",
+      "harness": "claude-code",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "diff": 1,
+      "dimension": "D10",
+      "harness": "claude-code",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "diff": 1,
+      "dimension": "D05",
+      "harness": "claude-managed-agents",
+      "rater1": 2,
+      "rater2": 3
+    },
+    {
+      "diff": 1,
+      "dimension": "D08",
+      "harness": "claude-managed-agents",
+      "rater1": 2,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D15",
+      "harness": "cline",
+      "rater1": 3,
+      "rater2": 2
+    },
+    {
+      "diff": 1,
+      "dimension": "D01",
+      "harness": "codex-cli",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "diff": 1,
+      "dimension": "D09",
+      "harness": "codex-cli",
+      "rater1": 2,
+      "rater2": 1
+    },
+    {
+      "dimension": "D10",
+      "harness": "codex-cli",
+      "rater1": null,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D10",
+      "harness": "copilot-studio",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "diff": 1,
+      "dimension": "D11",
+      "harness": "copilot-studio",
+      "rater1": 2,
+      "rater2": 3
+    },
+    {
+      "dimension": "D01",
+      "harness": "crewai",
+      "rater1": null,
+      "rater2": 0
+    },
+    {
+      "dimension": "D09",
+      "harness": "crush",
+      "rater1": null,
+      "rater2": 1
+    },
+    {
+      "dimension": "D09",
+      "harness": "cursor",
+      "rater1": null,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D14",
+      "harness": "cursor",
+      "rater1": 2,
+      "rater2": 3
+    },
+    {
+      "diff": 1,
+      "dimension": "D04",
+      "harness": "deepagents",
+      "rater1": 2,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D08",
+      "harness": "deepagents",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "diff": 2,
+      "dimension": "D04",
+      "harness": "deepseek-harness",
+      "rater1": 2,
+      "rater2": 0
+    },
+    {
+      "dimension": "D09",
+      "harness": "deepseek-harness",
+      "rater1": null,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D10",
+      "harness": "deepseek-harness",
+      "rater1": 2,
+      "rater2": 1
+    },
+    {
+      "dimension": "D14",
+      "harness": "deepseek-harness",
+      "rater1": 0,
+      "rater2": null
+    },
+    {
+      "diff": 1,
+      "dimension": "D03",
+      "harness": "devin",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "diff": 1,
+      "dimension": "D01",
+      "harness": "factory-droid",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "dimension": "D09",
+      "harness": "factory-droid",
+      "rater1": null,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D04",
+      "harness": "github-copilot",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "diff": 1,
+      "dimension": "D04",
+      "harness": "github-copilot-sdk",
+      "rater1": 2,
+      "rater2": 1
+    },
+    {
+      "dimension": "D06",
+      "harness": "github-copilot-sdk",
+      "rater1": null,
+      "rater2": 1
+    },
+    {
+      "dimension": "D09",
+      "harness": "github-copilot-sdk",
+      "rater1": null,
+      "rater2": 1
+    },
+    {
+      "dimension": "D04",
+      "harness": "goose",
+      "rater1": 0,
+      "rater2": null
+    },
+    {
+      "diff": 1,
+      "dimension": "D09",
+      "harness": "grok-build",
+      "rater1": 2,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D14",
+      "harness": "grok-build",
+      "rater1": 2,
+      "rater2": 3
+    },
+    {
+      "diff": 1,
+      "dimension": "D04",
+      "harness": "hermes-agent",
+      "rater1": 2,
+      "rater2": 1
+    },
+    {
+      "dimension": "D07",
+      "harness": "jules",
+      "rater1": null,
+      "rater2": 1
+    },
+    {
+      "dimension": "D09",
+      "harness": "junie",
+      "rater1": null,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D09",
+      "harness": "kilo-code",
+      "rater1": 2,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D11",
+      "harness": "kilo-code",
+      "rater1": 2,
+      "rater2": 1
+    },
+    {
+      "dimension": "D14",
+      "harness": "kimi-cli",
+      "rater1": 0,
+      "rater2": null
+    },
+    {
+      "diff": 1,
+      "dimension": "D01",
+      "harness": "kiro",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "diff": 1,
+      "dimension": "D15",
+      "harness": "kiro",
+      "rater1": 3,
+      "rater2": 2
+    },
+    {
+      "diff": 1,
+      "dimension": "D09",
+      "harness": "langgraph",
+      "rater1": 2,
+      "rater2": 1
+    },
+    {
+      "dimension": "D01",
+      "harness": "langgraph-platform",
+      "rater1": null,
+      "rater2": 0
+    },
+    {
+      "diff": 1,
+      "dimension": "D09",
+      "harness": "langgraph-platform",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "dimension": "D07",
+      "harness": "microsoft-agent-framework",
+      "rater1": 1,
+      "rater2": null
+    },
+    {
+      "diff": 1,
+      "dimension": "D09",
+      "harness": "microsoft-agent-framework",
+      "rater1": 2,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D08",
+      "harness": "oh-my-pi",
+      "rater1": 0,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D09",
+      "harness": "oh-my-pi",
+      "rater1": 2,
+      "rater2": 1
+    },
+    {
+      "dimension": "D02",
+      "harness": "openai-agentkit",
+      "rater1": null,
+      "rater2": 0
+    },
+    {
+      "dimension": "D04",
+      "harness": "openclaw",
+      "rater1": 0,
+      "rater2": null
+    },
+    {
+      "dimension": "D10",
+      "harness": "openclaw",
+      "rater1": 1,
+      "rater2": null
+    },
+    {
+      "diff": 1,
+      "dimension": "D03",
+      "harness": "opencode",
+      "rater1": 0,
+      "rater2": 1
+    },
+    {
+      "dimension": "D09",
+      "harness": "opencode",
+      "rater1": null,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D10",
+      "harness": "opencode",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "dimension": "D08",
+      "harness": "openhands-sdk",
+      "rater1": null,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D01",
+      "harness": "qoder",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "diff": 1,
+      "dimension": "D04",
+      "harness": "qoder",
+      "rater1": 2,
+      "rater2": 1
+    },
+    {
+      "dimension": "D07",
+      "harness": "qoder",
+      "rater1": null,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D11",
+      "harness": "qwen-code",
+      "rater1": 2,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D11",
+      "harness": "replit-agent",
+      "rater1": 2,
+      "rater2": 3
+    },
+    {
+      "diff": 1,
+      "dimension": "D12",
+      "harness": "replit-agent",
+      "rater1": 1,
+      "rater2": 0
+    },
+    {
+      "dimension": "D07",
+      "harness": "roo-code",
+      "rater1": 1,
+      "rater2": null
+    },
+    {
+      "dimension": "D07",
+      "harness": "strands-agents",
+      "rater1": 1,
+      "rater2": null
+    },
+    {
+      "diff": 1,
+      "dimension": "D12",
+      "harness": "trae",
+      "rater1": 0,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D03",
+      "harness": "trueforge",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "diff": 1,
+      "dimension": "D07",
+      "harness": "trueforge",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "dimension": "D08",
+      "harness": "trueforge",
+      "rater1": null,
+      "rater2": 1
+    },
+    {
+      "dimension": "D12",
+      "harness": "trueforge",
+      "rater1": 1,
+      "rater2": null
+    },
+    {
+      "diff": 1,
+      "dimension": "D14",
+      "harness": "trueforge",
+      "rater1": 1,
+      "rater2": 2
+    },
+    {
+      "diff": 1,
+      "dimension": "D03",
+      "harness": "warp",
+      "rater1": 1,
+      "rater2": 0
+    },
+    {
+      "diff": 1,
+      "dimension": "D04",
+      "harness": "warp",
+      "rater1": 0,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D14",
+      "harness": "warp",
+      "rater1": 2,
+      "rater2": 1
+    },
+    {
+      "diff": 1,
+      "dimension": "D04",
+      "harness": "windsurf",
+      "rater1": 1,
+      "rater2": 2
+    }
+  ],
+  "exact_agreement": 0.916,
+  "kappa_quadratic": 0.8757,
+  "na_vs_score": 29,
+  "overlapping_scored_cells": 655,
+  "within_one": 0.9954
+}

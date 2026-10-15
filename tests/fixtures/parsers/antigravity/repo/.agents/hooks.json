@@ -1,0 +1,12 @@
+{
+  "guard": {
+    "enabled": true,
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "./scripts/guard.sh",
+        "timeout": 30
+      }
+    ]
+  }
+}

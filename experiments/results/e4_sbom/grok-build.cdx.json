@@ -1,0 +1,140 @@
+{
+ "bomFormat": "CycloneDX",
+ "specVersion": "1.5",
+ "version": 1,
+ "metadata": {
+  "timestamp": "2026-10-15T00:00:00Z",
+  "tools": [
+   {
+    "name": "harnesswatch experiments/e4_supply.py"
+   }
+  ],
+  "component": {
+   "type": "application",
+   "name": "@xai-official/grok",
+   "version": "1.0.52",
+   "purl": "pkg:npm/%40xai-official/grok@1.0.52",
+   "bom-ref": "root:grok-build"
+  },
+  "properties": [
+   {
+    "name": "harnesswatch:note",
+    "value": "resolved from lockfile/compile output; not installed"
+   }
+  ]
+ },
+ "components": [
+  {
+   "type": "library",
+   "name": "@iarna/toml",
+   "version": "3.0.0",
+   "purl": "pkg:npm/%40iarna/toml@3.0.0",
+   "bom-ref": "pkg:npm/%40iarna/toml@3.0.0",
+   "licenses": [
+    {
+     "license": {
+      "name": "ISC"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@xai-official/grok",
+   "version": "1.0.52",
+   "purl": "pkg:npm/%40xai-official/grok@1.0.52",
+   "bom-ref": "pkg:npm/%40xai-official/grok@1.0.52",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@xai-official/grok-darwin-arm64",
+   "version": "1.0.52",
+   "purl": "pkg:npm/%40xai-official/grok-darwin-arm64@1.0.52",
+   "bom-ref": "pkg:npm/%40xai-official/grok-darwin-arm64@1.0.52",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@xai-official/grok-darwin-x64",
+   "version": "1.0.52",
+   "purl": "pkg:npm/%40xai-official/grok-darwin-x64@1.0.52",
+   "bom-ref": "pkg:npm/%40xai-official/grok-darwin-x64@1.0.52",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@xai-official/grok-linux-arm64",
+   "version": "1.0.52",
+   "purl": "pkg:npm/%40xai-official/grok-linux-arm64@1.0.52",
+   "bom-ref": "pkg:npm/%40xai-official/grok-linux-arm64@1.0.52",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@xai-official/grok-linux-x64",
+   "version": "1.0.52",
+   "purl": "pkg:npm/%40xai-official/grok-linux-x64@1.0.52",
+   "bom-ref": "pkg:npm/%40xai-official/grok-linux-x64@1.0.52",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@xai-official/grok-win32-arm64",
+   "version": "1.0.52",
+   "purl": "pkg:npm/%40xai-official/grok-win32-arm64@1.0.52",
+   "bom-ref": "pkg:npm/%40xai-official/grok-win32-arm64@1.0.52",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  },
+  {
+   "type": "library",
+   "name": "@xai-official/grok-win32-x64",
+   "version": "1.0.52",
+   "purl": "pkg:npm/%40xai-official/grok-win32-x64@1.0.52",
+   "bom-ref": "pkg:npm/%40xai-official/grok-win32-x64@1.0.52",
+   "licenses": [
+    {
+     "license": {
+      "name": "Apache-2.0"
+     }
+    }
+   ]
+  }
+ ]
+}

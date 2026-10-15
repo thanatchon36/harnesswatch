@@ -1,0 +1,22 @@
+id: HG-SUB-001
+title: Sub-agent or delegated agent configured with bypass permissions
+area: SUB
+severity: medium
+confidence: medium
+kind: design-weakness
+taxonomy: [T11, T03]
+description: >
+  A sub-agent definition that sets its own permission mode to bypass/allow-all runs with broader
+  authority than the parent session, and instructions or content handed to it are executed without
+  prompts. Delegation chains across harnesses make this hard to see.
+remediation: Let sub-agents inherit the parent's permission rules, restrict their `tools`, and isolate them (worktrees/containers) when they need more autonomy.
+references:
+  - https://code.claude.com/docs/en/sub-agents
+params:
+  settings:
+    claude-code: [{key: permissionMode, value: bypassPermissions, kinds: [agents]}]
+    opencode:
+      - {key: "agent.*.permission", value: allow}
+      - {key: "agent.*.permission.bash", value: allow}
+      - {key: permission, value: allow, kinds: [agents]}
+      - {key: permission.bash, value: allow, kinds: [agents]}

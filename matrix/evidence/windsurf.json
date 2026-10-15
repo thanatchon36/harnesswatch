@@ -1,0 +1,205 @@
+{
+ "harness": "windsurf",
+ "version": "Devin Desktop v3.10.67 (2026-10-12); docs-level",
+ "analysed_on": "2026-10-15",
+ "status": "docs-only",
+ "dimensions": {
+  "D01": {
+   "facts": [
+    {
+     "claim": "Cascade auto-execution levels: Disabled, Allowlist Only, Auto (premium models), Turbo (all except deny list); deny list wins; admin max level.",
+     "source": "https://docs.devin.ai/desktop/terminal",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Devin Local uses permissions allow/ask/deny; explicit deny always wins (v3.6.21).",
+     "source": "https://docs.devin.ai/desktop/changelog.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Graded levels with deny precedence and admin cap; Turbo one click away."
+  },
+  "D02": {
+   "facts": [
+    {
+     "claim": "Sandbox available for Devin Local/CLI (optional); Cascade sandbox not mentioned.",
+     "source": "https://docs.devin.ai/desktop/devin-local.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Opt-in and not for Cascade."
+  },
+  "D03": {
+   "facts": [
+    {
+     "claim": "Sandbox domain allow/deny lists and org-wide domains; default network_mode full.",
+     "source": "https://docs.devin.ai/cli/sandbox.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Only inside optional sandbox."
+  },
+  "D04": {
+   "facts": [
+    {
+     "claim": "Restricted Mode disables agents and hooks until workspace trusted; trust prompt in sidebar.",
+     "source": "https://docs.devin.ai/desktop/changelog.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Restricted Mode bypass via nested settings fixed v3.10.31 (VS Code CVE-2026-81376).",
+     "source": "https://github.com/advisories/GHSA-x6gf-c826-8c9m",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Trust gate exists, consequential bypass fixed 2026-09."
+  },
+  "D05": {
+   "facts": [
+    {
+     "claim": "Admin MCP allowlist (server ID/exact/regex), registry URLs, allow-MCP toggle; maximum 100 tools.",
+     "source": "https://docs.devin.ai/desktop/cascade/mcp",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Central allowlist; project-level approval n/a."
+  },
+  "D06": {
+   "facts": [
+    {
+     "claim": "Policy AllowedExtensions by publisher; admin marketplace URL (v3.10.67).",
+     "source": "https://docs.devin.ai/desktop/enterprise-policies.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Publisher allowlist + marketplace pinning."
+  },
+  "D07": {
+   "facts": [],
+   "proposed_score": null,
+   "rationale": "N/A (No verified facts.)"
+  },
+  "D08": {
+   "facts": [
+    {
+     "claim": "Headless via Devin CLI, not Desktop.",
+     "source": "https://docs.devin.ai/cli/reference/commands.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": null,
+   "rationale": "N/A (See devin profile.)"
+  },
+  "D09": {
+   "facts": [
+    {
+     "claim": "Cascade memories auto-generated, workspace-scoped, agent-writable; Devin Local persists none.",
+     "source": "https://docs.devin.ai/desktop/cascade/memories",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Agent-writable memories without documented review."
+  },
+  "D10": {
+   "facts": [
+    {
+     "claim": "Devin Local session approvals cover subagents.",
+     "source": "https://docs.devin.ai/desktop/devin-local.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": null,
+   "rationale": "N/A (Isolation unverified.)"
+  },
+  "D11": {
+   "facts": [
+    {
+     "claim": "Custom analytics (cascade_runs etc.); conversation transcripts shareable with secret redaction.",
+     "source": "https://docs.devin.ai/desktop/devin-local.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Hooks post_cascade_response_with_transcript for auditing.",
+     "source": "https://docs.devin.ai/desktop/cascade/hooks.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 2,
+   "rationale": "Hook-based audit + admin analytics."
+  },
+  "D12": {
+   "facts": [
+    {
+     "claim": "TelemetryLevel policy all|error|crash|off; analytics not started before account status resolves (v3.6.22).",
+     "source": "https://docs.devin.ai/desktop/enterprise-policies.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": null,
+   "rationale": "N/A (Training default for Desktop not verified.)"
+  },
+  "D13": {
+   "facts": [
+    {
+     "claim": "Auto-update controllable by UpdateMode policy.",
+     "source": "https://docs.devin.ai/desktop/enterprise-policies.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": null,
+   "rationale": "N/A (Signing undocumented.)"
+  },
+  "D14": {
+   "facts": [
+    {
+     "claim": "MDM/GPO device policies (.admx, mobileconfig, /etc/vscode/policy.json), Enterprise controls override local, system hooks/rules paths.",
+     "source": "https://docs.devin.ai/desktop/enterprise-policies.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 3,
+   "rationale": "Strong multi-layer admin policy."
+  },
+  "D15": {
+   "facts": [
+    {
+     "claim": "security@windsurf.com with PGP, CVD, safe harbour; no bounty or advisory list; page dated 2024-12-10.",
+     "source": "https://docs.devin.ai/desktop/security/reporting.md",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    },
+    {
+     "claim": "Tenable TRA-2025-47 / CVE-2025-36730: unfixed at disclosure; vendor asked to use HackerOne.",
+     "source": "https://www.tenable.com/security/research/tra-2025-47",
+     "label": "from-official-docs",
+     "accessed": "2026-10-15"
+    }
+   ],
+   "proposed_score": 1,
+   "rationale": "Contact and safe harbour but slow historical response and no advisory feed."
+  }
+ }
+}

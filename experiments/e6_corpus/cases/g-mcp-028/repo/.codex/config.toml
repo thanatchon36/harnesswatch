@@ -1,0 +1,9 @@
+model = "gpt-5.1-codex"
+approval_policy = "on-request"
+
+[mcp_servers.context]
+url = "https://mcp.context.example.com/mcp"
+
+[mcp_servers.wiki]
+url = "http://mcp.wiki.internal.example.com:8080/mcp"
+bearer_token_env_var = "MCP_TOKEN"

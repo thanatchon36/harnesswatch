@@ -1,0 +1,6 @@
+{
+  "general": {"defaultApprovalMode": "auto_edit", "checkpointing": {"enabled": true}},
+  "tools": {"allowed": ["run_shell_command(git status)", "run_shell_command(go test ./...)"]},
+  "privacy": {"usageStatisticsEnabled": false},
+  "security": {"disableYoloMode": true}
+}

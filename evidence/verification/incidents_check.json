@@ -1,0 +1,6064 @@
+[
+ {
+  "id": "INC-G5d-001",
+  "harness": "copilot-studio",
+  "title": "Copilot Studio SSRF protection bypass (information disclosure)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2024-38206",
+    "found": true,
+    "published": "2024-08-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-073",
+  "harness": "cursor; github-copilot",
+  "title": "Rules File Backdoor: hidden Unicode in rule files (.cursorrules, copilot-instructions) steers code generation",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G6-074",
+  "harness": "mcp-clients (cursor demo)",
+  "title": "MCP tool poisoning attacks: hidden instructions in tool descriptions, rug pulls, tool shadowing",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G6-023",
+  "harness": "cursor",
+  "title": "Arbitrary file write from Cursor Agent through a prompt injection from malicious @Docs",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-32018",
+    "found": true,
+    "published": "2025-04-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-qjh8-mh96-fc86",
+    "found": true,
+    "published": "2025-04-07",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-075",
+  "harness": "github-mcp-server",
+  "title": "GitHub MCP server toxic agent flow: malicious public issue hijacks agent to leak private repo data",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G6-022",
+  "harness": "cursor",
+  "title": "Potential Information Leakage using JSON schema in Cursor Agent",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-49150",
+    "found": true,
+    "published": "2025-06-11",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-9h3v-h59j-v6rj",
+    "found": true,
+    "published": "2025-06-11",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-049",
+  "harness": "mcp-inspector",
+  "title": "Inspector proxy server vulnerabilities",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-49596",
+    "found": true,
+    "published": "2025-06-13",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-7f8r-222p-6f5g",
+    "found": true,
+    "published": "2025-06-13",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I035",
+  "harness": "claude-code",
+  "title": "Claude Code IDE extensions allow websocket connections from arbitrary origins",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-52882",
+    "found": true,
+    "published": "2025-06-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-9f65-56v6-gxw7",
+    "found": true,
+    "published": "2025-06-23",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I006",
+  "harness": "roo-code",
+  "title": "Information leakage via JSON schema",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-53097",
+    "found": true,
+    "published": "2025-06-27",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-wr2q-46pg-f228",
+    "found": true,
+    "published": "2025-06-27",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I007",
+  "harness": "roo-code",
+  "title": "RCE via project .roo/mcp.json written under auto-approved writes",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-53098",
+    "found": true,
+    "published": "2025-06-27",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-5x8h-m52g-5v54",
+    "found": true,
+    "published": "2025-06-27",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-056",
+  "harness": "mcp-server-filesystem",
+  "title": "Path validation bypass via colliding path prefix",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-53110",
+    "found": true,
+    "published": "2025-07-02",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-hc55-p739-j48w",
+    "found": true,
+    "published": "2025-07-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-057",
+  "harness": "mcp-server-filesystem",
+  "title": "Path validation bypass via symlink handling",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-53109",
+    "found": true,
+    "published": "2025-07-02",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-q66q-fx2p-7w4m",
+    "found": true,
+    "published": "2025-07-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-054",
+  "harness": "mcp-python-sdk",
+  "title": "Unhandled Exception in Streamable HTTP Transport Leading to Denial of Service",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-53365",
+    "found": true,
+    "published": "2025-07-04",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-j975-95f5-7wqh",
+    "found": true,
+    "published": "2025-07-04",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-055",
+  "harness": "mcp-python-sdk",
+  "title": "MCP SDK FastMCP Server Validation Error Leading to Denial of Service",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-53366",
+    "found": true,
+    "published": "2025-07-04",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-3qhf-m339-9g5v",
+    "found": true,
+    "published": "2025-07-04",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I008",
+  "harness": "roo-code",
+  "title": "RCE via .vscode/settings.json under auto-approved writes",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-53536",
+    "found": true,
+    "published": "2025-07-07",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-3765-5vjr-qjgm",
+    "found": true,
+    "published": "2025-07-07",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-076",
+  "harness": "supabase-mcp (via cursor)",
+  "title": "Supabase MCP data leak: SQL-returned support ticket injection exfiltrates integration_tokens via service_role",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G6-051",
+  "harness": "mcp-remote",
+  "title": "mcp-remote OS command injection via crafted authorization_endpoint from untrusted MCP server",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-6514",
+    "found": true,
+    "published": "2025-07-09",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I040",
+  "harness": "replit-agent",
+  "title": "Replit Agent deleted SaaStr production database during a declared code freeze",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G6-071",
+  "harness": "amazon-q-developer",
+  "title": "Amazon Q Developer VS Code extension 1.84.0 shipped with injected malicious prompt/code (over-scoped CodeBuild GitHub to",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-8217",
+    "found": true,
+    "published": "2025-07-30",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I009",
+  "harness": "roo-code",
+  "title": "Missing line-break validation in command execution tool (allowlist bypass)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-54377",
+    "found": true,
+    "published": "2025-07-23",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-p278-52x9-cffx",
+    "found": true,
+    "published": "2025-07-23",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I042",
+  "harness": "gemini-cli",
+  "title": "Gemini CLI prompt injection plus allowlist prefix bypass enabling silent command execution and exfiltration (Tracebit)",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G5b-I17",
+  "harness": "smolagents",
+  "title": "Sandbox escape in LocalPythonExecutor (local_python_executor.py)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-5120",
+    "found": true,
+    "published": "2025-07-27",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-6v92-r5mx-h5fx",
+    "found": true,
+    "published": "2025-07-27",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-072",
+  "harness": "gemini-cli",
+  "title": "Gemini CLI: prompt injection via README + whitelist root-command validation flaw -> silent command execution/exfiltratio",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G4-I041",
+  "harness": "trae",
+  "title": "Trae IDE reported to send ~500 calls / up to 26 MB telemetry in ~7 min with telemetry disabled",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G1-I033",
+  "harness": "claude-code",
+  "title": "Command Injection in Claude Code echo command allowed bypass of user approval prompt for command execution",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-54795",
+    "found": true,
+    "published": "2025-08-05",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-x56v-x2h6-7j34",
+    "found": true,
+    "published": "2025-08-04",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I034",
+  "harness": "claude-code",
+  "title": "Path Restriction Bypass in Claude Code Research Preview could allow unauthorized file access when path prefixes collide",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-54794",
+    "found": true,
+    "published": "2025-08-05",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-pmw4-pwvc-3hx2",
+    "found": true,
+    "published": "2025-08-04",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I001",
+  "harness": "cursor",
+  "title": "MCPoison: modified MCP server definition bypasses re-approval",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-54136",
+    "found": true,
+    "published": "2025-08-02",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-24mc-g4xr-4395",
+    "found": true,
+    "published": "2025-08-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I004",
+  "harness": "cursor",
+  "title": "Allowlist bypass via backtick or $(cmd) in auto-run",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-54131",
+    "found": true,
+    "published": "2025-08-01",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-534m-3w6r-8pqr",
+    "found": true,
+    "published": "2025-08-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-018",
+  "harness": "cursor",
+  "title": "MCP Install Deeplink Did Not Show Arguments on User-Dialog",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-54133",
+    "found": true,
+    "published": "2025-08-02",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-r22h-5wp2-2wfv",
+    "found": true,
+    "published": "2025-08-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-019",
+  "harness": "cursor",
+  "title": "Arbitrary Image Fetch in Mermaid Diagram Tool",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-54132",
+    "found": true,
+    "published": "2025-08-01",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-43wj-mwcc-x93p",
+    "found": true,
+    "published": "2025-08-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I002",
+  "harness": "cursor",
+  "title": "CurXecute: prompt injection writes .cursor/mcp.json to run code",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-54135",
+    "found": true,
+    "published": "2025-08-05",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-4cxx-hrm3-49rm",
+    "found": true,
+    "published": "2025-08-02",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I003",
+  "harness": "cursor",
+  "title": "Code execution via prompt injection and editor special files",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-54130",
+    "found": true,
+    "published": "2025-08-05",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-vqv7-vq92-x87f",
+    "found": true,
+    "published": "2025-08-02",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I036",
+  "harness": "amp",
+  "title": "Amp Code: arbitrary command execution via prompt injection (agent could edit settings.json allowlist and amp.mcpServers ",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G6-046",
+  "harness": "zed",
+  "title": "AI Agent Remote Code Execution",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-55012",
+    "found": true,
+    "published": "2025-08-11",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-x34m-39xw-g2wr",
+    "found": true,
+    "published": "2025-08-11",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I018",
+  "harness": "github-copilot",
+  "title": "Copilot/VS Code command injection: prompt injection can enable auto-approve and execute code",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-53773",
+    "found": true,
+    "published": "2025-08-12",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-3m2x-p87c-pwv6",
+    "found": true,
+    "published": "2025-08-12",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I032",
+  "harness": "claude-code",
+  "title": "Permissive Default Allowlist Enables Unauthorized File Read and Network Exfiltration in Claude Code",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-55284",
+    "found": true,
+    "published": "2025-08-16",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-x5gv-jw7f-j6xj",
+    "found": true,
+    "published": "2025-08-18",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I024",
+  "harness": "devin",
+  "title": "Devin prompt-injection tests: command execution, secret exfil, expose_port (Month of AI Bugs)",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G4-I037",
+  "harness": "amp",
+  "title": "Amp Code: invisible Unicode tag prompt injection leading to exfiltration; fixed by input sanitization",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G4-I038",
+  "harness": "amp",
+  "title": "Amp Code: data exfiltration via image rendering fixed",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G2-I010",
+  "harness": "roo-code",
+  "title": "RCE via auto-execute commands",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-57771",
+    "found": true,
+    "published": "2025-08-22",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-wrh9-463x-7wvv",
+    "found": true,
+    "published": "2025-08-22",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-084",
+  "harness": "claude-code",
+  "title": "Anthropic threat intelligence (Aug 2025): Claude Code used for \"vibe hacking\" data extortion against >=17 organizations",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G6-077",
+  "harness": "nx / npm ecosystem (targets claude-code, gemini-cli, q)",
+  "title": "s1ngularity: malicious nx versions weaponise installed AI CLIs (--dangerously-skip-permissions, --yolo, --trust-all-tool",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-cxm3-wv7p-598c",
+    "found": true,
+    "published": "2025-08-27",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I029",
+  "harness": "junie",
+  "title": "Junie information disclosure via search_project",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-58335",
+    "found": true,
+    "published": "2025-08-28",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-083",
+  "harness": "amp, openhands, devin, jules, windsurf, kiro, q, codex, cline, claude-code, cursor",
+  "title": "Month of AI Bugs (Embrace The Red): 29 write-ups across coding agents, wrap-up index",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G1-I031",
+  "harness": "claude-code",
+  "title": "Claude Code Vulnerable to Arbitrary Code Execution Due to Insufficient Startup Warning",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-ph6w-f82w-28w6",
+    "found": true,
+    "published": "2025-09-03",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I011",
+  "harness": "roo-code",
+  "title": "RCE via bash parameter expansion and indirect reference",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-58370",
+    "found": true,
+    "published": "2025-09-05",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-2rm5-cvcm-7592",
+    "found": true,
+    "published": "2025-09-04",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I012",
+  "harness": "roo-code",
+  "title": "Command injection in project GitHub Actions workflow",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-58371",
+    "found": true,
+    "published": "2025-09-05",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-xr6r-vj48-29f6",
+    "found": true,
+    "published": "2025-09-04",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I013",
+  "harness": "roo-code",
+  "title": "RCE via .code-workspace file under auto-approved writes",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-58372",
+    "found": true,
+    "published": "2025-09-05",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-4pqh-4ggm-jfmm",
+    "found": true,
+    "published": "2025-09-04",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I014",
+  "harness": "roo-code",
+  "title": "Symlink bypass of .rooignore leading to file disclosure",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-58373",
+    "found": true,
+    "published": "2025-09-05",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-p76r-7mc3-qh7c",
+    "found": true,
+    "published": "2025-09-04",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I015",
+  "harness": "roo-code",
+  "title": "Auto-approve allows npm install running malicious postinstall scripts",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-58374",
+    "found": true,
+    "published": "2025-09-06",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-c292-qxq4-4p2v",
+    "found": true,
+    "published": "2025-09-04",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-050",
+  "harness": "mcp-inspector",
+  "title": "Potential Command Execution in MCP Inspector via XSS When Connecting to an Untrusted MCP Server",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-58444",
+    "found": true,
+    "published": "2025-09-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-g9hg-qhmf-q45m",
+    "found": true,
+    "published": "2025-09-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I029",
+  "harness": "claude-code",
+  "title": "Claude Code vulnerable to arbitrary code execution caused by maliciously configured git email",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-59041",
+    "found": true,
+    "published": "2025-09-10",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-j4h9-wv2m-wrf7",
+    "found": true,
+    "published": "2025-09-10",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I030",
+  "harness": "claude-code",
+  "title": "Command Injection in Claude Code rg command allowed bypass of user approval prompt for command execution",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-58764",
+    "found": true,
+    "published": "2025-09-10",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-qxfv-fcpc-w36x",
+    "found": true,
+    "published": "2025-09-10",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-080",
+  "harness": "cursor",
+  "title": "Cursor ships with Workspace Trust disabled: .vscode/tasks.json runOn folderOpen auto-executes on opening a repo",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G4-I030",
+  "harness": "junie",
+  "title": "Junie code execution due to improper command validation",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-59458",
+    "found": true,
+    "published": "2025-09-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I036",
+  "harness": "codex-cli",
+  "title": "Sandbox bypass due to bug in path configuration logic",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-59532",
+    "found": true,
+    "published": "2025-09-22",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-w5fx-fh39-j5rw",
+    "found": true,
+    "published": "2025-09-19",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-078",
+  "harness": "npm ecosystem",
+  "title": "Shai-Hulud self-replicating npm worm (>500 packages) steals developer/cloud credentials",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G1-I027",
+  "harness": "claude-code",
+  "title": "Claude Code Vulnerable to Arbitrary Code Execution via Plugin Autoloading with Specific Yarn Versions",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-59828",
+    "found": true,
+    "published": "2025-09-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-2jjv-qf24-vfm4",
+    "found": true,
+    "published": "2025-09-24",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-086",
+  "harness": "mcp (postmark-mcp npm)",
+  "title": "Malicious postmark-mcp npm package 1.0.16 BCCs all sent email to attacker",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G6-061",
+  "harness": "agentapi",
+  "title": "AgentAPI (HTTP API fronting Claude Code, Goose, Aider, Gemini, Amp, Codex) DNS rebinding exposes /messages history",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-59956",
+    "found": true,
+    "published": "2025-09-30",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I005",
+  "harness": "cursor",
+  "title": "Cursor CLI permissive project config .cursor/cli.json leads to code execution",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-61592",
+    "found": true,
+    "published": "2025-10-03",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-v64q-396f-7m79",
+    "found": true,
+    "published": "2025-10-02",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I006",
+  "harness": "cursor",
+  "title": "RCE in Cursor CLI via MCP OAuth2 communication with untrusted server",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-61591",
+    "found": true,
+    "published": "2025-10-03",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-wj33-264c-j9cq",
+    "found": true,
+    "published": "2025-10-02",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I008",
+  "harness": "cursor",
+  "title": "RCE via .code-workspace files using prompt injection",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-61590",
+    "found": true,
+    "published": "2025-10-03",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-xg6w-rmh5-r77r",
+    "found": true,
+    "published": "2025-10-02",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-024",
+  "harness": "cursor",
+  "title": "Cursor IDE - Sensitive File Overwrite Bypass",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-59944",
+    "found": true,
+    "published": "2025-10-03",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-xcwh-rrwj-gxc7",
+    "found": true,
+    "published": "2025-10-02",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-025",
+  "harness": "cursor",
+  "title": "Cursor CLI Agent - Sensitive File Overwrite Bypass",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-61593",
+    "found": true,
+    "published": "2025-10-03",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-x2vq-h6v6-jhc6",
+    "found": true,
+    "published": "2025-10-02",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-030",
+  "harness": "cursor",
+  "title": "Potential Information Leakage via Mermaid Diagram",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-61589",
+    "found": true,
+    "published": "2025-10-03",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-xw2x-252g-97w2",
+    "found": true,
+    "published": "2025-10-02",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I026",
+  "harness": "claude-code",
+  "title": "Permission deny bypass through symlink",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-59829",
+    "found": true,
+    "published": "2025-10-03",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-66m2-gx93-v996",
+    "found": true,
+    "published": "2025-10-03",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I028",
+  "harness": "claude-code",
+  "title": "Command execution prior to Claude Code startup trust dialog",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-59536",
+    "found": true,
+    "published": "2025-10-03",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-4fgq-fpq9-mr3g",
+    "found": true,
+    "published": "2025-10-03",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-067",
+  "harness": "github-copilot-chat",
+  "title": "CamoLeak: Copilot Chat exfiltrates private repo content via hidden PR comments and GitHub Camo image proxy",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G2-I018",
+  "harness": "kilo-code",
+  "title": "Injection in ClineProvider prompt handler (legacy Roo-fork Kilo Code)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-11445",
+    "found": true,
+    "published": "2025-10-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I022",
+  "harness": "windsurf",
+  "title": "Prompt injection via file name causes data exfiltration (Windsurf 1.10.7, Write mode, SWE-1)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-36730",
+    "found": true,
+    "published": "2025-10-14",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-6mh4-fc28-667v",
+    "found": true,
+    "published": "2025-10-14",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-088",
+  "harness": "vscode extensions / open vsx",
+  "title": "GlassWorm self-propagating VS Code/Open VSX extension worm using invisible Unicode",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G4-I021",
+  "harness": "windsurf",
+  "title": "Path traversal in Windsurf IDE tools enabling arbitrary file read/write (reachable via prompt injection)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-62353",
+    "found": true,
+    "published": "2025-10-17",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-gxc9-77c7-jmqm",
+    "found": true,
+    "published": "2025-10-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5d-003",
+  "harness": "copilot-studio",
+  "title": "CoPhish: OAuth consent phishing and token exfiltration via Copilot Studio agent sign-in topic",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G5b-I18",
+  "harness": "smolagents",
+  "title": "XPath injection in search_item_ctrl_f (vision_web_browser.py)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-11844",
+    "found": true,
+    "published": "2025-10-22",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-8mf9-rmgw-33qc",
+    "found": true,
+    "published": "2025-10-22",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5d-015",
+  "harness": "langgraph-platform",
+  "title": "LangGraph SQLite store SQL injection",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-8709",
+    "found": true,
+    "published": "2025-10-26",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-4h97-wpxp-3757",
+    "found": true,
+    "published": "2025-10-26",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5d-014",
+  "harness": "langgraph-platform",
+  "title": "LangGraph SQLite checkpoint filter key SQL injection (SqliteStore)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-64104",
+    "found": true,
+    "published": "2025-10-29",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-7p73-8jqx-23r8",
+    "found": true,
+    "published": "2025-10-29",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I032",
+  "harness": "antigravity",
+  "title": "Antigravity indirect prompt injection exfiltrates .env via cat then browser subagent to allowlisted webhook.site",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "INC-G5c-13",
+  "harness": "openai-agentkit",
+  "title": "AgentKit Guardrails (LLM-judge) bypass via prompt injection reported by HiddenLayer and Zenity",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G4-I007",
+  "harness": "cursor",
+  "title": "Command injection via untrusted .cursor/mcp.json in Cursor CLI beta",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-64109",
+    "found": true,
+    "published": "2025-11-05",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-4hwr-97q3-37w2",
+    "found": true,
+    "published": "2025-11-03",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-031",
+  "harness": "cursor",
+  "title": "Speedbump Modal Bypass in Cursor MCP Server Deep-Link",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-64106",
+    "found": true,
+    "published": "2025-11-04",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-4575-fh42-7848",
+    "found": true,
+    "published": "2025-11-03",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-032",
+  "harness": "cursor",
+  "title": "Sensitive File Protection Bypass - Path Manipulation Using Backslashes on Windows",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-64107",
+    "found": true,
+    "published": "2025-11-04",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-2jr2-8wf5-v6pf",
+    "found": true,
+    "published": "2025-11-03",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-033",
+  "harness": "cursor",
+  "title": "Sensitive File Modification - NTFS Path Quirks",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-64108",
+    "found": true,
+    "published": "2025-11-04",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-6r98-6qcw-rxrw",
+    "found": true,
+    "published": "2025-11-03",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-034",
+  "harness": "cursor",
+  "title": "Cursorignore Bypass via New Cursorignore Write",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-64110",
+    "found": true,
+    "published": "2025-11-05",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-vhc2-fjv4-wqch",
+    "found": true,
+    "published": "2025-11-03",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5a-I02",
+  "harness": "langgraph",
+  "title": "RCE in json mode of JsonPlusSerializer (langgraph-checkpoint)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-64439",
+    "found": true,
+    "published": "2025-11-07",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-wwqv-p2pp-99h5",
+    "found": true,
+    "published": "2025-11-05",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-064",
+  "harness": "github-copilot-vscode",
+  "title": "VS Code Copilot Chat extension command injection (network)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-62222",
+    "found": true,
+    "published": "2025-11-11",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-065",
+  "harness": "github-copilot-vscode",
+  "title": "VS Code Copilot Chat extension path traversal / security feature bypass",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-62449",
+    "found": true,
+    "published": "2025-11-11",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-085",
+  "harness": "claude-code",
+  "title": "Anthropic: AI-orchestrated espionage campaign by Chinese state-sponsored actor using Claude Code (~30 targets, 80-90% au",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G2-I005",
+  "harness": "cline",
+  "title": "Data exfiltration via prompt injection using 'safe' ping command (DNS)",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G6-079",
+  "harness": "cline",
+  "title": "Cline: DNS exfiltration via ping, .clinerules code execution, TOCTOU script execution, model-name leak (4 issues)",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G1-I024",
+  "harness": "claude-code",
+  "title": "Command execution prior to Claude Code startup trust dialog",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-65099",
+    "found": true,
+    "published": "2025-11-19",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-5hhx-v7f6-x7gv",
+    "found": true,
+    "published": "2025-11-19",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I025",
+  "harness": "claude-code",
+  "title": "Sed Command Validation Bypass Allows Arbitrary File Writes",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-64755",
+    "found": true,
+    "published": "2025-11-21",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-7mv8-j34q-vp7q",
+    "found": true,
+    "published": "2025-11-20",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-066",
+  "harness": "github-copilot-vscode",
+  "title": "GitHub Copilot and VS Code improper access control leading to code execution (multi-root workspace case)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-64660",
+    "found": true,
+    "published": "2025-11-20",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I016",
+  "harness": "roo-code",
+  "title": "RCE via zsh command validation bug",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-65946",
+    "found": true,
+    "published": "2025-11-21",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-hwm7-w97p-4h8p",
+    "found": true,
+    "published": "2025-11-21",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B2-I001",
+  "harness": "antigravity",
+  "title": "Workspace rule makes the agent overwrite the global ~/.gemini/antigravity/mcp_config.json, giving code execution on ever",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "B2-I002",
+  "harness": "antigravity",
+  "title": "Indirect prompt injection (incl. invisible Unicode Tag instructions) drives run_command to fetch and execute a remote sc",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "B2-I003",
+  "harness": "antigravity",
+  "title": "No human-in-the-loop for MCP tool calls: injected instructions (e.g. in a Linear ticket) invoke any connected MCP tool",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "B2-I004",
+  "harness": "antigravity",
+  "title": "Exfiltration via read_url_content without approval and via Markdown image rendering after reading .env",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G6-081",
+  "harness": "antigravity",
+  "title": "Antigravity indirect-injection data exfiltration (webhook.site in default browser allowlist; .env read via cat despite i",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G6-087",
+  "harness": "antigravity",
+  "title": "Antigravity agent in Turbo mode ran rmdir /s /q d:\\ wiping a user drive",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G6-053",
+  "harness": "mcp-python-sdk",
+  "title": "DNS Rebinding Protection Disabled by Default in Model Context Protocol Python SDK for Servers Running on Localhost",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-66416",
+    "found": true,
+    "published": "2025-12-02",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-9h52-p55h-vw2f",
+    "found": true,
+    "published": "2025-12-02",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-052",
+  "harness": "mcp-typescript-sdk",
+  "title": "DNS Rebinding Protection Disabled by Default in Model Context Protocol TypeScript SDK for Servers Running on Localhost",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-66414",
+    "found": true,
+    "published": "2025-12-02",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-w48q-cv73-mx4w",
+    "found": true,
+    "published": "2025-12-02",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I023",
+  "harness": "claude-code",
+  "title": "Command Validation Bypass Allows Arbitrary Code Execution",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-66032",
+    "found": true,
+    "published": "2025-12-03",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-xq4m-mc3c-vvg3",
+    "found": true,
+    "published": "2025-12-03",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-082",
+  "harness": "multiple (cursor, windsurf, kiro, copilot, zed, roo, junie, cline, gemini-cli, claude-code)",
+  "title": "IDEsaster: >30 vulnerabilities, prompt injection -> tools -> base IDE features (24 CVEs) in AI IDEs",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G5a-I06",
+  "harness": "langgraph",
+  "title": "SQL injection via metadata filter key in SQLite checkpointer",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-67644",
+    "found": true,
+    "published": "2025-12-11",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-9rwj-6rc7-p77c",
+    "found": true,
+    "published": "2025-12-10",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-058",
+  "harness": "mcp-server-git",
+  "title": "Unrestricted git_init tool allows repository creation at arbitrary filesystem locations in mcp-server-git",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-68143",
+    "found": true,
+    "published": "2025-12-17",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-5cgr-j3jf-jw3v",
+    "found": true,
+    "published": "2025-12-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-059",
+  "harness": "mcp-server-git",
+  "title": "Argument injection in git_diff and git_checkout functions for mcp-server-git allows overwriting local files",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-68144",
+    "found": true,
+    "published": "2025-12-17",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-9xwc-hfwc-8w59",
+    "found": true,
+    "published": "2025-12-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-060",
+  "harness": "mcp-server-git",
+  "title": "Missing path validation when using --repository flag in mcp-server-git",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-68145",
+    "found": true,
+    "published": "2025-12-17",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-j22h-9j4x-23w5",
+    "found": true,
+    "published": "2025-12-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-047",
+  "harness": "zed",
+  "title": "Zed IDE LSP Binary Configuration Arbitrary Code Execution",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-68432",
+    "found": true,
+    "published": "2025-12-17",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-29cp-2hmh-hcxj",
+    "found": true,
+    "published": "2025-12-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G6-048",
+  "harness": "zed",
+  "title": "Zed IDE MCP Context Server Configuration Arbitrary Code Execution",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-68433",
+    "found": true,
+    "published": "2025-12-17",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-cv6g-cmxc-vw8j",
+    "found": true,
+    "published": "2025-12-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I19",
+  "harness": "smolagents",
+  "title": "Unsafe pickle deserialization in Remote Python Executor leads to RCE",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-14931",
+    "found": true,
+    "published": "2025-12-23",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-q9r5-6hrr-9ph7",
+    "found": true,
+    "published": "2025-12-23",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I082",
+  "harness": "kiro-ide",
+  "title": "Command injection via crafted workspace folder names",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-0830",
+    "found": true,
+    "published": "2026-01-09",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I038",
+  "harness": "opencode",
+  "title": "Malicious website can execute commands on the local system through XSS in the OpenCode web UI",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-22813",
+    "found": true,
+    "published": "2026-01-12",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-c83v-7274-4vgp",
+    "found": true,
+    "published": "2026-01-13",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I039",
+  "harness": "opencode",
+  "title": "Unauthenticated HTTP Server Allows Arbitrary Command Execution",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-22812",
+    "found": true,
+    "published": "2026-01-12",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-vxw4-wv6m-9hhh",
+    "found": true,
+    "published": "2026-01-13",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I009",
+  "harness": "cursor",
+  "title": "Terminal allowlist bypass via environment-variable shell built-ins",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-22708",
+    "found": true,
+    "published": "2026-01-14",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-82wg-qcm4-fp2w",
+    "found": true,
+    "published": "2026-01-14",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I105",
+  "harness": "mcpjam-inspector",
+  "title": "MCP inspector listens on 0.0.0.0 by default; crafted HTTP request installs an MCP server -> RCE",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-23744",
+    "found": true,
+    "published": "2026-01-16",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I022",
+  "harness": "claude-code",
+  "title": "Malicious repo configuration can trigger data leakage via environment configuration used before trust confirmation",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-21852",
+    "found": true,
+    "published": "2026-01-21",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-jh7p-qr78-84p7",
+    "found": true,
+    "published": "2026-01-21",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5d-002",
+  "harness": "copilot-studio",
+  "title": "Copilot Studio Information Disclosure (prompt-injection based per researcher, \"ShareLeak\")",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-21520",
+    "found": true,
+    "published": "2026-01-22",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I074",
+  "harness": "openclaw (clawdbot)",
+  "title": "Internet-exposed Clawdbot Control UI/gateways (Shodan): configs, API keys, chat history, some unauthenticated command ex",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G3-I033",
+  "harness": "openclaw",
+  "title": "Publicly exposed Clawdbot control panels / gateways leaking API keys, bot tokens, OAuth secrets and chat histories",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G3-I015",
+  "harness": "openclaw",
+  "title": "1-Click RCE via Authentication Token Exfiltration From gatewayUrl",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-25253",
+    "found": true,
+    "published": "2026-02-01",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-g8p2-7wf7-98mq",
+    "found": true,
+    "published": "2026-02-02",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I016",
+  "harness": "openclaw",
+  "title": "Command Injection in Clawdbot Docker Execution via PATH Environment Variable",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-24763",
+    "found": true,
+    "published": "2026-02-02",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-mc68-q9jw-2h3v",
+    "found": true,
+    "published": "2026-02-02",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I017",
+  "harness": "openclaw",
+  "title": "OS Command Injection via Project Root Path in sshNodeCommand",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-25157",
+    "found": true,
+    "published": "2026-02-04",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-q284-4pvr-m585",
+    "found": true,
+    "published": "2026-02-02",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I034",
+  "harness": "openclaw",
+  "title": "Malicious skills on ClawHub (ClawHavoc campaign; AMOS stealer): 341 of 2,857 audited skills flagged",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G1-I019",
+  "harness": "claude-code",
+  "title": "Command Injection in find Command Bypasses User Approval Prompt",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-24887",
+    "found": true,
+    "published": "2026-02-03",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-qgqw-h4xq-7w8w",
+    "found": true,
+    "published": "2026-02-03",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I020",
+  "harness": "claude-code",
+  "title": "Path Restriction Bypass via ZSH Clobber Allows Arbitrary File Writes",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-24053",
+    "found": true,
+    "published": "2026-02-03",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-q728-gf8j-w49r",
+    "found": true,
+    "published": "2026-02-03",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I021",
+  "harness": "claude-code",
+  "title": "Domain Validation Bypass Allows Automatic Requests to Attacker-Controlled Domains",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-24052",
+    "found": true,
+    "published": "2026-02-03",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-vhw5-3g5m-8ggf",
+    "found": true,
+    "published": "2026-02-03",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I081",
+  "harness": "openclaw|clawhub",
+  "title": "ClawHavoc: 341 of 2,857 audited ClawHub skills malicious (335 AMOS-stealer lure via fake prerequisites); later counts 82",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G7-I098",
+  "harness": "mcp-sdk",
+  "title": "TypeScript SDK shared server/transport instance leaks cross-client response data",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-25536",
+    "found": true,
+    "published": "2026-02-04",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-345p-7cg4-v4c7",
+    "found": true,
+    "published": "2026-02-04",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I018",
+  "harness": "openclaw",
+  "title": "Unauthenticated Local RCE via WebSocket config.apply",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-25593",
+    "found": true,
+    "published": "2026-02-06",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-g55j-c2v4-pjcg",
+    "found": true,
+    "published": "2026-02-04",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I015",
+  "harness": "claude-code",
+  "title": "Command Injection via Directory Change Bypasses Write Protection",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-25722",
+    "found": true,
+    "published": "2026-02-06",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-66q4-vfjg-2qhh",
+    "found": true,
+    "published": "2026-02-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I016",
+  "harness": "claude-code",
+  "title": "Command Injection via Piped sed Command Bypasses File Write Restrictions",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-25723",
+    "found": true,
+    "published": "2026-02-06",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-mhg7-666j-cqg4",
+    "found": true,
+    "published": "2026-02-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I017",
+  "harness": "claude-code",
+  "title": "Sandbox Escape via Persistent Configuration Injection in settings.json",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-25725",
+    "found": true,
+    "published": "2026-02-06",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-ff64-7w26-62rf",
+    "found": true,
+    "published": "2026-02-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I018",
+  "harness": "claude-code",
+  "title": "Permission Deny Bypass Through Symbolic Links",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-25724",
+    "found": true,
+    "published": "2026-02-06",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-4q92-rfm6-2cqx",
+    "found": true,
+    "published": "2026-02-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I01",
+  "harness": "pydantic-ai",
+  "title": "SSRF in URL download handling",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-25580",
+    "found": true,
+    "published": "2026-02-06",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-2jrp-274c-jhv3",
+    "found": true,
+    "published": "2026-02-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I02",
+  "harness": "pydantic-ai",
+  "title": "Stored XSS via path traversal in Web UI CDN URL",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-25640",
+    "found": true,
+    "published": "2026-02-06",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-wjp5-868j-wqv7",
+    "found": true,
+    "published": "2026-02-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I004",
+  "harness": "cline",
+  "title": "'Clinejection': prompt injection via GitHub issue title in AI triage workflow -> Actions cache poisoning -> release toke",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G7-I059",
+  "harness": "cline|claude-code-action",
+  "title": "'Clinejection': issue-title prompt injection in Claude-powered triage workflow with Bash tool -> Actions cache poisoning",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G7-I070",
+  "harness": "zed",
+  "title": "MCP tool-call parameters not shown in approval prompt (tool poisoning undetectable)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-25805",
+    "found": true,
+    "published": "2026-02-10",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-f2g4-87h6-4pxq",
+    "found": true,
+    "published": "2026-02-10",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I010",
+  "harness": "cursor",
+  "title": "Sandbox escape via writing .git hooks",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-26268",
+    "found": true,
+    "published": "2026-02-13",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-8pcm-8jpx-hv8r",
+    "found": true,
+    "published": "2026-02-13",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I030",
+  "harness": "openclaw",
+  "title": "Remote Code Execution via Node Invoke Approval Bypass in Gateway",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-gv46-4xfq-jv58",
+    "found": true,
+    "published": "2026-03-02",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I031",
+  "harness": "openclaw",
+  "title": "Inbound allowlist policy bypass in voice-call extension (empty caller ID + suffix matching)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-4rj2-gpmh-qq5x",
+    "found": true,
+    "published": "2026-02-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I032",
+  "harness": "openclaw",
+  "title": "Path Traversal in Plugin Installation",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-qrq5-wjgg-rvqw",
+    "found": true,
+    "published": "2026-02-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I003",
+  "harness": "cline",
+  "title": "Unauthorized npm publish cline@2.3.0 with postinstall installing openclaw (~8h window)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-9ppg-jx86-fqw7",
+    "found": true,
+    "published": "2026-02-19",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I20",
+  "harness": "smolagents",
+  "title": "SSRF via requests.get/post inside LocalPythonExecutor",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-2654",
+    "found": true,
+    "published": "2026-02-18",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-jxgv-6j54-wwc7",
+    "found": true,
+    "published": "2026-02-18",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5c-10",
+  "harness": "vertex-ai-agent-engine",
+  "title": "Vertex AI Python SDK stored XSS",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-2472",
+    "found": true,
+    "published": "2026-02-20",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-qv8j-hgpc-vrq8",
+    "found": true,
+    "published": "2026-02-20",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5c-11",
+  "harness": "vertex-ai-agent-engine",
+  "title": "Vertex AI Python SDK predictable bucket naming",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-2473",
+    "found": true,
+    "published": "2026-02-20",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-wh2j-26j7-9728",
+    "found": true,
+    "published": "2026-02-20",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5a-I03",
+  "harness": "langgraph",
+  "title": "BaseCache deserialization of untrusted data (pickle fallback) -> RCE",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-27794",
+    "found": true,
+    "published": "2026-02-25",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-mhr3-j7m5-c7c9",
+    "found": true,
+    "published": "2026-02-25",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5d-019",
+  "harness": "manus",
+  "title": "SilentBridge: zero-click indirect prompt injection to sandbox takeover and connector data access",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G7-I093",
+  "harness": "mcp-server-git",
+  "title": "git_add path traversal stages files outside repository",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-27735",
+    "found": true,
+    "published": "2026-02-26",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-vjqx-cfc4-9h6v",
+    "found": true,
+    "published": "2026-02-26",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I069",
+  "harness": "zed",
+  "title": "Symlink escape in agent read_file/edit_file tools",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-27967",
+    "found": true,
+    "published": "2026-02-26",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-786m-x2vc-5235",
+    "found": true,
+    "published": "2026-02-25",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5c-08",
+  "harness": "bedrock-agentcore",
+  "title": "AgentCore Code Interpreter sandbox mode permits DNS egress usable as covert exfiltration/command channel",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G5a-I04",
+  "harness": "langgraph",
+  "title": "Unsafe msgpack deserialization in checkpoint loading",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-28277",
+    "found": true,
+    "published": "2026-03-05",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-g48c-2wqr-h844",
+    "found": true,
+    "published": "2026-03-05",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I019",
+  "harness": "github-copilot",
+  "title": "Copilot CLI shell safety assessment bypass via bash parameter expansion",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-29783",
+    "found": true,
+    "published": "2026-03-06",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-g8r9-g2v8-jv6f",
+    "found": true,
+    "published": "2026-03-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I011",
+  "harness": "cursor",
+  "title": "Arbitrary code execution via prompt injection and whitelist bypass",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-31854",
+    "found": true,
+    "published": "2026-03-11",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-hf2x-r83r-qw5q",
+    "found": true,
+    "published": "2026-03-09",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5d-004",
+  "harness": "copilot-studio",
+  "title": "Copilot Studio audit logging gaps (auth removal, App Insights disable, share, publish not logged)",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G3-I029",
+  "harness": "openclaw",
+  "title": "Pairing-scoped device tokens could mint `operator.admin` and reach node RCE",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-4jpw-hj22-2xmc",
+    "found": true,
+    "published": "2026-03-13",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I028",
+  "harness": "openclaw",
+  "title": "WebSocket shared-auth connections could self-declare elevated scopes",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-rqpp-rjj8-7wv8",
+    "found": true,
+    "published": "2026-03-13",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5c-05",
+  "harness": "bedrock-agentcore",
+  "title": "Bedrock AgentCore Starter Toolkit: improper S3 ownership verification enables code injection during build leading to cod",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-4269",
+    "found": true,
+    "published": "2026-03-16",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-xfhr-q72q-jcrj",
+    "found": true,
+    "published": "2026-03-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I013",
+  "harness": "claude-code",
+  "title": "Workspace Trust Dialog Bypass via Repo-Controlled Settings File",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-33068",
+    "found": true,
+    "published": "2026-03-20",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-mmgp-wc2j-qcv7",
+    "found": true,
+    "published": "2026-03-19",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I019",
+  "harness": "openhands",
+  "title": "Command injection in git diff handler (get_git_diff path parameter)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-33718",
+    "found": true,
+    "published": "2026-03-27",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-7h8w-hj9j-8rjw",
+    "found": true,
+    "published": "2026-03-25",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I027",
+  "harness": "openclaw",
+  "title": "Gateway device.pair.approve Lets operator.pairing Escalate a New Device into operator.admin, reaching Node RCE.",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-hf68-49fm-59cq",
+    "found": true,
+    "published": "2026-03-26",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I112",
+  "harness": "litellm (PyPI)",
+  "title": "litellm 1.82.7 and 1.82.8 published with credential-harvesting malware after token exposure via trivy dependency",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-5mg7-485q-xm76",
+    "found": true,
+    "published": "2026-03-25",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I023",
+  "harness": "openclaw",
+  "title": "Gateway Backend Reconnect lets Non-Admin Operator Scopes Self-Claim operator.admin",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-9hjh-fr4f-gxc4",
+    "found": true,
+    "published": "2026-03-27",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I026",
+  "harness": "openclaw",
+  "title": "Gateway local shared-auth reconnect silently widens paired device scope from operator.read to operator.admin and reach n",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-fqw4-mph7-2vr8",
+    "found": true,
+    "published": "2026-03-27",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I21",
+  "harness": "smolagents",
+  "title": "Code injection via evaluate_augassign/evaluate_call/evaluate_with in LocalPythonExecutor (incomplete fix of CVE-2025-995",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-4963",
+    "found": true,
+    "published": "2026-03-27",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-54fq-v6x8-244g",
+    "found": true,
+    "published": "2026-03-27",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I022",
+  "harness": "openclaw",
+  "title": "/pair approve command path omitted caller scope subsetting and reopened device pairing escalation",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-hc5h-pmr3-3497",
+    "found": true,
+    "published": "2026-03-31",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I024",
+  "harness": "openclaw",
+  "title": "CWD `.env` environment variable injection bypasses host-env policy and allows config takeover",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-8rh7-6779-cjqq",
+    "found": true,
+    "published": "2026-04-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I025",
+  "harness": "openclaw",
+  "title": "Incomplete host env sanitization blocklist allows supply-chain redirection via package-manager env overrides",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-j7p2-qcwm-94v4",
+    "found": true,
+    "published": "2026-03-31",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I118",
+  "harness": "codex (cloud/CLI/SDK/IDE)",
+  "title": "Branch-name command injection in Codex task creation exposed short-lived GitHub OAuth tokens; OpenAI remediated by 2026-",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G5b-I22",
+  "harness": "crewai",
+  "title": "Code Interpreter Tool: arbitrary C function calls / RCE via weak sandbox fallback when Docker unavailable",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-2275",
+    "found": true,
+    "published": "2026-03-30",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I23",
+  "harness": "crewai",
+  "title": "Arbitrary local file read (insecure defaults in agent/Docker images)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-2285",
+    "found": true,
+    "published": "2026-03-30",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I24",
+  "harness": "crewai",
+  "title": "Server-side request forgery (insecure defaults)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-2286",
+    "found": true,
+    "published": "2026-03-30",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I25",
+  "harness": "crewai",
+  "title": "RCE via Docker runtime checks (insecure fallback)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-2287",
+    "found": true,
+    "published": "2026-03-30",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I106",
+  "harness": "roo-code",
+  "title": "Command auto-approval relies on regexes; $(...) and backtick substitution inside allowlisted command bypass whitelist",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-30307",
+    "found": true,
+    "published": "2026-03-30",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I044",
+  "harness": "claude-code",
+  "title": "@anthropic-ai/claude-code 2.1.88 published with a JavaScript source map exposing the CLI's TypeScript source (packaging ",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G7-I026",
+  "harness": "claude-code",
+  "title": "npm package @anthropic-ai/claude-code 2.1.88 shipped a source map exposing CLI source; Anthropic: release packaging erro",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G7-I111",
+  "harness": "npm (axios)",
+  "title": "axios 1.14.1 and 0.30.4 malicious (injected plain-crypto-js RAT dropper) after maintainer account takeover; ecosystem co",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-fw8c-xr5c-95f9",
+    "found": true,
+    "published": "2026-03-31",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I020",
+  "harness": "openclaw",
+  "title": "Sandbox escape via TOCTOU race in remote FS bridge readFile",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-9p3r-hh9g-5cmg",
+    "found": true,
+    "published": "2026-04-03",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I021",
+  "harness": "openclaw",
+  "title": "Heartbeat context inheritance bypasses sandbox via senderIsOwner escalation",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-g5cg-8x5w-7jpm",
+    "found": true,
+    "published": "2026-04-02",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5c-09",
+  "harness": "vertex-ai-agent-engine",
+  "title": "Default per-project per-product service agent (P4SA) of Agent Engine/ADK had excessive default permissions and broad non",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G5a-I01",
+  "harness": "google-adk",
+  "title": "ADK code injection and missing authentication allows unauthenticated RCE",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-4810",
+    "found": true,
+    "published": "2026-04-13",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-rg7c-g689-fr3x",
+    "found": true,
+    "published": "2026-04-13",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I040",
+  "harness": "codex-cli",
+  "title": "OpenAI Codex CLI enables code execution through malicious MCP configuration files (project .env and .codex/config.toml l",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-61260",
+    "found": true,
+    "published": "2026-04-14",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-xrxf-jgv3-qmrm",
+    "found": true,
+    "published": "2026-04-14",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I027",
+  "harness": "claude-code-security-review|gemini-cli-action|github-copilot-coding-agent",
+  "title": "'Comment and Control': prompt injection in PR title/issue/HTML comment makes CI agents post their own secrets (ANTHROPIC",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G7-I088",
+  "harness": "windsurf",
+  "title": "Prompt injection via attacker HTML edits local MCP config and auto-registers malicious STDIO server (zero-click)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-30615",
+    "found": true,
+    "published": "2026-04-15",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-wj2m-jvpr-64cq",
+    "found": true,
+    "published": "2026-04-15",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I019",
+  "harness": "openclaw",
+  "title": "Feishu webhook and card-action validation now fail closed",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-xh72-v6v9-mwhc",
+    "found": true,
+    "published": "2026-04-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I011",
+  "harness": "claude-code",
+  "title": "Insecure System-Wide Configuration Loading Enables Local Privilege Escalation on Windows",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-35603",
+    "found": true,
+    "published": "2026-04-17",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-5cwg-9f6j-9jvx",
+    "found": true,
+    "published": "2026-04-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I031",
+  "harness": "junie",
+  "title": "Junie command execution via malicious project file",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-41153",
+    "found": true,
+    "published": "2026-04-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I091",
+  "harness": "antigravity",
+  "title": "find_by_name Pattern flag injection into fd (-X exec-batch) bypasses Secure Mode (native tool) -> RCE with prompt inject",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G1-I014",
+  "harness": "claude-code",
+  "title": "Sandbox Escape via Symlink Following Allows Arbitrary File Write Outside Workspace",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-39861",
+    "found": true,
+    "published": "2026-04-21",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-vp62-r36r-9xqp",
+    "found": true,
+    "published": "2026-04-21",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I033",
+  "harness": "antigravity",
+  "title": "Antigravity find_by_name Pattern flag injection gives RCE, bypasses Secure Mode",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G7-I113",
+  "harness": "@bitwarden/cli (npm)",
+  "title": "Malicious @bitwarden/cli 2026.4.0: preinstall worm harvesting ~/.claude.json, ~/.claude/mcp.json, ~/.kiro/settings/mcp.j",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-g98r-qjhg-4fmr",
+    "found": true,
+    "published": "2026-04-23",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I012",
+  "harness": "claude-code",
+  "title": "Trust Dialog Bypass via Git Worktree Spoofing Allows Arbitrary Code Execution",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-40068",
+    "found": true,
+    "published": "2026-05-05",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-q5hj-mxqh-vv77",
+    "found": true,
+    "published": "2026-04-24",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I041",
+  "harness": "gemini-cli",
+  "title": "Gemini CLI: Remote Code Execution via workspace trust and tool allowlisting bypasses",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-12537",
+    "found": true,
+    "published": "2026-06-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-wpqr-6v78-jr5g",
+    "found": true,
+    "published": "2026-04-24",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I009",
+  "harness": "claude-code",
+  "title": "Local Privilege Escalation via Directory Junction in CoworkVMService",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-44470",
+    "found": true,
+    "published": "2026-05-13",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-5p5x-5294-qhp3",
+    "found": true,
+    "published": "2026-05-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I010",
+  "harness": "claude-code",
+  "title": "SSH Host Key Verification Bypass Allows Man-in-the-Middle Attack on Remote Sessions",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-44467",
+    "found": true,
+    "published": "2026-05-13",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-3rwf-2g6p-c2f9",
+    "found": true,
+    "published": "2026-05-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I020",
+  "harness": "github-copilot",
+  "title": "Copilot CLI nested bare repository core.fsmonitor code execution",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-45033",
+    "found": true,
+    "published": "2026-05-13",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-9ccr-r5hg-74gf",
+    "found": true,
+    "published": "2026-05-11",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5c-12",
+  "harness": "azure-ai-foundry-agent-service",
+  "title": "Azure AI Foundry (M365 published agents) improper access control, elevation of privilege",
+  "verified_by_agent": "no",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-35435",
+    "found": true,
+    "published": "2026-05-07",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I002",
+  "harness": "cline",
+  "title": "Cross-origin WebSocket hijack in Cline Kanban server (127.0.0.1:3484) enabling agent terminal hijack",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-44211",
+    "found": true,
+    "published": "2026-06-01",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-5c57-rqjx-35g2",
+    "found": true,
+    "published": "2026-05-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I071",
+  "harness": "zed",
+  "title": "Terminal tool allowlist bypass via inline env-var assignment (e.g. PAGER)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-44463",
+    "found": true,
+    "published": "2026-05-28",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-c3g6-c3ff-69cg",
+    "found": true,
+    "published": "2026-05-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I072",
+  "harness": "zed",
+  "title": "Untrusted-mode folder with poisoned .git/config (core.fsmonitor) executes commands",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-44465",
+    "found": true,
+    "published": "2026-05-28",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-fj2r-rmw6-h222",
+    "found": true,
+    "published": "2026-05-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I101",
+  "harness": "code-runner-mcp",
+  "title": "Code Runner MCP Server over HTTP transport exposes run-code tool without authentication",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-5029",
+    "found": true,
+    "published": "2026-05-12",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-jv4w-6p47-rhcx",
+    "found": true,
+    "published": "2026-05-12",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I090",
+  "harness": "deepseek-tui",
+  "title": "task_create sub-agents default to shell + auto-approve: RCE via prompt injection in project files",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-45374",
+    "found": true,
+    "published": "2026-05-28",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-72w5-pf8h-xfp4",
+    "found": true,
+    "published": "2026-05-14",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I103",
+  "harness": "mcp-registry",
+  "title": "Official MCP Registry: stored XSS via server.json websiteUrl in catalogue UI",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-44429",
+    "found": true,
+    "published": "2026-05-14",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I104",
+  "harness": "mcp-registry",
+  "title": "Official MCP Registry: OCI ownership validation fails open on HTTP 429, letting a publisher bind namespace to images it ",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-45781",
+    "found": true,
+    "published": "2026-05-14",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I017",
+  "harness": "kilo-code",
+  "title": "Path traversal in File Diff API endpoint (worktree-diff.ts)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-8765",
+    "found": true,
+    "published": "2026-05-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B2-I005",
+  "harness": "antigravity",
+  "title": "agy: --dangerously-skip-permissions also auto-approves the agent's requests to bypass the terminal sandbox, making --san",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G7-I025",
+  "harness": "claude-code",
+  "title": "Network sandbox allowlist bypasses: empty allowedDomains disabled proxy (CVE-2025-66479 sandbox-runtime only); SOCKS5 nu",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2025-66479",
+    "found": true,
+    "published": "2025-12-04",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I023",
+  "harness": "claude-code-action",
+  "title": "claude-code-action: PR head .mcp.json + enableAllProjectMcpServers lets PR author run code on Actions runner and exfiltr",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-47751",
+    "found": true,
+    "published": "2026-07-16",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-8q5r-mmjf-575q",
+    "found": true,
+    "published": "2026-06-10",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I03",
+  "harness": "pydantic-ai",
+  "title": "SSRF cloud-metadata blocklist bypass via IPv4-mapped IPv6 (incomplete fix of CVE-2026-25580)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-46678",
+    "found": true,
+    "published": "2026-07-29",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-cqp8-fcvh-x7r3",
+    "found": true,
+    "published": "2026-05-21",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I012",
+  "harness": "cursor",
+  "title": "Sandbox escape via workspace Claude hook configuration (.claude/settings.local.json)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-48124",
+    "found": true,
+    "published": "2026-06-15",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-pc9j-3qc2-95wv",
+    "found": true,
+    "published": "2026-05-21",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I100",
+  "harness": "windows-mcp",
+  "title": "HTTP transport exposes unauthenticated PowerShell control with wildcard CORS",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-48989",
+    "found": true,
+    "published": "2026-06-17",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-vrxg-gm77-7q5g",
+    "found": true,
+    "published": "2026-05-21",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I025",
+  "harness": "kiro",
+  "title": "Kiro CLI tool authorization bypass via piped stdin",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-9255",
+    "found": true,
+    "published": "2026-05-22",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5a-I05",
+  "harness": "langgraph",
+  "title": "Unsafe JSON deserialization in checkpoint loading",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-48775",
+    "found": true,
+    "published": "2026-06-16",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-fjqc-hq36-qh5p",
+    "found": true,
+    "published": "2026-06-25",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5a-I11",
+  "harness": "langgraph",
+  "title": "Unsafe URL path construction in LangGraph SDK",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-48776",
+    "found": true,
+    "published": "2026-06-17",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-w39p-vh2g-g8g5",
+    "found": true,
+    "published": "2026-06-25",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I04",
+  "harness": "pydantic-ai",
+  "title": "SSRF blocklist bypass via IPv4-compatible/SIIT/NAT64 IPv6 forms (incomplete fix of CVE-2026-46678)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-48782",
+    "found": true,
+    "published": "2026-06-17",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-cg7w-rg45-pc59",
+    "found": true,
+    "published": "2026-06-26",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I005",
+  "harness": "hermes-agent",
+  "title": "Injection in skills_guard Skills Guard multi-word prompt handler (THREAT_PATTERNS)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-9353",
+    "found": true,
+    "published": "2026-05-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-238w-f66p-w349",
+    "found": true,
+    "published": "2026-05-26",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I006",
+  "harness": "hermes-agent",
+  "title": "Injection in agent/prompt_builder._scan_context_content (context-file injection scanner bypass)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-9366",
+    "found": true,
+    "published": "2026-05-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-pgp4-xr4j-h5cg",
+    "found": true,
+    "published": "2026-05-26",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I007",
+  "harness": "hermes-agent",
+  "title": "Sandbox issue in execute_code environment variable handler",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-9368",
+    "found": true,
+    "published": "2026-05-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-wm96-9gfh-vvgq",
+    "found": true,
+    "published": "2026-05-26",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I008",
+  "harness": "hermes-agent",
+  "title": "Incorrect comparison of HERMES_ENABLE_PROJECT_PLUGINS in dashboard plugin discovery",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-9369",
+    "found": true,
+    "published": "2026-05-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-cv5c-mh6j-wvp9",
+    "found": true,
+    "published": "2026-05-26",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I068",
+  "harness": "hermes-agent",
+  "title": "Missing authorization in check_all_command_guards (tools/approval.py, Batch Runner)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-9350",
+    "found": true,
+    "published": "2026-05-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-4j8w-8wvv-4969",
+    "found": true,
+    "published": "2026-05-26",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I009",
+  "harness": "hermes-agent",
+  "title": "Injection in run_agent._compress_context (context compression)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-10221",
+    "found": true,
+    "published": "2026-06-01",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-xq8w-9jvx-gm3v",
+    "found": true,
+    "published": "2026-06-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I010",
+  "harness": "hermes-agent",
+  "title": "Injection in hermes_cli.config._sanitize_env_lines (.env sanitization)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-10222",
+    "found": true,
+    "published": "2026-06-01",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-mv8x-fg99-32mf",
+    "found": true,
+    "published": "2026-06-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I011",
+  "harness": "hermes-agent",
+  "title": "Injection in tools/memory_tool._scan_memory_content (memory poisoning scanner)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-10223",
+    "found": true,
+    "published": "2026-06-01",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-33qv-c5qm-799v",
+    "found": true,
+    "published": "2026-06-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I012",
+  "harness": "hermes-agent",
+  "title": "Uncontrolled resource consumption in Feishu webhook endpoint",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-10224",
+    "found": true,
+    "published": "2026-06-01",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-pmqc-57g8-c22c",
+    "found": true,
+    "published": "2026-06-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I026",
+  "harness": "kiro",
+  "title": "Kiro IDE file write to execution-sensitive paths (.vscode/tasks.json) auto-exec on folder open",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-10591",
+    "found": true,
+    "published": "2026-06-02",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I013",
+  "harness": "cursor",
+  "title": "Sandbox escape via symlink and failed path canonicalization",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-50549",
+    "found": true,
+    "published": "2026-06-25",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-3v8f-48vw-3mjx",
+    "found": true,
+    "published": "2026-06-05",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I014",
+  "harness": "cursor",
+  "title": "Sandbox escape via agent-controlled working directory",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-50548",
+    "found": true,
+    "published": "2026-06-25",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-3p48-7v9f-v5cw",
+    "found": true,
+    "published": "2026-06-05",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I094",
+  "harness": "mcp-sdk",
+  "title": "Python SDK HTTP transports route to existing session by ID without checking principal",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-52869",
+    "found": true,
+    "published": "2026-07-15",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-jpw9-pfvf-9f58",
+    "found": true,
+    "published": "2026-07-16",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I114",
+  "harness": "npm (Miasma/IronWorm worms)",
+  "title": "Miasma worm: 57 packages/286+ versions; injects into .claude/settings.json, .cursor/rules, .gemini/settings.json, .vscod",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G3-I001",
+  "harness": "pi",
+  "title": "Pi loads project-local extensions without approval",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-54325",
+    "found": true,
+    "published": "2026-06-23",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-mqxh-6gq7-558m",
+    "found": true,
+    "published": "2026-06-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I002",
+  "harness": "pi",
+  "title": "Predictable temporary extension install paths allow local privilege escalation on shared Linux hosts",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-54328",
+    "found": true,
+    "published": "2026-06-23",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-jfgx-wxx8-mp94",
+    "found": true,
+    "published": "2026-06-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I003",
+  "harness": "pi",
+  "title": "Race condition in auth.json writes could expose stored credentials",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-54327",
+    "found": true,
+    "published": "2026-06-23",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-r95r-rj6r-c39x",
+    "found": true,
+    "published": "2026-06-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I004",
+  "harness": "pi",
+  "title": "Potential XSS in HTML session exports via Markdown URL sanitization bypass",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-54326",
+    "found": true,
+    "published": "2026-06-23",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-7v5m-pr3q-6453",
+    "found": true,
+    "published": "2026-06-16",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I022",
+  "harness": "warp",
+  "title": "OS command injection when opening terminal links from WSL",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-54699",
+    "found": true,
+    "published": "2026-06-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-xmw3-wj6r-48m4",
+    "found": true,
+    "published": "2026-06-09",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I023",
+  "harness": "warp",
+  "title": "DCS lifecycle hook spoofing can alter terminal session metadata",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-54686",
+    "found": true,
+    "published": "2026-06-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-9w2v-jhww-vm85",
+    "found": true,
+    "published": "2026-06-09",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I024",
+  "harness": "warp",
+  "title": "Branch selector command injection via Git branch names",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-48719",
+    "found": true,
+    "published": "2026-06-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-hgvx-4xvm-39pw",
+    "found": true,
+    "published": "2026-06-09",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I025",
+  "harness": "warp",
+  "title": "Terminal output may access local clipboard through OSC 52",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-48725",
+    "found": true,
+    "published": "2026-06-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-wgqj-4c26-7c4g",
+    "found": true,
+    "published": "2026-06-09",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I026",
+  "harness": "warp",
+  "title": "Markdown notebook links may open executable local files",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-48704",
+    "found": true,
+    "published": "2026-06-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-589x-4mxh-jcrf",
+    "found": true,
+    "published": "2026-06-09",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I027",
+  "harness": "warp",
+  "title": "Linux external editor command injection",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-48731",
+    "found": true,
+    "published": "2026-06-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-7xgc-mhc8-g7wc",
+    "found": true,
+    "published": "2026-06-09",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I028",
+  "harness": "warp",
+  "title": "Remote SSH cwd can lead to unauthorized remote command execution",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-48732",
+    "found": true,
+    "published": "2026-06-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-qqpc-wvvw-4269",
+    "found": true,
+    "published": "2026-06-09",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I029",
+  "harness": "warp",
+  "title": "SSH remote output can lead to local file overwrite and persistence",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-48720",
+    "found": true,
+    "published": "2026-06-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-5h96-jrrq-6hxq",
+    "found": true,
+    "published": "2026-06-09",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I030",
+  "harness": "warp",
+  "title": "Env-var prefixes bypass command denylist in unsandboxed CLI agent profile",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-48721",
+    "found": true,
+    "published": "2026-06-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-3839-h8jj-ph82",
+    "found": true,
+    "published": "2026-06-09",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I031",
+  "harness": "warp",
+  "title": "Command injection via Grep/FileGlob agent tool arguments bypassing approval policy",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-48703",
+    "found": true,
+    "published": "2026-06-24",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-8r78-7jwh-m6hm",
+    "found": true,
+    "published": "2026-06-09",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I05",
+  "harness": "pydantic-ai",
+  "title": "UI adapters trust client-supplied providerMetadata to build UploadedFile: S3/GCS confused deputy using app credentials",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-54249",
+    "found": true,
+    "published": "2026-07-29",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-h7p7-w5gc-xj3w",
+    "found": true,
+    "published": "2026-08-13",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I006",
+  "harness": "claude-code",
+  "title": "Out-of-Band Data Exfiltration via Pre-Approved HuggingFace Domain in WebFetch",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-54316",
+    "found": true,
+    "published": "2026-06-23",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-fg94-h982-f3mm",
+    "found": true,
+    "published": "2026-06-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5c-02",
+  "harness": "bedrock-agentcore",
+  "title": "AgentCore Python SDK install_packages() argument-delimiter injection allows command execution in Code Interpreter sandbo",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-12530",
+    "found": true,
+    "published": "2026-06-17",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-6rfw-mq36-jm8h",
+    "found": true,
+    "published": "2026-06-19",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I013",
+  "harness": "hermes-agent",
+  "title": "DNS rebinding in WebSocket endpoints bypasses Host/Origin validation",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-53869",
+    "found": true,
+    "published": "2026-06-17",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-4pqm-j46f-795x",
+    "found": true,
+    "published": "2026-06-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G3-I014",
+  "harness": "hermes-agent",
+  "title": "response_store.db and webhook_subscriptions.json created world-readable (0o644)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-53870",
+    "found": true,
+    "published": "2026-06-17",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-99f9-j8r3-p853",
+    "found": true,
+    "published": "2026-06-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B1-I002",
+  "harness": "agenticmail",
+  "title": "Inbound email to the bridge inbox resumes the operator's Claude Code session with permissionMode bypassPermissions and e",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-57495",
+    "found": true,
+    "published": "2026-07-20",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-fq4x-789w-jg5h",
+    "found": true,
+    "published": "2026-06-18",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B2-I006",
+  "harness": "antigravity",
+  "title": "agy with --dangerously-skip-permissions: rd /s /q on a repo dir named 'nul' resolved to the C: drive root and deleted mo",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "B2-I009",
+  "harness": "antigravity",
+  "title": "Antigravity IDE: changes to the agent security mode were not persisted (user-selected security mode silently reverted)",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G2-I001",
+  "harness": "cline",
+  "title": "Cross-origin WebSocket hijacking in Cline Hub dashboard /browser endpoint (MCP settings mutation, auto-approve sessions)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-59723",
+    "found": true,
+    "published": "2026-07-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-3cj3-hqcr-g934",
+    "found": true,
+    "published": "2026-09-24",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I005",
+  "harness": "claude-code",
+  "title": "Sandbox Escape via Git Worktree Path Confusion Allows Unsandboxed Code Execution",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-55607",
+    "found": true,
+    "published": "2026-06-29",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-7835-87q9-rgvv",
+    "found": true,
+    "published": "2026-07-24",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I008",
+  "harness": "claude-code",
+  "title": "Insecure Temporary File in /copy Command Enables Response Disclosure and Symlink-Based File Write",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-46406",
+    "found": true,
+    "published": "2026-06-29",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-4vp2-6q8c-pvq2",
+    "found": true,
+    "published": "2026-06-25",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B1-I003",
+  "harness": "neuro-cortex-memory",
+  "title": "Cortex memory MCP server treats CLAUDE_PROJECT_DIR (set by Claude Code to the open project) as a trusted dev checkout; a",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-49986",
+    "found": true,
+    "published": "2026-08-14",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-gvpp-v77h-5w8g",
+    "found": true,
+    "published": "2026-07-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I102",
+  "harness": "open-vsx",
+  "title": "Open VSX /vscode/unpkg/ serves uploaded HTML inline without CSP: session theft, PAT creation, malicious extension public",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-13323",
+    "found": true,
+    "published": "2026-07-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B1-I001",
+  "harness": "ruflo",
+  "title": "Ruflo (meta-harness for Claude Code and Codex) default docker-compose exposed MCP bridge POST /mcp without authenticatio",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-59726",
+    "found": true,
+    "published": "2026-07-09",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-c4hm-4h84-2cf3",
+    "found": true,
+    "published": "2026-07-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I035",
+  "harness": "codex-desktop",
+  "title": "Codex macOS desktop auto-fetches Markdown remote images: prompt-injection exfiltration channel",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-14898",
+    "found": true,
+    "published": "2026-07-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I015",
+  "harness": "cursor",
+  "title": "Cloud Agent browser sandbox escape to unauthenticated local agent endpoint",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-61613",
+    "found": true,
+    "published": "2026-07-15",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-whx2-4gvm-m3r3",
+    "found": true,
+    "published": "2026-07-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I095",
+  "harness": "mcp-sdk",
+  "title": "Python SDK WebSocket server transport has no Host/Origin validation (DNS rebinding)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-59950",
+    "found": true,
+    "published": "2026-07-15",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-vj7q-gjh5-988w",
+    "found": true,
+    "published": "2026-07-16",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B3-I001",
+  "harness": "grok-build",
+  "title": "Grok Build CLI 0.2.93 uploads whole workspace as git bundle to GCS bucket (grok-code-session-traces) regardless of 'Impr",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G7-I099",
+  "harness": "mcp-atlassian",
+  "title": "HTTP transport with global Jira/Confluence credentials: unauthenticated MCP requests use operator credentials",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-77254",
+    "found": true,
+    "published": "2026-09-22",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-vc8m-84rp-53hx",
+    "found": true,
+    "published": "2026-07-10",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I06",
+  "harness": "pydantic-ai",
+  "title": "UI adapters: dangling client-submitted tool call can execute when trailing message dropped in sanitize_messages",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-65975",
+    "found": true,
+    "published": "2026-07-29",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-jpr8-2v3g-wgf9",
+    "found": true,
+    "published": "2026-07-11",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I092",
+  "harness": "grok-build",
+  "title": "Grok Build CLI 0.2.93 uploads whole workspace as git bundle to GCS bucket (grok-code-session-traces) regardless of 'Impr",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G4-I016",
+  "harness": "cursor",
+  "title": "Sandbox escape via tampered Python virtual environment (macOS)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-73217",
+    "found": true,
+    "published": "2026-08-11",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-p9g2-cr55-cw9c",
+    "found": true,
+    "published": "2026-07-14",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I017",
+  "harness": "cursor",
+  "title": "Sandbox escape via privileged containers / Docker Desktop VirtioFS (macOS)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-73218",
+    "found": true,
+    "published": "2026-08-11",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-v4xv-rqh3-w9mc",
+    "found": true,
+    "published": "2026-07-14",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5c-04",
+  "harness": "bedrock-agentcore",
+  "title": "Sensitive content disclosure via OpenTelemetry spans in bedrock-agentcore-sdk-python",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-15737",
+    "found": true,
+    "published": "2026-07-16",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-hqf8-7w95-9r33",
+    "found": true,
+    "published": "2026-07-16",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B3-I002",
+  "harness": "grok-build",
+  "title": "Grok Build hook runner: SSRF bypass via HTTP redirect (http hooks)",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G7-I054",
+  "harness": "cursor",
+  "title": "Cursor for Windows 3.2.16 executes workspace-resident git.exe (binary planting) on startup",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-63093",
+    "found": true,
+    "published": "2026-07-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B3-I003",
+  "harness": "grok-build",
+  "title": "Grok Build: System-Reminder XML tag injection in CLAUDE.md via agents_md loader",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G4-I027",
+  "harness": "kiro",
+  "title": "Kiro IDE hidden web text rewrites mcp.json and launches attacker MCP server without approval",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G4-I034",
+  "harness": "antigravity",
+  "title": "Antigravity macOS Seatbelt allow-default escape and .vscode tasks Secure Mode bypass (Pillar Week of Sandbox Escapes)",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G7-I107",
+  "harness": "roo-code",
+  "title": "Auto-approve: nested command substitution inside parameter-expansion defaults bypasses allow/deny lists",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-63108",
+    "found": true,
+    "published": "2026-07-20",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I110",
+  "harness": "vercel-ai-sdk-harness-opencode",
+  "title": "@ai-sdk/harness-opencode tool relay authorizes any sandbox process whose command line contains helper script name: host ",
+  "verified_by_agent": "yes",
+  "status": "partially-found",
+  "checks": [
+   {
+    "id": "CVE-2026-64651",
+    "found": true,
+    "published": "2026-07-20",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-g48p-5rr5-8rgq",
+    "found": false,
+    "published": null,
+    "mentions_product": null
+   }
+  ]
+ },
+ {
+  "id": "B3-I004",
+  "harness": "grok-build",
+  "title": "Grok Build Bash permission gate / auto mode: arbitrary code execution via 'safe' commands (rg --pre, kubectl credential ",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "B3-I005",
+  "harness": "grok-build",
+  "title": "Grok Build: Bash(git:*) allowlist matched a whole command chain by prefix; project Claude permissions not gated on folde",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "INC-G5c-03",
+  "harness": "bedrock-agentcore",
+  "title": "AgentCore Python SDK install_packages() argument-delimiter injection (follow-up, still exploitable < 1.18.1)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-16796",
+    "found": true,
+    "published": "2026-07-23",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-j6g5-3hh3-pgw8",
+    "found": true,
+    "published": "2026-07-24",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I021",
+  "harness": "goose",
+  "title": "goose review runs git on attacker-controlled .git/config (core.fsmonitor) -> command execution before any model call",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-72718",
+    "found": true,
+    "published": "2026-08-10",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-r5pp-p5r8-466r",
+    "found": true,
+    "published": "2026-07-24",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B3-I006",
+  "harness": "grok-build",
+  "title": "Grok Build: acceptEdits auto-approved agent writes into the always-trusted global hook root; workspace file-reference re",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "B3-I007",
+  "harness": "grok-build",
+  "title": "Grok Build sandbox profile was not applied to the leader process that executes tools",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "B1-I004",
+  "harness": "network-ai",
+  "title": "Network-AI ClaudeHookBridge truncates the Bash command to 500 chars before deny-pattern matching while Claude Code runs ",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-73614",
+    "found": true,
+    "published": "2026-08-13",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-743h-jr5x-mpcr",
+    "found": true,
+    "published": "2026-07-28",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5a-I07",
+  "harness": "langgraph",
+  "title": "Store namespace prefix matching crosses segment boundaries (Postgres and SQLite)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-71433",
+    "found": true,
+    "published": "2026-08-06",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-47pj-3jcm-6whg",
+    "found": true,
+    "published": "2026-08-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B3-I008",
+  "harness": "grok-build",
+  "title": "Grok Build vendor-compat MCP kill switch ([compat.*] mcps=false) reported on but not enforced",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G4-I028",
+  "harness": "kiro",
+  "title": "Kiro IDE and CLI on Windows: executable resolution from untrusted project directory bypasses workspace trust",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-18656",
+    "found": true,
+    "published": "2026-08-04",
+    "mentions_product": true
+   },
+   {
+    "id": "CVE-2026-18657",
+    "found": true,
+    "published": "2026-08-04",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I116",
+  "harness": "praisonai",
+  "title": "Bundled Claude GitHub Actions workflow interpolates PR branch name into bash and lets any @claude comment trigger it: fo",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-48168",
+    "found": true,
+    "published": "2026-08-05",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G2-I020",
+  "harness": "openhands",
+  "title": "Command injection in resolver initialize_repo (send_pull_request.py)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-19022",
+    "found": true,
+    "published": "2026-08-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I07",
+  "harness": "pydantic-ai",
+  "title": "Unbounded memory use downloading remote content via web_fetch/FileUrl",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-107294",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-v2xh-2vp8-57h8",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I08",
+  "harness": "pydantic-ai",
+  "title": "Web chat UI (Agent.to_web/clai web): website visited by developer can trigger agent runs and server-side tool execution ",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-107295",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-h4xc-3qfq-jf93",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I09",
+  "harness": "pydantic-ai",
+  "title": "OTel instrumentation: retry prompt content not redacted when include_content=False",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-107293",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-3gh4-cghq-f8v4",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I043",
+  "harness": "vscode-copilot-agent",
+  "title": "Fetch Web Page tool: crafted page launches OS protocol handler -> RCE",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-59113",
+    "found": true,
+    "published": "2026-08-11",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-36qf-jgq9-4m6j",
+    "found": true,
+    "published": "2026-08-12",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I10",
+  "harness": "pydantic-ai",
+  "title": "Web chat UI: local endpoint does not validate Host header (DNS rebinding)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-107292",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-q2xc-rrxj-58x9",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B2-I008",
+  "harness": "antigravity",
+  "title": "MCP OAuth access and refresh tokens stored in plaintext JSON, created world-readable (0644), in four state dirs",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "INC-G5d-005",
+  "harness": "langgraph-platform",
+  "title": "langgraph-api: incomplete assistant authorization on run creation (cross-user assistant metadata/config disclosure)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-55236",
+    "found": true,
+    "published": "2026-09-14",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-jfj5-wrj9-63x4",
+    "found": true,
+    "published": "2026-08-19",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5d-006",
+  "harness": "langgraph-platform",
+  "title": "langgraph-api: relative webhook targets reach in-process routes without authentication",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-55235",
+    "found": true,
+    "published": "2026-09-14",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-2c9q-c2q9-qgqv",
+    "found": true,
+    "published": "2026-08-19",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B3-I009",
+  "harness": "grok-build",
+  "title": "Grok Build folder trust: trusting a parent directory implicitly trusted every repo cloned under it later",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "B3-I010",
+  "harness": "grok-build",
+  "title": "Grok Build installer sent the deployment key as a Bearer token to an attacker-settable URL",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "B3-I011",
+  "harness": "grok-build",
+  "title": "Grok Build sandbox escape: SessionStart hook persisted via config.toml written inside the sandbox led to unsandboxed exe",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G5a-I08",
+  "harness": "langgraph",
+  "title": "LangGraph SDK custom auth silently ignores actions= on resource decorators",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-104873",
+    "found": true,
+    "published": "2026-10-02",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-fvww-7h3r-vfhp",
+    "found": true,
+    "published": "2026-10-05",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B3-I012",
+  "harness": "grok-build",
+  "title": "Grok Build: persistent RCE via unescaped GROK_CHANNEL interpolated into ~/.grok/config.toml; native Write/Edit bypass of",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G7-I031",
+  "harness": "codex-cli|codex-desktop",
+  "title": "PowerShell --% stop-parsing token misclassified as safe: approval-free git write can alter Codex config and launch attac",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-19591",
+    "found": true,
+    "published": "2026-09-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I032",
+  "harness": "codex-cli|codex-desktop",
+  "title": "Git metadata collection runs repo-local core.fsmonitor outside sandbox without approval",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-19592",
+    "found": true,
+    "published": "2026-09-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I033",
+  "harness": "codex-desktop",
+  "title": "Codex Desktop honors repo-local core.hooksPath in automated git operations -> hook runs outside sandbox",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-19590",
+    "found": true,
+    "published": "2026-09-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I034",
+  "harness": "codex-desktop",
+  "title": "Codex Desktop inspects git status on workspace open; attr.tree + clean/process filter runs attacker program outside sand",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-19593",
+    "found": true,
+    "published": "2026-09-01",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B1-I005",
+  "harness": "claude-code-templates",
+  "title": "Claude Code Templates --studio server binds 0.0.0.0:3444 with permissive CORS and no auth; /api/execute and /api/install",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-73222",
+    "found": true,
+    "published": "2026-08-11",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-79wm-x847-7cvg",
+    "found": true,
+    "published": "2026-09-03",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I089",
+  "harness": "deepseek-harness (dsh)",
+  "title": "Local HTTP control-plane trusts client-supplied Host header: full agent control (danger-full-access commands, sandbox di",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-82533",
+    "found": true,
+    "published": "2026-09-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-8m2g-8cgm-3vcp",
+    "found": true,
+    "published": "2026-09-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B3-I013",
+  "harness": "grok-build",
+  "title": "Grok Build: project instructions (AGENTS.md/CLAUDE.md) and skills were loaded without folder trust; DISABLE_TELEMETRY no",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G7-I039",
+  "harness": "vscode-copilot-agent",
+  "title": "Remote agent host address and local-file grants read from workspace .vscode/settings.json -> RCE",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-78462",
+    "found": true,
+    "published": "2026-09-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-2cmq-rv52-5rf6",
+    "found": true,
+    "published": "2026-09-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I042",
+  "harness": "vscode-copilot-agent",
+  "title": "Agent integrated-browser network filter bypass via backslash/mixed separators in URL",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-81378",
+    "found": true,
+    "published": "2026-09-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-4gv7-q2x8-32p8",
+    "found": true,
+    "published": "2026-09-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I044",
+  "harness": "vscode-copilot-agent",
+  "title": "Agent-provided Markdown remote image fetched before policy applied: data exfiltration channel",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-81380",
+    "found": true,
+    "published": "2026-09-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-vww8-mqc2-4x8v",
+    "found": true,
+    "published": "2026-09-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I023",
+  "harness": "windsurf",
+  "title": "VS Code workspace trust / Restricted Mode bypass via nested settings object; Devin Desktop v3.10.31 hardens",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-81376",
+    "found": true,
+    "published": "2026-09-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-x6gf-c826-8c9m",
+    "found": true,
+    "published": "2026-09-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I117",
+  "harness": "claude-code (misuse)",
+  "title": "Threat report Dec 2025-Aug 2026: agentic coding (Claude Code) used as engineering/orchestration layer in espionage, hack",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G7-I029",
+  "harness": "gemini-cli|run-gemini-cli",
+  "title": "Untrusted .env overrides GEMINI_CLI_HOME to load malicious config and bypass folder trust",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-13745",
+    "found": true,
+    "published": "2026-09-10",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B1-I006",
+  "harness": "openclaw",
+  "title": "OpenClaw MCP channel bridge lets a non-owner channel sender approve or deny Claude Code permission prompts meant for the",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-100585",
+    "found": true,
+    "published": "2026-09-26",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-p5g8-m35v-7m82",
+    "found": true,
+    "published": "2026-09-11",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I075",
+  "harness": "openclaw",
+  "title": "Escaped newlines confuse exec allowlist parsing: visible command differs from executed",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-9f86-pvv5-rxfw",
+    "found": true,
+    "published": "2026-09-11",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I076",
+  "harness": "openclaw",
+  "title": "'Allow Always' persists path-only grant: later runs with different arguments need no prompt",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-74gc-hg2m-79p9",
+    "found": true,
+    "published": "2026-09-11",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I077",
+  "harness": "openclaw",
+  "title": "Exec-wrapper allowlist trusts arbitrary inner command",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-ghpx-6xwq-2w4w",
+    "found": true,
+    "published": "2026-09-11",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I078",
+  "harness": "openclaw",
+  "title": "Codex native tools (shell/file/patch) ignore per-chat tools.allow policy in OpenClaw",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-wwcw-jfpp-gpxw",
+    "found": true,
+    "published": "2026-09-11",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I079",
+  "harness": "openclaw",
+  "title": "Skill tool dispatch skips owner-only policy for non-owner senders",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-7cp7-87pj-p32v",
+    "found": true,
+    "published": "2026-09-11",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5c-01",
+  "harness": "claude-agent-sdk",
+  "title": "Argument injection via resume option allows arbitrary command execution (Python SDK)",
+  "verified_by_agent": "yes",
+  "status": "partially-found",
+  "checks": [
+   {
+    "id": "CVE-2026-96620",
+    "found": false,
+    "published": null,
+    "mentions_product": null
+   },
+   {
+    "id": "GHSA-h4mw-j7qp-8mwm",
+    "found": true,
+    "published": "2026-09-12",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I11",
+  "harness": "pydantic-ai",
+  "title": "SSRF cloud-metadata blocklist bypass via IPv6 zone identifiers",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-107289",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-vmxc-h2x2-jmf3",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I12",
+  "harness": "pydantic-ai",
+  "title": "web_fetch_tool blocked_domains bypass via hostname normalized differently by resolver",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-107288",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-22h6-qm39-v87j",
+    "found": true,
+    "published": "2026-09-17",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I13",
+  "harness": "pydantic-ai",
+  "title": "OTel include_content=False does not redact exceptions, error statuses, instructions or output template",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-107291",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-4x9p-g9wm-8q7f",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I14",
+  "harness": "pydantic-ai",
+  "title": "Event loop blocked by quadratic response processing in web_fetch",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-107290",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-fpf4-vwcp-v4hp",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I080",
+  "harness": "openclaw|npm",
+  "title": "Malware in npm package @memtensor/memos-cloud-openclaw-plugin",
+  "verified_by_agent": "yes",
+  "status": "found-product-unmatched",
+  "checks": [
+   {
+    "id": "GHSA-mhjf-v53x-7p87",
+    "found": true,
+    "published": "2026-09-23",
+    "mentions_product": false
+   }
+  ]
+ },
+ {
+  "id": "G7-I087",
+  "harness": "kiro-ide",
+  "title": "File-write tool in untrusted workspace lets injected agent modify auto-loaded global config (~/.kiro)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-95985",
+    "found": true,
+    "published": "2026-09-24",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5d-020",
+  "harness": "manus",
+  "title": "Salt Labs: prompt injection via obfuscated email leads to code execution in Manus environment",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G1-I037",
+  "harness": "opencode",
+  "title": "Cross-site OpenCode server upgrade request can install arbitrary packages for npm-based installations",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-632h-h47v-g4x4",
+    "found": true,
+    "published": "2026-09-24",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I001",
+  "harness": "claude-code",
+  "title": "Claude Desktop (macOS): opening a malicious file from a Cowork folder could run commands on the host",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-v234-4jrq-mgg6",
+    "found": true,
+    "published": "2026-09-25",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G4-I035",
+  "harness": "antigravity",
+  "title": "Antigravity app: .git/.env/.vscode files modifiable without prompt in Default and Request Review presets (changelog fix)",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G5a-I09",
+  "harness": "langgraph",
+  "title": "JavaScript custom authentication may permit cross-user Store access",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-4hm6-w6qq-w73v",
+    "found": true,
+    "published": "2026-09-28",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I096",
+  "harness": "mcp-sdk",
+  "title": "Python SDK OAuth client sends credentials to authorization server chosen by MCP server",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-qx49-fqc8-xw99",
+    "found": true,
+    "published": "2026-09-28",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I002",
+  "harness": "claude-code",
+  "title": "Managed Settings Not Applied When a Stored API Key Was Preferred Over Enterprise Sign-In",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-103012",
+    "found": true,
+    "published": "2026-09-30",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-gfvf-j8jh-jxxw",
+    "found": true,
+    "published": "2026-09-29",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B3-I014",
+  "harness": "grok-build",
+  "title": "Grok Build sandbox: symlink-following sandbox paths closed; managed policy trust tamper classification added",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G7-I109",
+  "harness": "kilo-code",
+  "title": "permission/allow-everything endpoint lets local attacker execute arbitrary code",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-79403",
+    "found": true,
+    "published": "2026-09-29",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I097",
+  "harness": "mcp-sdk",
+  "title": "TypeScript SDK OAuth client sends credentials to authorization server chosen by MCP server",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-104850",
+    "found": true,
+    "published": "2026-10-06",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-6qxp-vccf-f47h",
+    "found": true,
+    "published": "2026-10-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5b-I15",
+  "harness": "pydantic-ai",
+  "title": "Excessive resource use when local web fetching converts nested HTML",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-107287",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-v36g-jcw9-x7cw",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B2-I010",
+  "harness": "antigravity",
+  "title": "agy: after a permission request was denied (e.g. raised by a subagent that cannot ask) the agent worked around the denia",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G5b-I16",
+  "harness": "pydantic-ai",
+  "title": "Concurrency-limited model streams can retain slots after completion or interruption",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-107286",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-6fqq-452j-qhrp",
+    "found": true,
+    "published": "2026-10-08",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I004",
+  "harness": "claude-code",
+  "title": "Arbitrary File Write via Write-Time Symlink Following (TOCTOU) in Claude Code",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-103435",
+    "found": true,
+    "published": "2026-10-07",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-5j29-h97v-84ch",
+    "found": true,
+    "published": "2026-10-05",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5a-I16",
+  "harness": "strands-agents",
+  "title": "Local privilege escalation via symlink attack in default FileSessionManager storage",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-3w55-933p-8pv5",
+    "found": true,
+    "published": "2026-10-05",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5a-I17",
+  "harness": "strands-agents",
+  "title": "Default FileSessionManager storage world-readable on shared systems",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-763v-5pjm-fx36",
+    "found": true,
+    "published": "2026-10-05",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5c-06",
+  "harness": "bedrock-agentcore",
+  "title": "Starter Toolkit: generated code injection from crafted Bedrock Agent data (agent import)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-105812",
+    "found": true,
+    "published": "2026-10-06",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-37r5-8xpw-vxp9",
+    "found": true,
+    "published": "2026-10-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "INC-G5c-07",
+  "harness": "bedrock-agentcore",
+  "title": "Starter Toolkit: improper outbound requests and local file reads on agent import",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-106032",
+    "found": true,
+    "published": "2026-10-06",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-5xmr-2rcp-3j75",
+    "found": true,
+    "published": "2026-10-06",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5a-I10",
+  "harness": "langgraph",
+  "title": "Unencoded identifiers in SDK v3 streaming redirect authenticated GET requests",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-3fx2-cqw9-xr3c",
+    "found": true,
+    "published": "2026-10-07",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5a-I13",
+  "harness": "microsoft-agent-framework",
+  "title": "Declarative MCP approval executes with transport headers different from approved (TOCTOU)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-q7g7-7c7x-frcq",
+    "found": true,
+    "published": "2026-10-07",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5a-I14",
+  "harness": "microsoft-agent-framework",
+  "title": "Declarative MCP invocations may expose protected workflow values to external servers",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-9f26-7mqc-9vc4",
+    "found": true,
+    "published": "2026-10-07",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5a-I15",
+  "harness": "microsoft-agent-framework",
+  "title": "Foundry Hosting toolbox MCP client could send Azure bearer token to unintended origin",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-r2mq-wgc9-vgh3",
+    "found": true,
+    "published": "2026-10-07",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G1-I003",
+  "harness": "claude-code",
+  "title": "Plugin Commit SHA Pin Bypass Allows Installation of Attacker-Controlled Code",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-86063",
+    "found": true,
+    "published": "2026-10-13",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-pq7j-f95f-qfcv",
+    "found": true,
+    "published": "2026-10-09",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B2-I011",
+  "harness": "antigravity",
+  "title": "agy macOS terminal sandbox let sandboxed commands read ~/Library/Application Support, where desktop apps keep credential",
+  "verified_by_agent": "yes",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ },
+ {
+  "id": "G1-I007",
+  "harness": "claude-code",
+  "title": "Uncontrolled Search Path Enables Arbitrary Code Execution via Malicious Git Executable",
+  "verified_by_agent": "yes",
+  "status": "partially-found",
+  "checks": [
+   {
+    "id": "CVE-2026-88066",
+    "found": false,
+    "published": null,
+    "mentions_product": null
+   },
+   {
+    "id": "GHSA-4p2j-qj3c-6x84",
+    "found": true,
+    "published": "2026-10-13",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G5a-I12",
+  "harness": "deepagents",
+  "title": "deepagents-acp shell approval bypass via commands that fail to parse",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-459r-276m-w72x",
+    "found": true,
+    "published": "2026-10-13",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I115",
+  "harness": "opencode2 (npm typosquat)",
+  "title": "Malware in opencode2 and platform sub-packages (typosquat of OpenCode)",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "GHSA-8w65-j2wh-mqv7",
+    "found": true,
+    "published": "2026-10-13",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I108",
+  "harness": "roo-code",
+  "title": "Auto-approve bypass: bare >& redirect prefix makes allowlist match redirect target while shell runs denied command",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-110202",
+    "found": true,
+    "published": "2026-10-13",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I038",
+  "harness": "vscode-copilot-agent",
+  "title": "Copilot agent sessions on local harness auto-approved edits to custom hook and agent-definition locations -> RCE",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-102232",
+    "found": true,
+    "published": "2026-10-13",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-fq62-m6f5-c7h9",
+    "found": true,
+    "published": "2026-10-13",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I040",
+  "harness": "vscode-copilot-agent",
+  "title": "Opening workspace via vscode.dev/agents/tunnel skips workspace trust; attacker-contributed skills run",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-70098",
+    "found": true,
+    "published": "2026-10-13",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-r2p5-jgfw-r5vw",
+    "found": true,
+    "published": "2026-10-13",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "G7-I041",
+  "harness": "vscode-copilot-agent",
+  "title": "MCP sandbox permission approvals stored in shared config, not per-server",
+  "verified_by_agent": "yes",
+  "status": "confirmed",
+  "checks": [
+   {
+    "id": "CVE-2026-102851",
+    "found": true,
+    "published": "2026-10-13",
+    "mentions_product": true
+   },
+   {
+    "id": "GHSA-qghm-w43w-vx8v",
+    "found": true,
+    "published": "2026-10-13",
+    "mentions_product": true
+   }
+  ]
+ },
+ {
+  "id": "B2-I007",
+  "harness": "antigravity",
+  "title": "agy recursive cleanup on Windows 10 deleted paths far outside the intended targets (Program Files, user dirs), breaking ",
+  "verified_by_agent": "no",
+  "status": "no-id (primary-source only)",
+  "checks": []
+ }
+]

@@ -1,0 +1,5 @@
+{
+  "hooks": {
+    "PostToolUse": [{"matcher": "apply_patch", "hooks": [{"type": "command", "command": "./scripts/check-generated.sh", "timeout": 30}]}]
+  }
+}

@@ -1,0 +1,290 @@
+{
+  "harness": "gemini-cli",
+  "version": "0.64.0",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "--approval-mode default|auto_edit|yolo|plan and --yolo/-y; general.defaultApprovalMode default 'default'; security.disableYoloMode and admin.secureModeEnabled disallow YOLO; tools.allowed (e.g. run_shell_command(git)) bypass confirmation.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/packages/cli/src/config/config.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-097",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Policy engine: TOML rules ([[rule]] toolName, commandPrefix, decision, priority, modes) in ~/.gemini/policies and admin tier (system dirs, adminPolicyPaths); workspace-tier policies are documented as disabled.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/policy-engine.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-098"
+        },
+        {
+          "claim": "GHSA-wpqr-6v78-jr5g / CVE-2026-12537 (critical, CVSS 10): RCE via workspace trust and tool allowlisting bypasses (headless auto-trusted folders; --yolo ignored fine-grained allowlists); fixed 0.39.1 and 0.40.0-preview.3, published 2026-04-24; reported via VRP by Novee Security and Pillar Security.",
+          "source": "https://github.com/google-gemini/gemini-cli/security/advisories/GHSA-wpqr-6v78-jr5g",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-111"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Default approval prompts, TOML policy engine with admin tier, disableYoloMode and admin secureMode; YOLO now respects tool allowlists after 0.39.1."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Sandbox is opt-in (GEMINI_SANDBOX / tools.sandbox / -s): macOS Seatbelt (default profile permissive-open: write restrictions, network allowed), Docker/Podman container, runsc, lxc; security.toolSandboxing experimental; tools.sandboxNetworkAccess default false.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/sandbox.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-103"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Seatbelt/Docker/Podman sandboxes exist but are opt-in; Seatbelt default profile allows network."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Sandbox is opt-in (GEMINI_SANDBOX / tools.sandbox / -s): macOS Seatbelt (default profile permissive-open: write restrictions, network allowed), Docker/Podman container, runsc, lxc; security.toolSandboxing experimental; tools.sandboxNetworkAccess default false.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/sandbox.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-103"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Sandbox network access defaults to false only inside the opt-in sandbox; no general domain allowlist found."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Folder trust: code default security.folderTrust.enabled=true (settings schema default true) although docs/cli/trusted-folders.md still says 'disabled by default'; untrusted folders ignore .gemini/settings.json and project .env, disable auto-acceptance and extension management; decisions in ~/.gemini/trustedFolders.json.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/packages/cli/src/config/trustedFolders.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-099",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Headless mode requires explicit trust: --skip-trust or GEMINI_CLI_TRUST_WORKSPACE=true (GHSA text names GEMINI_TRUST_WORKSPACE, code/docs use GEMINI_CLI_TRUST_WORKSPACE); GEMINI_CLI_TRUST_WORKSPACE=false forces untrusted.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/packages/core/src/utils/trust.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-100",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Hooks under settings 'hooks' (hooksConfig.enabled default true); project hooks are fingerprinted and changed hooks are treated as new/untrusted and warned before running; env GEMINI_PROJECT_DIR.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/docs/hooks/index.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-101"
+        },
+        {
+          "claim": "GHSA-wpqr-6v78-jr5g / CVE-2026-12537 (critical, CVSS 10): RCE via workspace trust and tool allowlisting bypasses (headless auto-trusted folders; --yolo ignored fine-grained allowlists); fixed 0.39.1 and 0.40.0-preview.3, published 2026-04-24; reported via VRP by Novee Security and Pillar Security.",
+          "source": "https://github.com/google-gemini/gemini-cli/security/advisories/GHSA-wpqr-6v78-jr5g",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-111"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Folder trust is on by default in code, headless now requires explicit trust and project hooks are fingerprinted; docs are inconsistent and a CVSS-10 advisory existed."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "mcpServers entry: command,args,env,cwd,url,httpUrl,headers,tcp,type stdio|sse|http,timeout,trust,includeTools,excludeTools,oauth; mcp.allowed / mcp.excluded lists; admin-required servers; token storage hybrid keychain/file.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/schemas/settings.schema.json",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-102",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "mcp.allowed/excluded, per-server trust flag, admin-required servers and keychain-backed OAuth tokens."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "security.blockGitExtensions and security.allowedExtensions (regex allowlist) restrict extension sources; extension integrity checks exist in core.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/schemas/settings.schema.json",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-104",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Folder trust: code default security.folderTrust.enabled=true (settings schema default true) although docs/cli/trusted-folders.md still says 'disabled by default'; untrusted folders ignore .gemini/settings.json and project .env, disable auto-acceptance and extension management; decisions in ~/.gemini/trustedFolders.json.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/packages/cli/src/config/trustedFolders.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-099",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Extension source allowlist/git blocking and integrity checks; extensions disabled in untrusted folders."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Auth cache file ~/.gemini/oauth_creds.json (OAUTH_FILE constant); MCP OAuth tokens use hybrid keychain/file storage; sessions in ~/.gemini/tmp/<project_hash>/chats/.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/packages/core/src/config/storage.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-105",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "OAuth cache file plus hybrid keychain storage for MCP tokens; env redaction documented."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "Headless: gemini -p/--prompt, --output-format json|stream-json, exit codes 0/1/42/53; google-github-actions/run-gemini-cli action.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/headless.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-108"
+        },
+        {
+          "claim": "Headless mode requires explicit trust: --skip-trust or GEMINI_CLI_TRUST_WORKSPACE=true (GHSA text names GEMINI_TRUST_WORKSPACE, code/docs use GEMINI_CLI_TRUST_WORKSPACE); GEMINI_CLI_TRUST_WORKSPACE=false forces untrusted.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/packages/core/src/utils/trust.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-100",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "GHSA-wpqr-6v78-jr5g / CVE-2026-12537 (critical, CVSS 10): RCE via workspace trust and tool allowlisting bypasses (headless auto-trusted folders; --yolo ignored fine-grained allowlists); fixed 0.39.1 and 0.40.0-preview.3, published 2026-04-24; reported via VRP by Novee Security and Pillar Security.",
+          "source": "https://github.com/google-gemini/gemini-cli/security/advisories/GHSA-wpqr-6v78-jr5g",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-111"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Headless -p with exit codes and trust gating; official Action with trust guidance after the 2026 advisory."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "Global ~/.gemini/GEMINI.md and repository GEMINI.md are loaded; save_memory tool writes to the global GEMINI.md; auto-memory feature documented in docs/cli/auto-memory.md.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/docs/tools/memory.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-107"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Global GEMINI.md written by save_memory plus project GEMINI.md; user-visible files."
+    },
+    "D10": {
+      "facts": [],
+      "proposed_score": null,
+      "rationale": "N/A (subagent isolation not assessed)."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Auth cache file ~/.gemini/oauth_creds.json (OAUTH_FILE constant); MCP OAuth tokens use hybrid keychain/file storage; sessions in ~/.gemini/tmp/<project_hash>/chats/.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/packages/core/src/config/storage.ts",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-105",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "privacy.usageStatisticsEnabled defaults true; OpenTelemetry (telemetry.enabled) is opt-in and logPrompts is opt-in.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/schemas/settings.schema.json",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-106",
+          "relabelled": "A09: source/API read, not a local test"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Local session files and opt-in OpenTelemetry."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "privacy.usageStatisticsEnabled defaults true; OpenTelemetry (telemetry.enabled) is opt-in and logPrompts is opt-in.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/schemas/settings.schema.json",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-106",
+          "relabelled": "A09: source/API read, not a local test"
+        },
+        {
+          "claim": "Google Developers Blog (2026-05-19): Gemini CLI and Gemini Code Assist IDE extensions stop serving requests on 2026-06-18 for Google AI Pro/Ultra and Gemini Code Assist for individuals (free); enterprise Standard/Enterprise licences and paid API keys keep access; Antigravity CLI is the successor. The MISSION claim is therefore correct for consumer accounts, but the OSS repo and enterprise/API use continue (v0.64.0 shipped 2026-10-13).",
+          "source": "https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-095"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Usage statistics on by default with opt-out; OTel opt-in; consumer service ended 2026-06-18."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Release assets include gemini-cli-bundle.zip and darwin zips named '-unsigned'; install via npm, Homebrew, MacPorts, conda; npm provenance not verified here.",
+          "source": "https://github.com/google-gemini/gemini-cli/releases/tag/v0.64.0",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-112"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "npm/brew distribution; macOS release zips are unsigned; provenance not verified."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Settings files: system /etc/gemini-cli/settings.json (macOS /Library/Application Support/GeminiCli/, Windows C:\\ProgramData\\gemini-cli\\; GEMINI_CLI_SYSTEM_SETTINGS_PATH), user ~/.gemini/settings.json, project .gemini/settings.json; schema at schemas/settings.schema.json.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/enterprise.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-096"
+        },
+        {
+          "claim": "Policy engine: TOML rules ([[rule]] toolName, commandPrefix, decision, priority, modes) in ~/.gemini/policies and admin tier (system dirs, adminPolicyPaths); workspace-tier policies are documented as disabled.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/policy-engine.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-098"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "System settings file and admin policy tier at higher precedence; admin secureMode."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md: report via g.co/vulnz (Google VRP); coordination and disclosure on GitHub including GitHub Security Advisories.",
+          "source": "https://github.com/google-gemini/gemini-cli/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-110"
+        },
+        {
+          "claim": "GHSA-wpqr-6v78-jr5g / CVE-2026-12537 (critical, CVSS 10): RCE via workspace trust and tool allowlisting bypasses (headless auto-trusted folders; --yolo ignored fine-grained allowlists); fixed 0.39.1 and 0.40.0-preview.3, published 2026-04-24; reported via VRP by Novee Security and Pillar Security.",
+          "source": "https://github.com/google-gemini/gemini-cli/security/advisories/GHSA-wpqr-6v78-jr5g",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-111"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Google VRP intake, SECURITY.md and a published critical GHSA/CVE."
+    }
+  }
+}

@@ -1,0 +1,4 @@
+expected: [HG-SUB-001]
+origin: hand
+family: sub
+note: "user sub-agent with bypassPermissions"

@@ -1,0 +1,484 @@
+{
+  "harness": "claude-code",
+  "version": "2.1.300",
+  "analysed_on": "2026-10-15",
+  "status": "analysed",
+  "dimensions": {
+    "D01": {
+      "facts": [
+        {
+          "claim": "In Manual (default) mode reads inside the working directory run without asking while Bash commands (except a read-only built-in set), file edits, WebFetch and WebSearch ask for approval.",
+          "source": "https://code.claude.com/docs/en/permissions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-007"
+        },
+        {
+          "claim": "permissions.defaultMode accepts default, acceptEdits, plan, auto, dontAsk, bypassPermissions, manual (alias of default); 'auto' and 'bypassPermissions' do not take effect from project or local settings (since v2.1.257 for bypass).",
+          "source": "https://code.claude.com/docs/en/settings-reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-005"
+        },
+        {
+          "claim": "permissions.deny rules block in every mode including bypassPermissions; permissions.disableBypassPermissionsMode='disable' makes Claude Code reject --dangerously-skip-permissions.",
+          "source": "https://code.claude.com/docs/en/settings-reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-006"
+        },
+        {
+          "claim": "Built-in starting permission mode: interactive terminal and VS Code sessions start in auto on v2.1.283+; claude -p / Agent SDK start in default when the session fetches feature flags, and in auto (v2.1.285+) when it does not (third-party provider or telemetry off); when auto is unavailable (unsupported model, disableAutoMode, server-side off) the session starts in Manual (default). Corrects profile default_mode.",
+          "source": "https://code.claude.com/docs/en/permission-modes",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-005"
+        },
+        {
+          "claim": "On Linux and macOS Claude Code refuses --dangerously-skip-permissions when run as root or under sudo ('cannot be used with root/sudo privileges for security reasons'); the check is skipped inside a 'recognized sandbox' (mechanism not documented; IS_SANDBOX does not appear in the env-var reference or CHANGELOG as of 2026-10-15). The dev container runs Claude Code as a non-root user.",
+          "source": "https://code.claude.com/docs/en/permission-modes#skip-all-checks-with-bypasspermissions-mode",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-006"
+        },
+        {
+          "claim": "CHANGELOG 2.1.126: --dangerously-skip-permissions now bypasses prompts for writes to .claude/, .git/, .vscode/, shell config files and other previously protected paths (catastrophic removals still prompt).",
+          "source": "https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-015"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Corrected by B1 (2026-10-15): the built-in starting mode is auto (classifier-approved, no user prompt) for interactive sessions on >=2.1.283, and auto for -p on >=2.1.285 when feature flags are not fetched, so the rubric's score-2 criterion 'default mode asks before shell commands' is not met literally. Score-3 controls still exist: deny rules apply in every mode, bypass/auto cannot be set from project files, and disableBypassPermissionsMode/disableAutoMode can be managed. Manual mode (asks before Bash/edits) is one setting away. Reviewer to confirm whether a classifier-gated default counts as 'asking'."
+    },
+    "D02": {
+      "facts": [
+        {
+          "claim": "Bash sandbox is off by default (sandbox.enabled=false); uses Seatbelt on macOS and bubblewrap+socat on Linux/WSL2; if the sandbox cannot start Claude Code runs commands unsandboxed unless sandbox.failIfUnavailable=true.",
+          "source": "https://code.claude.com/docs/en/sandboxing",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-008"
+        },
+        {
+          "claim": "Linux sandbox dependencies: bubblewrap (filesystem isolation) and socat (network relay to proxy); optional seccomp filter (Unix-socket blocking) from npm @anthropic-ai/sandbox-runtime; Ubuntu 24.04+ needs an AppArmor profile for bwrap user namespaces; in unprivileged containers bwrap cannot mount /proc unless sandbox.enableWeakerNestedSandbox=true; sandbox.bwrapPath/socatPath managed settings (2.1.133).",
+          "source": "https://code.claude.com/docs/en/sandboxing",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-014"
+        }
+      ],
+      "proposed_score": 1,
+      "rationale": "Seatbelt/bubblewrap sandbox exists and is centrally enforceable, but is off by default and fails open unless failIfUnavailable is set."
+    },
+    "D03": {
+      "facts": [
+        {
+          "claim": "Sandboxed commands have no direct network route; traffic goes through a local proxy checking sandbox.network.allowedDomains (default empty); managed allowManagedDomainsOnly can lock the list.",
+          "source": "https://code.claude.com/docs/en/sandboxing",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-009"
+        },
+        {
+          "claim": "Bash sandbox is off by default (sandbox.enabled=false); uses Seatbelt on macOS and bubblewrap+socat on Linux/WSL2; if the sandbox cannot start Claude Code runs commands unsandboxed unless sandbox.failIfUnavailable=true.",
+          "source": "https://code.claude.com/docs/en/sandboxing",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-008"
+        },
+        {
+          "claim": "WebFetch sends the requested hostname (not URL) to api.anthropic.com for a blocklist check before each fetch, on every model provider, unaffected by CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC; disabled only by skipWebFetchPreflight: true; passing hostnames cached 5 minutes.",
+          "source": "https://code.claude.com/docs/en/data-usage#webfetch-domain-safety-check",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-002"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Sandbox proxy enforces domain allowlists (default empty) and can be managed-locked; however the sandbox itself is off by default and WebFetch/MCP traffic follows permission prompts."
+    },
+    "D04": {
+      "facts": [
+        {
+          "claim": "Interactive sessions hold back hooks from every settings file until the workspace trust dialog is accepted; claude -p / SDK never show the dialog, treat the folder as trusted and run repo hooks from .claude/settings.json.",
+          "source": "https://code.claude.com/docs/en/hooks#workspace-trust",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-010"
+        },
+        {
+          "claim": "Per docs, in a -p run on a never-trusted folder: hooks, env block and apiKeyHelper in repo settings are used; .mcp.json servers connect without asking; permissions.allow rules from .claude/settings.json are not used.",
+          "source": "https://code.claude.com/docs/en/permissions#what-runs-before-you-trust-a-folder",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-011"
+        },
+        {
+          "claim": "CVE-2025-59536 / GHSA-4fgq-fpq9-mr3g: startup trust dialog bug let project code execute before trust accepted; fixed v1.0.111 (GHSA published 2025-10-03). Check Point published 'Caught in the Hook' on 2026-02-25 covering hooks, MCP consent bypass and CVE-2026-21852 (ANTHROPIC_BASE_URL key exfiltration before trust).",
+          "source": "https://github.com/anthropics/claude-code/security/advisories/GHSA-4fgq-fpq9-mr3g",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-034"
+        },
+        {
+          "claim": "What runs in a never-trusted folder under claude -p / SDK: settings hooks, env block, apiKeyHelper and project skill hooks/allowed-tools are used; permissions.allow and additionalDirectories are not used (stderr 'this workspace has not been trusted'); project subagent frontmatter hooks, inline subagent mcpServers and repo extraKnownMarketplaces are not used; .mcp.json servers connect without asking; .mcp.json headersHelper is not run (stderr 'headersHelper not run'). With only a parent folder trusted, settings hooks and env are used.",
+          "source": "https://code.claude.com/docs/en/permissions#what-runs-before-you-trust-a-folder",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-007"
+        },
+        {
+          "claim": "Project/local settings env values apply after trust, or at startup under -p; project/local env cannot set CLAUDE_CONFIG_DIR, CLAUDE_CODE_TMPDIR, HOME, TMPDIR, XDG_*, OTel exporter/content variables (v2.1.282+), CLAUDE_CODE_PROCESS_WRAPPER and dialog timers (v2.1.290+); ANTHROPIC_BASE_URL is not on the ignore list and is used as the env example.",
+          "source": "https://code.claude.com/docs/en/settings-reference#variables-claude-code-ignores-in-env",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-008"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Trust dialog gates settings hooks in interactive mode and approvals committed in repos are ignored when untrusted; but -p/SDK runs never show it and run repo hooks, and several pre-trust execution CVEs were fixed."
+    },
+    "D05": {
+      "facts": [
+        {
+          "claim": "Project .mcp.json servers need per-server approval (enabledMcpjsonServers / enableAllProjectMcpServers / disabledMcpjsonServers); in an untrusted folder those keys are ignored when committed in .claude/settings.json.",
+          "source": "https://code.claude.com/docs/en/mcp#project-server-approvals-and-workspace-trust",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-012"
+        },
+        {
+          "claim": "Managed MCP controls: allowedMcpServers / deniedMcpServers (by serverName, serverCommand array, serverUrl), allowManagedMcpServersOnly, managedMcpServers, managed-mcp.json for exclusive control.",
+          "source": "https://code.claude.com/docs/en/settings-reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-013"
+        },
+        {
+          "claim": "Per docs, in a -p run on a never-trusted folder: hooks, env block and apiKeyHelper in repo settings are used; .mcp.json servers connect without asking; permissions.allow rules from .claude/settings.json are not used.",
+          "source": "https://code.claude.com/docs/en/permissions#what-runs-before-you-trust-a-folder",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-011"
+        },
+        {
+          "claim": "What runs in a never-trusted folder under claude -p / SDK: settings hooks, env block, apiKeyHelper and project skill hooks/allowed-tools are used; permissions.allow and additionalDirectories are not used (stderr 'this workspace has not been trusted'); project subagent frontmatter hooks, inline subagent mcpServers and repo extraKnownMarketplaces are not used; .mcp.json servers connect without asking; .mcp.json headersHelper is not run (stderr 'headersHelper not run'). With only a parent folder trusted, settings hooks and env are used.",
+          "source": "https://code.claude.com/docs/en/permissions#what-runs-before-you-trust-a-folder",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-007"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Per-server approval for .mcp.json, managed allow/deny lists and exclusive managed-mcp.json; gap: -p connects project servers without asking."
+    },
+    "D06": {
+      "facts": [
+        {
+          "claim": "Plugins/marketplaces: marketplace.json catalogs, enabledPlugins, extraKnownMarketplaces, strictKnownMarketplaces (managed allowlist); plugin subagents ignore hooks/mcpServers/permissionMode frontmatter.",
+          "source": "https://code.claude.com/docs/en/plugin-marketplaces",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-016"
+        },
+        {
+          "claim": "GHSA-pq7j-f95f-qfcv / CVE-2026-86063: plugin commit SHA pin bypass allowed installing attacker-controlled code; fixed 2.1.179 (published 2026-10-09).",
+          "source": "https://github.com/anthropics/claude-code/security/advisories/GHSA-pq7j-f95f-qfcv",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-017"
+        },
+        {
+          "claim": "allowManagedHooksOnly (managed-only) blocks user, project, local and non-force-enabled plugin hooks; disableAllHooks disables hooks.",
+          "source": "https://code.claude.com/docs/en/settings-reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-015"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Marketplace allowlisting (strictKnownMarketplaces), managed force-enable and allowManagedHooksOnly exist; a plugin SHA-pin bypass CVE shows supply-chain risk remains."
+    },
+    "D07": {
+      "facts": [
+        {
+          "claim": "Credentials: macOS Keychain (fallback ~/.claude/.credentials.json mode 0600); Linux ~/.claude/.credentials.json mode 0600; Windows %USERPROFILE%\\.claude\\.credentials.json.",
+          "source": "https://code.claude.com/docs/en/authentication",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-018"
+        },
+        {
+          "claim": "Local 2.1.300 install on Linux: ~/.claude/.credentials.json exists with mode -rw------- (top-level key claudeAiOauth; contents not read).",
+          "source": "local:~/.claude/.credentials.json",
+          "label": "verified-by-test",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-019"
+        },
+        {
+          "claim": "Session transcripts are stored locally under ~/.claude/projects/<project>/*.jsonl; OpenTelemetry export requires CLAUDE_CODE_ENABLE_TELEMETRY=1; CLAUDE_CODE_SKIP_PROMPT_HISTORY=1 or --no-session-persistence skip writing transcripts; cleanupPeriodDays controls retention.",
+          "source": "https://code.claude.com/docs/en/monitoring-usage",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-025"
+        },
+        {
+          "claim": "CLAUDE_CODE_SUBPROCESS_ENV_SCRUB=1 strips credentials (by name or value, keeping GitHub tokens and proxy settings) from Bash, hook and stdio MCP subprocess environments; it is off by default, and claude-code-action sets it when allowed_non_write_users is configured.",
+          "source": "https://code.claude.com/docs/en/env-vars#what-the-subprocess-environment-scrub-removes",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-009"
+        },
+        {
+          "claim": "Host structure (names and modes only, no contents, 2026-10-15): ~/.claude 0755; .credentials.json 0600; ~/.claude.json 0600; history.jsonl 0600; projects/ transcripts 0600 (23 files) in 0755 dirs; projects/*/memory files 0644; sessions/ 0700; backups 0600; paste-cache 0600; settings.json 0644; umask 022, home 0750. ~/.local/share/claude/versions holds 2.1.299 (2026-10-14) and 2.1.300 (2026-10-15 08:13), consistent with a native-installer background update.",
+          "source": "local:~/.claude (stat only)",
+          "label": "verified-by-test",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-012"
+        },
+        {
+          "claim": "Local session transcripts are stored in plaintext under ~/.claude/projects/ for 30 days by default (cleanupPeriodDays); transcripts shared via the post-survey 'Yes' are uploaded with known key/token patterns redacted and kept up to 6 months; /feedback transcripts are kept 5 years.",
+          "source": "https://code.claude.com/docs/en/data-usage#data-retention",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-013"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "OS keychain on macOS, 0600 file on Linux (verified locally); transcripts are plaintext on disk (redaction not verified)."
+    },
+    "D08": {
+      "facts": [
+        {
+          "claim": "claude -p supports --output-format text|json|stream-json, --allowedTools, --disallowedTools, --permission-mode, --max-turns, --max-budget-usd, --no-session-persistence, --settings, --setting-sources, --mcp-config, --strict-mcp-config, --bare, --dangerously-skip-permissions.",
+          "source": "https://code.claude.com/docs/en/cli-reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-020"
+        },
+        {
+          "claim": "Claude Code GitHub Action checks the triggering actor has write access (allowed_non_write_users to override) and rejects bot actors unless listed in allowed_bots.",
+          "source": "https://code.claude.com/docs/en/github-actions",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-021"
+        },
+        {
+          "claim": "Interactive sessions hold back hooks from every settings file until the workspace trust dialog is accepted; claude -p / SDK never show the dialog, treat the folder as trusted and run repo hooks from .claude/settings.json.",
+          "source": "https://code.claude.com/docs/en/hooks#workspace-trust",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-010"
+        },
+        {
+          "claim": "What runs in a never-trusted folder under claude -p / SDK: settings hooks, env block, apiKeyHelper and project skill hooks/allowed-tools are used; permissions.allow and additionalDirectories are not used (stderr 'this workspace has not been trusted'); project subagent frontmatter hooks, inline subagent mcpServers and repo extraKnownMarketplaces are not used; .mcp.json servers connect without asking; .mcp.json headersHelper is not run (stderr 'headersHelper not run'). With only a parent folder trusted, settings hooks and env are used.",
+          "source": "https://code.claude.com/docs/en/permissions#what-runs-before-you-trust-a-folder",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-007"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Rich -p controls (--allowedTools, --max-turns, --bare, --setting-sources) and an actor-checking GitHub Action; default -p trusts the folder and honors repo hooks/MCP."
+    },
+    "D09": {
+      "facts": [
+        {
+          "claim": "CLAUDE.md files (managed /etc/claude-code/CLAUDE.md, ~/.claude/CLAUDE.md, ./CLAUDE.md or ./.claude/CLAUDE.md, ./CLAUDE.local.md, .claude/rules/) are loaded as instructions; auto memory is on by default, machine-local at ~/.claude/projects/<project>/memory/ (MEMORY.md index), disable via autoMemoryEnabled=false or CLAUDE_CODE_DISABLE_AUTO_MEMORY=1.",
+          "source": "https://code.claude.com/docs/en/memory",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-022"
+        },
+        {
+          "claim": "External imports in a project-level memory file trigger an approval dialog the first time they are encountered.",
+          "source": "https://code.claude.com/docs/en/memory",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-023"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Auto memory is on by default but machine-local, per project, user-visible via /memory and switchable off; external imports require approval."
+    },
+    "D10": {
+      "facts": [
+        {
+          "claim": "Built-in subagents inherit the parent conversation's permission rules; custom subagents can set permissionMode, tools, mcpServers, hooks, and isolation: worktree; permissions.disableBypassPermissionsMode makes agent permissionMode:bypassPermissions ignored.",
+          "source": "https://code.claude.com/docs/en/sub-agents",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-024"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Subagents inherit parent permission rules and hooks fire inside them; worktree isolation is opt-in per agent; bypass can be disabled centrally."
+    },
+    "D11": {
+      "facts": [
+        {
+          "claim": "Session transcripts are stored locally under ~/.claude/projects/<project>/*.jsonl; OpenTelemetry export requires CLAUDE_CODE_ENABLE_TELEMETRY=1; CLAUDE_CODE_SKIP_PROMPT_HISTORY=1 or --no-session-persistence skip writing transcripts; cleanupPeriodDays controls retention.",
+          "source": "https://code.claude.com/docs/en/monitoring-usage",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-025"
+        },
+        {
+          "claim": "Hooks are configured under the 'hooks' key in settings (event -> [{matcher, hooks:[{type: command|http|mcp_tool|prompt|agent, command, if, args}]}]); events include SessionStart, PreToolUse, PermissionRequest, PostToolUse, Stop, SubagentStart, ConfigChange, InstructionsLoaded, WorktreeCreate, etc.; defined in user, project, local, managed, plugin, skill and subagent frontmatter.",
+          "source": "https://code.claude.com/docs/en/hooks",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-014"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "Local JSONL transcripts plus OpenTelemetry export and hook events (ConfigChange, InstructionsLoaded) support auditing."
+    },
+    "D12": {
+      "facts": [
+        {
+          "claim": "Usage metrics and error reports are sent by default; opt out with DISABLE_TELEMETRY=1 / DISABLE_ERROR_REPORTING=1 or all non-essential traffic with CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1.",
+          "source": "https://code.claude.com/docs/en/data-usage",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-026"
+        },
+        {
+          "claim": "Retention: consumer accounts allowing model improvement 5 years, otherwise 30 days; commercial standard 30 days; ZDR available to qualified Enterprise accounts; commercial accounts are not used for training by default.",
+          "source": "https://code.claude.com/docs/en/data-usage",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-027"
+        },
+        {
+          "claim": "Claude Code CLI documented network destinations: api.anthropic.com (API, WebFetch safety check, feature flags, telemetry event logging), claude.ai, claude.com, platform.claude.com, mcp-proxy.anthropic.com, downloads.claude.ai, storage.googleapis.com, registry.npmjs.org, bridge.claudeusercontent.com, *.frame.claudeusercontent.com, github.com, raw.githubusercontent.com, *-review.googlesource.com, http-intake.logs.us5.datadoghq.com (telemetry), browser-intake-us5-datadoghq.com (error reports), formulae.brew.sh, code.claude.com. No Statsig or Sentry host is listed.",
+          "source": "https://code.claude.com/docs/en/network-config#network-access-requirements",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-001"
+        },
+        {
+          "claim": "Error reporting (third-party error tracker, Datadog browser-intake host) is on only for Pro/Max sign-ins on v2.1.198+ connecting directly to the Claude API without ZDR/HIPAA; usage metrics are default-on for the Claude API and default-off for Bedrock, Vertex (Agent Platform), Foundry and Claude Platform on AWS. Refines G1-026.",
+          "source": "https://code.claude.com/docs/en/data-usage#telemetry-services",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-003"
+        },
+        {
+          "claim": "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC (any non-empty value, including 0/false) disables auto-updates, telemetry, error reporting, /feedback, release notes, PR status badges, availability checks and feature-flag fetching; it does not cover official plugin marketplace auto-install (CLAUDE_CODE_DISABLE_OFFICIAL_MARKETPLACE_AUTOINSTALL) or the WebFetch check. DISABLE_TELEMETRY and DISABLE_ERROR_REPORTING also treat 0/false as opt-out; DO_NOT_TRACK is a standard boolean.",
+          "source": "https://code.claude.com/docs/en/env-vars",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-004"
+        },
+        {
+          "claim": "WebFetch sends the requested hostname (not URL) to api.anthropic.com for a blocklist check before each fetch, on every model provider, unaffected by CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC; disabled only by skipWebFetchPreflight: true; passing hostnames cached 5 minutes.",
+          "source": "https://code.claude.com/docs/en/data-usage#webfetch-domain-safety-check",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-002"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Telemetry and error reporting on by default with documented env opt-outs; clear retention and training policy by account type, ZDR available. B1: documented hosts are api.anthropic.com plus two Datadog intake hosts; error reports only for Pro/Max sign-ins; the WebFetch hostname preflight to api.anthropic.com is not covered by CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC (skipWebFetchPreflight)."
+    },
+    "D13": {
+      "facts": [
+        {
+          "claim": "Native installer: curl -fsSL https://claude.ai/install.sh | bash; each release publishes manifest.json with SHA256 per platform binary, signed with an Anthropic GPG key (fingerprint 31DD DE24 DDFA B679 F42D 7BD2 BAA9 29FF 1A7E CACE); apt/dnf/apk repos are signed; also Homebrew, WinGet and npm @anthropic-ai/claude-code.",
+          "source": "https://code.claude.com/docs/en/setup",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-028"
+        },
+        {
+          "claim": "Native installs auto-update (autoUpdatesChannel latest|stable, minimumVersion floor, DISABLE_AUTOUPDATER); Homebrew/WinGet/apt/dnf/apk do not auto-update by default.",
+          "source": "https://code.claude.com/docs/en/setup",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-029"
+        },
+        {
+          "claim": "Release manifest.json signatures exist from 2.1.89 onward (key 'Anthropic Claude Code Release Signing <security@anthropic.com>', fingerprint 31DDDE24DDFAB679F42D7BD2BAA929FF1A7ECACE, served at downloads.claude.ai/claude-code-releases/<ver>/manifest.json.sig); macOS binaries are signed and notarized, Windows binaries Authenticode-signed, Linux binaries not individually code-signed.",
+          "source": "https://code.claude.com/docs/en/setup#binary-integrity-and-code-signing",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-010"
+        },
+        {
+          "claim": "npm metadata (registry, read in a disposable node:22-slim container, scripts not run): @anthropic-ai/claude-code 2.1.300 published 2026-10-14T14:27:26Z by 'GitHub Actions' as an npm trusted publisher (GitHub OIDC); dist has two registry ECDSA signatures (keyid SHA256:DhQ8wR5A...) and no provenance attestations field; dist-tags latest/next 2.1.300, stable 2.1.292; scripts.postinstall 'node install.cjs' and a prepare guard; dependencies {}; 8 platform optionalDependencies pinned to 2.1.300; tarball 7 files, 189,328 bytes unpacked (bin/claude.exe 500-byte placeholder, install.cjs 8,375 B, cli-wrapper.cjs, sdk-tools.d.ts, package.json, README.md, LICENSE.md); license 'SEE LICENSE IN README.md'; engines node>=22. @anthropic-ai/claude-code-linux-x64@2.1.300 unpacks to 266,972,930 bytes, same trusted publisher.",
+          "source": "https://registry.npmjs.org/@anthropic-ai/claude-code",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-011"
+        },
+        {
+          "claim": "CHANGELOG: 2.1.290 CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC also skips the startup connection warm-up; 2.1.120 fixed DISABLE_TELEMETRY/NONESSENTIAL not suppressing usage metrics for API and enterprise users; 2.1.105 fixed NONESSENTIAL in one project's settings disabling metrics machine-wide; 2.1.98 fixed DISABLE_AUTOUPDATER not suppressing the npm registry version check.",
+          "source": "https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "B1-016"
+        }
+      ],
+      "proposed_score": 2,
+      "rationale": "Corrected by B1: GPG-signed manifest (from 2.1.89), signed apt/dnf/apk repos, macOS/Windows code signing, and channel/minimumVersion/DISABLE_UPDATES controls meet score 2. Score 3 also needs provenance and an SBOM: npm 2.1.300 is published through npm trusted publishing (GitHub OIDC) with registry signatures but carries no provenance attestation, no SBOM is documented, and Linux binaries are not individually code-signed."
+    },
+    "D14": {
+      "facts": [
+        {
+          "claim": "Settings precedence (highest first): managed settings (managed-settings.json, MDM, or claude.ai server-managed), command line --settings, .claude/settings.local.json, .claude/settings.json, ~/.claude/settings.json.",
+          "source": "https://code.claude.com/docs/en/settings",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-003"
+        },
+        {
+          "claim": "Managed file paths: macOS /Library/Application Support/ClaudeCode/managed-settings.json; Linux and WSL /etc/claude-code/managed-settings.json; Windows C:\\Program Files\\ClaudeCode\\ (plus managed-settings.d/ drop-ins and managed-mcp.json).",
+          "source": "https://code.claude.com/docs/en/managed-settings",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-004"
+        },
+        {
+          "claim": "allowManagedHooksOnly (managed-only) blocks user, project, local and non-force-enabled plugin hooks; disableAllHooks disables hooks.",
+          "source": "https://code.claude.com/docs/en/settings-reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-015"
+        },
+        {
+          "claim": "Managed MCP controls: allowedMcpServers / deniedMcpServers (by serverName, serverCommand array, serverUrl), allowManagedMcpServersOnly, managedMcpServers, managed-mcp.json for exclusive control.",
+          "source": "https://code.claude.com/docs/en/settings-reference",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-013"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "managed-settings.json/.d, MDM and server-managed settings sit at top precedence with managed-only locks for hooks, MCP, permissions and marketplaces."
+    },
+    "D15": {
+      "facts": [
+        {
+          "claim": "SECURITY.md directs reports to HackerOne and the Anthropic bug bounty program.",
+          "source": "https://github.com/anthropics/claude-code/blob/main/SECURITY.md",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-030"
+        },
+        {
+          "claim": "anthropics/claude-code lists 35 repository security advisories via the GitHub API (accessed 2026-10-15), most with CVE IDs, fixed in the stated versions.",
+          "source": "https://github.com/anthropics/claude-code/security/advisories",
+          "label": "from-official-docs",
+          "accessed": "2026-10-15",
+          "ledger_id": "G1-031"
+        }
+      ],
+      "proposed_score": 3,
+      "rationale": "SECURITY.md with HackerOne bounty and dozens of published GHSAs with CVE IDs."
+    }
+  },
+  "claims_vs_observed": "matrix/claims_vs_observed.d/B1.csv (CVO-B1-001..025, untested)"
+}

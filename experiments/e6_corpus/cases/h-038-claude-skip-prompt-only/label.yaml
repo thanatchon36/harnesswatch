@@ -1,0 +1,4 @@
+expected: []
+origin: hand
+family: perm
+note: "only suppresses the bypass confirmation dialog; mode not enabled"
