@@ -7,6 +7,7 @@
 [![PyPI](https://img.shields.io/pypi/v/harnesswatch.svg)](https://pypi.org/project/harnesswatch/)
 [![Docs](https://img.shields.io/badge/docs-mkdocs-blue)](https://thanatchon36.github.io/harnesswatch/)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23407630.svg)](https://doi.org/10.5281/zenodo.23407630)
 
 📄 **[Read the paper on the web](https://thanatchon36.github.io/harnesswatch/paper/)** ·
 ⬇️ **[Download the PDF](https://github.com/thanatchon36/harnesswatch/raw/main/paper/main.pdf)** ·

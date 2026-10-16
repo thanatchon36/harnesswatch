@@ -163,6 +163,7 @@ def main() -> int:
         f"  title  = {{{title.replace('\u2013', '--')}}},\n"
         "  year   = {2026},\n"
         "  note   = {Preprint},\n"
+        "  doi    = {10.5281/zenodo.23407630},\n"
         f"  url    = {{{PAPER_URL}}}\n"
         "}"
     )

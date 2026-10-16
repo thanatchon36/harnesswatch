@@ -11,7 +11,8 @@ authors:
   - family-names: Chongmankhong
     given-names: Thanatchon
 version: 0.1.0
-date-released: 2026-10-15
+date-released: 2026-10-16
+doi: 10.5281/zenodo.23407630
 license: Apache-2.0
 repository-code: "https://github.com/thanatchon36/harnesswatch"
 url: "https://thanatchon36.github.io/harnesswatch/"
