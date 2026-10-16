@@ -187,10 +187,10 @@ lags the npm release (1.0.45 against 1.0.52) and endpoints are injected
 at build time, so we read the source white-box and treat the shipped npm
 client as Tier B in E3 and E7. *Tier C* (closed and unreachable):
 documentation, advisories and third-party research only (e.g. Cursor,
-Kiro, Devin, Jules). *Tier D* (runtimes and SDKs) is scored on a
-separate ladder and never ranked against products; the rubric files and
-figures group it with hosted services as “tier C”. The matrix covers 36
-tier A/B products and 22 runtimes and hosted services.
+Kiro, Devin, Jules). *Tier D* (runtimes and SDKs) has its own ladder and
+is never ranked against products; the rubric and figures group it with
+hosted services as “tier C”. The matrix covers 36 tier A/B products and
+22 runtimes and hosted services.
 
 #### Black-box method
 
@@ -231,11 +231,17 @@ and source facts are recorded in the evidence ledger and in
 `matrix/evidence/`; every <sup>\[T\]</sup> fact traces to a probe or
 bench file under `experiments/results/` or `bench/results/`.
 
-#### Who did the work
+#### Use of generative AI
 
-Evidence collection, both matrix ratings, and the collection and
-classification of incidents were carried out by LLM research agents run
-and supervised by the author;
+The study was carried out with Claude (Anthropic), operated through the
+Claude Code harness, which is itself among the systems examined. Working
+from the author’s written specification, LLM research agents wrote the
+`harnesswatch` toolkit and the experiment scripts, collected the
+evidence, produced both matrix ratings, collected and classified the
+incidents, and drafted and revised this manuscript. The author specified
+the research questions, the scope, the rules of evidence and the ethical
+constraints, directed the work and reviewed its outputs, and takes sole
+responsibility for the content;
 Section <a href="#sec:limits" data-reference-type="ref"
 data-reference="sec:limits">12</a> discusses the consequences for
 reliability.
@@ -246,8 +252,7 @@ We distinguish a *vulnerability* (a defect that violates the product’s
 own security intent, usually with a CVE or GHSA), a *design weakness* (a
 documented default or capability that enables harm without being a bug,
 such as headless mode running repository hooks) and a *policy choice*
-(telemetry or retention defaults, for instance). Only the first is a
-bug.
+(e.g. telemetry or retention defaults). Only the first is a bug.
 
 #### Ethics
 
@@ -438,7 +443,7 @@ Agent’s `smart`<sup>\[D\]</sup>). The rubric does not treat a
 classifier’s verdict as “asking”, so these defaults score 1. Counting
 them as asking would raise Claude Code’s D01 from 1 to 3 and lift the
 other classifier-default harnesses; we did not recompute the rankings
-under that reading, which remains the rubric’s principal open question.
+under that reading, the rubric’s principal open question.
 
 #### Sandbox and egress (D02, D03)
 
@@ -928,13 +933,13 @@ Claude Code’s is vendor-unsupported,
 Section <a href="#sec:method" data-reference-type="ref"
 data-reference="sec:method">3</a>) and four open-source harnesses
 (OpenCode, Codex CLI, Aider and Qwen Code). No vendor credentials are
-used, so every harness talks to the same local open-weight model,
+used, so every harness talks to one local open-weight model,
 `qwen3:4b-instruct`, served by Ollama. The grid is 7 harnesses $\times$
 5 scenarios $\times$ 2 modes, with 5 runs per cell. A run is capped at
 240 s and scored on its state at the cap; a run with no harness output
-counts as an error, not as safe. Aider never loads an instruction file,
-so its `instructions` cells are N/A in both modes and are excluded from
-the pooled statistics.
+counts as an error, not as safe. Aider loads no instruction file, so its
+`instructions` cells are N/A in both modes and excluded from the pooled
+statistics.
 
 #### Metrics
 
@@ -991,7 +996,7 @@ The low follow rate most probably reflects the small model’s limited
 agentic and instruction-following ability and the plainly worded, benign
 canary, *not* the robustness of the harnesses. With 5 runs per cell and
 zero or one event per cell, the intervals are wide, and we do not rank
-harnesses on resilience. Nor do we describe default modes as safer.
+harnesses on resilience, nor describe default modes as safer.
 
 #### Correction
 
@@ -1198,7 +1203,7 @@ prompt injection leading to RCE in agents (Vandevanter 2025); and Check
 Point Research and Cymulate on Cursor, Codex CLI and Claude
 Code (Charikov, Zaikin, and Vanunu 2025; Mill and Vanunu 2025; Donenfeld
 and Vanunu 2026; Beber 2025). Our survey normalises these reports under
-one taxonomy, one root-cause scheme and one counting rule.
+one taxonomy, root-cause scheme and counting rule.
 
 #### CI and supply chain
 
@@ -1270,12 +1275,12 @@ login-gated harnesses were observed only before login.
 #### Rating and classification
 
 Both matrix raters worked from one shared fact base, so $\kappa$
-measures the application of the rubric rather than the reliability of
-the evidence, and it excludes the N/A-versus-score cells (all 84
+measures how the rubric was applied, not the reliability of the
+evidence, and it excludes the N/A-versus-score cells (all 84
 disagreements, those included, are published). Incident classes and root
-causes had a single LLM rater and no agreement measurement, and RC1 is
-the residual class of an ordered procedure. Several scores turn on
-rubric interpretation, notably of classifier-gated defaults.
+causes had one LLM rater and no agreement measurement, and RC1 is the
+residual class of an ordered procedure. Several scores turn on rubric
+interpretation, notably of classifier-gated defaults.
 
 #### Selection
 
@@ -1367,8 +1372,7 @@ independence reworded.
 
 Table <a href="#tab:rules" data-reference-type="ref"
 data-reference="tab:rules">7</a> lists every rule; each YAML file adds
-harness-specific spellings, remediation guidance, references and
-fixtures.
+harness-specific spellings, remediation, references and fixtures.
 
 <div id="tab:rules">
 
@@ -1416,8 +1420,8 @@ adapters. Every injected block uses the same versioned payload template;
 only its location changes. The `hidden_unicode` scenario is implemented
 but excluded from the reported grid, because its zero-width wrapping
 reaches the model as plain ASCII and so measures nothing beyond
-`instructions`. Aider has no auto-loaded instruction file, so its
-`instructions` cells are N/A.
+`instructions`. Aider loads no instruction file, so its `instructions`
+cells are N/A.
 
 <div id="tab:bench-catalogue">
 

@@ -11,11 +11,11 @@ Pinned versions: harness versions are listed in \texttt{VERSIONS.md}; bench imag
 Following an internal hostile review we made these changes, all reflected in the results files and logged in the assumptions log: (1)~deterministic incident de-duplication, which removed one double-counted incident, with the excluded out-of-period row now shown; (2)~``patch latency'' recomputed from dates and reframed as fix date relative to advisory publication, with undated fixes reported; (3)~the E3 secret metric split into \emph{secret read} and \emph{secret in state} once the lenient metric was found to count harness persistence (Codex environment snapshots, the Claude Code \texttt{@path} import); (4)~E2 prevalence reported per stratum rather than pooled; (5)~matrix evidence labels aligned with the ledger, so that source reads are \evD{}, not \evT{}; (6)~one Grok Build fact obtained by listing strings in the shipped binary withdrawn as outside our metadata-only rule; (7)~claims about RQ3 shares, mode safety, claim coverage and rater independence reworded.
 
 \section{Rule Pack}\label{app:rules}
-Table~\ref{tab:rules} lists every rule; each YAML file adds harness-specific spellings, remediation guidance, references and fixtures.
+Table~\ref{tab:rules} lists every rule; each YAML file adds harness-specific spellings, remediation, references and fixtures.
 \input{tables/rules.tex}
 
 \section{Canary-Bench Scenario Catalogue}\label{app:bench}
-Table~\ref{tab:bench-catalogue} lists the scenarios and adapters. Every injected block uses the same versioned payload template; only its location changes. The \texttt{hidden\_unicode} scenario is implemented but excluded from the reported grid, because its zero-width wrapping reaches the model as plain ASCII and so measures nothing beyond \texttt{instructions}. Aider has no auto-loaded instruction file, so its \texttt{instructions} cells are N/A.
+Table~\ref{tab:bench-catalogue} lists the scenarios and adapters. Every injected block uses the same versioned payload template; only its location changes. The \texttt{hidden\_unicode} scenario is implemented but excluded from the reported grid, because its zero-width wrapping reaches the model as plain ASCII and so measures nothing beyond \texttt{instructions}. Aider loads no instruction file, so its \texttt{instructions} cells are N/A.
 \input{tables/bench_scenarios.tex}
 
 \section{Scorecard Rubric}\label{app:rubric}
