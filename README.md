@@ -8,11 +8,13 @@
 [![Docs](https://img.shields.io/badge/docs-mkdocs-blue)](https://thanatchon36.github.io/harnesswatch/)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23407630.svg)](https://doi.org/10.5281/zenodo.23407630)
+[![Dataset](https://img.shields.io/badge/Hugging%20Face-dataset-yellow?logo=huggingface)](https://huggingface.co/datasets/thanatchon36/harnesswatch)
 
 📄 **[Read the paper on the web](https://thanatchon36.github.io/harnesswatch/paper/)** ·
 ⬇️ **[Download the PDF](https://github.com/thanatchon36/harnesswatch/raw/main/paper/main.pdf)** ·
 📚 **[Documentation](https://thanatchon36.github.io/harnesswatch/)** ·
-📋 **[Executive brief](brief/executive-brief.pdf)**
+📋 **[Executive brief](brief/executive-brief.pdf)** ·
+🤗 **[Dataset](https://huggingface.co/datasets/thanatchon36/harnesswatch)**
 
 **Security audit toolkit and research study for AI coding-agent harnesses.** The harness is the runtime
 loop (Claude Code, Codex CLI, OpenCode, Cursor, Copilot CLI, Kiro, Grok Build, Antigravity, Goose, Aider and others)
@@ -28,6 +30,26 @@ unattended in CI. harnesswatch audits that layer, and the accompanying paper mea
   It records metadata only and never request bodies.
 - **`bench`:** an inert canary prompt-injection benchmark. It runs in disposable containers with egress blocked,
   uses synthetic secrets and sends exfiltration only to a local sink.
+
+## What the study found
+
+**Harness incidents keep climbing.** The paper counts 323 publicly disclosed harness-level advisories and incidents
+from 2025–2026. Of these, 48% trace to a flawed approval, allowlist or path check, or to configuration honoured before
+consent. Pure prompt injection accounts for 5%.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/thanatchon36/harnesswatch/main/paper/figures/rq3_timeline.png" alt="Bar chart of verified harness incidents and CVEs per quarter, rising from 1 in Q1 2025 to 74 in Q3 2026; Q4 2026 is a partial quarter with 19" width="640"><br>
+  <em>Verified harness incidents and CVEs by quarter of disclosure. The hatched final quarter is partial (to 15 October 2026) and does not indicate a decline.</em>
+</p>
+
+**Controls exist but are seldom safe by default.** Across 58 harnesses and runtimes, 664 evidence-linked scores rate
+fifteen control dimensions from 0 to 3. No per-dimension mean reaches 2 across the 36 tier A/B products. The ratings
+were produced by LLM research agents, as the paper's Method section discloses. A blind second rater reached quadratic κ = 0.88.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/thanatchon36/harnesswatch/main/paper/figures/e1_heatmap.png" alt="Heatmap of control scores from 0 to 3 for 58 harnesses across fifteen dimensions, with products and runtimes ranked separately" width="640"><br>
+  <em>Control matrix: score per dimension, rater 1; hatched cells are N/A. Per-cell evidence and rationale are in <a href="matrix/"><code>matrix/</code></a> and on <a href="https://huggingface.co/datasets/thanatchon36/harnesswatch">Hugging Face</a>.</em>
+</p>
 
 ## Install and quickstart
 
@@ -63,6 +85,8 @@ an evidence label (verified-by-test / from-official-docs / third-party-report).
   verifying `harnesswatch` command): [`brief/governance-checklist.md`](brief/governance-checklist.md)
 - Evidence: [`evidence/`](evidence/) (ledger, incidents, sources), [`matrix/`](matrix/) (control matrix,
   claims vs observed), [`taxonomy/`](taxonomy/), [`VERSIONS.md`](VERSIONS.md)
+- Dataset: the same tables as Parquet, with the benchmark runs and results JSON, on
+  [Hugging Face](https://huggingface.co/datasets/thanatchon36/harnesswatch)
 
 Reproduce:
 
